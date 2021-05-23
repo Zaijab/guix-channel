@@ -1,4 +1,4 @@
-(define-module (gnu packages emacs-leaf-keywords)
+(define-module (zaijab packages emacs-leaf-keywords)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
