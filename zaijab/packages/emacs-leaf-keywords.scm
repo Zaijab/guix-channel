@@ -4,8 +4,6 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system emacs)
   #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (gnu packages emacs)
-  ;#:use-module (zaijab packages)
   #:use-module (gnu packages emacs-xyz))
 
 
@@ -53,8 +51,8 @@
 	     (base32
 	      "16iv1cvlky2gij1ndx2d6q8l35axm72bx52n6v5y3h21aibj197n"))))
    (build-system emacs-build-system)
-   ;; (propagated-inputs
-   ;;  `(("emacs-leaf" ,emacs-leaf)))
+   (propagated-inputs
+    `(("emacs-leaf" ,emacs-leaf)))
    (home-page "https://github.com/conao3/leaf-keywords.el")
    (synopsis "Extra keywords for leaf.")
    (description "Extra keywords for leaf.")
