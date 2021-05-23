@@ -5,6 +5,7 @@
   #:use-module (guix build-system asdf)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages lisp-xyz))
+
 (define-public sbcl-lisp-stat
   (package
    (name "sbcl-lisp-stat")
@@ -31,6 +32,7 @@
    (synopsis "Common Lisp statistics package.")
    (description "Common Lisp statistics package.")
    (license license:ms-pl)))
+
 (define-public sbcl-data-frame 
   (package
    (name "sbcl-data-frame")
@@ -49,6 +51,7 @@
    (synopsis "Common Lisp statistics package.")
    (description "Common Lisp statistics package.")
    (license license:ms-pl)))
+
 (define-public sbcl-dfio 
   (package
    (name "sbcl-dfio")
