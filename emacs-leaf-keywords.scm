@@ -5,7 +5,7 @@
   #:use-module (guix build-system emacs)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages emacs)
-  #:use-module (zaijab packages)
+  ;#:use-module (zaijab packages)
   #:use-module (gnu packages emacs-xyz))
 
 (define-public emacs-leaf-keywords
