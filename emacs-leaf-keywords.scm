@@ -1,5 +1,6 @@
 (define-module (gnu packages emacs-leaf-keywords)
   #:use-module (guix packages)
+  #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix build-system emacs)
   #:use-module ((guix licenses) #:prefix license:))
