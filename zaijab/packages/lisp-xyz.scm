@@ -64,7 +64,7 @@
 	    (file-name (git-file-name name version))
 	    (sha256
 	     (base32
-	      "16iv1cvlky2gij1ndx2d6q8l35axm72bx52n6v5y3h21aibj197n"))))
+	      "1jr19ihqyd0k2rqppi8gs3f3gfzrklldzma36g5qsif68gfdfba8"))))
    (build-system asdf-build-system/sbcl)
    (home-page "https://github.com/Lisp-Stat/lisp-stat.git")
    (synopsis "Common Lisp statistics package.")
