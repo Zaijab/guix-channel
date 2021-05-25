@@ -29,7 +29,13 @@
    (version "0.0.14")
    (source (origin
             (method url-fetch)
-            (uri "https://discord.com/api/download?platform=linux&format=tar.gz"))
+            (uri (string-append "https://cdn.discordapp.com/apps/linux/"
+                                version
+                                "/"
+                                name
+                                "-"
+                                version
+                                ".tar.gz"))
             (sha256
              (base32
               "1p786ma54baljs0bw8nl9sr37ypbpjblcndxsw4djgyxkd9ii16r"))))
