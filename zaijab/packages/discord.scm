@@ -85,6 +85,8 @@
    (propagated-inputs `(("wget" ,wget)
 			("libsm" ,libsm)
 			("libappindicator" ,libappindicator)
+			("libdbusmenu" ,libdbusmenu)
+			("unzip" ,unzip)
                         ("node" ,node)))
    (arguments
     `(#:modules ((guix build utils))
