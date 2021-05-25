@@ -21,8 +21,6 @@
   #:use-module (gnu packages nss)
   #:use-module (gnu packages gcc))
 
-;;(use-modules (guix licenses))
-;(discord)
 (define-public discord
   (package
    (name "discord")
@@ -38,7 +36,7 @@
                                 ".tar.gz"))
             (sha256
              (base32
-              "1p786ma54baljs0bw8nl9sr37ypbpjblcndxsw4djgyxkd9ii16r"))))
+              "1rq490fdl5pinhxk8lkfcfmfq7apj79jzf3m14yql1rc9gpilrf2"))))
    (build-system trivial-build-system)
    (inputs `(("alsa-lib"      ,alsa-lib)
              ("atk"           ,atk)
