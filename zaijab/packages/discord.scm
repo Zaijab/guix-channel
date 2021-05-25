@@ -86,6 +86,8 @@
 			("libsm" ,libsm)
 			("libappindicator" ,libappindicator)
 			("libdbusmenu" ,libdbusmenu)
+			("libdrm" ,libdrm)
+			("mesa" ,mesa)
 			("unzip" ,unzip)
                         ("node" ,node)))
    (arguments
