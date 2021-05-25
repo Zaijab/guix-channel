@@ -73,13 +73,13 @@
              ("libpulseaudio" ,pulseaudio)
              ("libffmpeg"     ,ffmpeg)
              ("libgcc"        ,gcc "lib")
-	     ("wget"          ,wget)
-	     ("node"          ,node)
              ("libcxx"        ,libcxx)))
    (native-inputs `(("patchelf" ,patchelf)
                     ("glibc"    ,glibc)
                     ("tar"      ,tar)
                     ("gzip"     ,gzip)))
+   (propagated-inputs `(("wget" ,wget)
+                        ("node" ,node)))
    (arguments
     `(#:modules ((guix build utils))
       #:builder (begin
