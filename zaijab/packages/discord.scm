@@ -1,4 +1,4 @@
-(define-module (discord)
+(define-module (zaijab packages discord)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix build-system trivial)
