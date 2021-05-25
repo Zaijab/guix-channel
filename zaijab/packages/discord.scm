@@ -119,8 +119,8 @@
                             "--set-interpreter"
                             (string-append glibc "/lib/ld-linux-x86-64.so.2")
                             (string-append output "/opt/discord/Discord"))
-                    (link (string-append %output "/opt/discord/Discord")
-                          (string-append %output "/bin/discord"))
+                    ;(link (string-append %output "/opt/discord/Discord")
+                    ;      (string-append %output "/bin/discord"))
                     (link (string-append %output "/opt/discord/discord.png")
                           (string-append %output "/share/pixmaps/discord.png"))
                     #t))))
