@@ -18,6 +18,7 @@
   #:use-module (gnu packages llvm)
   #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages video)
+  #:use-module (gnu packages nss)
   #:use-module (gnu packages gcc))
 
 ;;(use-modules (guix licenses))
