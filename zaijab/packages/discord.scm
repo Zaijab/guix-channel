@@ -19,6 +19,7 @@
   #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages video)
   #:use-module (gnu packages nss)
+  #:use-module (gnu packages wget)
   #:use-module (gnu packages gcc))
 
 (define-public discord
