@@ -26,7 +26,7 @@
 (define-public discord
   (package
    (name "discord")
-   (version "0.0.14")
+   (version "0.0.12-2")
    (source (origin
             (method url-fetch)
             (uri (string-append "https://cdn.discordapp.com/apps/linux/"
