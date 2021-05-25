@@ -71,6 +71,7 @@
              ("libpulseaudio" ,pulseaudio)
              ("libffmpeg"     ,ffmpeg)
              ("libgcc"        ,gcc "lib")
+	     ("wget"          ,wget)
              ("libcxx"        ,libcxx)))
    (native-inputs `(("patchelf" ,patchelf)
                     ("glibc"    ,glibc)
