@@ -20,6 +20,7 @@
   #:use-module (gnu packages video)
   #:use-module (gnu packages nss)
   #:use-module (gnu packages wget)
+  #:use-module (gnu packages node)
   #:use-module (gnu packages gcc))
 
 (define-public discord
@@ -72,9 +73,10 @@
              ("libpulseaudio" ,pulseaudio)
              ("libffmpeg"     ,ffmpeg)
              ("libgcc"        ,gcc "lib")
+	     ("wget"          ,wget)
+	     ("node"          ,node)
              ("libcxx"        ,libcxx)))
    (native-inputs `(("patchelf" ,patchelf)
-		    ("wget"     ,wget)
                     ("glibc"    ,glibc)
                     ("tar"      ,tar)
                     ("gzip"     ,gzip)))
