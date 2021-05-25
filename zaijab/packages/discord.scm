@@ -16,6 +16,8 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages gnuzilla)
   #:use-module (gnu packages llvm)
+  #:use-module (gnu packages gl)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages video)
