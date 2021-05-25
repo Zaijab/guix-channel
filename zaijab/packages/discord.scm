@@ -82,6 +82,7 @@
                     ("tar"      ,tar)
                     ("gzip"     ,gzip)))
    (propagated-inputs `(("wget" ,wget)
+			("libsm" ,libsm)
                         ("node" ,node)))
    (arguments
     `(#:modules ((guix build utils))
