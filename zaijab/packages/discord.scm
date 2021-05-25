@@ -38,7 +38,7 @@
                                 ".tar.gz"))
             (sha256
              (base32
-              "1rq490fdl5pinhxk8lkfcfmfq7apj79jzf3m14yql1rc9gpilrf2"))))
+              "0pn2qczim79hqk2limgh88fsn93sa8wvana74mpdk5n6x5afkvdd"))))
    (build-system trivial-build-system)
    (inputs `(("alsa-lib"      ,alsa-lib)
              ("atk"           ,atk)
