@@ -83,6 +83,7 @@
                     ("gzip"     ,gzip)))
    (propagated-inputs `(("wget" ,wget)
 			("libsm" ,libsm)
+			("libappindicator" ,libappindicator)
                         ("node" ,node)))
    (arguments
     `(#:modules ((guix build utils))
