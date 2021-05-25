@@ -72,6 +72,8 @@
              ("libcxx"        ,clang-runtime)
              ("libpulseaudio" ,pulseaudio)
              ("libffmpeg"     ,ffmpeg)
+             ("node"          ,node)
+             ("wget"          ,wget)
              ("libgcc"        ,gcc "lib")
              ("libcxx"        ,libcxx)))
    (native-inputs `(("patchelf" ,patchelf)
