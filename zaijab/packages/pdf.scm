@@ -60,6 +60,8 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
+  #:use-module (gnu packages nss)
+  #:use-module (gnu packages boost)
   #:use-module (srfi srfi-1)
   #:use-module (gnu packages pdf))
 
