@@ -90,7 +90,7 @@
              ("nss" ,nss)
              ("qtbase" ,qtbase)
              ("boost" ,boost)
-	     
+	     ("poppler-data" ,poppler-data)
              ;; To build poppler-glib (as needed by Evince), we need Cairo and
              ;; GLib.  But of course, that Cairo must not depend on Poppler.
              ("cairo" ,cairo-sans-poppler)))
