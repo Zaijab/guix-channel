@@ -72,7 +72,7 @@
                                 version ".tar.xz"))
             (sha256
              (base32
-              "0v3z4mk1rr8i0c4cfkab7pnxdbil30j4cm4w6cqlq6cfghkhlqxg"))))
+              "1563xz4rayf424vkl33mplv0gfs9xb6mnakwwpxc7ghg54b5njwn"))))
    (build-system cmake-build-system)
    ;; FIXME:
    ;;  use libcurl:        no
