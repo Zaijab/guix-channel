@@ -1,4 +1,4 @@
-(define-module (gnu packages pdf)
+(define-module (zaijab packages pdf)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)
@@ -60,7 +60,8 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
-  #:use-module (srfi srfi-1))
+  #:use-module (srfi srfi-1)
+  #:use-module (gnu packages pdf))
 
 (define-public poppler
   (package
