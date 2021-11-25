@@ -160,11 +160,11 @@
 	     (base32
 	      "1kplgpn79av1p2icyk7h93cy00gshyan96vxlinvwxibhsrhxsj2"))))
    (build-system asdf-build-system/sbcl)
+   (native-inputs `(("fiveam" ,sbcl-fiveam)))
    (inputs
     `(("alexandria" ,sbcl-alexandria)
       ("anaphora" ,sbcl-anaphora)
-      ("let-plus" ,sbcl-let-plus)
-      ("fiveam" ,sbcl-fiveam)))
+      ("let-plus" ,sbcl-let-plus)))
    (arguments
     `(#:asd-systems '("select"
 		      "select/tests")
