@@ -160,7 +160,7 @@
 	     (base32
 	      "1kplgpn79av1p2icyk7h93cy00gshyan96vxlinvwxibhsrhxsj2"))))
    (build-system asdf-build-system/sbcl)
-   (native-inputs `(("fiveam" ,sbcl-fiveam)))
+   ;; (native-inputs `(("fiveam" ,sbcl-fiveam)))
    (inputs
     `(("alexandria" ,sbcl-alexandria)
       ("anaphora" ,sbcl-anaphora)
