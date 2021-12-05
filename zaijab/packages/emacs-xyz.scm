@@ -18,7 +18,7 @@
 	    (file-name (git-file-name name version))
 	    (sha256
 	     (base32
-	      "16iv1cvlky2gij1ndx2d6q8l35axm72bx52n6v5y3h21aibj197n"))))
+	      "00fnkk6hl9l64dgmkhsqibhna7gdpazs4j28f7833n1dmg626ki6"))))
    (build-system emacs-build-system)
    (propagated-inputs
     `(("emacs-leaf" ,emacs-leaf)))
