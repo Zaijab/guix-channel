@@ -46,4 +46,23 @@
  (description "Use Emacs to install packages using system package manager.")
  (license license:gpl3+)))
 
+(define-public emacs-exlybar
+  (package
+   (name "emacs-exlybar")
+   (version "focal")
+   (source (origin
+	    (method git-fetch)
+	    (uri (git-reference
+		  (url "https://github.com/jollm/exlybar.git")
+		  (commit version)))
+	    (file-name (git-file-name name version))
+	    (sha256
+	     (base32
+	      "10cccwkfha12id4jvb8mrn7ym6xbs3gd2ni9sxbwvf7p5f0mh0q4"))))
+   (build-system emacs-build-system)
+   (home-page "https://gitlab.com/jollm/exlybar.git")
+   (synopsis "An Emacs Polybar-like window manager status bar.")
+   (description "An Emacs Polybar-like window manager status bar.")
+   (license license:gpl3+)))
+
 
