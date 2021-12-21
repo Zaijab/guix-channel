@@ -60,8 +60,8 @@
 	     (base32
 	      "0a4c2f8pbzrzda1zdn9g7hmicqbp3ss3wf6b523kspr8wvhzghy1"))))
    (build-system emacs-build-system)
-   (propagated-inputs
-    `(("emacs-next" ,emacs-next)))
+   (arguments
+    (substitute-keyword-arguments (package-arguments emacs-next)))
    (home-page "https://gitlab.com/jollm/exlybar.git")
    (synopsis "An Emacs Polybar-like window manager status bar.")
    (description "An Emacs Polybar-like window manager status bar.")
