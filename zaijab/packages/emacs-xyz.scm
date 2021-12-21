@@ -58,7 +58,7 @@
 	    (file-name (git-file-name name version))
 	    (sha256
 	     (base32
-	      "10cccwkfha12id4jvb8mrn7ym6xbs3gd2ni9sxbwvf7p5f0mh0q4"))))
+	      "0a4c2f8pbzrzda1zdn9g7hmicqbp3ss3wf6b523kspr8wvhzghy1"))))
    (build-system emacs-build-system)
    (home-page "https://gitlab.com/jollm/exlybar.git")
    (synopsis "An Emacs Polybar-like window manager status bar.")
