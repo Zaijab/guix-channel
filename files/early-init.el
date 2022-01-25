@@ -31,5 +31,5 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 
 (setq user-emacs-directory "~/.config/emacs")
-
+(setq byte-compile-warnings '(cl-functions))
 (setq make-backup-files nil)

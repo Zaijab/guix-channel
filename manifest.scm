@@ -1,0 +1,72 @@
+;; This "manifest" file can be passed to 'guix package -m' to reproduce
+;; the content of your profile.  This is "symbolic": it only specifies
+;; package names.  To reproduce the exact same profile, you also need to
+;; capture the channels being used, as returned by "guix describe".
+;; See the "Replicating Guix" section in the manual.
+
+(use-modules (guix transformations))
+
+(define transform1
+  (options->transformation
+    '((with-branch . "emacs-next=master"))))
+
+(packages->manifest
+  (list (specification->package "ungoogled-chromium")
+        (specification->package "ublock-origin-chromium")
+        (transform1 (specification->package "emacs-next"))
+        (specification->package "emacs-org-roam")
+        (specification->package "emacs-guix")
+        (specification->package "nyxt")
+        (specification->package "emacs-exwm")
+        (specification->package "pavucontrol")
+        (specification->package "emacs-pdf-tools")
+        (specification->package "git")
+        (specification->package "fontconfig")
+        (specification->package "emacs-leaf-keywords")
+        (specification->package "emacs-leaf")
+        (specification->package "libvirt")
+        (specification->package "emacs-lispyville")
+        (specification->package "emacs-lispy")
+        (specification->package "font-fira-code")
+        (specification->package "emacs-doom-modeline")
+        (specification->package "emacs-origami-el")
+        (specification->package "emacs-doom-themes")
+        (specification->package "emacs-vterm")
+        (specification->package "openssh")
+        (specification->package "ovmf")
+        (specification->package "sbcl-iterate")
+        (specification->package "emacs-no-littering")
+        (specification->package "curl")
+        (specification->package "emacs-ytel")
+        (specification->package "emacs-org-drill")
+        (specification->package "xhost")
+        (specification->package "xauth")
+        (specification->package "emacs-engine-mode")
+        (specification->package "s6-rc")
+        (specification->package "s6")
+        (specification->package "lshw")
+        (specification->package "sbcl-slynk")
+        (specification->package "font-lohit")
+        (specification->package "sbcl")
+        (specification->package "emacs-sly")
+        (specification->package "font-ipa-mj-mincho")
+        (specification->package "emacs-ddskk")
+        (specification->package "emacs-valign")
+        (specification->package "emacs-which-key")
+        (specification->package "emacs-general")
+        (specification->package "emacs-popup")
+        (specification->package "emacs-undo-tree")
+        (specification->package "emacs-helm")
+        (specification->package "emacs-yasnippet")
+        (specification->package
+          "emacs-rainbow-delimiters")
+        (specification->package "emacs-polymode-org")
+        (specification->package "emacs-google-translate")
+        (specification->package "emacs-company")
+        (specification->package "emacs-evil")
+        (specification->package "emacs-projectile")
+        (specification->package "emacs-perspective")
+        (specification->package "emacs-system-packages")
+        (specification->package
+          "emacs-helm-system-packages")
+        (specification->package "bridge-utils")))

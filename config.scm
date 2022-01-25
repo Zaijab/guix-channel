@@ -1,7 +1,3 @@
-(use-modules (gnu) (gnu system nss))
-(use-service-modules desktop xorg)
-(use-package-modules certs gnome)
-
 (use-modules (gnu)
 	     (gnu services)
 	     (gnu services desktop)
@@ -10,14 +6,18 @@
 	     (gnu services ssh)
 	     (gnu services virtualization)
 	     (gnu services linux)
+	     (gnu services networking)
+	     (gnu system nss)
 	     (gnu packages linux)
 	     (gnu packages firmware)
+	     (gnu packages certs)
+	     (gnu packages gnome)
+	     (gnu packages emacs)
+	     (gnu packages wm)
+	     (gnu packages virtualization)
 	     (nongnu packages linux)
 	     (nongnu system linux-initrd)
 	     (rnrs lists))
-
-(use-package-modules emacs wm virtualization)
-(use-service-modules desktop networking)
 
 (operating-system
  (kernel linux)
@@ -66,6 +66,7 @@
 				       "netdev"
 				       "audio"
 				       "libvirt"
+				       "kvm"
 				       "video")))
 	      %base-user-accounts))
  (packages (append (list
@@ -78,6 +79,9 @@
 		    (specification->package "font-fira-code")
 		    (specification->package "font-adobe-source-han-sans")
 		    (specification->package "qemu")
+		    (specification->package "ovmf")
+		    (specification->package "libvirt")
+		    (specification->package "bridge-utils")
 		    (specification->package "nss-certs"))
 		   %base-packages))
  (services (cons*
@@ -98,7 +102,7 @@
 	    ;; 		       ,(plain-file "mhwd-gpu.conf"
 	    ;; 				    "vfio-pci"))))
 	    (service kernel-module-loader-service-type
-		     '("vfio-pci"))
+		     '("vfio-pci" "kvm"))
 	    (service sddm-service-type
 		     (sddm-configuration
 		      (auto-login-user "zjabbar")
@@ -106,6 +110,7 @@
 		      (minimum-uid 1000)
 		      (theme "darkine")))
 	    (service libvirt-service-type)
+	    (service virtlog-service-type)
 	    (service elogind-service-type)
 	    (service network-manager-service-type)
 	    (service modem-manager-service-type)
