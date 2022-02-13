@@ -15,10 +15,7 @@
       ring-bell-function 'ignore
       inhibit-splash-screen t
       inhibit-startup-message t
-      initial-scratch-message nil
-					;message-log-max nil
-      )
-;(kill-buffer "*Messages*")
+      initial-scratch-message nil)
 
 (tooltip-mode -1)
 (scroll-bar-mode -1)
