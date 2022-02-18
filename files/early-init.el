@@ -27,6 +27,9 @@
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 
+(setq comp-async-report-warnings-errors nil)
+(setq warning-suppress-log-types '((comp) (comp)))
+(setq warning-suppress-types '((comp) (comp)))
 (setq user-emacs-directory "~/.config/emacs")
 (setq byte-compile-warnings '(cl-functions))
 (setq make-backup-files nil)

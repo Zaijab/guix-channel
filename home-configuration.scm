@@ -8,6 +8,7 @@
  (gnu packages emacs)
  (gnu packages wm)
  (gnu packages virtualization)
+ (gnu packages autotools)
  (gnu services)
  (gnu services desktop)
  (gnu services sddm)
@@ -24,6 +25,8 @@
  (gnu home services shells)
  (gnu home-services emacs)
  (gnu home-services-utils)
+ (dwl-guile home-service)
+ (dwl-guile patches)
  (rnrs lists))
 
 (home-environment
@@ -55,4 +58,9 @@
 	 (home-emacs-configuration
 	  (rebuild-elisp-packages? #t)
 	  (early-init-el `(,(slurp-file-gexp (local-file "files/early-init.el"))))
-	  (init-el `(,(slurp-file-gexp (local-file "files/init.el")))))))))
+	  (init-el `(,(slurp-file-gexp (local-file "files/init.el"))))))
+	(service home-dwl-guile-service-type
+		 (home-dwl-guile-configuration
+		  (config
+		   (dwl-config
+		    (terminal `(,(file-append emacs-next-pgtk "/bin/emacs"))))))))))

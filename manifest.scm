@@ -1,61 +1,48 @@
-(use-modules (guix transformations))
+((compose specifications->manifest list)
+ ;; X Apps
+ "pavucontrol"
+ ;; "ungoogled-chromium"
+ ;; "ublock-origin-chromium"
+ "nyxt"
 
-(define transform1
-  (options->transformation
-   '((with-branch . "emacs-next=master"))))
+ ;; X Resources
+ "fontconfig"
+ "font-fira-code"
+ "xauth"
 
-(define transform2
-  (options->transformation
-   '((with-commit . "emacs-next=5627693ce3f6ff7ef928a902bfab59731a63fbd4"))))
+ ;; Programming
+ "git"
 
-(packages->manifest
- (list
-  ;; X Apps
-  (specification->package "pavucontrol")
-  (specification->package "ungoogled-chromium")
-  (specification->package "ublock-origin-chromium")
-  (specification->package "nyxt")
-
-  ;; X Resources
-  (specification->package "fontconfig")
-  (specification->package "font-fira-code")
-  ;; (specification->package "font-ipa-mj-mincho")
-  ;; (specification->package "font-lohit")
-  (specification->package "xauth")
-
-  ;; Programming
-  (specification->package "git")
-
-  ;; Python
-  (specification->package "python")
-  (specification->package "python-pandas")
-  (specification->package "python-matplotlib")
-  ;; (specification->package "jupyter")
+ ;; Python
+ "python"
+ "python-pandas"
+ "python-matplotlib"
   
-  ;; LISP
-  (specification->package "sbcl")
-  (specification->package "sbcl-iterate")
+ ;; LISP
+ "sbcl"
+ "sbcl-iterate"
+ "sbcl-cepl"
   
-  ;; Emacs
-  (transform2 (specification->package "emacs-next"))
-  
-  (specification->package "emacs-org-roam")
-  (specification->package "emacs-guix")
-  (specification->package "emacs-exwm")
-  (specification->package "emacs-pdf-tools")
-  (specification->package "emacs-lispyville")
-  (specification->package "emacs-lispy")
-  (specification->package "emacs-sly")
-  (specification->package "emacs-doom-modeline")
-  (specification->package "emacs-doom-themes")
-  (specification->package "emacs-vterm")
-  (specification->package "emacs-which-key")
-  (specification->package "emacs-undo-tree")
-  (specification->package "emacs-helm")
-  (specification->package "emacs-yasnippet")
-  (specification->package "emacs-rainbow-delimiters")
-  (specification->package "emacs-google-translate")
-  (specification->package "emacs-company")
-  (specification->package "emacs-evil")
-  (specification->package "emacs-projectile")
-  (specification->package "emacs-no-littering")))
+ ;; Emacs
+ "emacs-next-pgtk"
+ "emacs-org-roam"
+ "emacs-guix"
+ "emacs-exwm"
+ "emacs-pdf-tools"
+ "emacs-lispyville"
+ "emacs-lispy"
+ "emacs-sly"
+ "emacs-doom-modeline"
+ "emacs-doom-themes"
+ "emacs-vterm"
+ "emacs-which-key"
+ "emacs-undo-tree"
+ "emacs-helm"
+ "emacs-yasnippet"
+ "emacs-rainbow-delimiters"
+ "emacs-google-translate"
+ "emacs-company"
+ "emacs-evil"
+ "emacs-projectile"
+ "emacs-no-littering"
+ )

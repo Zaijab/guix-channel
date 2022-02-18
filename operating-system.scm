@@ -80,9 +80,8 @@
 				       "video")))
 	      %base-user-accounts))
  (packages (append (list
-		    (specification->package "emacs")
-		    (specification->package "emacs-exwm")
 		    (specification->package "emacs-desktop-environment")
+		    (specification->package "emacs-exwm")
 		    (specification->package "pulseaudio")
 		    (specification->package "gvfs")
 		    (specification->package "at-spi2-core")
@@ -105,7 +104,8 @@
 	    (service sddm-service-type
 		     (sddm-configuration
 		      (auto-login-user "zjabbar")
-		      (auto-login-session "exwm.desktop")
+		      (display-server "wayland")
+		      ;; (auto-login-session "exwm.desktop")
 		      (minimum-uid 1000)
 		      (theme "darkine")))
 	    (service libvirt-service-type
