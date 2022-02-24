@@ -1,22 +1,29 @@
 ((compose specifications->manifest list)
  ;; X Apps
+ "sway"
  "pavucontrol"
- ;; "ungoogled-chromium"
- ;; "ublock-origin-chromium"
+ "bemenu"
  "nyxt"
+ "mpv"
 
  ;; X Resources
  "fontconfig"
  "font-fira-code"
+ "font-google-noto"
+ "font-lohit"
+ "font-vazir"
  "xauth"
+ "setxkbmap"
 
  ;; Programming
  "git"
 
  ;; Python
  "python"
+ "jupyter"
  "python-pandas"
  "python-matplotlib"
+ "python-lxml"
   
  ;; LISP
  "sbcl"

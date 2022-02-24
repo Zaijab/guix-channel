@@ -29,6 +29,13 @@
  (gnu home-services-utils)
  (rnrs lists))
 
+(define %my-services
+  (modify-services %base-services
+    (mingetty-service-type config =>
+                           (mingetty-configuration
+                            (inherit config)
+                            (auto-login "zjabbar")))))
+
 (operating-system
  (kernel linux)
  (firmware (list linux-firmware))
@@ -75,8 +82,6 @@
 	       (supplementary-groups '("wheel"
 				       "netdev"
 				       "audio"
-				       "libvirt"
-				       "kvm"
 				       "video")))
 	      %base-user-accounts))
  (packages (append (list
@@ -99,24 +104,11 @@
 		    (specification->package "nss-certs"))
 		   %base-packages))
  (services (cons*
-	    (service kernel-module-loader-service-type
-		     '("vfio-pci" "kvm"))
-	    (service sddm-service-type
-		     (sddm-configuration
-		      (auto-login-user "zjabbar")
-		      (display-server "wayland")
-		      ;; (auto-login-session "exwm.desktop")
-		      (minimum-uid 1000)
-		      (theme "darkine")))
-	    (service libvirt-service-type
-		     (libvirt-configuration (unix-sock-group "libvirt")
-					    (unix-sock-rw-perms "0777")))
-	    (service virtlog-service-type)
 	    (service elogind-service-type)
 	    (service network-manager-service-type)
 	    (service modem-manager-service-type)
 	    (service wpa-supplicant-service-type)
 	    (service ntp-service-type)
 	    (service nix-service-type)
-	    %base-services))
+	    %my-services))
  (name-service-switch %mdns-host-lookup-nss))

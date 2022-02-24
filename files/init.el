@@ -7,47 +7,30 @@
 ;; Emacs UI
 (load-theme 'doom-one t)
 (doom-modeline-mode 1)
-(setq inhibit-startup-echo-area-message "zjabbar")
+(blink-cursor-mode 0)
 (set-face-attribute 'default nil :font "Fira Code-14")
-(setq minibuffer-local-must-match-filename-map nil)
+(which-key-mode)
 
-;; Tab Bar
-(tab-bar-mode)
-(display-time-mode)
-(customize-set-variable 'tab-bar-format '(tab-bar-format-history tab-bar-format-tabs tab-bar-separator tab-bar-format-add-tab tab-bar-format-align-right tab-bar-format-global))
-(customize-set-variable 'mode-line-misc-info '(""))
-(customize-set-variable 'display-time-load-average-threshold 100)
-(customize-set-variable 'display-time-day-and-date t)
-(set-face-attribute 'tab-bar nil :foreground "#FFFFFF")
-(setq tabbar-use-images nil)
 ;; Helm
 (helm-mode 1)
 
 ;; Hotkeys
-(global-set-key (kbd "s-n") #'org-roam-node-find)
-(global-set-key (kbd "s-<tab>") #'helm-find-files)
-(global-set-key (kbd "s-a") #'(lambda () (interactive) (helm-find-files-1 "~/.config/guix/")))
-(global-set-key (kbd "s-x") #'helm-M-x)
-(global-set-key (kbd "s-c") #'guix)
-(global-set-key (kbd "s-b") #'helm-buffers-list)
-(global-set-key (kbd "s-h") #'windmove-left)
-(global-set-key (kbd "s-j") #'windmove-down)
-(global-set-key (kbd "s-k") #'windmove-up)
-(global-set-key (kbd "s-l") #'windmove-right)
-(global-set-key (kbd "s-SPC") #'(lambda (command) (interactive (list (read-shell-command "$ "))) (start-process-shell-command command nil command)))
-(global-set-key (kbd "s-e") #'(lambda () (interactive) (start-process-shell-command "chromium" nil "chromium")))
-(global-set-key (kbd "s-q") #'kill-current-buffer)
-(global-set-key (kbd "s-w") #'sly)
-(global-set-key (kbd "s-g") #'vterm)
-(global-set-key (kbd "s-0") #'delete-window)
-(global-set-key (kbd "s-1") #'delete-other-windows)
-(global-set-key (kbd "s-2") #'split-window-below)
-(global-set-key (kbd "s-3") #'split-window-right)
-(global-set-key (kbd "s-4") #'tab-switch)
-(global-set-key (kbd "<f7>") #'(lambda () (interactive) (call-process-shell-command "loginctl suspend")))
+(evil-mode 1)
+(evil-define-state windows
+  "Change Window States. Edit files / buffers to show and orientation."
+  :tag " <W> "
+  :message "-- WINDOW MODE --"
+  :input-method t
+  :intercept-esc nil)
 
+;; File Hotkeys
+(evil-define-key 'normal 'global (kbd "<SPC>ff") #'helm-find-files)
+(evil-define-key 'normal 'global (kbd "<SPC>fc") #'(lambda () (interactive) (helm-find-files-1 "~/.config/guix/")))
+(evil-define-key 'normal 'global (kbd "<SPC>x") #'helm-M-x)
+(evil-define-key 'normal 'global (kbd "<SPC>t") #'vterm)
+(evil-define-key 'normal 'global (kbd "<SPC>b") #'helm-buffers-list)
+(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
 
-(which-key-mode)
 
 (setq auto-save-file-name-transforms
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
@@ -60,10 +43,9 @@
 
 (undo-tree-mode 1)
 
-(evil-mode 1)
-(evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle)
 
 (global-company-mode)
+
 
 (setq org-babel-python-command "python3")
 (setq python-shell-interpreter "python3")
@@ -71,6 +53,7 @@
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode-enable)
 (add-hook 'lisp-mode-hook 'rainbow-delimiters-mode-enable)
 (add-hook 'scheme-mode-hook 'rainbow-delimiters-mode-enable)
+(add-hook 'scheme-mode-hook 'guix-devel-mode)
 
 (setq inferior-lisp-program "sbcl")
   (setq sly-lisp-implementations
