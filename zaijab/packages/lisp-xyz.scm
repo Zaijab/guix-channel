@@ -9,7 +9,7 @@
 (define-public sbcl-cepl.sdl2
   (package
     (name "sbcl-cepl.sdl2")
-    (version (git-version "0.0.0" "1" "6da5a030db5e3579c5a1c5350b1ffb8fc9950e9a"))
+    (version (git-version "6da5a030db5e3579c5a1c5350b1ffb8fc9950e9a"))
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
@@ -22,9 +22,9 @@
     (build-system asdf-build-system/sbcl)
     (arguments
      `(#:asd-files '("cepl.sdl2.asd")))
-    (propagated-inputs
-     `(("sbcl-cepl" ,sbcl-cepl)
-       ("sbcl-sdl2" ,sbcl-sdl2)))
+    (inputs
+     `(("cepl" ,sbcl-cepl)
+       ("sdl2" ,sbcl-sdl2)))
     (home-page "")
     (synopsis "")
     (description "")
