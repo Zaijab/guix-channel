@@ -15,11 +15,13 @@
 	      (uri (git-reference
 		    (url "https://github.com/cbaggers/cepl.sdl2.git")
 		    (commit version)))
-	      (file-name (git-file-name name))
+	      (file-name (git-file-name "cepl.sdl2" version))
 	      (sha256
 	       (base32
 		"0lz8yxm1g2ch0w779lhrs2xkfciy3iz6viz7cdgyd2824isvinjf"))))
     (build-system asdf-build-system/sbcl)
+    (arguments
+     `(#:asd-files '("cepl.sdl2.asd")))
     (propagated-inputs
      `(("sbcl-cepl" ,sbcl-cepl)
        ("sbcl-sdl2" ,sbcl-sdl2)))
