@@ -18,7 +18,7 @@
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"16iv1cvlky2gij1ndx2d6q8l35axm72bx52n6v5y3h21aibj197n"))))
+		"0lz8yxm1g2ch0w779lhrs2xkfciy3iz6viz7cdgyd2824isvinjf"))))
     (build-system asdf-build-system/sbcl)
     (propagated-inputs
      `(("sbcl-data-frame" ,sbcl-cepl)
