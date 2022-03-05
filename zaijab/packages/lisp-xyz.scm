@@ -15,7 +15,7 @@
 	      (uri (git-reference
 		    (url "https://github.com/cbaggers/cepl.sdl2.git")
 		    (commit version)))
-	      (file-name (git-file-name "cepl.sdl2" version))
+	      (file-name "cepl.sdl2")
 	      (sha256
 	       (base32
 		"0lz8yxm1g2ch0w779lhrs2xkfciy3iz6viz7cdgyd2824isvinjf"))))
