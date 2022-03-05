@@ -6,11 +6,11 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages lisp-xyz))
 
-(define-public sbcl-cepl
+(define-public sbcl-cepl.sdl2
   (let ((commit "6da5a030db5e3579c5a1c5350b1ffb8fc9950e9a")
         (revision "1"))
     (package
-     (name "sbcl-cepl")
+     (name "sbcl-cepl.sdl2")
      (version (git-version "0.0.0" revision commit))
      (source
       (origin
