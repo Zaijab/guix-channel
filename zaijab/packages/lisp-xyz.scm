@@ -13,7 +13,7 @@
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
-		    (url "https://github.com/cbaggers/cepl.sdl2.git")
+		    (url "https://github.com/cbaggers/cepl.sdl2")
 		    (commit version)))
 	      (file-name "cepl.sdl2")
 	      (sha256
