@@ -21,8 +21,8 @@
 		"0lz8yxm1g2ch0w779lhrs2xkfciy3iz6viz7cdgyd2824isvinjf"))))
     (build-system asdf-build-system/sbcl)
     (propagated-inputs
-     `(("sbcl-data-frame" ,sbcl-cepl)
-       ("sbcl-dfio" ,sbcl-sdl2)))
+     `(("sbcl-cepl" ,sbcl-cepl)
+       ("sbcl-sdl2" ,sbcl-sdl2)))
     (home-page "")
     (synopsis "")
     (description "")
