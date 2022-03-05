@@ -6,32 +6,54 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages lisp-xyz))
 
+(define-public sbcl-cepl.sdl2
+  (package
+    (name "sbcl-cepl.sdl2")
+    (version "master")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/cbaggers/cepl.sdl2.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"16iv1cvlky2gij1ndx2d6q8l35axm72bx52n6v5y3h21aibj197n"))))
+    (build-system asdf-build-system/sbcl)
+    (propagated-inputs
+     `(("sbcl-data-frame" ,sbcl-cepl)
+       ("sbcl-dfio" ,sbcl-sdl2)))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license license:bsd-2)))
+
 (define-public sbcl-lisp-stat
   (package
-   (name "sbcl-lisp-stat")
-   (version "master")
-   (source (origin
-	    (method git-fetch)
-	    (uri (git-reference
-		  (url "https://github.com/Lisp-Stat/lisp-stat.git")
-		  (commit version)))
-	    (file-name (git-file-name name version))
-	    (sha256
-	     (base32
-	      "16iv1cvlky2gij1ndx2d6q8l35axm72bx52n6v5y3h21aibj197n"))))
-   (build-system asdf-build-system/sbcl)
-   (propagated-inputs
-    `(("sbcl-data-frame" ,sbcl-data-frame)
-      ("sbcl-dfio" ,sbcl-dfio)
-      ("sbcl-special-functions" ,sbcl-special-functions)
-      ("sbcl-numerical-utilities" ,sbcl-numerical-utilities)
-      ("sbcl-documentation" ,sbcl-documentation)
-      ("sbcl-plot" ,sbcl-plot)
-      ("sbcl-select" ,sbcl-select)))
-   (home-page "https://github.com/Lisp-Stat/lisp-stat.git")
-   (synopsis "Common Lisp statistics package.")
-   (description "Common Lisp statistics package.")
-   (license license:ms-pl)))
+    (name "sbcl-lisp-stat")
+    (version "master")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/Lisp-Stat/lisp-stat.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"16iv1cvlky2gij1ndx2d6q8l35axm72bx52n6v5y3h21aibj197n"))))
+    (build-system asdf-build-system/sbcl)
+    (propagated-inputs
+     `(("sbcl-data-frame" ,sbcl-data-frame)
+       ("sbcl-dfio" ,sbcl-dfio)
+       ("sbcl-special-functions" ,sbcl-special-functions)
+       ("sbcl-numerical-utilities" ,sbcl-numerical-utilities)
+       ("sbcl-documentation" ,sbcl-documentation)
+       ("sbcl-plot" ,sbcl-plot)
+       ("sbcl-select" ,sbcl-select)))
+    (home-page "https://github.com/Lisp-Stat/lisp-stat.git")
+    (synopsis "Common Lisp statistics package.")
+    (description "Common Lisp statistics package.")
+    (license license:ms-pl)))
 
 (define-public sbcl-data-frame 
   (package
