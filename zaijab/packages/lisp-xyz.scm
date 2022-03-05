@@ -9,7 +9,7 @@
 (define-public sbcl-cepl.sdl2
   (package
     (name "sbcl-cepl.sdl2")
-    (version "master")
+    (version (git-version "0.0.0" "1" "6da5a030db5e3579c5a1c5350b1ffb8fc9950e9a"))
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
