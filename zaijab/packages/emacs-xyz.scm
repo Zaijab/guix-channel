@@ -6,26 +6,47 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages emacs-xyz))
 
+(define-public emacs-org-fc
+  (package
+    (name "emacs-org-fc")
+    (version "master")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://git.sr.ht/~l3kn/org-fc")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"00fnkk6hl9l64dgmkhsqibhna7gdpazs4j28f7833n1dmg626ki6"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-org" ,emacs-org)))
+    (home-page "https://github.com/conao3/leaf-keywords.el")
+    (synopsis "Extra keywords for leaf.")
+    (description "Extra keywords for leaf.")
+    (license license:gpl3+)))
+
 (define-public emacs-leaf-keywords
   (package
-   (name "emacs-leaf-keywords")
-   (version "master")
-   (source (origin
-	    (method git-fetch)
-	    (uri (git-reference
-		  (url "https://github.com/conao3/leaf-keywords.el.git")
-		  (commit version)))
-	    (file-name (git-file-name name version))
-	    (sha256
-	     (base32
-	      "00fnkk6hl9l64dgmkhsqibhna7gdpazs4j28f7833n1dmg626ki6"))))
-   (build-system emacs-build-system)
-   (propagated-inputs
-    `(("emacs-leaf" ,emacs-leaf)))
-   (home-page "https://github.com/conao3/leaf-keywords.el")
-   (synopsis "Extra keywords for leaf.")
-   (description "Extra keywords for leaf.")
-   (license license:gpl3+)))
+    (name "emacs-leaf-keywords")
+    (version "master")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/conao3/leaf-keywords.el.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"00fnkk6hl9l64dgmkhsqibhna7gdpazs4j28f7833n1dmg626ki6"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-leaf" ,emacs-leaf)))
+    (home-page "https://github.com/conao3/leaf-keywords.el")
+    (synopsis "Extra keywords for leaf.")
+    (description "Extra keywords for leaf.")
+    (license license:gpl3+)))
 
 (define-public emacs-system-packages
   (package
