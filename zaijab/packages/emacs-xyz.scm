@@ -9,7 +9,7 @@
 (define-public emacs-org-fc
   (package
     (name "emacs-org-fc")
-    (version "master")
+    (version "main")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
