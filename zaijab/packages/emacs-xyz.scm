@@ -21,10 +21,11 @@
 		"1d0a3vr09zkplclypcgpfbfd6r0h0i3g3zsqb4pcz6x239d59gd5"))))
     (build-system emacs-build-system)
     (propagated-inputs
-     `(("emacs-org" ,emacs-org)))
-    (home-page "https://github.com/conao3/leaf-keywords.el")
-    (synopsis "Extra keywords for leaf.")
-    (description "Extra keywords for leaf.")
+     `(("emacs-org" ,emacs-org)
+       ("emacs-hydra" ,emacs-hydra)))
+    (home-page "https://www.leonrische.me/fc/index.html")
+    (synopsis "Flashcards in Org Mode.")
+    (description "Flashcards in Org Mode.")
     (license license:gpl3+)))
 
 (define-public emacs-leaf-keywords
