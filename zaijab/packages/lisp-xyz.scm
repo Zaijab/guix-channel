@@ -6,11 +6,11 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages lisp-xyz))
 
-(define-public sbcl-rtg-math
+(define-public sbcl-rtg-math-zain
   (let ((commit "29fc5b3d0028a4a11a82355ecc8cca62662c69e0")
         (revision "1"))
     (package
-      (name "sbcl-rtg-math")
+      (name "sbcl-rtg-math-zain")
       (version (git-version "0.0.0" revision commit))
       (source
        (origin
