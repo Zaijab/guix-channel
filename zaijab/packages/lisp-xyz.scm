@@ -23,6 +23,7 @@
           (base32 "0bhxxnv7ldkkb18zdxyz2rj2a3iawzq2kcp7cn5i91iby7n0082x"))))
       (build-system asdf-build-system/sbcl)
       (arguments
+       `(#:asd-systems '("rtg-math" "rtg-math.vari"))
        `(#:asd-files '("rtg-math.asd" "rtg-math.vari.asd")))
       (inputs
        (list sbcl-alexandria sbcl-documentation-utils sbcl-glsl-spec sbcl-varjo))
