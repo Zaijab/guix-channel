@@ -22,6 +22,8 @@
          (sha256
           (base32 "0bhxxnv7ldkkb18zdxyz2rj2a3iawzq2kcp7cn5i91iby7n0082x"))))
       (build-system asdf-build-system/sbcl)
+      (arguments
+       `(#:asd-files '("rtg-math.asd" "rtg-math.vari.asd")))
       (inputs
        (list sbcl-alexandria sbcl-documentation-utils sbcl-glsl-spec sbcl-varjo))
       (home-page "https://github.com/cbaggers/rtg-math")
