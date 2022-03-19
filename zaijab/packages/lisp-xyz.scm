@@ -6,43 +6,68 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages lisp-xyz))
 
+(define-public sbcl-rtg-math
+  (let ((commit "29fc5b3d0028a4a11a82355ecc8cca62662c69e0")
+        (revision "1"))
+    (package
+      (name "sbcl-rtg-math")
+      (version (git-version "0.0.0" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/cbaggers/rtg-math")
+               (commit commit)))
+         (file-name (git-file-name "rtg-math" version))
+         (sha256
+          (base32 "0bhxxnv7ldkkb18zdxyz2rj2a3iawzq2kcp7cn5i91iby7n0082x"))))
+      (build-system asdf-build-system/sbcl)
+      (inputs
+       (list sbcl-alexandria sbcl-documentation-utils sbcl-glsl-spec sbcl-varjo))
+      (home-page "https://github.com/cbaggers/rtg-math")
+      (synopsis "Common Lisp library of game-related math functions")
+      (description
+       "RTG-MATH provides a selection of the math routines most commonly needed
+for making realtime graphics in Lisp.")
+      (license license:bsd-2))))
+
 (define-public sbcl-cepl.sdl2
   (let ((commit "6da5a030db5e3579c5a1c5350b1ffb8fc9950e9a")
         (revision "1"))
     (package
-     (name "sbcl-cepl.sdl2")
-     (version (git-version "0.0.0" revision commit))
-     (source
-      (origin
-       (method git-fetch)
-       (uri (git-reference
-             (url "https://github.com/cbaggers/cepl.sdl2")
-             (commit commit)))
-       (file-name (git-file-name "cepl.sdl2" version))
-       (sha256
-        (base32 "0lz8yxm1g2ch0w779lhrs2xkfciy3iz6viz7cdgyd2824isvinjf"))))
-     (build-system asdf-build-system/sbcl)
-     (arguments
-      `(#:asd-files '("cepl.sdl2.asd")))
-     (inputs
-      `(("alexandria" ,sbcl-alexandria)
-        ("bordeaux-threads" ,sbcl-bordeaux-threads)
-        ("cffi" ,sbcl-cffi)
-        ("cl-opengl" ,sbcl-cl-opengl)
-        ("cl-ppcre" ,sbcl-cl-ppcre)
-        ("documentation-utils" ,sbcl-documentation-utils)
-        ("float-features" ,sbcl-float-features)
-        ("ieee-floats" ,sbcl-ieee-floats)
-        ("split-sequence" ,sbcl-split-sequence)
-        ("varjo" ,sbcl-varjo)
-	("cepl" ,sbcl-cepl)
-	("sdl2" ,sbcl-sdl2)))
-     (propagated-inputs
-      (list sbcl-quickproject))
-     (home-page "https://github.com/cbaggers/cepl")
-     (synopsis "Development playground to work with OpenGL")
-     (description
-      "CEPL (Code Evaluate Play Loop ) is a lispy and REPL-friendly Common Lisp
+      (name "sbcl-cepl.sdl2")
+      (version (git-version "0.0.0" revision commit))
+      (source
+       (origin
+	 (method git-fetch)
+	 (uri (git-reference
+               (url "https://github.com/cbaggers/cepl.sdl2")
+               (commit commit)))
+	 (file-name (git-file-name "cepl.sdl2" version))
+	 (sha256
+          (base32 "0lz8yxm1g2ch0w779lhrs2xkfciy3iz6viz7cdgyd2824isvinjf"))))
+      (build-system asdf-build-system/sbcl)
+      (arguments
+       `(#:asd-files '("cepl.sdl2.asd")))
+      (inputs
+       `(("alexandria" ,sbcl-alexandria)
+         ("bordeaux-threads" ,sbcl-bordeaux-threads)
+         ("cffi" ,sbcl-cffi)
+         ("cl-opengl" ,sbcl-cl-opengl)
+         ("cl-ppcre" ,sbcl-cl-ppcre)
+         ("documentation-utils" ,sbcl-documentation-utils)
+         ("float-features" ,sbcl-float-features)
+         ("ieee-floats" ,sbcl-ieee-floats)
+         ("split-sequence" ,sbcl-split-sequence)
+         ("varjo" ,sbcl-varjo)
+	 ("cepl" ,sbcl-cepl)
+	 ("sdl2" ,sbcl-sdl2)))
+      (propagated-inputs
+       (list sbcl-quickproject))
+      (home-page "https://github.com/cbaggers/cepl")
+      (synopsis "Development playground to work with OpenGL")
+      (description
+       "CEPL (Code Evaluate Play Loop ) is a lispy and REPL-friendly Common Lisp
 library for working with OpenGL.
 
 Its definition of success is making the user feel that GPU programming has
@@ -52,7 +77,7 @@ The usual approach to using CEPL is to start it at the beginning of your Lisp
 session and leave it open for the duration of your work.  You can then treat the
 window it creates as just another output for your graphics, analogous to how
 @code{*standard-output*} is treated for text.")
-     (license license:bsd-2))))
+      (license license:bsd-2))))
 
 (define-public sbcl-lisp-stat
   (package
