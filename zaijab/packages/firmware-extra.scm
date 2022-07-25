@@ -1,4 +1,4 @@
-(define-module (gnu packages firmware-extra)
+(define-module (zaijab packages firmware-extra)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix gexp)
