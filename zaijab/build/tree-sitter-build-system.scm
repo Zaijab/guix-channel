@@ -16,7 +16,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (guix build tree-sitter-build-system)
+(define-module (zaijab build tree-sitter-build-system)
   #:use-module ((guix build node-build-system) #:prefix node:)
   #:use-module (guix build json)
   #:use-module (guix build utils)
