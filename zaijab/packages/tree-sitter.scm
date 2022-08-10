@@ -31,6 +31,12 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages crates-graphics)
   #:use-module (gnu packages crates-io)
+  #:use-module ((guix build node-build-system) #:prefix node:)
+  #:use-module (guix build json)
+  #:use-module (guix build utils)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 regex)
+  #:use-module (srfi srfi-1)
   #:use-module (gnu packages icu4c))
 
 
