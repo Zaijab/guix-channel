@@ -7,13 +7,20 @@
   (name 'zaijab)
   (url "/home/zjabbar/code/guix-channel/")
   (branch "main"))
- ;; (channel
- ;;  (name 'nonguix)
- ;;  (url "https://gitlab.com/nonguix/nonguix")
- ;;  ;; Enable signature verification:
- ;;  (introduction
- ;;   (make-channel-introduction
- ;;    "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
- ;;    (openpgp-fingerprint
- ;;     "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
- %default-channels)
+ (channel
+  (name 'guix)
+  (url "https://git.savannah.gnu.org/git/guix.git")
+  (branch "master")
+  (commit "2a58ddb6da700978109f97a05157b6f9c758038c"))
+ (channel
+  (name 'nonguix)
+  (url "https://gitlab.com/nonguix/nonguix")
+  (commit "16b645772bf115de06b390cd7ec476a8f267d28a")
+  (introduction
+   (make-channel-introduction
+    "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
+    (openpgp-fingerprint
+     "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
+ ;; %default-channels
+ '()
+ )

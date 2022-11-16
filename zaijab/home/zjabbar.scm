@@ -42,17 +42,14 @@
                                   " then\nexport SSH_AUTH_SOCK=\"$(gpgconf --list-dirs agent-ssh-socket)\"\nfi\n"
                                   "export GPG_TTY=$(tty)\ngpg-connect-agent updatestartuptty /bye >/dev/null\n"
                                   "export HOSTNAME\n"
-                                  "eval \"$(direnv hook bash)\"")))
-               
-               ))
+                                  "eval \"$(direnv hook bash)\"")))))
      (service home-emacs-service-type home-emacs-total-configuration)
      (simple-service 'dotfiles
                    home-files-service-type
-                   `((".msmtprc" ,(local-file "../files/msmtprc"))
-                     (".config/mbsyncrc" ,(local-file "../files/mbsyncrc"))
+                   `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
+                     (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
                      ;; (".xsession" ,(local-file "files/xsession")) Cannot use this currently. .xsession needs to be executable.
-                     (".config/mpv/mpv.conf" ,(local-file "../files/mpv.conf"))
-                     (".config/emacs/templates" ,(local-file "../files/templates"))
-                     ))))))
+                     (".config/mpv/mpv.conf" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mpv.conf"))
+                     (".config/emacs/templates" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/templates"))))))))
 
 zains-home
