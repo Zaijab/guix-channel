@@ -1,0 +1,13 @@
+;; -*- mode: scheme -*-
+(define-module (zaijab home minimal-manifest)
+  #:use-module (gnu packages)
+  #:use-module (guix profiles))
+
+(packages->manifest (list (specification->package "make")
+			  (specification->package "git")
+			  (specification->package "xauth")
+			  (specification->package "gnupg")
+			  (specification->package "pinentry-emacs")
+			  (specification->package "tree")
+			  (specification->package "scrot")
+			  ))

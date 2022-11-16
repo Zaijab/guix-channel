@@ -1,0 +1,43 @@
+IMAPAccount zaijab2000_gmail
+Host imap.gmail.com
+User zaijab2000@gmail.com
+PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/mbsync/zaijab2000.gpg"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore zaijab2000_gmail-remote
+Account zaijab2000_gmail
+
+MaildirStore zaijab2000_gmail-local
+Subfolders Verbatim
+Path ~/.mail/zaijab2000/
+Inbox ~/.mail/zaijab2000/Inbox
+
+Channel gmail
+Far :zaijab2000_gmail-remote:
+Near :zaijab2000_gmail-local:
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+Create Both
+SyncState *
+
+IMAPAccount zjabbar_hawaii
+Host imap.gmail.com
+User zjabbar@hawaii.edu
+PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/mbsync/zjabbar.gpg"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore zjabbar_hawaii-remote
+Account zjabbar_hawaii
+
+MaildirStore zjabbar_hawaii-local
+Subfolders Verbatim
+Path ~/.mail/zjabbar/
+Inbox ~/.mail/zjabbar/Inbox
+
+Channel zjabbar_hawaii
+Far :zjabbar_hawaii-remote:
+Near :zjabbar_hawaii-local:
+Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+Create Both
+SyncState *

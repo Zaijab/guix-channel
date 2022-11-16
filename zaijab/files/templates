@@ -1,0 +1,5 @@
+org-mode
+
+(title "#+title: " p n "#+author: " user-full-name n "#+language: en" n n)
+(mm "\\( " p " \\) ")
+(dm "\\[ " p " \\]" n)
