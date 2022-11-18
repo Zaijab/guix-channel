@@ -1,10 +1,10 @@
 all: gnew gpull gpackage gsystem zjabbar
 
 zjabbar:
-	guix home reconfigure -v 4 /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades
+	guix home reconfigure -v 4 /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades --no-substitutes
 
 gsystem:
-	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/$(HOSTNAME).scm --allow-downgrades
+	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/$(HOSTNAME).scm --allow-downgrades --no-substitutes
 
 gpull:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channels.tmpl --allow-downgrades -v 4
@@ -15,4 +15,4 @@ gpackage:
 
 gnew:
 	git add -A
-	git diff-index --quiet HEAD || git commit -am "Adding Package"
+	git diff-index --quiet HEAD || git commit -am "Updating Config"
