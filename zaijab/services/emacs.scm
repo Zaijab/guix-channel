@@ -10,6 +10,7 @@
   #:use-module (guix transformations)
   #:use-module (guix gexp)
   #:use-module (zaijab packages emacs-xyz)
+  #:use-module (nongnu packages chrome)
 
   #:export (home-emacs-service-type
 	    home-emacs-configuration
@@ -228,6 +229,7 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-elfeed")
 		   emacs-elfeed-tube
+		   mpv-zain
 		   (specification->package "yt-dlp")
 		   (specification->package "ffmpeg")))
    (init '(
@@ -331,7 +333,7 @@
 	   (setq mu4e-get-mail-command  "mbsync -a -c ~/.config/mbsyncrc")
       
 	   (setq org-export-with-toc nil)
-	   (setq org-export-with-tile nil)
+	   (setq org-export-with-tile t)
 	   (setq org-mu4e-convert-to-html t)
 	   (setq message-send-mail-function 'message-send-mail-with-sendmail)
 	   (setq sendmail-program "msmtp")
@@ -433,8 +435,8 @@
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "ungoogled-chromium")
-		   (specification->package "ublock-origin-chromium")))
+   (packages (list google-chrome-unstable
+		   (specification->package "ungoogled-chromium")))
    (init '((defun zain-publish ()
 	     (interactive)
 	     (let ((current-prefix-arg (list 4))
@@ -582,7 +584,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 	   (add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
 	   
 	   (setq org-format-latex-options '(:foreground default :background default :scale 2 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
-	   (setf (alist-get :title org-export-options-alist) '(nil nil "Maybe, में भि میں بھی, 明媚." parse))
+	   (setf (alist-get :title org-export-options-alist) '("TITLE" nil "Maybe, में भि میں بھی, 明媚." t))
 	   (setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex)))
 	   ))))
 
@@ -733,7 +735,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 					      (start-process-shell-command command nil command))))
 	   (global-set-key (kbd "s-e") (function
 					(lambda () (interactive)
-						(start-process-shell-command "chromium" nil "chromium"))))
+						(start-process-shell-command "google-chrome-unstable" nil "google-chrome-unstable"))))
 	   (global-set-key (kbd "<f7>") (function
 					 (lambda () (interactive)
 						 (call-process-shell-command "loginctl suspend"))))

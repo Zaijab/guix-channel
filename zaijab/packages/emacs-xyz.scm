@@ -7,26 +7,241 @@
   #:use-module (gnu packages video)
   #:use-module (gnu packages curl)
   #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (gnu packages emacs-xyz)
-  )
+  #:use-module (ice-9 match)
+  #:use-module ((srfi srfi-1) #:hide (zip))
+  #:use-module (srfi srfi-26)
+  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (guix utils)
+  #:use-module (guix packages)
+  #:use-module (guix download)
+  #:use-module (guix gexp)
+  #:use-module (guix git-download)
+  #:use-module (guix svn-download)
+  #:use-module (guix hg-download)
+  #:use-module (guix build-system cargo)
+  #:use-module (guix build-system cmake)
+  #:use-module (guix build-system copy)
+  #:use-module (guix build-system gnu)
+  #:use-module (guix build-system glib-or-gtk)
+  #:use-module (guix build-system meson)
+  #:use-module (guix build-system perl)
+  #:use-module (guix build-system python)
+  #:use-module (guix build-system qt)
+  #:use-module (guix build-system waf)
+  #:use-module (guix build-system trivial)
+  #:use-module (gnu packages)
+  #:use-module (gnu packages algebra)
+  #:use-module (gnu packages assembly)
+  #:use-module (gnu packages audio)
+  #:use-module (gnu packages autotools)
+  #:use-module (gnu packages avahi)
+  #:use-module (gnu packages backup)
+  #:use-module (gnu packages base)
+  #:use-module (gnu packages bash)
+  #:use-module (gnu packages bison)
+  #:use-module (gnu packages boost)
+  #:use-module (gnu packages build-tools)
+  #:use-module (gnu packages cdrom)
+  #:use-module (gnu packages check)
+  #:use-module (gnu packages cmake)
+  #:use-module (gnu packages compression)
+  #:use-module (gnu packages cpp)
+  #:use-module (gnu packages crates-io)
+  #:use-module (gnu packages crates-graphics)
+  #:use-module (gnu packages curl)
+  #:use-module (gnu packages dbm)
+  #:use-module (gnu packages dejagnu)
+  #:use-module (gnu packages dns)
+  #:use-module (gnu packages docbook)
+  #:use-module (gnu packages documentation)
+  #:use-module (gnu packages elf)
+  #:use-module (gnu packages file)
+  #:use-module (gnu packages flex)
+  #:use-module (gnu packages fonts)
+  #:use-module (gnu packages fontutils)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages fribidi)
+  #:use-module (gnu packages gettext)
+  #:use-module (gnu packages ghostscript)
+  #:use-module (gnu packages gl)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages guile)
+  #:use-module (gnu packages gnome)
+  #:use-module (gnu packages gnunet)
+  #:use-module (gnu packages gnupg)
+  #:use-module (gnu packages gstreamer)
+  #:use-module (gnu packages gtk)
+  #:use-module (gnu packages haskell-xyz)
+  #:use-module (gnu packages image)
+  #:use-module (gnu packages imagemagick)
+  #:use-module (gnu packages iso-codes)
+  #:use-module (gnu packages libidn)
+  #:use-module (gnu packages libreoffice)
+  #:use-module (gnu packages libusb)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages llvm)
+  #:use-module (gnu packages lua)
+  #:use-module (gnu packages m4)
+  #:use-module (gnu packages man)
+  #:use-module (gnu packages markup)
+  #:use-module (gnu packages maths)
+  #:use-module (gnu packages music)
+  #:use-module (gnu packages mp3)
+  #:use-module (gnu packages ncurses)
+  #:use-module (gnu packages networking)
+  #:use-module (gnu packages ocr)
+  #:use-module (gnu packages pcre)
+  #:use-module (gnu packages pciutils)
+  #:use-module (gnu packages perl)
+  #:use-module (gnu packages perl-check)
+  #:use-module (gnu packages perl-web)
+  #:use-module (gnu packages photo)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages popt)
+  #:use-module (gnu packages pretty-print)
+  #:use-module (gnu packages protobuf)
+  #:use-module (gnu packages pulseaudio)
+  #:use-module (gnu packages python)
+  #:use-module (gnu packages python-crypto)
+  #:use-module (gnu packages python-web)
+  #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages qt)
+  #:use-module (gnu packages rdesktop)
+  #:use-module (gnu packages re2c)
+  #:use-module (gnu packages ruby)
+  #:use-module (gnu packages rust-apps)
+  #:use-module (gnu packages samba)
+  #:use-module (gnu packages sdl)
+  #:use-module (gnu packages serialization)
+  #:use-module (gnu packages shells)
+  #:use-module (gnu packages sqlite)
+  #:use-module (gnu packages ssh)
+  #:use-module (gnu packages swig)
+  #:use-module (gnu packages texinfo)
+  #:use-module (gnu packages textutils)
+  #:use-module (gnu packages tls)
+  #:use-module (gnu packages time)
+  #:use-module (gnu packages upnp)
+  #:use-module (gnu packages vulkan)
+  #:use-module (gnu packages web)
+  #:use-module (gnu packages webkit)
+  #:use-module (gnu packages wget)
+  #:use-module (gnu packages wxwidgets)
+  #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages xiph)
+  #:use-module (gnu packages xml)
+  #:use-module (gnu packages xorg)
+  
+  #:use-module (gnu packages emacs-xyz))
+(define-public mpv
+  (package
+    (name "mpv-zain")
+    (version "0.35.0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/mpv-player/mpv")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32 "1jnk1arwhf82s6q90jp70izk1wy0bkx3lr3il2jgbqsp355l6wsk"))))
+    (build-system waf-build-system)
+    (arguments
+     (list
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'patch-file-names
+            (lambda* (#:key inputs #:allow-other-keys)
+              (substitute* "player/lua/ytdl_hook.lua"
+		(("\"yt-dlp\",")
+                 (string-append
+                  "\"" (search-input-file inputs "bin/yt-dlp") "\",")))))
+          (add-before 'configure 'build-reproducibly
+            (lambda _
+              ;; Somewhere in the build system library dependencies are enumerated
+              ;; and passed as linker flags, but the order in which they are added
+              ;; varies.  See <https://github.com/mpv-player/mpv/issues/7855>.
+              ;; Set PYTHONHASHSEED as a workaround for deterministic results.
+              (setenv "PYTHONHASHSEED" "1")))
+          (add-before 'configure 'set-up-waf
+            (lambda* (#:key inputs #:allow-other-keys)
+              (copy-file (search-input-file inputs "bin/waf") "waf")
+              (setenv "CC" #$(cc-for-target)))))
+      #:configure-flags
+      #~(list "--enable-libmpv-shared"
+              "--enable-cdda"
+              "--enable-dvdnav"
+              "--disable-build-date")
+      ;; No check function defined.
+      #:tests? #f))
+    (native-inputs
+     (list perl ; for zsh completion file
+           pkg-config python-docutils))
+    ;; Missing features: libguess, V4L2.
+    (inputs
+     (list alsa-lib
+           enca
+           ffmpeg
+           jack-1
+           ladspa
+           lcms
+           libass
+           libbluray
+           libcaca
+           libbs2b
+           libcdio-paranoia
+           libdvdread
+           libdvdnav
+           libjpeg-turbo
+           libva
+           libvdpau
+           libx11
+           libxext
+           libxkbcommon
+           libxinerama
+	   libxpresent
+           libxrandr
+           libxscrnsaver
+           libxv
+           ;; XXX: lua > 5.2 is not currently supported; see
+           ;; waftools/checks/custom.py
+           lua-5.2
+           mesa
+           mpg123
+           pulseaudio
+           python-waf
+           rsound
+           shaderc
+           vulkan-headers
+           vulkan-loader
+           wayland
+           wayland-protocols
+           yt-dlp
+           zlib))
+    (home-page "https://mpv.io/")
+    (synopsis "Audio and video player")
+    (description "mpv is a general-purpose audio and video player.  It is a
+fork of mplayer2 and MPlayer.  It shares some features with the former
+projects while introducing many more.")
+    (license license:gpl2+)))
 
 (define-public emacs-dynaring
-(package
-  (name "emacs-dynaring")
-  (version "20210924.2026")
-  (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url "https://github.com/countvajhula/dynaring.git")
-                  (commit "dc9013117bdcdc1b12feebcc58eaf129a6ad3a73")))
-            (sha256
-             (base32
-              "0z5r0wybpm74hlcbisavn90i31vh3jsalhk0frihfclfgbqd24d9"))))
-  (build-system emacs-build-system)
-  (home-page "https://github.com/countvajhula/dynaring")
-  (synopsis "A dynamically sized ring structure")
-  (description "This package provides a dynamically sized ring structure.")
-  (license #f)))
+  (package
+    (name "emacs-dynaring")
+    (version "20210924.2026")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/countvajhula/dynaring.git")
+                    (commit "dc9013117bdcdc1b12feebcc58eaf129a6ad3a73")))
+              (sha256
+               (base32
+		"0z5r0wybpm74hlcbisavn90i31vh3jsalhk0frihfclfgbqd24d9"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/countvajhula/dynaring")
+    (synopsis "A dynamically sized ring structure")
+    (description "This package provides a dynamically sized ring structure.")
+    (license #f)))
 
 (define-public emacs-buffer-ring
 (package
