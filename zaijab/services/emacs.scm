@@ -229,7 +229,6 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-elfeed")
 		   emacs-elfeed-tube
-		   mpv-zain
 		   (specification->package "yt-dlp")
 		   (specification->package "ffmpeg")))
    (init '(
@@ -287,6 +286,7 @@
 		   (specification->package "alsa-utils")
 		   (specification->package "emacs-alsamixer-el")
 		   (specification->package "mpc")
+		   (specification->package "emacs-emms")
 		   
 		   ))
    (init '((global-set-key (kbd "<XF86AudioPrev>") 'libmpdel-playback-previous)
