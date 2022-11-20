@@ -133,7 +133,8 @@
   #:use-module (gnu packages xorg)
   
   #:use-module (gnu packages emacs-xyz))
-(define-public mpv
+
+(define-public mpv-zain
   (package
     (name "mpv-zain")
     (version "0.35.0")
