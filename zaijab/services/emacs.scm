@@ -229,6 +229,7 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-elfeed")
 		   emacs-elfeed-tube
+		   (specification->package "mpv")
 		   (specification->package "yt-dlp")
 		   (specification->package "ffmpeg")))
    (init '(
