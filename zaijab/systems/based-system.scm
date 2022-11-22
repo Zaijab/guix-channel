@@ -132,14 +132,13 @@
 	       (service unattended-upgrade-service-type)
 	       (bluetooth-service)
 	       
-	       (remove (lambda (service) (eq? (service-kind service) gdm-service-type))
-		       (modify-services %desktop-services
-			 (network-manager-service-type
-			  config => (network-manager-configuration
-				     (inherit config)
-				     (vpn-plugins
-				      (list network-manager-openvpn
-					    network-manager-openconnect))))))))))
+	       (modify-services %desktop-services
+		 (network-manager-service-type
+		  config => (network-manager-configuration
+			     (inherit config)
+			     (vpn-plugins
+			      (list network-manager-openvpn
+				    network-manager-openconnect)))))))))
 
 (define-public tao-operating-system
   based-operating-system)
