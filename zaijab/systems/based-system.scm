@@ -47,7 +47,9 @@
   #:use-module (gnu services sddm)
   #:use-module (gnu services dbus) 
   #:use-module (gnu services vpn) 
-  #:use-module (gnu services virtualization))
+  #:use-module (gnu services virtualization)
+  #:use-module (guix transformations)
+  )
 
 (define-public based-operating-system
   (operating-system
@@ -67,7 +69,9 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       emacs-exwm
+	       ((options->transformation
+		 '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
+		(specification->package "emacs-exwm"))
 	       nss-certs
 	       pulseaudio
 	       network-manager-applet
