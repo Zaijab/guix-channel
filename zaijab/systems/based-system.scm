@@ -69,8 +69,10 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
+	       emacs-next
 	       ((options->transformation
-		 '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
+		 '((with-input . "emacs=emacs-next")
+		   (with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
 		(specification->package "emacs-exwm"))
 	       nss-certs
 	       pulseaudio
