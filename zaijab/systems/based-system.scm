@@ -109,12 +109,12 @@
 		 %base-user-accounts))
     
     (services (cons*
-	       (service sddm-service-type
-			(sddm-configuration
-			 (minimum-uid 1000)
-			 (auto-login-session "exwm.desktop")
-			 (theme "darkine")
-			 (auto-login-user "zjabbar")))
+	       ;; (service sddm-service-type
+	       ;; 		(sddm-configuration
+	       ;; 		 (minimum-uid 1000)
+	       ;; 		 (auto-login-session "exwm.desktop")
+	       ;; 		 (theme "darkine")
+	       ;; 		 (auto-login-user "zjabbar")))
 	       (service openssh-service-type)
 	       (service mpd-service-type
 			(mpd-configuration
