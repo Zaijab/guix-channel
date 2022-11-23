@@ -721,6 +721,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 	   (global-set-key (kbd "s-c") (function
 					(lambda () (interactive)
 						(find-file "~/code/guix-channel/zaijab/services/emacs.scm"))))
+	   (global-set-key (kbd "C-x C-t") 'vterm)
 	   (global-set-key (kbd "s-s") (function org-roam-capture))
 	   (global-set-key (kbd "s-r") (function eval-region))
 	   (global-set-key (kbd "s-0") 'delete-window)
@@ -866,18 +867,11 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 	   (customize-set-variable 'mode-line-misc-info '(""))
 	   (customize-set-variable 'display-time-load-average-threshold 100)
 	   (customize-set-variable 'display-time-day-and-date t)
-
 	   (set-default 'truncate-lines t)
 	   
-	   (global-set-key (kbd "C-x C-t") 'vterm)
-
-
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
-	   ;; (define-globalized-minor-mode global-mu4e-unread-mode mu4e-alert-enable-mode-line-display mu4e-alert-disable-mode-line-display)
-	   ;; (global-mu4e-unread-mode)
-	   (which-key-mode)
-	   ))))
+	   (which-key-mode)))))
 
 ;;; Combine all Emacs-Configurations within module
 
