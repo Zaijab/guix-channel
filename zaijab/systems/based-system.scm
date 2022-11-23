@@ -7,6 +7,7 @@
   #:use-module (nongnu packages linux)
   #:use-module (gnu)
   #:use-module (gnu packages)
+  #:use-module (gnu packages linux)
   #:use-module (gnu services base)
   #:use-module (gnu services admin)
   #:use-module (gnu services desktop)
@@ -83,12 +84,7 @@
 		  (name "zjabbar")
 		  (comment "Zain Jabbar")
 		  (group "users")
-		  (supplementary-groups '("wheel"
-					  "netdev"
-					  "audio"
-					  "mpd"
-					  "lp"
-					  "video")))
+		  (supplementary-groups '("wheel" "netdev" "audio" "mpd" "lp" "video")))
 		 %base-user-accounts))
     
     (services (cons*
@@ -108,7 +104,6 @@
 			(syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
 	       (bluetooth-service)
-	       
 	       (modify-services %desktop-services
 		 (network-manager-service-type
 		  config => (network-manager-configuration
