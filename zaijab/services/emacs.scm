@@ -286,10 +286,8 @@
    (packages (list (specification->package "emacs-libmpdel")
 		   (specification->package "alsa-utils")
 		   (specification->package "emacs-alsamixer-el")
-		   (specification->package "mpc")
-		   (specification->package "emacs-emms")
-		   
-		   ))
+		   (specification->package "mpd-mpc")
+		   (specification->package "emacs-emms")))
    (init '((global-set-key (kbd "<XF86AudioPrev>") 'libmpdel-playback-previous)
 	   (global-set-key (kbd "<XF86AudioNext>") 'libmpdel-playback-next)
 	   (global-set-key (kbd "<XF86AudioPlay>") 'libmpdel-playback-play-pause)
