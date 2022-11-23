@@ -48,8 +48,7 @@
   #:use-module (gnu services dbus) 
   #:use-module (gnu services vpn) 
   #:use-module (gnu services virtualization)
-  #:use-module (guix transformations)
-  )
+  #:use-module (guix transformations))
 
 (define-public based-operating-system
   (operating-system
@@ -69,15 +68,15 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       emacs-next
+	       (specification->package "emacs-next")
 	       ((options->transformation
 		 '((with-input . "emacs=emacs-next")
 		   (with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
 		(specification->package "emacs-exwm"))
-	       nss-certs
-	       pulseaudio
-	       network-manager-applet
-	       gsettings-desktop-schemas
+	       (specification->package "nss-certs")
+	       (specification->package "pulseaudio")
+	       (specification->package "network-manager-applet")
+	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
     
     (host-name "tao")
@@ -96,6 +95,7 @@
 		     (type "tmpfs")
 		     (check? #f))
 		   %base-file-systems))
+    
     (users (cons (user-account
 		  (name "zjabbar")
 		  (comment "Zain Jabbar")
