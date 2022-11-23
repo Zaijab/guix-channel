@@ -92,12 +92,6 @@
 		 %base-user-accounts))
     
     (services (cons*
-	       ;; (service sddm-service-type
-	       ;; 		(sddm-configuration
-	       ;; 		 (minimum-uid 1000)
-	       ;; 		 (auto-login-session "exwm.desktop")
-	       ;; 		 (theme "darkine")
-	       ;; 		 (auto-login-user "zjabbar")))
 	       (service openssh-service-type)
 	       (service mpd-service-type
 			(mpd-configuration
@@ -120,8 +114,9 @@
 		  config => (network-manager-configuration
 			     (inherit config)
 			     (vpn-plugins
-			      (list network-manager-openvpn
-				    network-manager-openconnect)))))))))
+			      (list
+			       (specification->package "network-manager-openvpn")
+			       (specification->package "network-manager-openconnect"))))))))))
 
 (define-public tao-operating-system
   based-operating-system)
