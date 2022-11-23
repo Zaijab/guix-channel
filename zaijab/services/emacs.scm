@@ -203,6 +203,7 @@
 		   (specification->package "emacs-pinentry")
 		   (specification->package "pinentry-emacs")
 		   (specification->package "password-store")
+		   (specification->package "browserpass-native")
 		   (specification->package "pinentry")
 		   (specification->package "gnupg")
 		   (specification->package "openssh")
