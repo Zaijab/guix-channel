@@ -235,6 +235,7 @@
 		   (specification->package "ffmpeg")))
    (init '(
 	   (setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun pekin)
@@ -876,6 +877,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
+				     (emacs ((options->transform '(with-latest . "emacs-next")) (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
