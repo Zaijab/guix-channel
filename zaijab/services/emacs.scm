@@ -873,6 +873,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 						(with-input . "gcc=gcc@12.2.0")
 						(without-tests . "gcc")
 						(without-tests . "emacs-next")
+						(without-tests . "openssl")
 						
 						)) (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
