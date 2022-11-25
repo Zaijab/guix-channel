@@ -650,8 +650,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 		   (specification->package "emacs-guix")
 		   (specification->package "emacs-envrc")
 		   (specification->package "emacs-geiser")
-		   (specification->package "emacs-geiser-guile")
-		   ))
+		   (specification->package "emacs-geiser-guile")))
    (init '((require 'geiser-guile)
 	   (setq geiser-default-implementation 'guile)
 	   (require 'guix)
@@ -665,17 +664,13 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 	   (add-hook 'scheme-mode-hook 'lispy-mode)
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc
-				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))
-
-	   ))))
+				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
 
 (define sql-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-vterm")))
-   (init '(
-	   (setq sql-connection-alist
-		 '(
-		   (uhm-campus-energy
+   (init '((setq sql-connection-alist
+		 '((uhm-campus-energy
 		    (sql-product 'postgres)
 		    (sql-default-directory "/ssh:zain@128.171.46.101:")
 		    (sql-server "localhost")
@@ -688,10 +683,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 		    (sql-server "localhost")
 		    (sql-user "zain")
 		    (sql-database "zain")
-		    (sql-port 5432))
-		   ))
-
-	   ))))
+		    (sql-port 5432))))))))
 
 
 
@@ -800,8 +792,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 		 (progn
 		  (setq exwm-input-line-mode-passthrough t)
 		  (message "emacs receives all the keys now")))
-	     (force-mode-line-update)) 
-	   ))))
+	     (force-mode-line-update))))))
 
 (define ui-configuration
   (home-emacs-configuration

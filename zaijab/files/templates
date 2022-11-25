@@ -1,5 +1,9 @@
 org-mode
 
-(title "#+title: " p n "#+author: " user-full-name n "#+language: en" n n)
 (mm "\\( " p " \\) ")
 (dm "\\[ " p " \\]" n)
+(src "#+begin_src " p n> r> n> "#+end_src" :post (org-edit-src-code))
+(psrc "#+begin_src python3" p n> r> n> "#+end_src" :post (org-edit-src-code))
+(ssrc "#+begin_src scheme" p n> r> n> "#+end_src" :post (org-edit-src-code))
+(begin "\\begin{" (s env) "}" r> n> "\\end{" (s env) "}")
+(frac "\\frac{" p "}{" q "}")
