@@ -878,7 +878,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
 				     (emacs ((options->transformation
-					      '((with-latest . "emacs-next"))) (specification->package "emacs-next")))
+					      '((with-branch . "emacs-next=master"))) (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
