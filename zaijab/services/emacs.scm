@@ -419,7 +419,8 @@
    (packages (list
 	      ((options->transformation
 		'((without-tests . "emacs-magit")))
-	       (specification->package "emacs-org-roam"))))
+	       (specification->package "emacs-org-roam"))
+	      (specification->package "emacs-org-drill")))
    (init '((require 'org-roam-node)
 	   (setq org-roam-directory "~/notes")
 	   (setq org-roam-v2-ack t)
