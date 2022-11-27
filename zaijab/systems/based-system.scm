@@ -108,7 +108,7 @@
 	       (service nix-service-type)
 	       (pam-limits-service
 		(list
-		 (pam-limits-entry 'zjabbar 'hard 'nofile '524288)))
+		 (pam-limits-entry "@wheel" 'hard 'nofile 524288)))
 	       (modify-services %desktop-services
 		 (network-manager-service-type
 		  config => (network-manager-configuration
