@@ -106,7 +106,7 @@
 	       (service unattended-upgrade-service-type)
 	       (bluetooth-service)
 	       (service nix-service-type)
-	       (simple-service 'ulimit etc-service-type (list `("security/limits.conf" ,(plain-file "zjabbar hard nofile 524288"))))
+	       (simple-service 'ulimit etc-service-type (list `("security/limits.conf" ,(plain-file "limits.conf" "zjabbar hard nofile 524288"))))
 	       (pam-limits-service
 		(list
 		 (pam-limits-entry "@realtime" 'both 'rtprio 99)
