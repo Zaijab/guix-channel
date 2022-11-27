@@ -42,7 +42,8 @@
                                   " then\nexport SSH_AUTH_SOCK=\"$(gpgconf --list-dirs agent-ssh-socket)\"\nfi\n"
                                   "export GPG_TTY=$(tty)\ngpg-connect-agent updatestartuptty /bye >/dev/null\n"
                                   "export HOSTNAME\n"
-                                  "eval \"$(direnv hook bash)\"")))))
+                                  "eval \"$(direnv hook bash)\"\n"
+				  "source /run/current-system/profile/etc/profile.d/nix.sh")))))
      (service home-emacs-service-type home-emacs-total-configuration)
      (simple-service 'dotfiles
                    home-files-service-type

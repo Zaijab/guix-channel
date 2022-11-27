@@ -106,6 +106,10 @@
 	       (service unattended-upgrade-service-type)
 	       (bluetooth-service)
 	       (service nix-service-type)
+	       (pam-limits-service
+		(list
+		 (pam-limits-entry "@realtime" 'both 'rtprio 99)
+		 (pam-limits-entry "@realtime" 'both 'memlock 'unlimited)))
 	       (modify-services %desktop-services
 		 (network-manager-service-type
 		  config => (network-manager-configuration
