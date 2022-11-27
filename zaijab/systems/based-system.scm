@@ -60,6 +60,7 @@
 	       (specification->package "nss-certs")
 	       (specification->package "pulseaudio")
 	       (specification->package "network-manager-applet")
+	       (specification->package "nix")
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
     
@@ -104,6 +105,7 @@
 			(syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
 	       (bluetooth-service)
+	       (service nix-service-type)
 	       (modify-services %desktop-services
 		 (network-manager-service-type
 		  config => (network-manager-configuration

@@ -715,6 +715,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 					(lambda () (interactive)
 						(find-file "~/code/guix-channel/zaijab/services/emacs.scm"))))
 	   (global-set-key (kbd "C-x C-t") 'vterm)
+	   (global-set-key (kbd "s-d") (function geiser-guile))
 	   (global-set-key (kbd "s-s") (function org-roam-capture))
 	   (global-set-key (kbd "s-r") (function eval-region))
 	   (global-set-key (kbd "s-0") 'delete-window)
