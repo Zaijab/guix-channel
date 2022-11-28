@@ -64,14 +64,16 @@
 
 (define project-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "git")))
+   (packages (list (specification->package "git")
+		   (specification->package "direnv")
+		   (specification->package "emacs-envrc")))
    (init '((require 'ansi-color)
 	   (defun colorize-compilation-buffer ()
 	     (let ((inhibit-read-only t))
 	       (ansi-color-apply-on-region (point-min) (point-max))))
 	   (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)))))
 
-(define japanese-configuration
+(define language-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-ddskk")
 		   (specification->package "font-fira-code")
@@ -648,11 +650,10 @@ This is mainly to override org-roam's default filename convention of `timestamp-
   (home-emacs-configuration
    (packages (list (specification->package "emacs-lispy")
 		   (specification->package "emacs-lispyville")
-		   (specification->package "direnv")
 		   emacs-symex
 		   (specification->package "sicp")
 		   (specification->package "emacs-guix")
-		   (specification->package "emacs-envrc")
+		   (specification->package "emacs-srfi")
 		   (specification->package "emacs-geiser")
 		   (specification->package "emacs-geiser-guile")))
    (init '((require 'geiser-guile)
