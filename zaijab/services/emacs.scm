@@ -649,7 +649,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
    (packages (list (specification->package "emacs-lispy")
 		   (specification->package "emacs-lispyville")
 		   (specification->package "direnv")
-		   (specification->package "emacs-symex")
+		   emacs-symex
 		   (specification->package "sicp")
 		   (specification->package "emacs-guix")
 		   (specification->package "emacs-envrc")
