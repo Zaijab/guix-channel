@@ -244,6 +244,8 @@
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" crafter david)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCuj_loxODrOPxSsXDfJmpng" crafter andrew)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL5B3KLQNAC5j46Ro64xF7hLV6Uf-gHUHL" lecture continuum-mechanics)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" lecture machine-learning statistics ng)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLE18841CABEA24090" lecture sicp)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLEC88901EBADDD980" lecture mit odes)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL221E2BBF13BECF6C" lecture mit linear-algebra)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLLq_gUfXAnkkvL_UoCGivS0wOYhwCtczI" lecture mit pde)
@@ -270,8 +272,8 @@
 					 :add '(video youtube)))
 
 
-	   (setq youtube-dl-path "yt-dlp --sponsorblock-mark all")
-	   (setq youtube-dl-output-dir "~/media/")
+	   (setq youtube-dl-path "yt-dlp --sponsorblock-remove all")
+	   (setq youtube-dl-output-dir "~/lectures/hubermanlab/")
 
 	   (defun elfeed-download-video ()
 	     "Download a video using youtube-dl."
@@ -647,7 +649,8 @@ This is mainly to override org-roam's default filename convention of `timestamp-
    (packages (list (specification->package "emacs-lispy")
 		   (specification->package "emacs-lispyville")
 		   (specification->package "direnv")
-		   ;; (specification->package "emacs-symex")
+		   (specification->package "emacs-symex")
+		   (specification->package "sicp")
 		   (specification->package "emacs-guix")
 		   (specification->package "emacs-envrc")
 		   (specification->package "emacs-geiser")
@@ -659,7 +662,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 	   (global-guix-prettify-mode)
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
-	   ;; (setq symex-modal-backend 'evil)
+	   (setq symex-modal-backend 'evil)
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
 	   (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
 	   (add-hook 'scheme-mode-hook 'lispy-mode)
@@ -710,6 +713,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 	   (global-set-key (kbd "s-3") 'split-window-right)
 	   (global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
 	   (global-set-key (kbd "s-5") 'exwm-workspace-switch)
+	   (global-set-key (kbd "s-f") 'exwm-floating-toggle-floating)
 	   (global-set-key (kbd "s-<tab>") 'switch-to-buffer)
 	   (global-set-key (kbd "s-c") (function
 					(lambda () (interactive)
