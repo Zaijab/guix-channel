@@ -528,7 +528,8 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 
 (define hotkey-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-evil")))
+   (packages (list (specification->package "emacs-evil")
+		   (specification->package "emacs-evil-collection")))
    (init '((evil-mode 1)))))
 
 (define org-mode-configuration
@@ -537,9 +538,9 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 		   (specification->package "emacs-org-modern")
 		   (specification->package "emacs-tempel")
 		   (specification->package "emacs-valign")
+		   (specification->package "emacs-org-present")
 		   (specification->package "texlive-bin")
-		   (specification->package "ispell")
-		   ))
+		   (specification->package "ispell")))
    (init '((require 'org)
 	   (require 'ox)
 	   (global-org-modern-mode)
