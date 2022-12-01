@@ -549,6 +549,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 	   (global-unset-key (kbd "C-x C-n"))
 	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)
 	   (global-set-key (kbd "C-x C-r C-n") 'org-roam-capture)
+	   
 	   (setq org-agenda-files '("~/notes/20211222094239-workflow.org"))
 	   (setq org-startup-with-inline-images t)
 	   (setq org-startup-with-latex-preview t)
@@ -704,7 +705,9 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 	      (specification->package "picom")
 	      (specification->package "emacs-windsize")
 	      (specification->package "gnome")
-	      (specification->package "xrandr")))
+	      (specification->package "xrandr")
+	      (specification->package "arandr")
+	      ))
    (init '((require 'exwm)
 	   (require 'xelb)
 	   (require 'windsize)
