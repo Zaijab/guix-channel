@@ -703,6 +703,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 	      (specification->package "emacs-xelb")
 	      (specification->package "picom")
 	      (specification->package "emacs-windsize")
+	      (specification->package "gnome")
 	      (specification->package "xrandr")))
    (init '((require 'exwm)
 	   (require 'xelb)
