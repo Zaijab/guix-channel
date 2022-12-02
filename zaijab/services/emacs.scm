@@ -223,7 +223,7 @@
 	   (setq epa-pinentry-mode 'loopback)
 	   (setq epg-pinentry-mode 'loopback)
 	   (pinentry-start)
-	   (shell-command "gpg-connect-agent /bye")
+	   ;; (shell-command "gpg-connect-agent /bye")
 	   (setq auth-sources '(password-store))
 	   (auth-source-pass-enable)
 	   ;; (setq mml-secure-openpgp-signers '("F2E03744BDA622D8"))
