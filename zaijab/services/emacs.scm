@@ -884,7 +884,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 				      ((options->transformation
 					'((with-branch . "emacs-next=emacs-29")
 					  (with-input . "gcc=gcc@11")
-					  (without-tests . "emacs-next")))
+					  (without-tests . "curl")))
 				       (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
