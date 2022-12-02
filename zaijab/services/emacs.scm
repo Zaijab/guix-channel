@@ -541,6 +541,7 @@ This is mainly to override org-roam's default filename convention of `timestamp-
 		   (specification->package "emacs-valign")
 		   (specification->package "emacs-org-present")
 		   (specification->package "texlive")
+		   (specification->package "texlive-bin")
 		   (specification->package "ispell")))
    (init '((require 'org)
 	   (require 'ox)
