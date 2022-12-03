@@ -650,8 +650,8 @@
 
 (define lisp-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-lispy")
-		   (specification->package "emacs-lispyville")
+   (packages (list ;; (specification->package "emacs-lispy")
+		   ;; (specification->package "emacs-lispyville")
 		   emacs-symex
 		   (specification->package "sicp")
 		   (specification->package "emacs-guix")
@@ -667,8 +667,8 @@
 	   (setq user-mail-address "zaijab2000@gmail.com")
 	   (setq symex-modal-backend 'evil)
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
-	   (add-hook 'emacs-lisp-mode-hook 'lispy-mode)
-	   (add-hook 'scheme-mode-hook 'lispy-mode)
+	   (add-hook 'emacs-lisp-mode-hook 'symex-mode)
+	   (add-hook 'scheme-mode-hook 'symex-mode)
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc
 				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
