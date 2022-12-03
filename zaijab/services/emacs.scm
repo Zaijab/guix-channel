@@ -519,8 +519,7 @@
 		    :base-extension any
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-publish-attachment)
-		   ("zaindaman" :components ("orgfiles" "images" "css" "CNAME"))))
-	   ))))
+		   ("zaindaman" :components ("orgfiles" "images" "css" "CNAME"))))))))
 
 (define hotkey-configuration
   (home-emacs-configuration
@@ -852,7 +851,6 @@
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)))
    (init '((set-face-attribute 'default nil :font "Iosevka-14")
-	   (load-theme 'modus-operandi t)
 	   (setq nano-modeline-position 'bottom)
 	   (nano-modeline-mode)
 	   (tab-bar-mode)
@@ -869,6 +867,7 @@
 	   (customize-set-variable 'display-time-load-average-threshold 100)
 	   (customize-set-variable 'display-time-day-and-date t)
 	   (set-default 'truncate-lines t)
+	   (load-theme 'modus-operandi t)
 	   
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
