@@ -525,10 +525,9 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-evil")
 		   (specification->package "emacs-evil-collection")))
-   (init '((setq evil-want-keybinding nil)
-	   (evil-collection-init)
-	   (evil-mode 1)
-	   ))))
+   (init '((evil-collection-init)
+	   (evil-mode 1)))
+   (early-init '((setq evil-want-keybinding nil)))))
 
 (define org-mode-configuration
   (home-emacs-configuration
