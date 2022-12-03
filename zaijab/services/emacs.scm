@@ -525,8 +525,9 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-evil")
 		   (specification->package "emacs-evil-collection")))
-   (init '((evil-mode 1)
-	   (evil-collection-init)))))
+   (init '((evil-collection-init)
+	   (evil-mode 1)
+	   ))))
 
 (define org-mode-configuration
   (home-emacs-configuration
