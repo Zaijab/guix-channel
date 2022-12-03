@@ -436,15 +436,11 @@
 		    :unnarrowed t)
 		   ("d" "drill" entry "* %(word->drill (jisho-search->completing-read))"
 		    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "\n")
-		    :unnarrowed t)))
-
-	   ))))
+		    :unnarrowed t)))))))
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list google-chrome-unstable
-		   ;; (specification->package "ungoogled-chromium")
-		   ))
+   (packages (list google-chrome-unstable))
    (init '((defun zain-publish ()
 	     (interactive)
 	     (let ((current-prefix-arg (list 4))
@@ -452,7 +448,8 @@
 	       (call-interactively 'org-publish-all)
 	       (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam")))
 
-	   (global-set-key (kbd "C-c C-p C-w") 'zain-publish)
+	   
+	   (global-set-key (kbd "s-p") 'zain-publish)
 	   
 	   (require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
@@ -489,8 +486,6 @@
 	      (cadar (org-collect-keywords '("TITLE")))))
       
 	   (defun commonplace/slugify-export-output-file-name (output-file)
-	     "Gets the title of the org file and uses this (slugified) for the output filename.
-This is mainly to override org-roam's default filename convention of `timestamp-title_of_your_note` which doesn't work well with Agora."
 	     (let* ((title (get-title (buffer-file-name (buffer-base-buffer))))
 		    (directory (file-name-directory output-file))
 		    (slug (commonplace/slugify-title title)))
@@ -531,7 +526,8 @@ This is mainly to override org-roam's default filename convention of `timestamp-
   (home-emacs-configuration
    (packages (list (specification->package "emacs-evil")
 		   (specification->package "emacs-evil-collection")))
-   (init '((evil-mode 1)))))
+   (init '((evil-mode 1)
+	   (evil-collection-init)))))
 
 (define org-mode-configuration
   (home-emacs-configuration
