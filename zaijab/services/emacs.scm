@@ -525,7 +525,8 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-evil")
 		   (specification->package "emacs-evil-collection")))
-   (init '((evil-collection-init)
+   (init '((setq evil-want-keybinding nil)
+	   (evil-collection-init)
 	   (evil-mode 1)
 	   ))))
 
