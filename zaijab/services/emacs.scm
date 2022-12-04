@@ -665,7 +665,14 @@
 	   (global-guix-prettify-mode)
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
+
+
+	   
 	   (require 'rigpa)
+	   (setq symex-modal-backend 'evil)
+	   (symex-initialize)
+	   (global-set-key (kbd "s-;") 'symex-mode-interface) 
+
 
 	   (setq rigpa-mode t)
 
@@ -770,9 +777,6 @@
                     (rigpa-enter-mode "word")))
 
 	   
-	   (setq symex-modal-backend 'evil)
-	   (symex-initialize)
-	   (global-set-key (kbd "s-;") 'symex-mode-interface) 
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc
