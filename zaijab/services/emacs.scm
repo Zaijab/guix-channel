@@ -774,8 +774,6 @@
 	   (global-set-key (kbd "s-;") 'symex-mode-interface) 
 	   (setq symex-modal-backend 'evil)
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
-	   (add-hook 'emacs-lisp-mode-hook 'symex-mode-interface)
-	   (add-hook 'scheme-mode-hook 'symex-mode-interface)
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc
 				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
