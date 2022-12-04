@@ -668,11 +668,10 @@
 
 
 	   
-	   (require 'rigpa)
-	   (setq symex-modal-backend 'evil)
 	   (symex-initialize)
 	   (global-set-key (kbd "s-;") 'symex-mode-interface) 
 
+	   (require 'rigpa)
 
 	   (setq rigpa-mode t)
 
@@ -780,7 +779,9 @@
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc
-				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
+				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))
+
+   (early-init '((setq symex-modal-backend 'evil)))))
 
 (define sql-configuration
   (home-emacs-configuration
