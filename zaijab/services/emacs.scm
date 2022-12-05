@@ -81,7 +81,9 @@
 		   (specification->package "font-lohit")
 		   (specification->package "font-vazir")
 		   (specification->package "font-ipa-mj-mincho")
-		   (specification->package "font-iosevka")))
+		   (specification->package "font-iosevka")
+		   (specification->package "font-microsoft-courier-new")
+		   ))
    (init '((require 'facemenu)
 
 	   (defun jisho-word->japanese-part (jisho-word)
