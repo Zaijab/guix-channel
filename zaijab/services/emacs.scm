@@ -431,12 +431,15 @@
 	   (setq org-roam-v2-ack t)
 	   (org-roam-db-autosync-mode)
 	   (setq org-roam-capture-templates
-		 '(("n" "default" plain "%?"
-		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+		 '(("i" "default" plain "%?"
+		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
 		    :unnarrowed t)
 		   ("d" "drill" entry "* %(word->drill (jisho-search->completing-read))"
 		    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "\n")
-		    :unnarrowed t)))))))
+		    :unnarrowed t)))
+	   (global-set-key (kbd "s-i") (function org-roam-capture))
+
+	   ))))
 
 (define website-configuration
   (home-emacs-configuration
@@ -547,8 +550,9 @@
 	   (global-unset-key (kbd "C-x C-n"))
 	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)
 	   (global-set-key (kbd "C-x C-r C-n") 'org-roam-capture)
+	   (global-set-key (kbd "s-a") 'org-agenda)
 	   
-	   (setq org-agenda-files '("~/notes/20211222094239-workflow.org"))
+	   (setq org-agenda-files '("~/notes/20211224040925-todo.org" "~/notes/20221204145316-influx.org" "~/notes/20211222094239-workflow.org"))
 	   (setq org-startup-with-inline-images t)
 	   (setq org-startup-with-latex-preview t)
 	   (setq org-preview-latex-default-process 'dvisvgm)
@@ -650,14 +654,14 @@
 (define lisp-configuration
   (home-emacs-configuration
    (packages (list ;; (specification->package "emacs-lispy")
-		   ;; (specification->package "emacs-lispyville")
+	      ;; (specification->package "emacs-lispyville")
 	      emacs-symex
 	      emacs-rigpa
-		   (specification->package "sicp")
-		   (specification->package "emacs-guix")
-		   (specification->package "emacs-srfi")
-		   (specification->package "emacs-geiser")
-		   (specification->package "emacs-geiser-guile")))
+	      (specification->package "sicp")
+	      (specification->package "emacs-guix")
+	      (specification->package "emacs-srfi")
+	      (specification->package "emacs-geiser")
+	      (specification->package "emacs-geiser-guile")))
    (init '((require 'geiser-guile)
 	   (setq geiser-default-implementation 'guile)
 	   (require 'guix)
@@ -665,117 +669,113 @@
 	   (global-guix-prettify-mode)
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
-
-
-	   
 	   (symex-initialize)
-	   (global-set-key (kbd "s-;") 'symex-mode-interface) 
-
+	   (global-set-key (kbd "s-;") 'symex-mode-interface)
 	   (require 'rigpa)
-
 	   (setq rigpa-mode t)
+	   ;; temporary workaround for https://github.com/countvajhula/rigpa/issues/9
 
-  ;; temporary workaround for https://github.com/countvajhula/rigpa/issues/9
-  (remove-hook 'evil-symex-state-exit-hook (function symex-disable-editing-minor-mode))
-
-  ;; custom config
-  (setq rigpa-show-menus nil)
-
-  ;; navigating meta modes
-  (global-unset-key (kbd "s-m"))
-  (global-set-key (kbd "s-m s-m") 'rigpa-flashback-to-last-tower)
-  (global-set-key (kbd "C-<escape>")
-                  (lambda ()
-                    (interactive)
-                    (when (eq rigpa--complex rigpa-meta-complex)
-                      (rigpa-exit-mode-mode))
-                    (rigpa-enter-tower-mode)))
-  (global-set-key (kbd "M-<escape>") 'rigpa-enter-mode-mode)
-  (global-set-key (kbd "s-<escape>") 'rigpa-enter-mode-mode)
-  (global-set-key (kbd "M-<return>")
-                  (lambda ()
-                    (interactive)
-                    (when (eq rigpa--complex rigpa-meta-complex)
-                      (rigpa-enter-selected-level)
-                      (let ((ground (rigpa--get-ground-buffer)))
-                        (rigpa-exit-mode-mode)
-                        (switch-to-buffer ground)))))
-  (global-set-key (kbd "s-<return>")
-                  (lambda ()
-                    (interactive)
-                    (when (eq rigpa--complex rigpa-meta-complex)
-                      (rigpa-enter-selected-level)
-                      (let ((ground (rigpa--get-ground-buffer)))
-                        (rigpa-exit-mode-mode)
-                        (switch-to-buffer ground)))))
-  (global-set-key (kbd "C-<return>")
-                  (lambda ()
-                    (interactive)
-                    (when (eq rigpa--complex rigpa-meta-tower-complex)
-                      (rigpa-exit-tower-mode)
-                      (rigpa-enter-mode-mode))))
-
-  ;; indexed entry to various modes
-  (global-set-key (kbd "s-n") 'evil-normal-state)
-  (global-set-key (kbd "s-y")        ; symex mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "symex")))
-  (global-set-key (kbd "s-;") (kbd "s-y"))
-  (global-set-key (kbd "s-w")        ; window mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "window")))
-  (global-set-key (kbd "s-v")        ; view mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "view")))
-  (global-set-key (kbd "s-x")        ; char mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "char")))
-  (global-set-key (kbd "s-a")        ; activity mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "activity")))
-  (global-set-key (kbd "s-z")        ; text mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "text")))
-  (global-set-key (kbd "s-g")        ; history mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "history")))
-  (global-set-key (kbd "s-i")        ; system mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "system")))
-  (global-set-key (kbd "s-b")        ; buffer mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "buffer")))
-  (global-set-key (kbd "s-f")        ; file mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "file")))
-  (global-set-key (kbd "s-t")        ; tab mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "tab")))
-  (global-set-key (kbd "s-b")        ; line mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "line")))
-  (global-set-key (kbd "s-E")        ; application mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "application")))
-  (global-set-key (kbd "s-R")        ; word mode
-                  (lambda ()
-                    (interactive)
-                    (rigpa-enter-mode "word")))
-
+	   (remove-hook 'evil-symex-state-exit-hook (function symex-disable-editing-minor-mode))
 	   
+
+	   ;; custom config
+	   (setq rigpa-show-menus nil)
+
+	   ;; navigating meta modes
+	   (global-unset-key (kbd "s-m"))
+	   (global-set-key (kbd "s-m s-m") 'rigpa-flashback-to-last-tower)
+	   (global-set-key (kbd "C-<escape>")
+			   (lambda ()
+			     (interactive)
+			     (when (eq rigpa--complex rigpa-meta-complex)
+			       (rigpa-exit-mode-mode))
+			     (rigpa-enter-tower-mode)))
+	   (global-set-key (kbd "M-<escape>") 'rigpa-enter-mode-mode)
+	   (global-set-key (kbd "s-<escape>") 'rigpa-enter-mode-mode)
+	   (global-set-key (kbd "M-<return>")
+			   (lambda ()
+			     (interactive)
+			     (when (eq rigpa--complex rigpa-meta-complex)
+			       (rigpa-enter-selected-level)
+			       (let ((ground (rigpa--get-ground-buffer)))
+				 (rigpa-exit-mode-mode)
+				 (switch-to-buffer ground)))))
+	   (global-set-key (kbd "s-<return>")
+			   (lambda ()
+			     (interactive)
+			     (when (eq rigpa--complex rigpa-meta-complex)
+			       (rigpa-enter-selected-level)
+			       (let ((ground (rigpa--get-ground-buffer)))
+				 (rigpa-exit-mode-mode)
+				 (switch-to-buffer ground)))))
+	   (global-set-key (kbd "C-<return>")
+			   (lambda ()
+			     (interactive)
+			     (when (eq rigpa--complex rigpa-meta-tower-complex)
+			       (rigpa-exit-tower-mode)
+			       (rigpa-enter-mode-mode))))
+
+	   ;; indexed entry to various modes
+	   (global-set-key (kbd "s-n") 'evil-normal-state)
+	   (global-set-key (kbd "s-y") ; symex mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "symex")))
+	   (global-set-key (kbd "s-;") (kbd "s-y"))
+	   (global-set-key (kbd "s-W") ; window mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "window")))
+	   (global-set-key (kbd "s-v") ; view mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "view")))
+	   (global-set-key (kbd "s-x") ; char mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "char")))
+	   (global-set-key (kbd "s-a") ; activity mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "activity")))
+	   (global-set-key (kbd "s-z") ; text mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "text")))
+	   (global-set-key (kbd "s-g") ; history mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "history")))
+	   (global-set-key (kbd "s-i") ; system mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "system")))
+	   (global-set-key (kbd "s-b") ; buffer mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "buffer")))
+	   (global-set-key (kbd "s-f") ; file mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "file")))
+	   (global-set-key (kbd "s-t") ; tab mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "tab")))
+	   (global-set-key (kbd "s-b") ; line mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "line")))
+	   (global-set-key (kbd "s-E") ; application mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "application")))
+	   (global-set-key (kbd "s-R") ; word mode
+			   (lambda ()
+			     (interactive)
+			     (rigpa-enter-mode "word")))
+
+
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc
