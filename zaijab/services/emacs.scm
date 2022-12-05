@@ -443,8 +443,7 @@
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list google-chrome-unstable
-		   (specification->package "ungoogled-chromium")))
+   (packages (list google-chrome-unstable))
    (init '((defun zain-publish ()
 	     (interactive)
 	     (let ((current-prefix-arg (list 4))
