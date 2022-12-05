@@ -722,58 +722,58 @@
 			     (interactive)
 			     (rigpa-enter-mode "symex")))
 	   (global-set-key (kbd "s-;") (kbd "s-y"))
-	   (global-set-key (kbd "s-W") ; window mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "window")))
-	   (global-set-key (kbd "s-v") ; view mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "view")))
-	   (global-set-key (kbd "s-x") ; char mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "char")))
-	   (global-set-key (kbd "s-a") ; activity mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "activity")))
-	   (global-set-key (kbd "s-z") ; text mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "text")))
-	   (global-set-key (kbd "s-g") ; history mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "history")))
-	   (global-set-key (kbd "s-i") ; system mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "system")))
-	   (global-set-key (kbd "s-b") ; buffer mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "buffer")))
-	   (global-set-key (kbd "s-f") ; file mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "file")))
-	   (global-set-key (kbd "s-t") ; tab mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "tab")))
-	   (global-set-key (kbd "s-b") ; line mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "line")))
-	   (global-set-key (kbd "s-E") ; application mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "application")))
-	   (global-set-key (kbd "s-R") ; word mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "word")))
+	   ;; (global-set-key (kbd "s-W") ; window mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "window")))
+	   ;; (global-set-key (kbd "s-v") ; view mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "view")))
+	   ;; (global-set-key (kbd "s-x") ; char mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "char")))
+	   ;; (global-set-key (kbd "s-a") ; activity mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "activity")))
+	   ;; (global-set-key (kbd "s-z") ; text mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "text")))
+	   ;; (global-set-key (kbd "s-g") ; history mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "history")))
+	   ;; (global-set-key (kbd "s-i") ; system mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "system")))
+	   ;; (global-set-key (kbd "s-b") ; buffer mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "buffer")))
+	   ;; (global-set-key (kbd "s-f") ; file mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "file")))
+	   ;; (global-set-key (kbd "s-t") ; tab mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "tab")))
+	   ;; (global-set-key (kbd "s-b") ; line mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "line")))
+	   ;; (global-set-key (kbd "s-E") ; application mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "application")))
+	   ;; (global-set-key (kbd "s-R") ; word mode
+	   ;; 		   (lambda ()
+	   ;; 		     (interactive)
+	   ;; 		     (rigpa-enter-mode "word")))
 
 
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
@@ -854,7 +854,7 @@
 					 (lambda () (interactive)
 						 (call-process-shell-command "loginctl suspend"))))
 	   (global-set-key (kbd "<f8>") 'toggle-exwm-input-line-mode-passthrough)
-	   (global-set-key (kbd "s-a") 'toggle-exwm-input-line-mode-passthrough)
+	   ;(global-set-key (kbd "s-a") 'toggle-exwm-input-line-mode-passthrough)
 	   (defun exwm-rename-buffer-to-title () (exwm-workspace-rename-buffer exwm-class-name))
 	   (defun exwm-rename-buffer ()
 	     (interactive)
