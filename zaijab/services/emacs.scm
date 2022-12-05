@@ -83,7 +83,7 @@
 		   (specification->package "font-vazir")
 		   (specification->package "font-ipa-mj-mincho")
 		   (specification->package "font-iosevka")
-		   font-microsoft-courier-new))
+		   font-microsoft-couirer-new))
    (init '((require 'facemenu)
 
 	   (defun jisho-word->japanese-part (jisho-word)
