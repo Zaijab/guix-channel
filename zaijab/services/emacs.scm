@@ -82,7 +82,7 @@
 		   (specification->package "font-vazir")
 		   (specification->package "font-ipa-mj-mincho")
 		   (specification->package "font-iosevka")
-		   (specification->package "font-microsoft-courier-new")
+		   ;(specification->package "font-microsoft-courier-new")
 		   ))
    (init '((require 'facemenu)
 
