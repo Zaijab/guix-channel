@@ -83,8 +83,7 @@
 		   (specification->package "font-vazir")
 		   (specification->package "font-ipa-mj-mincho")
 		   (specification->package "font-iosevka")
-		   font-microsoft-courier-new
-		   ))
+		   font-microsoft-courier-new))
    (init '((require 'facemenu)
 
 	   (defun jisho-word->japanese-part (jisho-word)
@@ -239,8 +238,7 @@
 		   (specification->package "mpv")
 		   (specification->package "yt-dlp")
 		   (specification->package "ffmpeg")))
-   (init '(
-	   (setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
+   (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
