@@ -443,7 +443,8 @@
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list google-chrome-unstable))
+   (packages (list google-chrome-unstable
+		   (specification->package "ungoogled-chromium")))
    (init '((defun zain-publish ()
 	     (interactive)
 	     (let ((current-prefix-arg (list 4))
@@ -832,6 +833,9 @@
 	   (global-set-key (kbd "s-c") (function
 					(lambda () (interactive)
 						(find-file "~/code/guix-channel/zaijab/services/emacs.scm"))))
+	   (global-set-key (kbd "s-b") (function
+					(lambda () (interactive)
+						(find-file (read-file-name "" "~/books/")))))
 	   (global-set-key (kbd "C-x C-t") 'vterm)
 	   (global-set-key (kbd "s-d") (function geiser-guile))
 	   (global-set-key (kbd "s-s") (function org-roam-capture))
