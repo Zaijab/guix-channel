@@ -450,7 +450,7 @@
 	     (let ((current-prefix-arg (list 4))
 		   (default-directory "~/code/zaijab.github.io"))
 	       (call-interactively 'org-publish-all)
-	       (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam")))
+	       (call-interactively (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam"))))
 
 	   
 	   (global-set-key (kbd "s-p") 'zain-publish)
