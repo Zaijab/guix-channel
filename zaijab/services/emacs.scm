@@ -133,7 +133,7 @@
 		 (setq total-word (append (jisho-word->japanese-part word) (jisho-word->english-part word)))
 		 (setq *jisho-results* (append *jisho-results* (list (cons (string-join total-word " ") total-word))))
 		 (setq words (cdr words)))
-    
+	       
 	       (alist-get
 		(completing-read "Results: " *jisho-results*)
 		*jisho-results* nil nil 'equal)))))))
@@ -338,7 +338,7 @@
 	   (setq mu4e-change-filenames-when-moving t)
 	   (setq mu4e-update-interval 300)
 	   (setq mu4e-get-mail-command  "mbsync -a -c ~/.config/mbsyncrc")
-      
+	   
 	   (setq org-export-with-toc nil)
 	   (setq org-export-with-tile t)
 	   (setq org-mu4e-convert-to-html t)
@@ -450,11 +450,11 @@
 	     (let ((current-prefix-arg (list 4))
 		   (default-directory "~/code/zaijab.github.io"))
 	       (call-interactively 'org-publish-all)
-	       (call-interactively (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam"))))
+	       (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam")))
 
-	   
+
 	   (global-set-key (kbd "s-p") 'zain-publish)
-	   
+
 	   (require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
 	     "For a given file, get its TITLE keyword."
@@ -463,7 +463,7 @@
 	      (cadar (org-collect-keywords '("TITLE")))))
 	   (require 'cl)
 	   (require 'cl-lib)
-      
+
 	   (defun commonplace/slugify-title (title)
 	     "Convert TITLE to a filename-suitable slug.  Use hyphens rather than underscores."
 	     (cl-flet* ((nonspacing-mark-p (char)
@@ -482,21 +482,21 @@
 			      (slug (-reduce-from (function cl-replace) (strip-nonspacing-marks title) pairs)))
 			 (downcase slug))))
 
-      
+
 	   (defun get-title (file)
 	     "For a given file, get its TITLE keyword."
 	     (with-current-buffer
 	      (get-file-buffer file)
 	      (cadar (org-collect-keywords '("TITLE")))))
-      
+
 	   (defun commonplace/slugify-export-output-file-name (output-file)
 	     (let* ((title (get-title (buffer-file-name (buffer-base-buffer))))
 		    (directory (file-name-directory output-file))
 		    (slug (commonplace/slugify-title title)))
 	       (concat directory slug ".html")))
-      
+
 	   (advice-add (function org-export-output-file-name) :filter-return (function commonplace/slugify-export-output-file-name))
-      
+
 	   (setq org-publish-project-alist
 		 '(("orgfiles"
 		    :base-directory "~/notes/"
@@ -554,7 +554,13 @@
 	   (global-set-key (kbd "s-a") 'org-agenda)
 	   
 	   (setq org-agenda-files '("~/notes/20211224040925-todo.org" "~/notes/20221204145316-influx.org" "~/notes/20211222094239-workflow.org"))
+	   
 	   (setq org-startup-with-inline-images t)
+
+	   (setq org-agenda-time-grid
+		 (list '(daily weekly remove-match)
+		       (mapcar (lambda (x) (* 100 x)) (number-sequence 1 23))
+		       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
 	   (setq org-startup-with-latex-preview t)
 	   (setq org-preview-latex-default-process 'dvisvgm)
 	   (add-hook 'org-mode-hook 'org-fragtog-mode)
