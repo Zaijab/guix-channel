@@ -502,7 +502,9 @@
 		    :base-directory "~/notes/"
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-html-publish-to-html
-		    :base-extension "org"
+					;:base-extension "org"
+		    :exclude ".*org"
+		    :include ("20220925152629-index.org" "20220925155207-about.org") 
 		    :with-toc nil
 		    :html-head
 		    "<title></title><link rel=\"stylesheet\" href=\"/css/main-dark.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n</ul></div></header>"
@@ -523,7 +525,9 @@
 		    :base-extension any
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-publish-attachment)
-		   ("zaindaman" :components ("orgfiles" "images" "css" "CNAME"))))))))
+		   ("zaindaman" :components ("orgfiles" "images" "css" "CNAME"))
+		   ))
+	   ))))
 
 (define hotkey-configuration
   (home-emacs-configuration
