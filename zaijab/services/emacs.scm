@@ -977,6 +977,7 @@
 	   (setq nano-modeline-position 'bottom)
 	   (nano-modeline-mode)
 	   (tab-bar-mode)
+	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
 	   (customize-set-variable 'tab-bar-format
 				   '(tab-bar-format-history
