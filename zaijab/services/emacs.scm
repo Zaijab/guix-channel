@@ -540,6 +540,8 @@
 		   (specification->package "emacs-tempel")
 		   (specification->package "emacs-valign")
 		   (specification->package "emacs-org-present")
+		   (specification->package "emacs-calfw") 
+		   
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
 		   (specification->package "ispell")))
