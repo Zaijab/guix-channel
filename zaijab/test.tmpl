@@ -1,0 +1,21 @@
+(use-modules (guix)
+             (guix build-system gnu)
+	     (guix git-download)
+             (guix licenses))
+
+(package
+  (name "kaleido")
+  (version "v0.2.1")
+  (source (origin
+            (method git-fetch)
+            (uri (git-reference
+	    	  (url "https://github.com/plotly/Kaleido.git")
+		  (commit "624c30ca29b3a120215264b3b2e9341bf1bb4247")))
+            (sha256
+             (base32
+              "0p7vddwha4bmb0ihbvjgqwhwa7xmm7xnh2hff5r2xzz64rjcz47x"))))
+  (build-system gnu-build-system)
+  (synopsis "")
+  (description "")
+  (home-page "")
+  (license gpl3+))
