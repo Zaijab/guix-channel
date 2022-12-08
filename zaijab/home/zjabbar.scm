@@ -48,6 +48,7 @@
 		(list
 		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
+				  "source /run/current-system/profile/etc/profile.d/nix.sh"
 				  )))))
      (service home-emacs-service-type home-emacs-total-configuration)
      (simple-service 'dotfiles
