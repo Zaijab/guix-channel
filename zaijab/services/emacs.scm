@@ -63,6 +63,70 @@
 
 ;;; EMACS CONFIG
 
+;; Completions
+
+(define orderless-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-orderless")))
+   (init '((setq completion-styles '(orderless basic)
+		 completion-category-overrides '((file (styles basic partial-completion))))
+	   (setq orderless-smart-case nil
+		 completion-ignore-case t
+		 read-file-name-completion-ignore-case t
+		 read-buffer-completion-ignore-case t)))))
+
+(define vertico-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-vertico")))
+   (init '((vertico-mode 1)))))
+
+(define corfu-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-corfu")))
+   (init '((global-corfu-mode)
+	   (corfu-history-mode)
+	   (setq corfu-cycle t
+		 corfu-auto t
+		 corfu-auto-prefix 2
+		 corfu-auto-delay 0.0
+		 corfu-quit-at-boundary 'separator
+		 corfu-echo-documentation 0.25
+		 corfu-preview-current 'insert
+		 corfu-preselect-first nil)
+	   (define-key corfu-map (kbd "M-<SPC>") (function corfu-insert-separator))
+	   (define-key corfu-map (kbd "TAB") (function corfu-next))
+	   (define-key corfu-map (kbd "S-TAB") (function corfu-previous))))))
+
+(define tempel-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-tempel")))
+   (init '((require 'tempel) 
+	   (defun tempel-setup-capf ()
+	     (setq-local completion-at-point-functions
+			 (cons (function tempel-expand)
+			       completion-at-point-functions)))
+
+	   (add-hook 'prog-mode-hook 'tempel-setup-capf)
+	   (add-hook 'text-mode-hook 'tempel-setup-capf)
+	   (define-key tempel-map (kbd "<tab>") (function tempel-next))
+	   ))))
+
+(define cape-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-cape"))
+   (init '((setq tab-always-indent 'complete)
+	   (add-to-list 'completion-at-point-functions (function cape-symbol))
+	   ;(add-to-list 'completion-at-point-functions (function cape-line))
+	   ))))
+
+(define hotkey-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-evil")
+		   (specification->package "emacs-evil-collection")))
+   (init '((evil-collection-init)
+	   (evil-mode 1)))
+   (early-init '((setq evil-want-keybinding nil)))))
+
 (define project-configuration
   (home-emacs-configuration
    (packages (list (specification->package "git")
@@ -144,57 +208,6 @@
 		   (specification->package "emacs-explain-pause-mode")))
    (init '((gcmh-mode 1)))))
 
-(define orderless-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-orderless")))
-   (init '((setq completion-styles '(orderless basic)
-		 completion-category-overrides '((file (styles basic partial-completion))))
-	   (setq orderless-smart-case nil
-		 completion-ignore-case t
-		 read-file-name-completion-ignore-case t
-		 read-buffer-completion-ignore-case t)))))
-
-(define vertico-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-vertico")))
-   (init '((vertico-mode 1)))))
-
-(define corfu-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-corfu")))
-   (init '((global-corfu-mode)
-	   (corfu-history-mode)
-	   (setq corfu-cycle t
-		 corfu-auto t
-		 corfu-auto-prefix 2
-		 corfu-auto-delay 0.0
-		 corfu-quit-at-boundary 'separator
-		 corfu-echo-documentation 0.25
-		 corfu-preview-current 'insert
-		 corfu-preselect-first nil)
-	   (define-key corfu-map (kbd "M-<SPC>") (function corfu-insert-separator))
-	   (define-key corfu-map (kbd "TAB") (function corfu-next))
-	   (define-key corfu-map (kbd "S-TAB") (function corfu-previous))))))
-
-(define cape-configuration
-  (home-emacs-configuration
-   (packages (list
-	      (specification->package "emacs-cape")
-	      (specification->package "emacs-tempel")
-	      ))
-   (init '((require 'tempel)
-	   (defun tempel-setup-capf ()
-	     (setq-local completion-at-point-functions
-			 (cons (function tempel-expand)
-			       completion-at-point-functions)))
-
-	   (add-hook 'prog-mode-hook 'tempel-setup-capf)
-	   (add-hook 'text-mode-hook 'tempel-setup-capf)
-	   
-	   (setq tab-always-indent 'complete)
-	   (add-to-list 'completion-at-point-functions (function cape-symbol))
-	   (add-to-list 'completion-at-point-functions (function cape-line))
-	   ))))
 
 (define pdf-tools-configuration
   (home-emacs-configuration
@@ -528,13 +541,6 @@
 		   ))
 	   ))))
 
-(define hotkey-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-evil")
-		   (specification->package "emacs-evil-collection")))
-   (init '((evil-collection-init)
-	   (evil-mode 1)))
-   (early-init '((setq evil-want-keybinding nil)))))
 
 (define org-mode-configuration
   (home-emacs-configuration
