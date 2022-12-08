@@ -502,7 +502,6 @@
 		    :base-directory "~/notes/"
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-html-publish-to-html
-					;:base-extension "org"
 		    :exclude ".*org"
 		    :include ("20220925152629-index.org" "20220925155207-about.org") 
 		    :with-toc nil
