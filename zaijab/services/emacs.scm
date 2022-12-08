@@ -117,7 +117,7 @@
    (init '((setq tab-always-indent 'complete)
 	   (add-to-list 'completion-at-point-functions (function cape-symbol))
 	   ;(add-to-list 'completion-at-point-functions (function cape-line))
-	   ))))
+	   )))))
 
 (define hotkey-configuration
   (home-emacs-configuration
@@ -1024,4 +1024,3 @@
 		(map variable-ref
 		     (filter variable-bound?
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
- 
