@@ -5,4 +5,4 @@
 
 (define-public google-chrome-unstable-browserpass
   (package (inherit google-chrome-stable)
-    (inputs (append browser-pass-native (package-inputs google-chrome-stable)))))
+    (inputs (append browserpass-native (package-inputs google-chrome-stable)))))
