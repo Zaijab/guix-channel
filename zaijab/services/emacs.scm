@@ -223,13 +223,13 @@
 	   ;; 			       ""
 	   ;; 			       str))
 	   
-	   (let ((ssh_auth_sock (s-trim (shell-command-to-string "gpgconf --list-dirs agent-ssh-socket"))))
-	     (setenv "SSH_AUTH_SOCK" ssh_auth_sock))
-	   (setq epa-pinentry-mode 'loopback)
-	   (setq epg-pinentry-mode 'loopback)
-	   (auth-source-pass-enable)
+	   ;; (let ((ssh_auth_sock (s-trim (shell-command-to-string "gpgconf --list-dirs agent-ssh-socket"))))
+	   ;;   (setenv "SSH_AUTH_SOCK" ssh_auth_sock))
+	   ;; (setq epa-pinentry-mode 'loopback)
+	   ;; (setq epg-pinentry-mode 'loopback)
+	   ;; (auth-source-pass-enable)
 	   (pinentry-start)
-	   (setq auth-sources '(password-store))
+	   ;; (setq auth-sources '(password-store))
 	   ;; (setq mml-secure-openpgp-signers '("F2E03744BDA622D8"))
 	   ))))
 
