@@ -1,5 +1,5 @@
 (define-module (zaijab packages browser)
-  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (guix packages)
   #:use-module (gnu packages password-utils)
   #:use-module (nongnu packages chrome))
 
