@@ -120,8 +120,8 @@
 
 (define marginalia-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-marginalia"))
-	     (init '((marginalia-mode))))))
+   (packages (list (specification->package "emacs-marginalia")))
+	     (init '((marginalia-mode)))))
 
 
 (define hotkey-configuration
