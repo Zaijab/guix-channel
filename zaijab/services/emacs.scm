@@ -215,25 +215,21 @@
 		   (specification->package "emacs-pinentry")
 		   (specification->package "pinentry-emacs")
 		   (specification->package "password-store")
-		   (specification->package "browserpass-native")
 		   (specification->package "gnupg")
-		   (specification->package "openssh")
-		   (specification->package "binutils")
-		   ))
-   (init '(
-	   (defun chomp (str)
-	     "Chomp tailing whitespace from STR."
-	     (replace-regexp-in-string (rx (* (any " \t\n")) eos)
-				       ""
-				       str))
+		   (specification->package "openssh")))
+   (init '(;; (defun chomp (str)
+	   ;;   "Chomp tailing whitespace from STR."
+	   ;;   (replace-regexp-in-string (rx (* (any " \t\n")) eos)
+	   ;; 			       ""
+	   ;; 			       str))
 	   
-	   (let ((ssh_auth_sock (chomp (shell-command-to-string "gpgconf --list-dirs agent-ssh-socket"))))
+	   (let ((ssh_auth_sock (s-trim (shell-command-to-string "gpgconf --list-dirs agent-ssh-socket"))))
 	     (setenv "SSH_AUTH_SOCK" ssh_auth_sock))
 	   (setq epa-pinentry-mode 'loopback)
 	   (setq epg-pinentry-mode 'loopback)
+	   (auth-source-pass-enable)
 	   (pinentry-start)
 	   (setq auth-sources '(password-store))
-	   (auth-source-pass-enable)
 	   ;; (setq mml-secure-openpgp-signers '("F2E03744BDA622D8"))
 	   ))))
 
@@ -450,7 +446,7 @@
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list google-chrome-unstable-browserpass))
+   (packages (list google-chrome-unstable))
    (init '((defun zain-publish ()
 	     (interactive)
 	     (let ((current-prefix-arg (list 4))
