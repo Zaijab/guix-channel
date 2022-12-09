@@ -10,6 +10,7 @@
   #:use-module (guix transformations)
   #:use-module (guix gexp)
   #:use-module (zaijab packages emacs-xyz)
+  #:use-module (zaijab packages browser)
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages fonts)
 
@@ -449,7 +450,7 @@
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list google-chrome-unstable))
+   (packages (list google-chrome-unstable-browserpass))
    (init '((defun zain-publish ()
 	     (interactive)
 	     (let ((current-prefix-arg (list 4))
