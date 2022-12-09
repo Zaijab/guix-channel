@@ -13,7 +13,6 @@
   #:use-module (zaijab packages browser)
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages fonts)
-
   #:export (home-emacs-service-type
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
@@ -122,14 +121,37 @@
    (packages (list (specification->package "emacs-marginalia")))
    (init '((marginalia-mode)))))
 
-
-(define hotkey-configuration
+(define embark-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-evil")
-		   (specification->package "emacs-evil-collection")))
-   (init '((evil-collection-init)
-	   (evil-mode 1)))
-   (early-init '((setq evil-want-keybinding nil)))))
+   (packages (list (specification->package "emacs-embark")))
+   (init '((add-to-list 'display-buffer-alist
+			'("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+			  nil
+			  (window-parameters (mode-line-format . none))))))))
+
+(define consult-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-consult")))
+   (init '((add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
+	   (setq register-preview-delay 0.5
+		 register-preview-function #'consult-register-format)
+	   (advice-add #'register-preview :override #'consult-register-window)
+	   (setq xref-show-xrefs-function #'consult-xref
+		 xref-show-definitions-function #'consult-xref)
+	   (consult-customize
+	    consult-theme :preview-key '(:debounce 0.2 any)
+	    consult-ripgrep consult-git-grep consult-grep
+	    consult-bookmark consult-recent-file consult-xref
+	    consult--source-bookmark consult--source-file-register
+	    consult--source-recent-file consult--source-project-recent-file
+	    :preview-key '(:debounce 0.4 any))
+
+	   (setq consult-narrow-key "<")))))
+
+(define vertico-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-vertico")))
+   (init '((vertico-mode 1)))))
 
 (define project-configuration
   (home-emacs-configuration
@@ -217,29 +239,14 @@
 		   (specification->package "password-store")
 		   (specification->package "gnupg")
 		   (specification->package "openssh")))
-   (init '(;; (defun chomp (str)
-	   ;;   "Chomp tailing whitespace from STR."
-	   ;;   (replace-regexp-in-string (rx (* (any " \t\n")) eos)
-	   ;; 			       ""
-	   ;; 			       str))
-	   
-	   ;; (let ((ssh_auth_sock (s-trim (shell-command-to-string "gpgconf --list-dirs agent-ssh-socket"))))
-	   ;;   (setenv "SSH_AUTH_SOCK" ssh_auth_sock))
-	   ;; (setq epa-pinentry-mode 'loopback)
-	   ;; (setq epg-pinentry-mode 'loopback)
-	   ;; (auth-source-pass-enable)
-	   (pinentry-start)
-	   ;; (setq auth-sources '(password-store))
-	   ;; (setq mml-secure-openpgp-signers '("F2E03744BDA622D8"))
-	   ))))
+   (init '((pinentry-start)))))
 
 (define elfeed-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-elfeed")
-		   emacs-elfeed-tube
-		   (specification->package "mpv")
+   (packages (list (specification->package "mpv")
 		   (specification->package "yt-dlp")
-		   (specification->package "ffmpeg")))
+		   (specification->package "emacs-elfeed")
+		   emacs-elfeed-tube))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
@@ -440,9 +447,7 @@
 		   ("d" "drill" entry "* %(word->drill (jisho-search->completing-read))"
 		    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "\n")
 		    :unnarrowed t)))
-	   (global-set-key (kbd "s-i") (function org-roam-capture))
-
-	   ))))
+	   (global-set-key (kbd "s-i") (function org-roam-capture))))))
 
 (define website-configuration
   (home-emacs-configuration
@@ -453,7 +458,6 @@
 		   (default-directory "~/code/zaijab.github.io"))
 	       (call-interactively 'org-publish-all)
 	       (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam")))
-
 
 	   (global-set-key (kbd "s-p") 'zain-publish)
 
@@ -526,9 +530,7 @@
 		    :base-extension any
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-publish-attachment)
-		   ("zaindaman" :components ("orgfiles" "images" "css" "CNAME"))
-		   ))
-	   ))))
+		   ("zaindaman" :components ("orgfiles" "images" "css" "CNAME"))))))))
 
 
 (define org-mode-configuration
@@ -539,7 +541,6 @@
 		   (specification->package "emacs-valign")
 		   (specification->package "emacs-org-present")
 		   (specification->package "emacs-calfw") 
-		   
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
 		   (specification->package "ispell")))
@@ -625,12 +626,6 @@
 	      (specification->package "hicolor-icon-theme")
 	      (specification->package "python-sqlalchemy")
 	      (specification->package "python-sqlalchemy-utils")
-	      ;; (specification->package "tensorflow")
-	      ;; ((options->transformation
-	      ;;   '((with-input . "python-pyparsing=python-pyparsing@3.0.6")
-	      ;;     (without-tests . "python-pydot")
-	      ;;     (without-tests . "python-keras")))
-	      ;;  (specification->package "python-keras"))
 	      (specification->package "python-sshtunnel")
 	      (specification->package "python-psycopg2")
 	      (specification->package "python-pandas")
@@ -660,8 +655,7 @@
 
 (define lisp-configuration
   (home-emacs-configuration
-   (packages (list ;; (specification->package "emacs-lispy")
-	      ;; (specification->package "emacs-lispyville")
+   (packages (list 
 	      emacs-symex
 	      emacs-rigpa
 	      (specification->package "sicp")
@@ -682,8 +676,6 @@
 	   (setq rigpa-mode t)
 
 	   (remove-hook 'evil-symex-state-exit-hook (function symex-disable-editing-minor-mode))
-	   
-
 	   ;; custom config
 	   (setq rigpa-show-menus nil)
 
