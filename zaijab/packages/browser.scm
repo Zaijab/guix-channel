@@ -5,4 +5,5 @@
 
 (define-public google-chrome-unstable-browserpass
   (package (inherit google-chrome-unstable)
+    (name "google-chrome-unstable-browserpass")
     (inputs (append (list (list "browserpass-native" browserpass-native)) (package-inputs google-chrome-unstable)))))
