@@ -4,5 +4,5 @@
   #:use-module (nongnu packages chrome))
 
 (define-public google-chrome-unstable-browserpass
-  (package (inherit google-chrome-stable)
-    (inputs (append browserpass-native (package-inputs google-chrome-stable)))))
+  (package (inherit google-chrome-unstable)
+    (inputs (append (list (list "browserpass-native" browserpass-native)) (package-inputs google-chrome-unstable)))))
