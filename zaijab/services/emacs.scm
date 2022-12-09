@@ -124,7 +124,8 @@
 (define embark-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-embark")))
-   (init '((add-to-list 'display-buffer-alist
+   (init '((require 'embark)
+	   (add-to-list 'display-buffer-alist
 			'("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
 			  nil
 			  (window-parameters (mode-line-format . none))))))))
@@ -132,7 +133,8 @@
 (define consult-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-consult")))
-   (init '((add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
+   (init '((require 'consult)
+	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
 	   (setq register-preview-delay 0.5
 		 register-preview-function #'consult-register-format)
 	   (advice-add #'register-preview :override #'consult-register-window)
