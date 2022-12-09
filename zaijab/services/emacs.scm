@@ -94,8 +94,8 @@
 		 corfu-preview-current 'insert
 		 corfu-preselect-first nil)
 	   (define-key corfu-map (kbd "M-<SPC>") (function corfu-insert-separator))
-	   (define-key corfu-map (kbd "TAB") (function corfu-next))
-	   (define-key corfu-map (kbd "S-TAB") (function corfu-previous))))))
+	   (define-key corfu-map (kbd "<tab>") (function corfu-next))
+	   (define-key corfu-map (kbd "<backtab>") (function corfu-previous))))))
 
 (define tempel-configuration
   (home-emacs-configuration
@@ -105,11 +105,10 @@
 	     (setq-local completion-at-point-functions
 			 (cons (function tempel-expand)
 			       completion-at-point-functions)))
-
 	   (add-hook 'prog-mode-hook 'tempel-setup-capf)
 	   (add-hook 'text-mode-hook 'tempel-setup-capf)
-	   (define-key tempel-map (kbd "<tab>") (function tempel-next))
-	   ))))
+	   (define-key tempel-map (kbd "<backtab>") (function tempel-prev))
+	   (define-key tempel-map (kbd "<tab>") (function tempel-next))))))
 
 (define cape-configuration
   (home-emacs-configuration
@@ -118,6 +117,12 @@
 	   (add-to-list 'completion-at-point-functions (function cape-symbol))
 	   ;(add-to-list 'completion-at-point-functions (function cape-line))
 	   )))))
+
+(define marginalia-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-marginalia"))
+	     (init '((marginalia-mode))))))
+
 
 (define hotkey-configuration
   (home-emacs-configuration
