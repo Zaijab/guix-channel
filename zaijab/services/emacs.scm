@@ -210,12 +210,11 @@
 
 (define cryptography-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-pdf-tools")
+   (packages (list (specification->package "pinentry")
 		   (specification->package "emacs-pinentry")
 		   (specification->package "pinentry-emacs")
 		   (specification->package "password-store")
 		   (specification->package "browserpass-native")
-		   (specification->package "pinentry")
 		   (specification->package "gnupg")
 		   (specification->package "openssh")
 		   (specification->package "binutils")
