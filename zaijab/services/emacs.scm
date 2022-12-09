@@ -114,14 +114,12 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-cape")))
    (init '((setq tab-always-indent 'complete)
-	   (add-to-list 'completion-at-point-functions (function cape-symbol))
-	   ;(add-to-list 'completion-at-point-functions (function cape-line))
-	   ))))
+	   (add-to-list 'completion-at-point-functions (function cape-symbol))))))
 
 (define marginalia-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-marginalia")))
-	     (init '((marginalia-mode)))))
+   (init '((marginalia-mode)))))
 
 
 (define hotkey-configuration
@@ -154,32 +152,24 @@
 		   (specification->package "font-iosevka")
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)
-
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
 		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))
 	   (defun jisho-word->english-part (jisho-word)
 	     (gethash "english_definitions" (elt (gethash "senses" jisho-word) 0)))
-
 	   (defun kanji-word->drill (word)
-	     ;; (setq word (cons (car word) word))
 	     (apply 'format "%s :drill:Japanese:\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n** Kanji\n%s\n** Picture\n\n** Kana\n%s\n** English\n%s\n" (cons (car word) word)))
-
 	   (defun kana-word->drill (word)
-	     ;; (setq word (cons (car word) word))
 	     (apply 'format "%s :drill:Japanese:\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n** Kana\n%s\n** Picture\n\n** English\n%s\n" (cons (car word) word)))
-
 	   (defun word->drill (word)
 	     (if (car word)
 		 (kanji-word->drill word)
 		 (kana-word->drill (cdr word))))
-
 	   (defun my-presorted-completion-table (completions)
 	     (lambda (string pred action)
 	       (if (eq action 'metadata)
 		   `(metadata (display-sort-function . ,(function identity)))
 		   (complete-with-action action completions string pred))))
-
 	   (defvar *jisho-results* ())
 	   (defun jisho-search->completing-read ()
 	     (interactive)
@@ -202,7 +192,6 @@
 		 (setq total-word (append (jisho-word->japanese-part word) (jisho-word->english-part word)))
 		 (setq *jisho-results* (append *jisho-results* (list (cons (string-join total-word " ") total-word))))
 		 (setq words (cdr words)))
-	       
 	       (alist-get
 		(completing-read "Results: " *jisho-results*)
 		*jisho-results* nil nil 'equal)))))))
@@ -243,7 +232,6 @@
 	   (setq epa-pinentry-mode 'loopback)
 	   (setq epg-pinentry-mode 'loopback)
 	   (pinentry-start)
-	   ;; (shell-command "gpg-connect-agent /bye")
 	   (setq auth-sources '(password-store))
 	   (auth-source-pass-enable)
 	   ;; (setq mml-secure-openpgp-signers '("F2E03744BDA622D8"))
@@ -696,7 +684,6 @@
 	   (global-set-key (kbd "s-;") 'symex-mode-interface)
 	   (require 'rigpa)
 	   (setq rigpa-mode t)
-	   ;; temporary workaround for https://github.com/countvajhula/rigpa/issues/9
 
 	   (remove-hook 'evil-symex-state-exit-hook (function symex-disable-editing-minor-mode))
 	   
