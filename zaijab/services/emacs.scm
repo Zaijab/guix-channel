@@ -136,7 +136,7 @@
    (init '((require 'consult)
 	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
 	   (setq register-preview-delay 0.5
-		 register-preview-function #'consult-register-format)
+		 register-preview-function (function consult-register-format))
 	   (advice-add (function register-preview) :override (function consult-register-window))
 	   (setq xref-show-xrefs-function (function consult-xref)
 		 xref-show-definitions-function (function consult-xref))
