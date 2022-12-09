@@ -137,9 +137,9 @@
 	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
 	   (setq register-preview-delay 0.5
 		 register-preview-function #'consult-register-format)
-	   (advice-add #'register-preview :override #'consult-register-window)
-	   (setq xref-show-xrefs-function #'consult-xref
-		 xref-show-definitions-function #'consult-xref)
+	   (advice-add (function register-preview) :override (function consult-register-window))
+	   (setq xref-show-xrefs-function (function consult-xref)
+		 xref-show-definitions-function (function consult-xref))
 	   (consult-customize
 	    consult-theme :preview-key '(:debounce 0.2 any)
 	    consult-ripgrep consult-git-grep consult-grep
