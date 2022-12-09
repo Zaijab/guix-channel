@@ -100,7 +100,7 @@
 (define tempel-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-tempel")))
-   (init '((require 'tempel) 
+   (init '((require 'tempel)
 	   (defun tempel-setup-capf ()
 	     (setq-local completion-at-point-functions
 			 (cons (function tempel-expand)
@@ -112,11 +112,11 @@
 
 (define cape-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-cape"))
+   (packages (list (specification->package "emacs-cape")))
    (init '((setq tab-always-indent 'complete)
 	   (add-to-list 'completion-at-point-functions (function cape-symbol))
 	   ;(add-to-list 'completion-at-point-functions (function cape-line))
-	   )))))
+	   ))))
 
 (define marginalia-configuration
   (home-emacs-configuration
