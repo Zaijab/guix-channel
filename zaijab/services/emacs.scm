@@ -959,6 +959,7 @@
 		 (push '(vertical-scroll-bars) default-frame-alist)
 		 (blink-cursor-mode 0)
 		 (setq comp-async-report-warnings-errors nil)
+		 (setq native-comp-async-report-warnings-errors nil) 
 		 (setq warning-suppress-log-types '((comp) (comp)))
 		 (setq warning-suppress-types '((comp) (comp)))
 		 (setq user-emacs-directory "~/.config/emacs")
