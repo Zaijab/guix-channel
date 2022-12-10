@@ -161,9 +161,8 @@
 (define undo-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-undo-tree")))
-   (init '((setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undo")))
-	   (global-undo-tree-mode)))
-   (early-init '((setq evil-want-keybinding nil)))))
+   (init '((setq undo-tree-history-directory-alist  '(("." . "~/.config/emacs/undo-tree/")))
+	   (global-undo-tree-mode)))))
 
 (define project-configuration
   (home-emacs-configuration
