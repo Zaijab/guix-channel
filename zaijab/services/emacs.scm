@@ -150,10 +150,13 @@
 
 	   (setq consult-narrow-key "<")))))
 
-(define vertico-configuration
+(define evil-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-vertico")))
-   (init '((vertico-mode 1)))))
+   (packages (list (specification->package "emacs-evil")
+		   (specification->package "emacs-evil-collection")))
+   (init '((evil-collection-init)
+	   (evil-mode 1)))
+   (early-init '((setq evil-want-keybinding nil)))))
 
 (define project-configuration
   (home-emacs-configuration
