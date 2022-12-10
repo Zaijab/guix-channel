@@ -6,6 +6,6 @@ org-mode
 (mm "\\( " p " \\) ")
 (dm "\\[ " p " \\]" n)
 (begin "\\begin{" (s env) "}" r> n> "\\end{" (s env) "}")
-(frac "\\frac{" p "}{" q "}")
+(frac "\\frac{" p "}{" q "}" p)
 (set "\\{ " p " \\vert " p " \\}")
 (func p " \colon " p " \\to " p)

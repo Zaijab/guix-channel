@@ -107,8 +107,8 @@
 			       completion-at-point-functions)))
 	   (add-hook 'prog-mode-hook 'tempel-setup-capf)
 	   (add-hook 'text-mode-hook 'tempel-setup-capf)
-	   (define-key tempel-map (kbd "<backtab>") (function tempel-prev))
-	   (define-key tempel-map (kbd "<tab>") (function tempel-next))))))
+	   (define-key tempel-map (kbd "C-a") (function tempel-prev))
+	   (define-key tempel-map (kbd "C-d") (function tempel-next))))))
 
 (define cape-configuration
   (home-emacs-configuration
