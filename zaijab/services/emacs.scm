@@ -158,6 +158,13 @@
 	   (evil-mode 1)))
    (early-init '((setq evil-want-keybinding nil)))))
 
+(define undo-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-undo-tree")))
+   (init '((setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undo")))
+	   (global-undo-tree-mode)))
+   (early-init '((setq evil-want-keybinding nil)))))
+
 (define project-configuration
   (home-emacs-configuration
    (packages (list (specification->package "git")
