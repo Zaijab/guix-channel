@@ -164,7 +164,7 @@
    (init '((setq undo-tree-history-directory-alist  '(("." . "~/.config/emacs/undo-tree/")))
 	   (global-undo-tree-mode)))))
 
-(define undo-configuration
+(define indentation-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-aggressive-indent")))
    (init '((require 'aggressive-indent)
