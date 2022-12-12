@@ -255,7 +255,8 @@
 		   (specification->package "pinentry-emacs")
 		   (specification->package "password-store")
 		   (specification->package "gnupg")
-		   (specification->package "openssh")))
+		   (specification->package "openssh")
+		   (specification->package "openconnect")))
    (init '((pinentry-start)))))
 
 (define elfeed-configuration
