@@ -673,7 +673,8 @@
 	      (specification->package "emacs-guix")
 	      (specification->package "emacs-srfi")
 	      (specification->package "emacs-geiser")
-	      (specification->package "emacs-geiser-guile")))
+	      (specification->package "emacs-geiser-guile")
+	      (specification->package "guile-chickadee")))
    (init '((require 'geiser-guile)
 	   (setq geiser-default-implementation 'guile)
 	   (require 'guix)
@@ -784,7 +785,7 @@
 	   ;; 		     (interactive)
 	   ;; 		     (rigpa-enter-mode "word")))
 
-
+	   ;(define-key symex-mode-map (kbd ""))
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc
