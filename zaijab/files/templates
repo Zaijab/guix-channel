@@ -1,3 +1,4 @@
+;; -*- mode: emacs-lisp -*-
 org-mode
 
 (src "#+begin_src " p n> r> n> "#+end_src")
@@ -6,6 +7,8 @@ org-mode
 (mm "\\( " p " \\) ")
 (dm "\\[ " p " \\]" n)
 (begin "\\begin{" (s env) "}" r> n> "\\end{" (s env) "}")
+(align "\\begin{align}" r> n> "\\end{align}")
+(itemize "\\begin{itemize}\n\\item " r> n> "\\end{itemize}")
 (thm "#+BEGIN_THEOREM" p n> r> n> "#+END_THEOREM")
 (proof "#+BEGIN_PROOF" p n> r> n> "#+END_PROOF")
 (frac "\\frac{" p "}{" q "}" p)

@@ -116,7 +116,8 @@
 			     (vpn-plugins
 			      (list
 			       (specification->package "network-manager-openvpn")
-			       (specification->package "network-manager-openconnect"))))))))))
+			       (specification->package "network-manager-openconnect")
+			       #;(specification->package "openconnect-sso"))))))))))
 
 (define-public tao-operating-system
   based-operating-system)
