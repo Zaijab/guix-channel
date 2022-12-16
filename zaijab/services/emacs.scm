@@ -830,6 +830,7 @@
 	      (specification->package "emacs-xelb")
 	      (specification->package "picom")
 	      (specification->package "emacs-windsize")
+	      (specification->package "unclutter") 
 	      (specification->package "xrandr")
 	      (specification->package "arandr")))
    (init '((require 'exwm)
@@ -874,7 +875,7 @@
 					 (lambda () (interactive)
 						 (call-process-shell-command "loginctl suspend"))))
 	   (global-set-key (kbd "<f8>") 'toggle-exwm-input-line-mode-passthrough)
-	   ;(global-set-key (kbd "s-a") 'toggle-exwm-input-line-mode-passthrough)
+					;(global-set-key (kbd "s-a") 'toggle-exwm-input-line-mode-passthrough)
 	   (defun exwm-rename-buffer-to-title () (exwm-workspace-rename-buffer exwm-class-name))
 	   (defun exwm-rename-buffer ()
 	     (interactive)
@@ -882,7 +883,7 @@
 	      (concat exwm-class-name ":"
 		      (if (<= (length exwm-title) 25) exwm-title
 			  (concat (substring exwm-title 0 24) "...")))))
-      
+	   
 	   ;; Add these hooks in a suitable place (e.g., as done in exwm-config-default)
 	   (add-hook 'exwm-update-class-hook 'exwm-rename-buffer)
 	   (add-hook 'exwm-update-title-hook 'exwm-rename-buffer)
