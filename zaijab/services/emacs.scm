@@ -10,7 +10,6 @@
   #:use-module (guix transformations)
   #:use-module (guix gexp)
   #:use-module (zaijab packages emacs-xyz)
-  #:use-module (zaijab packages browser)
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages fonts)
   #:export (home-emacs-service-type
