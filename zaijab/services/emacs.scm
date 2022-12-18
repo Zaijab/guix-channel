@@ -1014,9 +1014,8 @@
   (fold (lambda (config-1 config-2) (home-emacs-configuration
 				     (emacs
 				      ((options->transformation '((with-branch . "emacs-next=master")
-								  (with-source . "binutils=mirror://gnu/binutils/binutils-2.39.tar.bz2") 
-								  (with-input . "libgccjit=libgccjit@11.3.0")
-								  ;(with-c-toolchain . "gcc=gcc@12.2.0")
+								  (with-input . "libgccjit=libgccjit@12.2.0")
+								  (with-c-toolchain . "gcc@12.2.0")
 								  )) (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
