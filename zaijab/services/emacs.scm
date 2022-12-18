@@ -1013,11 +1013,10 @@
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
 				     (emacs
-				      ((options->transformation '((with-branch . "emacs-next=master")
-								  (with-input . "libgccjit=libgccjit@12.2.0")
-								  (with-input . "gcc=gcc@12.2.0")
-								  (without-tests . "openssl")
-								  (with-c-toolchain . "libgccjit=gcc@12.2.0")
+				      ((options->transformation '((with-input . "libgccjit=libgccjit@12.2.0")
+								  
+								  
+								  
 								  )) (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
