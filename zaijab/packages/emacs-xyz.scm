@@ -163,7 +163,8 @@
           `(cons* "--with-tree-sitter" ,flags))))
       (inputs (modify-inputs
 	       (package-inputs emacs-next)
-	       (append tree-sitter))))))
+	       (append tree-sitter)
+	       (append curl))))))
 
 (define-public emacs-dynaring
   (package
