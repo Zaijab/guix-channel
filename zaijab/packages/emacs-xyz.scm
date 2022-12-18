@@ -133,6 +133,35 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
+(define-public emacs-next-tree-sitter
+  (let ((commit "32615c9bc124970aade150e81c2ed4a5c0492ef7")
+        (revision "5"))
+    (package
+      (inherit emacs)
+      (name "emacs-next-pgtk-stable")
+      (version (git-version "30.0.50" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/emacs-mirror/emacs")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (patches (search-patches "emacs-pgtk-super-key-fix.patch"
+                                  "emacs-exec-path.patch"
+                                  "emacs-fix-scheme-indent-function.patch"
+                                  "emacs-native-comp-driver-options.patch"
+                                  ;; "emacs-source-date-epoch.patch"
+                                  ))
+         (sha256
+          (base32
+           "1gv4ihns0vbghi0d34by436qxqgms96593sahb45qy4dbwxibjza"))))
+      (arguments
+       (substitute-keyword-arguments (package-arguments emacs-next)
+         ((#:configure-flags flags ''())
+          `(cons* "--with-tree-sitter" ,flags))))
+      (inputs
+       (package-inputs emacs-next)))))
 
 (define-public emacs-dynaring
   (package
