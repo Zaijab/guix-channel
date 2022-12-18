@@ -119,6 +119,7 @@
   #:use-module (gnu packages swig)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages textutils)
+  #:use-module (gnu packages text-editors)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages time)
   #:use-module (gnu packages upnp)
@@ -138,7 +139,7 @@
         (revision "5"))
     (package
       (inherit emacs)
-      (name "emacs-next-pgtk-stable")
+      (name "emacs-next-tree-sitter")
       (version (git-version "30.0.50" revision commit))
       (source
        (origin
@@ -160,8 +161,9 @@
        (substitute-keyword-arguments (package-arguments emacs-next)
          ((#:configure-flags flags ''())
           `(cons* "--with-tree-sitter" ,flags))))
-      (inputs
-       (package-inputs emacs-next)))))
+      (inputs (modify-inputs
+	       (package-inputs emacs-next)
+	       (append tree-sitter))))))
 
 (define-public emacs-dynaring
   (package
