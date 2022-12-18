@@ -1015,7 +1015,7 @@
 				     (emacs
 				      ((options->transformation '((with-branch . "emacs-next=master")
 								  (with-input . "libgccjit=libgccjit@12.2.0")
-								  (with-c-toolchain . "gcc@12.2.0")
+								  (with-c-toolchain . "libgccjit=gcc@12.2.0")
 								  )) (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
