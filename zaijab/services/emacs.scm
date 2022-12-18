@@ -291,7 +291,7 @@
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL6763F57A61FE6FE8" lecture topology wildberger)))
 	   (require 'elfeed-tube)
 	   (elfeed-tube-setup)
-	   (setq-default elfeed-search-filter "")
+	   (setq-default elfeed-search-filter "-fun -crafter")
 	   (setq-default elfeed-search-title-max-width 100)
 	   (setq-default elfeed-search-title-min-width 100)
 	   (defun browse-url-mpv (url &optional new-window)

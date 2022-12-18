@@ -321,7 +321,7 @@ layer that explicitly uses the abstract syntax tree, for greater precision.")
 	       (base32
 		"0h32bpq8w1j3rbwfqlfj10vvlw21j9rcpqjpp45pw8z6xxb2q0lp"))))
     (build-system emacs-build-system)
-    (propagated-inputs (list emacs-elfeed emacs-aio))
+    (propagated-inputs (list emacs-elfeed emacs-aio)) 
     (arguments
      '(#:include '("^elfeed-tube.el$" "^elfeed-tube-utils.el$"
 		   "^elfeed-tube-fill.el$")
