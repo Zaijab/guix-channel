@@ -1013,7 +1013,8 @@
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
 				     (emacs
-				      ((options->transformation '((with-input . "libgccjit=libgccjit@12.2.0") (with-branch . "emacs-next=feature/tree-sitter")))
+				      ((options->transformation '((with-input . "libgccjit=libgccjit@12.2.0")
+								  (with-branch . "emacs-next=emacs-29")))
 				       (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
