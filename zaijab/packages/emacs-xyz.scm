@@ -365,7 +365,7 @@ layer that explicitly uses the abstract syntax tree, for greater precision.")
     (license #f)))
 
 (define-public emacs-rigpa
- (package
+  (package
     (name "emacs-rigpa")
     (version "0.5")
     (source (origin
@@ -378,7 +378,7 @@ layer that explicitly uses the abstract syntax tree, for greater precision.")
 	       (base32
 		"14nx15chy36l6gdd6m926v98j1g4znx5pw7x7k3bgrnaw1dvyi9a"))))
     (build-system emacs-build-system)
-    (propagated-inputs
+    (inputs
      (list 
       `("emacs-next" ,(specification->package "emacs-next"))
       `("emacs-evil" ,(specification->package "emacs-evil"))
