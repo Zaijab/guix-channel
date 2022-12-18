@@ -7,7 +7,7 @@ gsystem:
 	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/$(HOSTNAME).scm --allow-downgrades
 
 gpull:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channels.tmpl --allow-downgrades
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channels.tmpl --allow-downgrades -v 4
 	guix upgrade
 
 gpackage:
