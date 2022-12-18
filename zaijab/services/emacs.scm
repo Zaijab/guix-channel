@@ -1014,6 +1014,7 @@
   (fold (lambda (config-1 config-2) (home-emacs-configuration
 				     (emacs
 				      ((options->transformation '((with-branch . "emacs-next=master")
+								  (with-branch . "binutils=master") 
 								  (with-input . "libgccjit=libgccjit@12.2.0")
 								  (with-c-toolchain . "gcc=gcc@12.2.0")
 								  (without-tests . "curl"))) (specification->package "emacs-next")))
