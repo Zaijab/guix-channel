@@ -52,11 +52,11 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       (specification->package "emacs-next")
-	       ((options->transformation
-		 '((with-input . "emacs=emacs-next")
-		   (with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
-		(specification->package "emacs-exwm"))
+	       ;; (specification->package "emacs-next")
+	       ;; ((options->transformation
+	       ;; 	 '((with-input . "emacs=emacs-next")
+	       ;; 	   (with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
+	       ;; 	(specification->package "emacs-exwm"))
 	       (specification->package "nss-certs")
 	       (specification->package "pulseaudio")
 	       (specification->package "network-manager-applet")
