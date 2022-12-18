@@ -131,100 +131,299 @@
   #:use-module (gnu packages xiph)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
-  
+  #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
 
-(define-public mpv-zain
+(define-public emacs-without-native-comp
   (package
-    (name "mpv-zain")
-    (version "0.35.0")
+    (name "emacs")
+    (version "28.2")
     (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://github.com/mpv-player/mpv")
-		    (commit (string-append "v" version))))
-	      (file-name (git-file-name name version))
+	      (method url-fetch)
+	      (uri (string-append "mirror://gnu/emacs/emacs-"
+				  version ".tar.xz"))
 	      (sha256
-	       (base32 "1jnk1arwhf82s6q90jp70izk1wy0bkx3lr3il2jgbqsp355l6wsk"))))
-    (build-system waf-build-system)
+	       (base32
+		"12144dcaihv2ymfm7g2vnvdl4h71hqnsz1mljzf34cpg6ci1h8gf"))
+	      (patches (search-patches "emacs-exec-path.patch"
+				       "emacs-fix-scheme-indent-function.patch"
+				       "emacs-source-date-epoch.patch"))
+	      (modules '((guix build utils)))
+	      (snippet
+	       '(with-directory-excursion "lisp"
+		  ;; Delete the bundled byte-compiled elisp files and generated
+		  ;; autoloads.
+		  (for-each delete-file
+			    (append (find-files "." "\\.elc$")
+				    (find-files "." "loaddefs\\.el$")
+				    (find-files "eshell" "^esh-groups\\.el$")))
+
+		  ;; Make sure Tramp looks for binaries in the right places on
+		  ;; remote Guix System machines, where 'getconf PATH' returns
+		  ;; something bogus.
+		  (substitute* "net/tramp.el"
+		    ;; Patch the line after "(defcustom tramp-remote-path".
+		    (("\\(tramp-default-remote-path")
+		     (format #f "(tramp-default-remote-path ~s ~s ~s ~s "
+			     "~/.guix-profile/bin" "~/.guix-profile/sbin"
+			     "/run/current-system/profile/bin"
+			     "/run/current-system/profile/sbin")))
+
+		  ;; Make sure Man looks for C header files in the right
+		  ;; places.
+		  (substitute* "man.el"
+		    (("\"/usr/local/include\"" line)
+		     (string-join
+		      (list line
+			    "\"~/.guix-profile/include\""
+			    "\"/var/guix/profiles/system/profile/include\"")
+		      " ")))))))
+    (build-system glib-or-gtk-build-system)
     (arguments
      (list
+      #:tests? #f                      ; no check target
+      #:modules (%emacs-modules build-system)
+      #:configure-flags #~(list "--with-modules"
+				"--with-cairo"
+				
+				"--disable-build-details")
+      #:make-flags #~(list "NATIVE_FULL_AOT=1")
       #:phases
       #~(modify-phases %standard-phases
-	  (add-after 'unpack 'patch-file-names
+	  (add-after 'set-paths 'set-libgccjit-path
 	    (lambda* (#:key inputs #:allow-other-keys)
-	      (substitute* "player/lua/ytdl_hook.lua"
-		(("\"yt-dlp\",")
-		 (string-append
-		  "\"" (search-input-file inputs "bin/yt-dlp") "\",")))))
-	  (add-before 'configure 'build-reproducibly
+	      (define (first-subdirectory/absolute directory)
+		(let ((files (scandir
+			      directory
+			      (lambda (file)
+				(and (not (member file '("." "..")))
+				     (file-is-directory? (string-append
+							  directory "/"
+							  file)))))))
+		  (and (not (null? files))
+		       (string-append directory "/" (car files)))))
+	      (let* ((libgccjit-libdir
+		      (first-subdirectory/absolute ;; version
+		       (first-subdirectory/absolute ;; host type
+			(search-input-directory inputs "lib/gcc")))))
+		(setenv "LIBRARY_PATH"
+			(string-append (getenv "LIBRARY_PATH")
+				       ":" libgccjit-libdir)))))
+	  (add-after 'unpack 'enable-elogind
 	    (lambda _
-	      ;; Somewhere in the build system library dependencies are enumerated
-	      ;; and passed as linker flags, but the order in which they are added
-	      ;; varies.  See <https://github.com/mpv-player/mpv/issues/7855>.
-	      ;; Set PYTHONHASHSEED as a workaround for deterministic results.
-	      (setenv "PYTHONHASHSEED" "1")))
-	  (add-before 'configure 'set-up-waf
+	      (substitute* "configure.ac"
+		(("libsystemd") "libelogind"))
+	      (when (file-exists? "configure")
+		(delete-file "configure"))))
+	  (add-after 'unpack 'patch-program-file-names
 	    (lambda* (#:key inputs #:allow-other-keys)
-	      (copy-file (search-input-file inputs "bin/waf") "waf")
-	      (setenv "CC" #$(cc-for-target)))))
-      #:configure-flags
-      #~(list "--enable-libmpv-shared"
-	      "--enable-cdda"
-	      "--enable-dvdnav"
-	      "--disable-build-date")
-      ;; No check function defined.
-      #:tests? #f))
-    (native-inputs
-     (list perl ; for zsh completion file
-	   pkg-config python-docutils))
-    ;; Missing features: libguess, V4L2.
+	      (substitute* '("src/callproc.c"
+			     "lisp/term.el"
+			     "lisp/htmlfontify.el"
+			     "lisp/textmodes/artist.el"
+			     "lisp/progmodes/sh-script.el")
+		(("\"/bin/sh\"")
+		 (format #f "~s" (search-input-file inputs "/bin/sh"))))
+	      (substitute* "lisp/doc-view.el"
+		(("\"(gs|dvipdf|ps2pdf|pdftotext)\"" all what)
+		 (let ((replacement (false-if-exception
+				     (search-input-file
+				      inputs
+				      (string-append "/bin/" what)))))
+		   (if replacement
+		       (string-append "\"" replacement "\"")
+		       all))))
+	      ;; match ".gvfs-fuse-daemon-real" and ".gvfsd-fuse-real"
+	      ;; respectively when looking for GVFS processes.
+	      (substitute* "lisp/net/tramp-gvfs.el"
+		(("\\(tramp-compat-process-running-p \"(.*)\"\\)" all process)
+		 (format #f "(or ~a (tramp-compat-process-running-p ~s))"
+			 all (string-append "." process "-real"))))))
+	  (add-after 'unpack 'patch-compilation-driver
+	    (lambda _
+	      (substitute* "lisp/emacs-lisp/comp.el"
+		(("\\(defcustom native-comp-driver-options nil")
+		 (format
+		  #f "(defcustom native-comp-driver-options '(~@{~s~^ ~})"
+		  (string-append
+		   "-B" #$(this-package-input "binutils") "/bin/")
+		  (string-append
+		   "-B" #$(this-package-input "glibc") "/lib/")
+		  (string-append
+		   "-B" #$(this-package-input "libgccjit") "/lib/")
+		  (string-append
+		   "-B" #$(this-package-input "libgccjit") "/lib/gcc/"))))))
+	  (add-before 'configure 'fix-/bin/pwd
+	    (lambda _
+	      ;; Use `pwd', not `/bin/pwd'.
+	      (substitute* (find-files "." "^Makefile\\.in$")
+		(("/bin/pwd")
+		 "pwd"))))
+	  (add-after 'install 'install-site-start
+	    ;; Use 'guix-emacs' in "site-start.el", which is used autoload the
+	    ;; Elisp packages found in EMACSLOADPATH.
+	    (lambda* (#:key inputs outputs #:allow-other-keys)
+	      (let* ((out      (assoc-ref outputs "out"))
+		     (lisp-dir (string-append out "/share/emacs/site-lisp"))
+		     (emacs    (string-append out "/bin/emacs")))
+
+		;; This is duplicated from emacs-utils to prevent coupling.
+		(define* (emacs-byte-compile-directory dir)
+		  (let ((expr `(progn
+				(setq byte-compile-debug t)
+				(byte-recompile-directory
+				 (file-name-as-directory ,dir) 0 1))))
+		    (invoke emacs "--quick" "--batch"
+			    (format #f "--eval=~s" expr))))
+
+		(copy-file #$(local-file
+			      (search-auxiliary-file "emacs/guix-emacs.el"))
+			   (string-append lisp-dir "/guix-emacs.el"))
+		(with-output-to-file (string-append lisp-dir "/site-start.el")
+		  (lambda ()
+		    (display
+		     (string-append
+		      "(when (require 'guix-emacs nil t)\n"
+		      "  (guix-emacs-autoload-packages)\n"
+		      "  (advice-add 'package-load-all-descriptors"
+		      " :after #'guix-emacs-load-package-descriptors))"))))
+		;; Remove the extraneous subdirs.el file, as it causes Emacs to
+		;; add recursively all the the sub-directories of a profile's
+		;; share/emacs/site-lisp union when added to EMACSLOADPATH,
+		;; which leads to conflicts.
+		(delete-file (string-append lisp-dir "/subdirs.el"))
+		;; Byte compile the site-start files.
+		(emacs-byte-compile-directory lisp-dir))))
+	  (add-after 'glib-or-gtk-wrap 'restore-emacs-pdmp
+	    ;; restore the dump file that Emacs installs somewhere in
+	    ;; libexec/ to its original state
+	    (lambda* (#:key outputs target #:allow-other-keys)
+	      (let* ((libexec (string-append (assoc-ref outputs "out")
+					     "/libexec"))
+		     ;; each of these ought to only match a single file,
+		     ;; but even if not (find-files) sorts by string<,
+		     ;; so the Nth element in one maps to the Nth element of
+		     ;; the other
+		     (pdmp (find-files libexec "\\.pdmp$"))
+		     (pdmp-real (find-files libexec "\\.pdmp-real$")))
+		(for-each rename-file pdmp-real pdmp))))
+	  (add-after 'glib-or-gtk-wrap 'strip-double-wrap
+	    (lambda* (#:key outputs #:allow-other-keys)
+	      ;; Directly copy emacs-X.Y to emacs, so that it is not wrapped
+	      ;; twice.  This also fixes a minor issue, where WMs would not be
+	      ;; able to track emacs back to emacs.desktop.
+	      (with-directory-excursion (assoc-ref outputs "out")
+		(copy-file
+		 (car (find-files "bin" "^emacs-([0-9]+\\.)+[0-9]+$"))
+		 "bin/emacs"))))
+	  (add-after 'strip-double-wrap 'wrap-emacs-paths
+	    (lambda* (#:key inputs outputs #:allow-other-keys)
+	      (let* ((out (assoc-ref outputs "out"))
+		     (lisp-dirs (find-files (string-append out "/share/emacs")
+					    "^lisp$"
+					    #:directories? #t)))
+		(for-each
+		 (lambda (prog)
+		   (wrap-program prog
+		     ;; emacs-next and variants rely on uname being in PATH for
+		     ;; Tramp.  Tramp paths can't be hardcoded, because they
+		     ;; need to be portable.
+		     `("PATH" suffix
+		       ,(map dirname
+			     (list (search-input-file inputs "/bin/gzip")
+				   ;; for coreutils
+				   (search-input-file inputs "/bin/yes"))))
+		     `("EMACSLOADPATH" suffix ,lisp-dirs)))
+		 (find-files (string-append out "/bin")
+			     ;; Matches versioned and unversioned emacs binaries.
+			     ;; We don't patch emacsclient, because it takes its
+			     ;; environment variables from emacs.
+			     ;; Likewise, we don't need to patch helper binaries
+			     ;; like etags, ctags or ebrowse.
+			     "^emacs(-[0-9]+(\\.[0-9]+)*)?$"))))))))
     (inputs
-     (list alsa-lib
-	   enca
-	   ffmpeg
-	   jack-1
-	   ladspa
-	   lcms
-	   libass
-	   libbluray
-	   libcaca
-	   libbs2b
-	   libcdio-paranoia
-	   libdvdread
-	   libdvdnav
-	   libjpeg-turbo
-	   libva
-	   libvdpau
+     (list gnutls
+	   ncurses
+
+	   ;; To "unshadow" ld-wrapper in native builds
+	   (make-ld-wrapper "ld-wrapper" #:binutils binutils)
+
+	   ;; For native compilation
+	   binutils
+	   glibc
+	   libgccjit
+
+	   ;; Required for "core" functionality, such as dired and compression.
+	   coreutils
+	   gzip
+
+	   ;; Avoid Emacs's limited movemail substitute that retrieves POP3
+	   ;; email only via insecure channels.
+	   ;; This is not needed for (modern) IMAP.
+	   mailutils
+
+	   gpm
 	   libx11
-	   libxext
-	   libxkbcommon
-	   libxinerama
-	   libxpresent
-	   libxrandr
-	   libxscrnsaver
-	   libxv
-	   ;; XXX: lua > 5.2 is not currently supported; see
-	   ;; waftools/checks/custom.py
-	   lua-5.2
-	   mesa
-	   mpg123
-	   pulseaudio
-	   python-waf
-	   rsound
-	   shaderc
-	   vulkan-headers
-	   vulkan-loader
-	   wayland
-	   wayland-protocols
-	   yt-dlp
-	   zlib))
-    (home-page "https://mpv.io/")
-    (synopsis "Audio and video player")
-    (description "mpv is a general-purpose audio and video player.  It is a
-fork of mplayer2 and MPlayer.  It shares some features with the former
-projects while introducing many more.")
-    (license license:gpl2+)))
+	   gtk+
+	   cairo
+	   pango
+	   harfbuzz
+	   libxft
+	   libtiff
+	   giflib
+	   lcms
+	   libjpeg-turbo
+	   libselinux
+	   acl
+	   jansson
+	   gmp
+	   ghostscript
+	   poppler
+	   elogind
+
+	   ;; When looking for libpng `configure' links with `-lpng -lz', so we
+	   ;; must also provide zlib as an input.
+	   libpng
+	   zlib
+	   (if (target-x86-64?)
+	       librsvg-bootstrap
+	       librsvg-2.40)
+	   libxpm
+	   libxml2
+	   libice
+	   libsm
+	   alsa-lib
+	   dbus
+
+	   ;; multilingualization support
+	   libotf
+	   m17n-lib))
+    (native-inputs
+     (list autoconf pkg-config texinfo))
+    (native-search-paths
+     (list (search-path-specification
+	    (variable "EMACSLOADPATH")
+	    (files '("share/emacs/site-lisp")))
+	   (search-path-specification
+	    (variable "EMACSNATIVELOADPATH")
+	    (files '("lib/emacs/native-site-lisp")))
+	   (search-path-specification
+	    (variable "INFOPATH")
+	    (files '("share/info")))))
+
+    (home-page "https://www.gnu.org/software/emacs/")
+    (synopsis "The extensible, customizable, self-documenting text editor")
+    (description
+     "GNU Emacs is an extensible and highly customizable text editor.  It is
+based on an Emacs Lisp interpreter with extensions for text editing.  Emacs
+has been extended in essentially all areas of computing, giving rise to a
+vast array of packages supporting, e.g., email, IRC and XMPP messaging,
+spreadsheets, remote server editing, and much more.  Emacs includes extensive
+documentation on all aspects of the system, from basic editing to writing
+large Lisp programs.  It has full Unicode support for nearly all human
+languages.")
+    (license license:gpl3+)))
+
 
 
 
@@ -233,12 +432,12 @@ projects while introducing many more.")
     (name "emacs-dynaring")
     (version "20210924.2026")
     (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/countvajhula/dynaring.git")
-                    (commit "dc9013117bdcdc1b12feebcc58eaf129a6ad3a73")))
-              (sha256
-               (base32
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/countvajhula/dynaring.git")
+		    (commit "dc9013117bdcdc1b12feebcc58eaf129a6ad3a73")))
+	      (sha256
+	       (base32
 		"0z5r0wybpm74hlcbisavn90i31vh3jsalhk0frihfclfgbqd24d9"))))
     (build-system emacs-build-system)
     (home-page "https://github.com/countvajhula/dynaring")
@@ -247,24 +446,23 @@ projects while introducing many more.")
     (license #f)))
 
 (define-public emacs-buffer-ring
-(package
-  (name "emacs-buffer-ring")
-  (version "20220120.124")
-  (source (origin
-            (method git-fetch)
-            (uri (git-reference
-                  (url "https://github.com/countvajhula/buffer-ring.git")
-                  (commit "177d67238c4d126a0270585e21c0f03ae750ca2a")))
-            (sha256
-             (base32
-              "1li3fq5797hcd2wy5w2vp6hmgf779mrm0pw2nj4a19snwl9ak02j"))))
-  (build-system emacs-build-system)
-  (propagated-inputs (list emacs-dynaring emacs-s emacs-ht))
-  (home-page "https://github.com/countvajhula/buffer-ring")
-  (synopsis "Rings and tori for buffer navigation")
-  (description "Rings of buffers and tori of buffer rings.")
-  (license #f))
-  )
+  (package
+    (name "emacs-buffer-ring")
+    (version "20220120.124")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/countvajhula/buffer-ring.git")
+                    (commit "177d67238c4d126a0270585e21c0f03ae750ca2a")))
+              (sha256
+               (base32
+		"1li3fq5797hcd2wy5w2vp6hmgf779mrm0pw2nj4a19snwl9ak02j"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-dynaring emacs-s emacs-ht))
+    (home-page "https://github.com/countvajhula/buffer-ring")
+    (synopsis "Rings and tori for buffer navigation")
+    (description "Rings of buffers and tori of buffer rings.")
+    (license #f)))
 
 (define-public emacs-centaur-tabs
   (package
@@ -403,27 +601,6 @@ layer that explicitly uses the abstract syntax tree, for greater precision.")
     (description "")
     (license license:gpl3+)))
 
-(define-public emacs-mpv-el
-  (package
-    (name "emacs-mpv-el")
-    (version "v0.2.0")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://github.com/kljohann/mpv.el.git")
-		    (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32
-		"03zziy1lcvpf1wq15bsxwy0dhdb2z7rrdcj6srgrmgykz2wf33q7"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("mpv" ,mpv)))
-    (home-page "")
-    (synopsis "")
-    (description "")
-    (license license:gpl3+)))
-
 (define-public emacs-elfeed-tube
   (package
     (name "emacs-elfeed-tube")
@@ -450,135 +627,11 @@ layer that explicitly uses the abstract syntax tree, for greater precision.")
     (synopsis "")
     (description "")
     (license license:gpl3+)))
- 
-(define-public emacs-org-fc
-  (package
-    (name "emacs-org-fc")
-    (version "main")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://git.sr.ht/~l3kn/org-fc")
-		    (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32
-		"1d0a3vr09zkplclypcgpfbfd6r0h0i3g3zsqb4pcz6x239d59gd5"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-org" ,emacs-org)
-       ("emacs-hydra" ,emacs-hydra)))
-    (home-page "https://www.leonrische.me/fc/index.html")
-    (synopsis "Flashcards in Org Mode.")
-    (description "Flashcards in Org Mode.")
-    (license license:gpl3+)))
 
-(define-public emacs-leaf-keywords
-  (package
-    (name "emacs-leaf-keywords")
-    (version "master")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://github.com/conao3/leaf-keywords.el.git")
-		    (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32
-		"00fnkk6hl9l64dgmkhsqibhna7gdpazs4j28f7833n1dmg626ki6"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-leaf" ,emacs-leaf)))
-    (home-page "https://github.com/conao3/leaf-keywords.el")
-    (synopsis "Extra keywords for leaf.")
-    (description "Extra keywords for leaf.")
-    (license license:gpl3+)))
 
-(define-public emacs-system-packages
-  (package
-   (name "emacs-system-packages")
-   (version "1.0.11")
-   (source (origin
-	    (method git-fetch)
-	    (uri (git-reference
-		  (url "https://gitlab.com/jabranham/system-packages.git")
-		(commit version)))
-	    (file-name (git-file-name name version))
-	    (sha256
-	     (base32
-	      "0pxkyys2lgn16rhf4mzqlh27vs9aw6g083z2vr2agr7bmbavd2fp"))))
-   (build-system emacs-build-system)
- (home-page "https://gitlab.com/jabranham/system-packages")
- (synopsis "Emacs interface to system package manager.")
- (description "Use Emacs to install packages using system package manager.")
- (license license:gpl3+)))
 
-(define-public emacs-exlybar
-  (package
-   (name "emacs-exlybar")
-   (version "focal")
-   (source (origin
-	    (method git-fetch)
-	    (uri (git-reference
-		  (url "https://github.com/jollm/exlybar.git")
-		  (commit version)))
-	    (file-name (git-file-name name version))
-	    (sha256
-	     (base32
-	      "0a4c2f8pbzrzda1zdn9g7hmicqbp3ss3wf6b523kspr8wvhzghy1"))))
-   (build-system emacs-build-system)
-   ;; (arguments
-   ;;  (substitute-keyword-arguments (package-arguments emacs-next)
-   ;; 				  ((#:configure-flags flags ''())
-   ;; 				   `(cons* "--with-pgtk" "--with-xwidgets" ,flags))))
-   (home-page "https://gitlab.com/jollm/exlybar.git")
-   (synopsis "An Emacs Polybar-like window manager status bar.")
-   (description "An Emacs Polybar-like window manager status bar.")
-   (license license:gpl3+)))
 
-(define-public emacs-lean-mode 
-  (package
-    (name "emacs-lean-mode")
-    (version "20220501.1007")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/leanprover/lean-mode.git")
-                    (commit "362bc6fa3efb1874c525ed6b4b6f24f76af22596")))
-              (sha256
-               (base32
-		"1lr4h555fa1kdi3q7hkhsnznv7nh9rgjqjkbj2bqp9zwh06245w3"))))
-    (build-system emacs-build-system)
-    (propagated-inputs (list emacs-dash emacs-s emacs-f emacs-flycheck))
-    (arguments
-     '(#:include '("^lean-[^/]+.el$")
-       #:exclude '()))
-    (home-page "https://github.com/leanprover/lean-mode")
-    (synopsis "A major mode for the Lean 3 language")
-    (description
-     "This package provides a major mode for the Lean 3 programming language.
 
-Provides highlighting, diagnostics, goal visualization, and many other useful
-features for Lean users.
 
-See the README.md for more advanced features and the associated keybindings.")
-    (license #f)))
 
-(define-public emacs-lsp-pyright
-  (package
-    (name "emacs-lsp-pyright")
-    (version "20220614.1545")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/emacs-lsp/lsp-pyright.git")
-                    (commit "2fa2c897659909ba9804baba72a108578d007677")))
-              (sha256
-               (base32
-		"1d951q5dnb4zffgwbhzbg37wi3qcssxsp5q853zzyd7j6jp0iaws"))))
-    (build-system emacs-build-system)
-    (propagated-inputs (list emacs-lsp-mode emacs-dash emacs-ht))
-    (home-page "https://github.com/emacs-lsp/lsp-pyright")
-    (synopsis "Python LSP client using Pyright")
-    (description "  Pyright language server.")
-    (license #f)))
+
