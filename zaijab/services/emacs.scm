@@ -240,7 +240,8 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-gcmh")
 		   (specification->package "emacs-explain-pause-mode")))
-   (init '((gcmh-mode 1)))))
+   (init '((gcmh-mode 1)))
+   (early-init '((setq native-comp-speed -1)))))
 
 
 (define pdf-tools-configuration
