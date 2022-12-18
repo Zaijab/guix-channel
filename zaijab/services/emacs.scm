@@ -1013,7 +1013,7 @@
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
 				     (emacs ((options->transformation '((with-branch . "emacs-next=master")
-									(with-patch . "emacs-next=./emacs-exec-path.patch")))
+									(with-patch . "emacs-next=https://git.savannah.gnu.org/cgit/guix.git/tree/gnu/packages/patches/emacs-exec-path.patch")))
 					     (specification->package "emacs-next"))) 
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
