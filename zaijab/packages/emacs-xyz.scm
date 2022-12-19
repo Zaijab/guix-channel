@@ -164,7 +164,11 @@
       (inputs (modify-inputs
 	       (package-inputs emacs-next)
 	       (append tree-sitter)
-	       (append curl))))))
+	       (append curl)))
+      (propagated-inputs (modify-inputs
+			  (package-inputs emacs-next)
+			  (append curl)))
+      )))
 
 (define-public emacs-dynaring
   (package
