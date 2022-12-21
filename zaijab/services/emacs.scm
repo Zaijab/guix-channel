@@ -469,16 +469,7 @@
 (define website-configuration
   (home-emacs-configuration
    (packages (list google-chrome-unstable))
-   (init '((defun zain-publish ()
-	     (interactive)
-	     (let ((current-prefix-arg (list 4))
-		   (default-directory "~/code/zaijab.github.io"))
-	       (call-interactively 'org-publish-all)
-	       (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam")))
-
-	   (global-set-key (kbd "s-p") 'zain-publish)
-
-	   (require 'ucs-normalize)
+   (init '((require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
 	     "For a given file, get its TITLE keyword."
 	     (with-current-buffer
@@ -519,8 +510,34 @@
 		    (slug (commonplace/slugify-title title)))
 	       (concat directory slug ".html")))
 
-	   (advice-add (function org-export-output-file-name) :filter-return (function commonplace/slugify-export-output-file-name))
+	   (defun zain-publish ()
+	     (interactive)
+	     (let ((current-prefix-arg (list 4))
+		   (default-directory "~/code/zaijab.github.io"))
+	       (advice-add 'org-export-output-file-name :filter-return (function commonplace/slugify-export-output-file-name))
+	       (call-interactively 'org-publish-all)
+	       (advice-remove 'org-export-output-file-name (function commonplace/slugify-export-output-file-name))
+	       (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam")))
+	   (global-set-key (kbd "s-p") 'zain-publish)
 
+	   (defun org-export-output-file-name-modified (orig-fun extension &optional subtreep pub-dir)
+	     (unless pub-dir
+	       (setq pub-dir "/home/zjabbar/.cache/note-export/")
+	       (unless (file-directory-p pub-dir)
+		 (make-directory pub-dir)))
+	     (apply orig-fun extension subtreep pub-dir nil))
+	   (advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified)
+	   (setq org-latex-title-command (concat
+					  "\\begin{titlepage}\n"
+					  "\\vspace*{\\fill}\n"
+					  "\\centering\n"
+					  "{\\huge \\textmd{\\textbf{%t}} \\par }\n"
+					  "\\vspace{0.1in}\n"
+					  "{\\normalsize %a \\par}\n"
+					  "\\vspace{0.1in}\n"
+					  "{\\large \\textit{%D} \\professor \\ \\ \\hmwkduedate \\par}\n"
+					  "\\vspace*{\\fill}\n"
+					  "\\end{titlepage}\n"))
 	   (setq org-publish-project-alist
 		 '(("orgfiles"
 		    :base-directory "~/notes/"
