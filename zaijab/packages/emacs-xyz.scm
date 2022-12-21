@@ -134,6 +134,7 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
+
 (define-public emacs-next-tree-sitter
   (let ((commit "32615c9bc124970aade150e81c2ed4a5c0492ef7")
         (revision "5"))

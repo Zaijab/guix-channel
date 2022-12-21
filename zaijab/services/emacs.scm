@@ -454,6 +454,7 @@
 	       (specification->package "emacs-org-roam"))
 	      (specification->package "emacs-org-drill")))
    (init '((require 'org-roam-node)
+	   (setq org-drill-scope 'directory)
 	   (setq org-roam-directory "~/notes")
 	   (setq org-roam-v2-ack t)
 	   (org-roam-db-autosync-mode)
@@ -526,7 +527,7 @@
 	       (unless (file-directory-p pub-dir)
 		 (make-directory pub-dir)))
 	     (apply orig-fun extension subtreep pub-dir nil))
-	   (advice-add 'org-export-output-file-name :around #'org-export-output-file-name-modified)
+	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
 	   (setq org-latex-title-command (concat
 					  "\\begin{titlepage}\n"
 					  "\\vspace*{\\fill}\n"
