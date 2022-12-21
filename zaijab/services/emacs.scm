@@ -513,6 +513,7 @@
 	      (cadar (org-collect-keywords '("TITLE")))))
 
 	   (defun commonplace/slugify-export-output-file-name (output-file)
+	     (message output-file)
 	     (let* ((title (get-title (buffer-file-name (buffer-base-buffer))))
 		    (directory (file-name-directory output-file))
 		    (slug (commonplace/slugify-title title)))
