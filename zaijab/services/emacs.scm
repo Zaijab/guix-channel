@@ -113,7 +113,8 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-cape")))
    (init '((setq tab-always-indent 'complete)
-	   (add-to-list 'completion-at-point-functions (function cape-symbol))))))
+	   ;(add-to-list 'completion-at-point-functions (function cape-file))
+	   ))))
 
 (define marginalia-configuration
   (home-emacs-configuration
