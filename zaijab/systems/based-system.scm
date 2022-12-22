@@ -60,7 +60,9 @@
 	       (specification->package "nss-certs")
 	       (specification->package "pulseaudio")
 	       (specification->package "network-manager-applet")
+	       (specification->package "texmacs")
 	       (specification->package "nix")
+	       (specification->package "searx") 
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
     
@@ -106,8 +108,9 @@
 	       (service unattended-upgrade-service-type)
 	       (bluetooth-service)
 	       (service nix-service-type)
-	       (simple-service 'searx-start-job mcron-service-type (list
-								    #~(job '(next-minute (range 0 60 1)) (string-append "pgrep searx || " #$(file-append searx "/bin/searx-run & disown")))))
+	       (simple-service 'searx-start-job mcron-service-type
+			       (list
+				#~(job '(next-minute (range 0 60 1)) (string-append "pgrep searx || " #$(file-append searx "/bin/searx-run & disown")))))
 	       (extra-special-file "/etc/searx/settings.yml"
 				   (plain-file "settings.yml" (string-append "
                                                            use_default_settings: True
