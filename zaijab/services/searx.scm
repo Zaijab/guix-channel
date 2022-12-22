@@ -11,7 +11,12 @@
   (list (shepherd-service
 	 (provision '(searx))
 	 (documentation "Run and control searx daemon.")
-	 (start #~(make-forkexec-constructor (list #$(file-append searx "/bin/searx-run"))))
+	 (start #~(make-forkexec-constructor (list #$(file-append searx "/bin/searx-run"))
+					     #:log-file (string-append
+							 (or (getenv "XDG_LOG_HOME")
+							     (format #f "~a/.local/var/log"
+								     (getenv "HOME")))
+							 "/searx.log")))
 	 (stop #~(make-kill-destructor)))))
 
 (define-public home-searx-service-type
