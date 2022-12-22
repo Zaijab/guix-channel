@@ -114,10 +114,10 @@
 	       (extra-special-file "/etc/searx/settings.yml"
 				   (plain-file "settings.yml" (string-append "use_default_settings: True\n"
 									     "general:\n"
-									     "instance_name : \"searx\" # displayed name\n"
+									     "  instance_name : \"searx\" # displayed name\n"
 									     "server:\n"
-									     "bind_address : \"0.0.0.0\"\n"
-									     "secret_key : \""
+									     "  bind_address : \"0.0.0.0\"\n"
+									     "  secret_key : \""
 									     (transmission-random-salt)
 									     (transmission-random-salt)
 									     (transmission-random-salt)
