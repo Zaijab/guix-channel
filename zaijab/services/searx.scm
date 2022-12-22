@@ -1,6 +1,7 @@
 (define-module (zaijab services searx)
-  #:use-modules (gnu home services shepherd)
-  #:use-modules (gnu packages search))
+  #:use-module (gnu home services shepherd)
+  #:use-module (gnu packages search)
+  #:use-module (guix gexp))
 
 (define (home-searx-profile-service config)
   (list searx))

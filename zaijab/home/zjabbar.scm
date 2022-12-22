@@ -1,4 +1,3 @@
-;; -*- compile-command: "make -k zjabbar" -*-
 (define-module (zaijab home zjabbar)
   #:use-module (gnu home)
   #:use-module (gnu home services)
@@ -49,15 +48,13 @@
 		(list
 		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
-				  "source /run/current-system/profile/etc/profile.d/nix.sh"
-				  )))))
+				  "source /run/current-system/profile/etc/profile.d/nix.sh")))))
      (service home-emacs-service-type home-emacs-total-configuration)
      (simple-service 'dotfiles
-                   home-files-service-type
-                   `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
-                     (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
-                     ;; (".xsession" ,(local-file "files/xsession")) Cannot use this currently. .xsession needs to be executable.
-                     (".config/mpv/mpv.conf" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mpv.conf"))
-                     (".config/emacs/templates" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/templates"))))))))
+                     home-files-service-type
+                     `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
+                       (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
+                       (".config/mpv/mpv.conf" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mpv.conf"))
+                       (".config/emacs/templates" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/templates"))))))))
 
 zains-home
