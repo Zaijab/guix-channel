@@ -14,7 +14,7 @@
 	 (start #~(make-forkexec-constructor '("searx-run")))
 	 (stop #~(make-kill-destructor)))))
 
-(define home-searx-service-type
+(define-public home-searx-service-type
   (service-type (name 'home-searx)
                 (extensions
                  (list (service-extension
