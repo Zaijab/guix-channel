@@ -112,17 +112,17 @@
 	       (bluetooth-service)
 	       (service nix-service-type)
 	       (extra-special-file "/etc/searx/settings.yml"
-				   (plain-file "settings.yml" (string-append "
-							   use_default_settings: True
-							   general:
-							       instance_name : \"searx\" # displayed name
-							   server:
-							       bind_address : \"0.0.0.0\"      # address to listen on
-							       secret_key : \""
+				   (plain-file "settings.yml" (string-append "use_default_settings: True\n"
+									     "general:\n"
+									     "instance_name : \"searx\" # displayed name\n"
+									     "server:\n"
+									     "bind_address : \"0.0.0.0\"\n"
+									     "secret_key : \""
 									     (transmission-random-salt)
 									     (transmission-random-salt)
 									     (transmission-random-salt)
-									     (transmission-random-salt) "\"")))
+									     (transmission-random-salt)
+									     "\"")))
 	       (pam-limits-service
 		(list
 		 (pam-limits-entry "@wheel" 'hard 'nofile 524288)))
