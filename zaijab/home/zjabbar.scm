@@ -10,7 +10,8 @@
   #:use-module (gnu home services shepherd)
   #:use-module (guix gexp)
   #:use-module (srfi srfi-9)
-  #:use-module (zaijab services emacs))
+  #:use-module (zaijab services emacs)
+  #:use-module (zaijab services searx))
 
 (define-public zains-home
   (home-environment
