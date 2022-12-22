@@ -50,6 +50,7 @@
                                   "eval \"$(direnv hook bash)\"\n"
 				  "source /run/current-system/profile/etc/profile.d/nix.sh")))))
      (service home-emacs-service-type home-emacs-total-configuration)
+     (service home-searx-service-type)
      (simple-service 'dotfiles
                      home-files-service-type
                      `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
