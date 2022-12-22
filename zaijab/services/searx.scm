@@ -1,4 +1,5 @@
 (define-module (zaijab services searx)
+  #:use-module (gnu home services)
   #:use-module (gnu home services shepherd)
   #:use-module (gnu packages search)
   #:use-module (guix gexp))
