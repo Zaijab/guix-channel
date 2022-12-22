@@ -11,7 +11,7 @@
   (list (shepherd-service
 	 (provision '(searx))
 	 (documentation "Run and control searx daemon.")
-	 (start #~(make-forkexec-constructor '("searx-run")))
+	 (start #~(make-forkexec-constructor (list #$(file-append searx "/bin/searx-run"))))
 	 (stop #~(make-kill-destructor)))))
 
 (define-public home-searx-service-type
