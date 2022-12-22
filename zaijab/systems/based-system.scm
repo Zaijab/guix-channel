@@ -8,6 +8,7 @@
   #:use-module (gnu)
   #:use-module (gnu packages)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages search)
   #:use-module (gnu services base)
   #:use-module (gnu services admin)
   #:use-module (gnu services desktop)
