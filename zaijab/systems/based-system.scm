@@ -32,6 +32,7 @@
   #:use-module (gnu services sddm)
   #:use-module (gnu services dbus) 
   #:use-module (gnu services vpn) 
+  #:use-module (gnu services mcron) 
   #:use-module (gnu services virtualization))
 
 (define-public based-operating-system
