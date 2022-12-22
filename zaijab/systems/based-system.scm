@@ -110,7 +110,8 @@
 	       (service nix-service-type)
 	       (simple-service 'searx-start-job mcron-service-type
 			       (list
-				#~(job '(next-minute (range 0 60 1)) (string-append "pgrep searx || " #$(file-append searx "/bin/searx-run & disown")))))
+				#~(job '(next-minute (range 0 60 1))
+				       (string-append "pgrep searx || " #$(file-append searx "/bin/searx-run & disown")))))
 	       (extra-special-file "/etc/searx/settings.yml"
 				   (plain-file "settings.yml" (string-append "
                                                            use_default_settings: True
@@ -118,20 +119,23 @@
                                                                instance_name : \"searx\" # displayed name
                                                            server:
                                                                bind_address : \"0.0.0.0\"      # address to listen on
-                                                               secret_key : \"" (transmission-random-salt) (transmission-random-salt) (transmission-random-salt) (transmission-random-salt) "\"
-                                                           "))))
-	      (pam-limits-service
-	       (list
-		(pam-limits-entry "@wheel" 'hard 'nofile 524288)))
-	      (modify-services %desktop-services
-		(network-manager-service-type
-		 config => (network-manager-configuration
-			    (inherit config)
-			    (vpn-plugins
-			     (list
-			      (specification->package "network-manager-openvpn")
-			      (specification->package "network-manager-openconnect")
-			      #;(specification->package "openconnect-sso"))))))))))
+                                                               secret_key : \""
+									     (transmission-random-salt)
+									     (transmission-random-salt)
+									     (transmission-random-salt)
+									     (transmission-random-salt) "\"")))
+	       (pam-limits-service
+		(list
+		 (pam-limits-entry "@wheel" 'hard 'nofile 524288)))
+	       (modify-services %desktop-services
+		 (network-manager-service-type
+		  config => (network-manager-configuration
+			     (inherit config)
+			     (vpn-plugins
+			      (list
+			       (specification->package "network-manager-openvpn")
+			       (specification->package "network-manager-openconnect")
+			       #;(specification->package "openconnect-sso"))))))))))
 
 (define-public tao-operating-system
   based-operating-system)
