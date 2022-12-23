@@ -1,29 +1,33 @@
 (define-module (zaijab services searx)
-  #:use-module (gnu services)
-  #:use-module (gnu services shepherd)
+  #:use-module (gnu home services)
+  #:use-module (gnu home services shepherd)
   #:use-module (gnu packages search)
   #:use-module (guix gexp))
 
-;; (define (searx-profile-service config)
-;;   (list searx))
+(define (home-searx-profile-service config)
+  (list searx))
 
-;; (define (searx-shepherd-service config)
-;;   (list (shepherd-service
-;; 	 (provision '(searx))
-;; 	 (documentation "Run and control searx daemon.")
-;; 	 (start #~(make-forkexec-constructor (list #$(file-append searx "/bin/searx-run"))
-;; 					     #:log-file "/home/zjabbar/.local/var/log/searx.log" h))
-;; 	 (stop #~(make-kill-destructor)))))
+(define (home-searx-shepherd-service config)
+  (list (shepherd-service
+	 (provision '(searx))
+	 (documentation "Run and control searx daemon.")
+	 (start #~(make-forkexec-constructor (list #$(file-append searx "/bin/searx-run"))
+					     #:log-file (string-append
+							 (or (getenv "XDG_LOG_HOME")
+							     (format #f "~a/.local/var/log"
+								     (getenv "HOME")))
+							 "/searx.log")))
+	 (stop #~(make-kill-destructor)))))
 
-;; (define-public searx-service-type
-;;   (service-type (name 'searx)
-;;                 (extensions
-;;                  (list (service-extension
-;;                         profile-service-type
-;;                         searx-profile-service)
-;; 		       (service-extension
-;; 			shepherd-service-type
-;; 			searx-shepherd-service)))
-;;                 (default-value #f)
-;;                 (description "Searx Time.")))
+(define-public home-searx-service-type
+  (service-type (name 'home-searx)
+                (extensions
+                 (list (service-extension
+                        home-profile-service-type
+                        home-searx-profile-service)
+		       (service-extension
+			home-shepherd-service-type
+			home-searx-shepherd-service)))
+                (default-value #f)
+                (description "Searx Time.")))
 
