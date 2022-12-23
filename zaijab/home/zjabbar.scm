@@ -51,12 +51,11 @@
                                   "eval \"$(direnv hook bash)\"\n"
 				  "source /run/current-system/profile/etc/profile.d/nix.sh")))))
      (service home-emacs-service-type home-emacs-total-configuration)
-     (service home-searx-service-type)
      (simple-service 'dotfiles
-                     home-files-service-type
-                     `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
-                       (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
-                       (".config/mpv/mpv.conf" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mpv.conf"))
-                       (".config/emacs/templates" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/templates"))))))))
+		     home-files-service-type
+		     `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
+		       (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
+		       (".config/mpv/mpv.conf" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mpv.conf"))
+		       (".config/emacs/templates" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/templates"))))))))
 
 zains-home
