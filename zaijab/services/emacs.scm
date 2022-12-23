@@ -242,6 +242,10 @@
 		   (specification->package "emacs-explain-pause-mode")))
    (init '((gcmh-mode 1)))))
 
+(define eww-configuration
+  (home-emacs-configuration
+   (init '((setq eww-search-prefix "http://127.0.0.1:8888/search?q=")))))
+
 
 (define pdf-tools-configuration
   (home-emacs-configuration

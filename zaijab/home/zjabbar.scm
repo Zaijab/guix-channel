@@ -16,6 +16,7 @@
   (home-environment
    (packages (list (specification->package "xmodmap")
                    (specification->package "xset")
+		   (specification->package "jami")
                    (specification->package "font-iosevka")))
    (services
     (list
