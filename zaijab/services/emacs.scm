@@ -880,6 +880,8 @@
 						(find-file (read-file-name "" "~/books/")))))
 	   (global-set-key (kbd "C-x C-t") 'vterm)
 	   (global-set-key (kbd "s-d") (function geiser-guile))
+	   (global-set-key (kbd "s-z") (function elfeed))
+	   (global-set-key (kbd "s-x") (function eww))
 	   (global-set-key (kbd "s-s") (function org-roam-capture))
 	   (global-set-key (kbd "s-r") (function eval-region))
 	   (global-set-key (kbd "s-0") 'delete-window)
