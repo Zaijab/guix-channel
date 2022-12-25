@@ -184,7 +184,6 @@
 (define language-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-ddskk")
-		   (specification->package "emacs-org-drill") 
 		   (specification->package "font-fira-code")
 		   (specification->package "font-google-noto")
 		   (specification->package "font-lohit")
@@ -284,7 +283,8 @@
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" lecture machine-learning statistics ng)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLE18841CABEA24090" lecture mit sicp)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLEC88901EBADDD980" lecture mit odes)
-				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL221E2BBF13BECF6C" lecture mit linear-algebra)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL221E2BBF13BECF6C" lecture mit linear)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLo4jXE-LdDTTIIIRwqK35CbFJieSJEcVR" lecture functional)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLLq_gUfXAnkkvL_UoCGivS0wOYhwCtczI" lecture pde)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLLq_gUfXAnkmC-VWIJ_HW8cdOZLEtHfXJ" lecture dynamical-systems)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL4C4C8A7D06566F38" lecture mit multivariable-calc)
@@ -461,22 +461,25 @@
 	       (specification->package "emacs-org-roam"))
 	      (specification->package "emacs-org-drill")))
    (init '((require 'org-roam-node)
+	   (require 'org-drill) 
 	   (setq org-drill-scope 'directory)
+	   (setq org-drill-hide-item-headings-p t)
 	   (setq org-roam-directory "~/notes")
 	   (setq org-roam-v2-ack t)
 	   (org-roam-db-autosync-mode)
 	   (setq org-roam-capture-templates
-		 '(("i" "default" plain "%?"
+		 '(("i" "Default" plain "%?"
 		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
 		    :unnarrowed t)
-		   ("d" "drill" entry "* %(word->drill (jisho-search->completing-read))"
+		   ("j" "Japanese" entry "* %(word->drill (jisho-search->completing-read))"
 		    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "\n")
 		    :unnarrowed t)))
 	   (global-set-key (kbd "s-i") (function org-roam-capture))))))
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list google-chrome-unstable))
+   (packages (list ;; google-chrome-unstable
+	      ))
    (init '((require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
 	     "For a given file, get its TITLE keyword."
