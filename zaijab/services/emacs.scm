@@ -184,6 +184,7 @@
 (define language-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-ddskk")
+		   (specification->package "emacs-org-drill") 
 		   (specification->package "font-fira-code")
 		   (specification->package "font-google-noto")
 		   (specification->package "font-lohit")
@@ -198,9 +199,9 @@
 	   (defun jisho-word->english-part (jisho-word)
 	     (gethash "english_definitions" (elt (gethash "senses" jisho-word) 0)))
 	   (defun kanji-word->drill (word)
-	     (apply 'format "%s :drill:Japanese:\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n** Kanji\n%s\n** Picture\n\n** Kana\n%s\n** English\n%s\n" (cons (car word) word)))
+	     (apply 'format "%s :drill:Japanese:\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n** Kanji\n%s [%s]\n** English\n%s\n" (cons (car word) word)))
 	   (defun kana-word->drill (word)
-	     (apply 'format "%s :drill:Japanese:\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n** Kana\n%s\n** Picture\n\n** English\n%s\n" (cons (car word) word)))
+	     (apply 'format "%s :drill:Japanese:\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n** Kana\n%s\n** English\n%s\n" (cons (car word) word)))
 	   (defun word->drill (word)
 	     (if (car word)
 		 (kanji-word->drill word)
@@ -234,7 +235,8 @@
 		 (setq words (cdr words)))
 	       (alist-get
 		(completing-read "Results: " *jisho-results*)
-		*jisho-results* nil nil 'equal)))))))
+		*jisho-results* nil nil 'equal)))
+	   ))))
 
 (define garbage-configuration
   (home-emacs-configuration
