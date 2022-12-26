@@ -83,3 +83,25 @@
     (synopsis "PyAMG: Algebraic Multigrid Solvers in Python")
     (description "PyAMG: Algebraic Multigrid Solvers in Python")
     (license license:expat)))
+
+(define-public python-py-pde
+  (package
+    (name "python-py-pde")
+    (version "0.27.1")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "py-pde" version))
+              (sha256
+               (base32
+                "00hlrrhjvs542qmgx3l6y4mbf7pcyzxbza0csy7bv3pxcdqrvqy4"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-matplotlib
+                             python-numba
+                             python-numpy
+                             python-scipy
+                             python-sympy
+                             python-tqdm))
+    (home-page "")
+    (synopsis "Python package for solving partial differential equations")
+    (description "Python package for solving partial differential equations")
+    (license license:expat)))
