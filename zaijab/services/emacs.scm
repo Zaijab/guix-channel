@@ -78,7 +78,6 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-vertico")))
    (init '((vertico-mode 1)))))
-
 (define corfu-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-corfu")))
@@ -113,7 +112,7 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-cape")))
    (init '((setq tab-always-indent 'complete)
-	   ;(add-to-list 'completion-at-point-functions (function cape-file))
+					;(add-to-list 'completion-at-point-functions (function cape-file))
 	   ))))
 
 (define marginalia-configuration
@@ -157,6 +156,12 @@
    (init '((evil-collection-init)
 	   (evil-mode 1)))
    (early-init '((setq evil-want-keybinding nil)))))
+
+(define polymode-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-polymode")
+		   (specification->package "emacs-polymode-org")))
+   (init '(()))))
 
 (define undo-configuration
   (home-emacs-configuration
@@ -478,8 +483,7 @@
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list ;; google-chrome-unstable
-	      ))
+   (packages (list google-chrome-unstable))
    (init '((require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
 	     "For a given file, get its TITLE keyword."
