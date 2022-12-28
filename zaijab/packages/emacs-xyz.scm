@@ -153,7 +153,6 @@
                                   "emacs-exec-path.patch"
                                   "emacs-fix-scheme-indent-function.patch"
                                   "emacs-native-comp-driver-options.patch"
-                                  "emacs-source-date-epoch.patch"
 				  ))
          (sha256
           (base32
