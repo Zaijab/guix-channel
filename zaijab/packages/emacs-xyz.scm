@@ -139,7 +139,7 @@
   (let ((commit "32615c9bc124970aade150e81c2ed4a5c0492ef7")
         (revision "5"))
     (package
-      (inherit emacs)
+      (inherit emacs-next)
       (name "emacs-next-tree-sitter")
       (version (git-version "30.0.50" revision commit))
       (source
@@ -153,8 +153,8 @@
                                   "emacs-exec-path.patch"
                                   "emacs-fix-scheme-indent-function.patch"
                                   "emacs-native-comp-driver-options.patch"
-                                  ;; "emacs-source-date-epoch.patch"
-                                  ))
+                                  "emacs-source-date-epoch.patch"
+				  ))
          (sha256
           (base32
            "1gv4ihns0vbghi0d34by436qxqgms96593sahb45qy4dbwxibjza"))))
