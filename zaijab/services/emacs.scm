@@ -896,7 +896,8 @@
 	   (global-set-key (kbd "s-e") (function
 					(lambda () (interactive)
 						(start-process-shell-command "google-chrome-unstable" nil "google-chrome-unstable"))))
-	   (global-set-key (kbd "s-r") (function eval-region))
+	   (global-set-key (kbd "s-r") (function eshell))
+	   (global-set-key (kbd "s-t") (function eval-region))
 	   (global-set-key (kbd "s-K") 'windsize-up)
 	   (global-set-key (kbd "s-J") 'windsize-down)
 	   (global-set-key (kbd "s-f") 'exwm-floating-toggle-floating)

@@ -160,7 +160,7 @@
       (arguments
        (substitute-keyword-arguments (package-arguments emacs-next)
          ((#:configure-flags flags ''())
-          `(cons* "--with-tree-sitter" ,flags))))
+          `(cons* "--wit-tree-sitter" ,flags))))
       (inputs (modify-inputs
 	       (package-inputs emacs-next)
 	       (append tree-sitter)
