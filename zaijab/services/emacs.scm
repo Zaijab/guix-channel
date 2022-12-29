@@ -190,8 +190,7 @@
 	   (defun colorize-compilation-buffer ()
 	     (let ((inhibit-read-only t))
 	       (ansi-color-apply-on-region (point-min) (point-max))))
-	   (add-hook 'prog-mode-hook 'colorize-compilation-buffer)
-	   (add-hook 'text-mode-hook 'colorize-compilation-buffer)))))
+	   (add-hook 'after-change-major-mode-hook 'colorize-compilation-buffer)))))
 
 (define language-configuration
   (home-emacs-configuration
