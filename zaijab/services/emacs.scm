@@ -157,11 +157,11 @@
 	   (evil-mode 1)))
    (early-init '((setq evil-want-keybinding nil)))))
 
-(define polymode-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-polymode")
-		   (specification->package "emacs-polymode-org")))
-   (init '(()))))
+;; (define polymode-configuration
+;;   (home-emacs-configuration
+;;    (packages (list (specification->package "emacs-polymode")
+;; 		   (specification->package "emacs-polymode-org")))
+;;    (init '(()))))
 
 (define undo-configuration
   (home-emacs-configuration
@@ -188,9 +188,10 @@
 		   (specification->package "emacs-envrc")))
    (init '((require 'ansi-color)
 	   (defun colorize-compilation-buffer ()
+	     (interactive)
 	     (let ((inhibit-read-only t))
 	       (ansi-color-apply-on-region (point-min) (point-max))))
-	   (add-hook 'after-change-major-mode-hook 'colorize-compilation-buffer)))))
+	   (add-hook 'compilation-mode-hook 'colorize-compilation-buffer)))))
 
 (define language-configuration
   (home-emacs-configuration
