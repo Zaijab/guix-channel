@@ -681,6 +681,7 @@
 	      (specification->package "python")
 	      (specification->package "python-lsp-server")
 	      (specification->package "jupyter")
+	      (specification->package "pandoc")
 	      (specification->package "remmina")
 	      (specification->package "gtk+")
 	      (specification->package "webkitgtk-with-libsoup2")
