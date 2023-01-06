@@ -16,3 +16,4 @@ gpackage:
 gnew:
 	git add -A
 	git diff-index --quiet HEAD || git commit -am "Updating Config"
+	git push -u github main
