@@ -315,6 +315,7 @@
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLBEeOnR8lrBHNZWwk8-pHOQLQnP3u8bO8" lecture topology clark)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL6763F57A61FE6FE8" lecture topology wildberger)))
 	   (require 'elfeed-tube)
+	   (add-hook 'elfeed-search-mode-hook (lambda () (undo-tree-mode -1)))
 	   (elfeed-tube-setup)
 	   (setq-default elfeed-search-filter "-fun -crafter")
 	   (setq-default elfeed-search-title-max-width 100)
@@ -610,6 +611,25 @@
    (init '((require 'org)
 	   (require 'ox)
 	   (require 'calfw)
+	   (require 'calfw-org)
+	   (setq org-agenda-show-log-scoped t)
+	   (defun cfw:org-get-timerange (text)
+	     "Return a range object (begin end text). If TEXT does not have a range, return nil."
+	     (let* ((dotime (cfw:org-tp text 'dotime)))
+	       (and (stringp dotime) (string-match org-ts-regexp dotime)
+		    (let* ((matches  (s-match-strings-all org-ts-regexp dotime))
+			   (start-date (nth 1 (car matches)))
+			   (end-date (nth 1 (nth 1 matches)))
+			   (extra (cfw:org-tp text 'extra)))
+		      (if (string-match "(\\([0-9]+\\)/\\([0-9]+\\)): " extra)
+			  ( list( calendar-gregorian-from-absolute
+				  (time-to-days
+				   (org-read-date nil t start-date))
+				  )
+			    (calendar-gregorian-from-absolute
+			     (time-to-days
+			      (org-read-date nil t end-date))) text))))))
+	   
 	   (setq org-tags-column 0)
 	   (global-org-modern-mode)
 	   (global-unset-key (kbd "C-x C-r"))
@@ -617,7 +637,8 @@
 	   (global-unset-key (kbd "C-x C-n"))
 	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)
 	   (global-set-key (kbd "C-x C-r C-n") 'org-roam-capture)
-	   (global-set-key (kbd "s-a") 'org-agenda)
+	   (global-set-key (kbd "s-a") 'cfw:open-org-calendar)
+	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
 	   
 	   (setq org-agenda-files '("~/notes/20211224040925-todo.org" "~/notes/20221204145316-influx.org" "~/notes/20211222094239-workflow.org"))
 	   
