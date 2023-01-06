@@ -633,6 +633,8 @@
 	   
 	   (setq org-tags-column 0)
 	   (global-org-modern-mode)
+	   (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
 	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
 	   (global-set-key (kbd "s-a") 'cfw:open-org-calendar)
