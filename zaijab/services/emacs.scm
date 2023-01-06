@@ -632,11 +632,7 @@
 	   
 	   (setq org-tags-column 0)
 	   (global-org-modern-mode)
-	   (global-unset-key (kbd "C-x C-r"))
-	   (global-unset-key (kbd "C-x C-z"))
-	   (global-unset-key (kbd "C-x C-n"))
-	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)
-	   (global-set-key (kbd "C-x C-r C-n") 'org-roam-capture)
+	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
 	   (global-set-key (kbd "s-a") 'cfw:open-org-calendar)
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
 	   
@@ -644,15 +640,14 @@
 	   
 	   (setq org-startup-with-inline-images t)
 
-	   (setq org-agenda-time-grid
-		 (list '(daily weekly remove-match)
-		       (mapcar (lambda (x) (* 100 x)) (number-sequence 1 23))
-		       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+	   ;; (setq org-agenda-time-grid
+	   ;; 	 (list '(daily weekly remove-match)
+	   ;; 	       (mapcar (lambda (x) (* 100 x)) (number-sequence 1 23))
+	   ;; 	       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
 	   (setq org-startup-with-latex-preview t)
 	   (setq org-preview-latex-default-process 'dvisvgm)
 	   (add-hook 'org-mode-hook 'org-fragtog-mode)
-	   ;; (add-hook 'org-mode-hook 'flyspell-mode)
-	   (add-hook 'org-mode-hook 'visual-line-mode)
+	   (add-hook 'org-mode-hook 'flyspell-mode)
 	   (setq org-confirm-babel-evaluate nil)
 	   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 	   (setq python-indent-guess-indent-offset-verbose nil)
