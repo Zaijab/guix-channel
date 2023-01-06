@@ -1013,7 +1013,8 @@
 		   (specification->package "emacs-nano-modeline")
                    (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
-   (early-init '((setq gc-cons-threshold most-positive-fixnum
+   (early-init '(
+		 (setq gc-cons-threshold most-positive-fixnum
 		       package-enable-at-startup nil
 		       indicate-buffer-boundaries nil
 		       indicate-empty-lines nil
@@ -1032,9 +1033,9 @@
 		       byte-compile-root-dir nil
 		       frame-inhibit-implied-resize t
 		       redisplay-dont-pause t
-		       max-mini-window-height 1			     
-		       initial-scratch-message nil
-		       setq org-src-fontify-natively t)
+		       max-mini-window-height 1
+		       initial-scratch-message nil)
+		 (setq org-src-fontify-natively t)
 		 (setq org-src-tab-acts-natively t)
 		 (setq org-src-preserve-indentation nil
 		       org-edit-src-content-indentation 0)
@@ -1055,7 +1056,8 @@
 		 (setq make-backup-files nil)
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
-		 (pixel-scroll-precision-mode)))
+		 (pixel-scroll-precision-mode)
+		 ))
    (init '((set-face-attribute 'default nil :font "Iosevka-14")
 	   (setq nano-modeline-position 'bottom)
 	   (nano-modeline-mode)
