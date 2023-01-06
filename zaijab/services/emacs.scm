@@ -191,7 +191,7 @@
 	     (interactive)
 	     (let ((inhibit-read-only t))
 	       (ansi-color-apply-on-region (point-min) (point-max))))
-	   (add-hook 'compilation-mode-hook (function colorize-compilation-buffer))
+	   (add-hook 'compilation-filter-hook (function colorize-compilation-buffer))
 	   (add-hook 'org-mode-hook (function colorize-compilation-buffer))
 	   ))))
 
