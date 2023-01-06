@@ -547,7 +547,7 @@
 	       (advice-add 'org-export-output-file-name :filter-return (function commonplace/slugify-export-output-file-name))
 	       (call-interactively 'org-publish-all)
 	       (advice-remove 'org-export-output-file-name (function commonplace/slugify-export-output-file-name))
-	       (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam")))
+	       (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam" "*Messages*")))
 	   (global-set-key (kbd "s-p") 'zain-publish)
 
 	   (defun org-export-output-file-name-modified (orig-fun extension &optional subtreep pub-dir)
@@ -633,6 +633,7 @@
 	   
 	   (setq org-tags-column 0)
 	   (global-org-modern-mode)
+	   (add-hook 'org-mode-hook (function valign-mode))
 	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
 	   (global-set-key (kbd "s-a") 'cfw:open-org-calendar)
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
@@ -1031,8 +1032,9 @@
 		       byte-compile-root-dir nil
 		       frame-inhibit-implied-resize t
 		       redisplay-dont-pause t
-		       initial-scratch-message nil)
-		 (setq org-src-fontify-natively t)
+		       max-mini-window-height 1			     
+		       initial-scratch-message nil
+		       setq org-src-fontify-natively t)
 		 (setq org-src-tab-acts-natively t)
 		 (setq org-src-preserve-indentation nil
 		       org-edit-src-content-indentation 0)
