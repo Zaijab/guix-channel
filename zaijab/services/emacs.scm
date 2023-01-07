@@ -493,6 +493,9 @@
 		    :unnarrowed t)
 		   ("j" "Japanese" entry "* %(word->drill (jisho-search->completing-read))"
 		    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "\n")
+		    :unnarrowed t)
+		   ("d" "Drill" entry "* TITLE\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n\n** \n\n** \n\n"
+		    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "\n")
 		    :unnarrowed t)))
 	   (global-set-key (kbd "s-i") (function org-roam-capture))))))
 
@@ -558,6 +561,7 @@
 	     (apply orig-fun extension subtreep pub-dir nil))
 	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
 	   (setq org-latex-title-command (concat
+					  "\\pagestyle{fance}"
 					  "\\begin{titlepage}\n"
 					  "\\vspace*{\\fill}\n"
 					  "\\centering\n"
@@ -654,6 +658,7 @@
 	   (add-hook 'org-mode-hook 'flyspell-mode)
 	   (setq org-confirm-babel-evaluate nil)
 	   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+	   (add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
 	   (setq python-indent-guess-indent-offset-verbose nil)
 	   (setq org-preview-latex-image-directory "/home/zjabbar/.cache/dvisvgm/")
 	   (with-eval-after-load 'evil-maps (define-key evil-motion-state-map (kbd "TAB") nil))
