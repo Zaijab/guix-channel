@@ -78,6 +78,7 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-vertico")))
    (init '((vertico-mode 1)))))
+
 (define corfu-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-corfu")))
@@ -266,6 +267,11 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-pdf-tools")))
    (init '((pdf-tools-install)))))
+
+(define mmm-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-mmm-mode")))
+   (init '())))
 
 (define cryptography-configuration
   (home-emacs-configuration
