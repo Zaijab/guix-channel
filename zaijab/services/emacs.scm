@@ -168,6 +168,9 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-undo-tree")))
    (init '((setq undo-tree-history-directory-alist  '(("." . "~/.config/emacs/undo-tree/")))
+	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)
+
+	   
 	   (global-undo-tree-mode)))))
 
 (define indentation-configuration
@@ -322,7 +325,6 @@
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLBEeOnR8lrBHNZWwk8-pHOQLQnP3u8bO8" lecture topology clark)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL6763F57A61FE6FE8" lecture topology wildberger)))
 	   (require 'elfeed-tube)
-	   (add-hook 'elfeed-search-mode-hook (lambda () (undo-tree-mode -1)))
 	   (elfeed-tube-setup)
 	   (setq-default elfeed-search-filter "-fun -crafter")
 	   (setq-default elfeed-search-title-max-width 100)
