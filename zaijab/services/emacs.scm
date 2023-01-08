@@ -346,6 +346,7 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-libmpdel")
 		   (specification->package "alsa-utils")
+		   (specification->package "pavucontrol")
 		   (specification->package "emacs-alsamixer-el")
 		   (specification->package "mpd-mpc")
 		   (specification->package "emacs-emms")))
