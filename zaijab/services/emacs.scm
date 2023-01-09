@@ -768,6 +768,7 @@
 	      (specification->package "pandoc")
 	      (specification->package "remmina")
 	      (specification->package "gtk+")
+	      (specification->package "gobject-introspection")
 	      (specification->package "webkitgtk-with-libsoup2")
 	      (specification->package "glib-networking")
 	      (specification->package "gsettings-desktop-schemas")
