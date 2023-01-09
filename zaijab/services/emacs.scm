@@ -167,7 +167,8 @@
 (define undo-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-undo-tree")))
-   (init '((setq undo-tree-history-directory-alist  '(("." . "~/.config/emacs/undo-tree/")))
+   (init '((require 'undo-tree)
+	   (setq undo-tree-history-directory-alist  '(("." . "~/.config/emacs/undo-tree/")))
 	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)
 
 	   
