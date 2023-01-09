@@ -26,7 +26,8 @@
                 '(("grep" . "--color auto")
                   ("ll"   . "ls -l")
                   ("ls"   . "-p --color auto")
-                  ("mbsync" . "mbsync -c ~/.config/mbsyncrc")))
+                  ("mbsync" . "mbsync -c ~/.config/mbsyncrc")
+		  ("bluepillar" . "~/code/gp-saml-gui/gp_saml_gui.py -S --gateway --clientos=Linux galileo.enterprise.its.hawaii.edu")))
                (environment-variables
                 '(("GNUPGHOME" . "~/.config/gnupg")
                   ("PASSWORD_STORE_ENABLE_EXTENSIONS" . "true")
