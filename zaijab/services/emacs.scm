@@ -789,7 +789,7 @@
 	      (specification->package "python-xgboost")
 	      (specification->package "python-numexpr")
 	      (specification->package "python-patsy")
-	      (specification->package "python-statsmodels")
+	      ;(specification->package "python-statsmodels")
 	      (specification->package "emacs-csv-mode")))
    (init '((setq org-babel-python-command "python3")
 	   (setq python-shell-interpreter "python3")
