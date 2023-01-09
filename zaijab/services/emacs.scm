@@ -627,6 +627,12 @@
 	   (require 'calfw)
 	   (require 'calfw-org)
 	   (setq org-agenda-show-log-scoped t)
+	   (setq org-agenda-prefix-format '((agenda  . "  • %?-12t% s")
+					    (timeline  . "  % s")
+					    (todo  . " %i %-12:c")
+					    (tags  . " %i %-12:c")
+					    (search . " %i %-12:c")))
+
 	   (defun cfw:org-get-timerange (text)
 	     "Return a range object (begin end text). If TEXT does not have a range, return nil."
 	     (let* ((dotime (cfw:org-tp text 'dotime)))
@@ -653,14 +659,57 @@
 	   (global-set-key (kbd "s-a") 'cfw:open-org-calendar)
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
 	   
-	   (setq org-agenda-files '("~/notes/20211224040925-todo.org" "~/notes/20221204145316-influx.org" "~/notes/20211222094239-workflow.org"))
+	   (setq org-agenda-files '("~/notes/"))
 	   
 	   (setq org-startup-with-inline-images t)
 
-	   ;; (setq org-agenda-time-grid
-	   ;; 	 (list '(daily weekly remove-match)
-	   ;; 	       (mapcar (lambda (x) (* 100 x)) (number-sequence 1 23))
-	   ;; 	       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+	   (setq org-agenda-time-grid
+		 (list '(daily weekly remove-match)
+		       (mapcar (lambda (x) (* 100 x)) (number-sequence 6 21))
+		       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+	   
+	   (defun org-time-to-minutes (time)
+	     "Convert an HHMM time to minutes"
+	     (+ (* (/ time 100) 60) (% time 100)))
+
+	   (defun org-time-from-minutes (minutes)
+	     "Convert a number of minutes to an HHMM time"
+	     (+ (* (/ minutes 60) 100) (% minutes 60)))
+
+	   (defadvice org-agenda-add-time-grid-maybe (around mde-org-agenda-grid-tweakify
+							     (list ndays todayp))
+	     (if (member 'remove-match (car org-agenda-time-grid))
+		 (flet ((extract-window
+			 (line)
+			 (let ((start (get-text-property 1 'time-of-day line))
+			       (dur (get-text-property 1 'duration line)))
+			   (cond
+			    ((and start dur)
+			     (cons start
+				   (org-time-from-minutes
+				    (truncate
+				     (+ dur (org-time-to-minutes start))))))
+			    (start start)
+			    (t nil)))))
+		       (let* ((windows (delq nil (mapcar 'extract-window list)))
+			      (org-agenda-time-grid
+			       (list
+				(car org-agenda-time-grid)
+				(remove-if
+				 (lambda (time)
+				   (find-if (lambda (w)
+					      (if (numberp w)
+						  (equal w time)
+						  (and (>= time (car w))
+						       (< time (cdr w)))))
+					    windows))
+				 (cadr org-agenda-time-grid) )
+				(caddr org-agenda-time-grid)
+				(cadddr org-agenda-time-grid)
+				)))
+			 ad-do-it))
+		 ad-do-it))
+	   (ad-activate 'org-agenda-add-time-grid-maybe)
 	   (setq org-startup-with-latex-preview t)
 	   (setq org-preview-latex-default-process 'dvisvgm)
 	   (add-hook 'org-mode-hook 'org-fragtog-mode)
