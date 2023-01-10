@@ -810,7 +810,7 @@
   (home-emacs-configuration
    (packages (list 
 	      emacs-symex
-	      emacs-rigpa
+	      ;emacs-rigpa
 	      (specification->package "sicp")
 	      (specification->package "emacs-guix")
 	      (specification->package "emacs-debbugs")
@@ -826,13 +826,13 @@
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
 	   (symex-initialize)
-	   (global-set-key (kbd "s-;") 'symex-mode-interface)
-	   (require 'rigpa)
-	   (setq rigpa-mode t)
+	   (global-set-key (kbd "s-y") 'symex-mode-interface)
+	   ;(require 'rigpa)
+	   ;(setq rigpa-mode t)
 
-	   (remove-hook 'evil-symex-state-exit-hook (function symex-disable-editing-minor-mode))
+	   ;(remove-hook 'evil-symex-state-exit-hook (function symex-disable-editing-minor-mode))
 	   ;; custom config
-	   (setq rigpa-show-menus nil)
+	   ;(setq rigpa-show-menus nil)
 
 	   ;; navigating meta modes
 	   ;; (global-unset-key (kbd "s-m"))
@@ -870,11 +870,11 @@
 
 	   ;; indexed entry to various modes
 	   (global-set-key (kbd "s-n") 'evil-normal-state)
-	   (global-set-key (kbd "s-y") ; symex mode
-			   (lambda ()
-			     (interactive)
-			     (rigpa-enter-mode "symex")))
-	   (global-set-key (kbd "s-;") (kbd "s-y"))
+	   ;(global-set-key (kbd "s-y") ; symex mode
+	;		   (lambda ()
+	;		     (interactive)
+	;		     (rigpa-enter-mode "symex")))
+	 ;  (global-set-key (kbd "s-;") (kbd "s-y"))
 	   ;; (global-set-key (kbd "s-W") ; window mode
 	   ;; 		   (lambda ()
 	   ;; 		     (interactive)
