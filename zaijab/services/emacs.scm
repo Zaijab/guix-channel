@@ -772,8 +772,6 @@
 					;(specification->package "gobject-introspection")
 	      (specification->package "python-pygobject")
 	      (specification->package "python-pyqt")
-	      (specification->package "webkitgtk")
-	      (specification->package "webkitgtk-with-libsoup2")
 	      (specification->package "glib-networking")
 	      (specification->package "gsettings-desktop-schemas")
 	      (specification->package "qtwebkit")
