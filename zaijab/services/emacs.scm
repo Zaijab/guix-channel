@@ -777,7 +777,7 @@
 	      (specification->package "glib-networking")
 	      (specification->package "gsettings-desktop-schemas")
 					;(specification->package "webkitgtk-with-libsoup2")
-	      webkitgtk-with-libsoup-old
+	      webkitgtk-with-libsoup2-old
 	      (specification->package "network-manager-applet")
 	      (specification->package "hicolor-icon-theme")
 	      (specification->package "python-sqlalchemy")
