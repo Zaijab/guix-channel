@@ -149,11 +149,10 @@
                (url "https://github.com/emacs-mirror/emacs")
                (commit commit)))
          (file-name (git-file-name name version))
-         (patches (search-patches "emacs-pgtk-super-key-fix.patch"
-                                  "emacs-exec-path.patch"
-                                  "emacs-fix-scheme-indent-function.patch"
-                                  "emacs-native-comp-driver-options.patch"
-				  ))
+         (patches (search-patches
+                   "emacs-exec-path.patch"
+                   "emacs-fix-scheme-indent-function.patch"
+                   "emacs-native-comp-driver-options.patch"))
          (sha256
           (base32
            "1gv4ihns0vbghi0d34by436qxqgms96593sahb45qy4dbwxibjza"))))
@@ -167,8 +166,7 @@
 	       (append curl)))
       (propagated-inputs (modify-inputs
 			  (package-inputs emacs-next)
-			  (append curl)))
-      )))
+			  (append curl))))))
 
 (define-public emacs-dynaring
   (package
