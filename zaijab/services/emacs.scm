@@ -10,6 +10,7 @@
   #:use-module (guix transformations)
   #:use-module (guix gexp)
   #:use-module (zaijab packages emacs-xyz)
+  #:use-module (zaijab packages webkit)
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages fonts)
   #:export (home-emacs-service-type
@@ -775,7 +776,8 @@
 	      (specification->package "python-pyqt")
 	      (specification->package "glib-networking")
 	      (specification->package "gsettings-desktop-schemas")
-	      (specification->package "webkitgtk-with-libsoup2")
+					;(specification->package "webkitgtk-with-libsoup2")
+	      webkitgtk-with-libsoup-old
 	      (specification->package "network-manager-applet")
 	      (specification->package "hicolor-icon-theme")
 	      (specification->package "python-sqlalchemy")
