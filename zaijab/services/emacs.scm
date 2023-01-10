@@ -571,7 +571,7 @@
 	     (apply orig-fun extension subtreep pub-dir nil))
 	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
 	   (setq org-latex-title-command (concat
-					  "\\pagestyle{fance}"
+					  "\\pagestyle{fancy}"
 					  "\\begin{titlepage}\n"
 					  "\\vspace*{\\fill}\n"
 					  "\\centering\n"
