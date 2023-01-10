@@ -768,6 +768,7 @@
 	      (specification->package "pandoc")
 	      (specification->package "remmina")
 	      (specification->package "gtk")
+	      (specification->package "glib")
 	      (specification->package "gtk+")
 	      (specification->package "python-pygobject")
 	      (specification->package "python-pyqt")
