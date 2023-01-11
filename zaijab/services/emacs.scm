@@ -945,7 +945,7 @@
 		    (sql-default-directory "/ssh:zain@128.171.46.101:")
 		    (sql-server "localhost")
 		    (sql-user "zain")
-		    (sql-database "uhm2022")
+		    (sql-database "uhm2023")
 		    (sql-port 5432))
 		   (zain-campus-energy
 		    (sql-product 'postgres)
