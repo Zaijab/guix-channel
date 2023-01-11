@@ -31,7 +31,8 @@
                (environment-variables
                 '(("GNUPGHOME" . "~/.config/gnupg")
                   ("PASSWORD_STORE_ENABLE_EXTENSIONS" . "true")
-                  ("GIO_MODULE_DIR" . "/home/zjabbar/.guix-profile/lib/gio/modules/")
+                  ("GIO_MODULE_DIR" . "/home/zjabbar/.guix-home/profile/lib/gio/modules/")
+                  ("EDITOR" . "emacsclient")
                   ("PATH" . "$PATH:/home/zjabbar/.local/bin")
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
                   ("PASSWORD_STORE_SYSTEM_EXTENSION_DIR" . "/home/zjabbar/.local/lib/python3.9/site-packages/")
