@@ -1081,7 +1081,7 @@
 		   (specification->package "emacs-nano-modeline")
                    (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
-   (early-init '((defun display-startup-echo-area-message () (exwm-randr-refresh))
+   (early-init '((defun display-startup-echo-area-message () (exwm-randr-enable) (exwm-randr-refresh))
 		 (setq gc-cons-threshold most-positive-fixnum
 		       package-enable-at-startup nil
 		       indicate-buffer-boundaries nil
