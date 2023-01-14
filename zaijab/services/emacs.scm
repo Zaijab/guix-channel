@@ -1081,8 +1081,7 @@
 		   (specification->package "emacs-nano-modeline")
                    (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
-   (early-init '((defun display-startup-echo-area-message () (exwm-randr-enable) (exwm-randr-refresh))
-		 (setq gc-cons-threshold most-positive-fixnum
+   (early-init '((setq gc-cons-threshold most-positive-fixnum
 		       package-enable-at-startup nil
 		       indicate-buffer-boundaries nil
 		       indicate-empty-lines nil
@@ -1148,7 +1147,10 @@
 	   
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
-	   (which-key-mode)))))
+	   (which-key-mode)
+	   (defun display-startup-echo-area-message () (exwm-randr-enable) (exwm-randr-refresh))
+
+	   ))))
 
 ;;; Combine all Emacs-Configurations within module
 
