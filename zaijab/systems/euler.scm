@@ -1,4 +1,5 @@
 (define-module (zaijab systems euler)
+  #:use-module (gnu system)
   #:use-module (zaijab systems based-system))
 
 (define-public euler-operating-system

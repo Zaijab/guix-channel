@@ -6,6 +6,7 @@
   #:use-module (guix transformations)
   #:use-module (nongnu packages linux)
   #:use-module (gnu)
+  #:use-module (gnu system)
   #:use-module (gnu packages)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages search)
