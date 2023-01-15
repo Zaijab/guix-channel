@@ -37,7 +37,7 @@
   #:use-module (gnu services mcron) 
   #:use-module (gnu services virtualization))
 
-(define-public based-operating-system
+(define-public tao-operating-system
   (operating-system
     (kernel linux)
     (firmware (list linux-firmware))
@@ -55,11 +55,6 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       ;; (specification->package "emacs-next")
-	       ;; ((options->transformation
-	       ;; 	 '((with-input . "emacs=emacs-next")
-	       ;; 	   (with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
-	       ;; 	(specification->package "emacs-exwm"))
 	       (specification->package "nss-certs")
 	       (specification->package "pulseaudio")
 	       (specification->package "network-manager-applet")
@@ -136,25 +131,3 @@
 			       (specification->package "network-manager-openconnect")
 			       (specification->package "openconnect-sso"))))))))))
 
-(define-public tao-operating-system
-  based-operating-system)
-
-(define-public euler-operating-system
-  (operating-system
-    (inherit based-operating-system)
-    (host-name "euler")
-    (file-systems (cons*
-		   (file-system
-		     (mount-point "/boot/efi")
-		     (device (uuid "A2B7-72DF" 'fat32))
-		     (type "vfat"))
-		   (file-system
-		     (mount-point "/")
-		     (device
-		      (uuid "08173b91-2416-4b98-a5e1-59281ae236a2"
-			    'btrfs))
-		     (type "btrfs"))
-		   %base-file-systems))))
-
-
-tao-operating-system
