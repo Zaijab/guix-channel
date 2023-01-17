@@ -59,7 +59,6 @@
 	       (specification->package "nss-certs")
 	       (specification->package "pulseaudio")
 	       (specification->package "network-manager-applet")
-	       (specification->package "texmacs")
 	       (specification->package "nix")
 	       (specification->package "searx") 
 	       (specification->package "gsettings-desktop-schemas")
