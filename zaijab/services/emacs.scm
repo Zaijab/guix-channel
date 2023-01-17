@@ -775,6 +775,7 @@
 	      (specification->package "ungoogled-chromium")
 	      (specification->package "gtk+")
 	      (specification->package "python-pygobject")
+	      (specification->package "python-srt")
 	      (specification->package "python-pyqt")
 	      (specification->package "glib-networking")
 	      (specification->package "qtwebkit")
