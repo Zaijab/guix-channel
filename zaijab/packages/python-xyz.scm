@@ -105,3 +105,37 @@
     (synopsis "Python package for solving partial differential equations")
     (description "Python package for solving partial differential equations")
     (license license:expat)))
+
+(define-public python-tree-sitter
+  (package
+    (name "python-tree-sitter")
+    (version "0.20.1")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "tree_sitter" version))
+              (sha256
+               (base32
+		"03f6xqpnjh4g28d9g219w9n4l07bap91ws2xzfy4jrjxahn0hgz9"))))
+    (build-system python-build-system)
+    (home-page "https://github.com/tree-sitter/py-tree-sitter")
+    (synopsis "Python bindings to the Tree-sitter parsing library")
+    (description "Python bindings to the Tree-sitter parsing library")
+    (license license:expat)))
+
+(define-public python-pyright
+  (package
+    (name "python-pyright")
+    (version "1.1.290")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "pyright" version))
+              (sha256
+               (base32
+		"0fhyjq8y55nikiv6924wf60kmzdg8bwfwby8akd58npbf3y8wvcm"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-nodeenv python-typing-extensions))
+    (native-inputs (list python-twine))
+    (home-page "https://github.com/RobertCraigie/pyright-python")
+    (synopsis "Command line wrapper for pyright")
+    (description "Command line wrapper for pyright")
+    (license license:expat)))
