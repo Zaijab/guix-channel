@@ -131,11 +131,15 @@
               (uri (pypi-uri "pyright" version))
               (sha256
                (base32
-		"0fhyjq8y55nikiv6924wf60kmzdg8bwfwby8akd58npbf3y8wvcm"))))
+                "0fhyjq8y55nikiv6924wf60kmzdg8bwfwby8akd58npbf3y8wvcm"))))
     (build-system python-build-system)
-    (propagated-inputs (list python-nodeenv python-typing-extensions))
+    (propagated-inputs (list
+			((options->transformation '((with-latest . "python-nodeenv")))
+			 (specification->package "python-nodeenv"))
+			python-typing-extensions))
     (native-inputs (list python-twine))
     (home-page "https://github.com/RobertCraigie/pyright-python")
     (synopsis "Command line wrapper for pyright")
     (description "Command line wrapper for pyright")
     (license license:expat)))
+
