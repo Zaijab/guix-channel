@@ -10,6 +10,7 @@
   #:use-module (guix transformations)
   #:use-module (guix gexp)
   #:use-module (zaijab packages emacs-xyz)
+  #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages fonts)
   #:export (home-emacs-service-type
@@ -768,7 +769,8 @@
 	      ((options->transformation		
 		'((with-branch . "emacs-jupyter=master"))) (specification->package "emacs-jupyter"))
 	      (specification->package "python")
-	      (specification->package "python-lsp-server")
+	      python-pyright
+	      python-tree-sitter
 	      (specification->package "jupyter")
 	      (specification->package "pandoc")
 	      (specification->package "remmina")
