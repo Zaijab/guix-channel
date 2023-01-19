@@ -769,7 +769,7 @@
 	      ((options->transformation		
 		'((with-branch . "emacs-jupyter=master"))) (specification->package "emacs-jupyter"))
 	      (specification->package "python")
-	      python-pyright
+	      (specification->package "python-lsp-server")
 	      python-tree-sitter
 	      (specification->package "jupyter")
 	      (specification->package "pandoc")
