@@ -999,6 +999,7 @@
 	   (global-set-key (kbd "s-f") 'exwm-floating-toggle-floating)
 	   (global-set-key (kbd "s-<tab>") 'switch-to-buffer)
 	   (global-set-key (kbd "s-<escape>") 'execute-extended-command)
+	   (global-set-key (kbd "s-`") 'eshell-command)
 	   (global-set-key (kbd "s-;") 'shell-command)
 	   (global-set-key (kbd "s-:") 'eval-expression)
 	   (global-set-key (kbd "s-c") (function
