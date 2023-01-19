@@ -134,7 +134,7 @@
                 "0fhyjq8y55nikiv6924wf60kmzdg8bwfwby8akd58npbf3y8wvcm"))))
     (build-system python-build-system)
     (propagated-inputs (list
-			((options->transformation '((with-latest . "python-nodeenv")))
+			((options->transformation '((with-branch . "python-nodeenv=master")))
 			 (specification->package "python-nodeenv"))
 			python-typing-extensions))
     (native-inputs (list python-twine))
