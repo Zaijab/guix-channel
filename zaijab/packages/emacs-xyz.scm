@@ -135,6 +135,13 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
 
+(define (%emacs-modules build-system)
+  (let ((which (build-system-name build-system)))
+    `((guix build ,(symbol-append which '-build-system))
+      (guix build utils)
+      (srfi srfi-1)
+      (ice-9 ftw))))
+
 (define-public emacs-next-tree-sitter
   (let ((commit "32615c9bc124970aade150e81c2ed4a5c0492ef7")
         (revision "5"))
