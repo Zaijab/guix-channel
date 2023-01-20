@@ -152,84 +152,86 @@
          (patches (search-patches
                    "emacs-exec-path.patch"
                    "emacs-fix-scheme-indent-function.patch"
-                   "emacs-native-comp-driver-options.patch"))
+                   "emacs-native-comp-driver-options.patch"
+		   ))
          (sha256
           (base32
            "1gv4ihns0vbghi0d34by436qxqgms96593sahb45qy4dbwxibjza"))))
       (arguments
-      (substitute-keyword-arguments (package-arguments emacs)
-      ((#:configure-flags flags #~'())
-      #~(cons "--with-xwidgets" #$flags))
-      ((#:modules _) (%emacs-modules build-system))
-      ((#:phases phases)
-      #~(modify-phases #$phases
-      (delete 'restore-emacs-pdmp)
-      (delete 'strip-double-wrap))))
-      )
+       (substitute-keyword-arguments (package-arguments emacs-next)
+	 ((#:configure-flags flags #~'())
+          #~(cons "--with-xwidgets" "--with-tree-sitter" #$flags))
+	 ((#:modules _) (%emacs-modules build-system))
+	 ((#:phases phases)
+          #~(modify-phases #$phases
+              (delete 'restore-emacs-pdmp)
+              (delete 'strip-double-wrap)))))
+      
       (inputs (modify-inputs
-      (package-inputs emacs-next)
-      (append tree-sitter)
-      (append curl)
-      (prepend webkitgtk-with-libsoup2 libxcomposite))
+	       (package-inputs emacs-next)
+	       (append tree-sitter)
+	       (append curl)
+	       (prepend webkitgtk-with-libsoup2 libxcomposite)))
       (propagated-inputs (modify-inputs
-      (package-inputs emacs-next)
-      (append curl))))))
+			  (package-inputs emacs-next)
+			  (append curl)))
+      )))
 
 (define-public emacs-dynaring
-(package
-(name "emacs-dynaring")
-(version "20210924.2026")
-(source (origin
-(method git-fetch)
-(uri (git-reference
-(url "https://github.com/countvajhula/dynaring.git")
-(commit "dc9013117bdcdc1b12feebcc58eaf129a6ad3a73")))
-(sha256
-(base32
-"0z5r0wybpm74hlcbisavn90i31vh3jsalhk0frihfclfgbqd24d9"))))
-(build-system emacs-build-system)
-(home-page "https://github.com/countvajhula/dynaring")
-(synopsis "A dynamically sized ring structure")
-(description "This package provides a dynamically sized ring structure.")
-(license #f)))
+  (package
+    (name "emacs-dynaring")
+    (version "20210924.2026")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/countvajhula/dynaring.git")
+		    (commit "dc9013117bdcdc1b12feebcc58eaf129a6ad3a73")))
+	      (sha256
+	       (base32
+		"0z5r0wybpm74hlcbisavn90i31vh3jsalhk0frihfclfgbqd24d9"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/countvajhula/dynaring")
+    (synopsis "A dynamically sized ring structure")
+    (description "This package provides a dynamically sized ring structure.")
+    (license #f)))
 
 (define-public emacs-buffer-ring
-(package
-(name "emacs-buffer-ring")
-(version "20220120.124")
-(source (origin
-(method git-fetch)
-(uri (git-reference
-(url "https://github.com/countvajhula/buffer-ring.git")
-(commit "177d67238c4d126a0270585e21c0f03ae750ca2a")))
-(sha256
-(base32
-"1li3fq5797hcd2wy5w2vp6hmgf779mrm0pw2nj4a19snwl9ak02j"))))
-(build-system emacs-build-system)
-(propagated-inputs (list emacs-dynaring emacs-s emacs-ht))
-(home-page "https://github.com/countvajhula/buffer-ring")
-(synopsis "Rings and tori for buffer navigation")
-(description "Rings of buffers and tori of buffer rings.")
-(license #f)))
+  (package
+    (name "emacs-buffer-ring")
+    (version "20220120.124")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/countvajhula/buffer-ring.git")
+                    (commit "177d67238c4d126a0270585e21c0f03ae750ca2a")))
+              (sha256
+               (base32
+		"1li3fq5797hcd2wy5w2vp6hmgf779mrm0pw2nj4a19snwl9ak02j"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-dynaring emacs-s emacs-ht))
+    (home-page "https://github.com/countvajhula/buffer-ring")
+    (synopsis "Rings and tori for buffer navigation")
+    (description "Rings of buffers and tori of buffer rings.")
+    (license #f)))
 
 (define-public emacs-centaur-tabs
-(package
-(name "emacs-centaur-tabs")
-(version "20220926.1247")
-(source (origin
-(method git-fetch)
-(uri (git-reference
-(url "https://github.com/ema2159/centaur-tabs.git")
-(commit "7d9fad0daa44ffb2acecf6525759e46e08e35f2c")))
-(sha256
-(base32
-"0la8fmwirspg7m453qhfb64sqryl59dxc1lfmjkh6mzf85nqbl1i"))))
-(build-system emacs-build-system)
-(propagated-inputs (list emacs-powerline))
-(home-page "https://github.com/ema2159/centaur-tabs")
-(synopsis "Aesthetic, modern looking customizable tabs plugin")
-(description
-"Emacs plugin aiming to become an aesthetic, modern looking tabs plugin.  This
+  (package
+    (name "emacs-centaur-tabs")
+    (version "20220926.1247")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/ema2159/centaur-tabs.git")
+                    (commit "7d9fad0daa44ffb2acecf6525759e46e08e35f2c")))
+              (sha256
+               (base32
+		"0la8fmwirspg7m453qhfb64sqryl59dxc1lfmjkh6mzf85nqbl1i"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-powerline))
+    (home-page "https://github.com/ema2159/centaur-tabs")
+    (synopsis "Aesthetic, modern looking customizable tabs plugin")
+    (description
+     "Emacs plugin aiming to become an aesthetic, modern looking tabs plugin.  This
 package offers tabs with a wide range of customization options, both aesthetical
 and functional, implementing them trying to follow the Emacs philosophy packing
 them with useful keybindings and a nice integration with the Emacs environment,
@@ -237,29 +239,29 @@ without sacrificing customizability.  Some of the features Centaur tabs offers
 are: - Tab styles - Tab icons - Graying out icons - Selected tab bar (over,
 under and left bar) - Close button - Modified marker - Buffer grouping -
 Projectile integration - Ivy and Helm integration for group switching")
-(license #f)))
+    (license #f)))
 
 (define-public emacs-elfeed-web
-(package
-(name "emacs-elfeed-web")
-(version "20210226.258")
-(source (origin
-(method git-fetch)
-(uri (git-reference
-(url "https://github.com/skeeto/elfeed.git")
-(commit "162d7d545ed41c27967d108c04aa31f5a61c8e16")))
-(sha256
-(base32
-"0v49l289wiral01pvgm30wyv79h5d3ly3i05dmcw1q93g4z4l56d"))))
-(build-system emacs-build-system)
-(propagated-inputs (list emacs-simple-httpd emacs-elfeed))
-(arguments
-'(#:include '("^web/[^/]+$")
-#:exclude '()))
-(home-page "https://github.com/skeeto/elfeed")
-(synopsis "web interface to Elfeed")
-(description
-"This is a very early work in progress.  The long-term goal is to provide a web
+  (package
+    (name "emacs-elfeed-web")
+    (version "20210226.258")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/skeeto/elfeed.git")
+                    (commit "162d7d545ed41c27967d108c04aa31f5a61c8e16")))
+              (sha256
+               (base32
+		"0v49l289wiral01pvgm30wyv79h5d3ly3i05dmcw1q93g4z4l56d"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-simple-httpd emacs-elfeed))
+    (arguments
+     '(#:include '("^web/[^/]+$")
+       #:exclude '()))
+    (home-page "https://github.com/skeeto/elfeed")
+    (synopsis "web interface to Elfeed")
+    (description
+     "This is a very early work in progress.  The long-term goal is to provide a web
 interface view of the database with optional remote tag updating.  An AngularJS
 client accesses the database over a few RESTful endpoints with JSON for
 serialization.  The IDs provided by RSS and Atom are completely arbitrary.  To
@@ -274,23 +276,23 @@ which is an filter string to be parsed and handled by
 tags of zero or more entries based on a JSON entry passed as the content.
 /elfeed/update Accepts a time parameter.  If time < `elfeed-db-last-update',
 respond with time.  Otherwise don't respond until database updates (long poll).")
-(license #f)))
+    (license #f)))
 
 (define-public emacs-symex
   (package
     (name "emacs-symex")
     (version "20221008.1605")
     (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://github.com/countvajhula/symex.el.git")
-		    (commit "b999c02284f6e72ff2061a98cbaa084954c44879")))
-	      (sha256
-	       (base32
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/countvajhula/symex.el.git")
+                    (commit "b999c02284f6e72ff2061a98cbaa084954c44879")))
+              (sha256
+               (base32
 		"1m7m0zmzib8kz765ny1miy9ydp512jgxix7bhdbxg1gfidqndp32"))))
     (build-system emacs-build-system)
     (propagated-inputs (list emacs-lispy
-			     emacs-paredit
+                             emacs-paredit
                              emacs-evil-cleverparens
                              emacs-evil
                              emacs-evil-surround
