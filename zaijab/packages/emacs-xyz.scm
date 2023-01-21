@@ -165,6 +165,7 @@
          (sha256
           (base32
            "1gv4ihns0vbghi0d34by436qxqgms96593sahb45qy4dbwxibjza"))))
+      (build-system gnu-build-system)
       (arguments
        (substitute-keyword-arguments (package-arguments emacs-next)
 	 ((#:configure-flags flags #~'())
