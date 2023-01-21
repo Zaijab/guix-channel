@@ -18,6 +18,7 @@
   #:use-module (guix git-download)
   #:use-module (guix svn-download)
   #:use-module (guix hg-download)
+  #:use-module (guix build-system)
   #:use-module (guix build-system cargo)
   #:use-module (guix build-system cmake)
   #:use-module (guix build-system copy)
