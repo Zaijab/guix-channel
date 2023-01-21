@@ -169,7 +169,7 @@
       (arguments
        (substitute-keyword-arguments (package-arguments emacs-next)
 	 ((#:configure-flags flags #~'())
-          #~(cons "--with-xwidgets" "--with-tree-sitter" #$flags))
+          #~(cons* "--with-xwidgets" "--with-tree-sitter" #$flags))
 	 ((#:modules _) (%emacs-modules build-system))
 	 ((#:phases phases)
           #~(modify-phases #$phases
