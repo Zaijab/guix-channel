@@ -154,6 +154,7 @@
 (define evil-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-evil")
+		   (specification->package "emacs-xah-fly-keys") 
 		   (specification->package "emacs-evil-collection")))
    (init '((evil-collection-init)
 	   (evil-mode 1)))
