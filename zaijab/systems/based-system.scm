@@ -1,6 +1,8 @@
 (define-module (zaijab systems based-system)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 textual-ports)
+  #:use-module (ice-9 rdelim)
+  #:use-module (ice-9 popen)
   #:use-module (guix)
   #:use-module (guix gexp)
   #:use-module (guix transformations)
@@ -148,3 +150,8 @@
 			    'btrfs))
 		     (type "btrfs"))
 		   %base-file-systems))))
+
+
+(let ((hostname (read-delimited "\n" (open-input-pipe "echo $HOSTNAME"))))
+  (cond ((string= hostname "tao") tao-operating-system)
+	((string= hostname "euler") euler-operating-system)))
