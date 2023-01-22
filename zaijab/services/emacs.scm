@@ -663,8 +663,6 @@
 	   (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
 	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
-	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
-	   (global-set-key (kbd "s-a") 'cfw:open-org-calendar)
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
 	   
 	   (setq org-agenda-files '("~/notes/"))
@@ -1012,6 +1010,8 @@
 					(lambda () (interactive)
 						(find-file (read-file-name "" "~/books/")))))
 	   (global-set-key (kbd "C-x C-t") 'vterm)
+	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
+	   (global-set-key (kbd "s-a") 'cfw:open-org-calendar)
 	   (global-set-key (kbd "s-d") (function geiser-guile))
 	   (global-set-key (kbd "s-z") (function elfeed))
 	   (global-set-key (kbd "s-g") (function guix))
