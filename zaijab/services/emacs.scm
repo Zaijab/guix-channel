@@ -499,7 +499,7 @@
 	      (specification->package "emacs-org-drill")))
    (init '((require 'org-roam-node)
 	   (require 'org-drill) 
-	   (setq org-drill-learn-fraction 0.75)
+	   (setq org-drill-learn-fraction 0.4)
 	   (setq org-drill-scope 'directory)
 	   (setq org-drill-hide-item-headings-p t)
 	   (setq org-roam-directory "~/notes")
