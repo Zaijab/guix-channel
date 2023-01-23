@@ -500,7 +500,6 @@
    (init '((require 'org-roam-node)
 	   (require 'org-drill) 
 	   (setq org-drill-learn-fraction 0.4)
-	   (setq org-drill-scope 'directory)
 	   (setq org-drill-hide-item-headings-p t)
 	   (setq org-roam-directory "~/notes")
 	   (setq org-roam-v2-ack t)
