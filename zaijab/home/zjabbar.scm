@@ -36,6 +36,7 @@
                   ("EDITOR" . "emacsclient")
                   ("PATH" . "$PATH:/home/zjabbar/.local/bin")
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
+                  ("TF_CPP_MIN_LOG_LEVEL" . "3")
                   ("PASSWORD_STORE_SYSTEM_EXTENSION_DIR" . "/home/zjabbar/.local/lib/python3.9/site-packages/")
                   ("GUILE_LOAD_PATH" . "$GUILE_LOAD_PATH:/home/zjabbar/.config/guix/current/share/guile/site/3.0/:/home/zjabbar/.guix-profile/share/guile/site/3.0/:/home/zjabbar/.guix-home/profile/share/guile/site/3.0/:/home/zjabbar/code/guix-channel/")))
                (bash-profile
