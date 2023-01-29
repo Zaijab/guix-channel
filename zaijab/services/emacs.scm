@@ -660,7 +660,6 @@
 	   
 	   (setq org-tags-column 0)
 	   (global-org-modern-mode)
-	   (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
 	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
