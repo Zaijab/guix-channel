@@ -13,5 +13,7 @@ org-mode
 (lemma "#+BEGIN_LEMMA" p n> r> n> "#+END_LEMMA")
 (proof "#+BEGIN_PROOF" p n> r> n> "#+END_PROOF")
 (frac "\\frac{" p "}{" q "}" p)
+(pdiff "\\frac{ \\partial " p "}{ \\partial " q "}" p)
+(diff "\\frac{ d " p "}{ d " q "}" p)
 (set "\\{ " p " \\vert " p " \\}")
 (func p " \\colon " p " \\to " p)
