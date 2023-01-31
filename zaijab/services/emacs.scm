@@ -131,25 +131,25 @@
 			  nil
 			  (window-parameters (mode-line-format . none))))))))
 
-(define consult-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-consult")))
-   (init '((require 'consult)
-	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
-	   (setq register-preview-delay 0.5
-		 register-preview-function (function consult-register-format))
-	   (advice-add (function register-preview) :override (function consult-register-window))
-	   (setq xref-show-xrefs-function (function consult-xref)
-		 xref-show-definitions-function (function consult-xref))
-	   (consult-customize
-	    consult-theme :preview-key '(:debounce 0.2 any)
-	    consult-ripgrep consult-git-grep consult-grep
-	    consult-bookmark consult-recent-file consult-xref
-	    consult--source-bookmark consult--source-file-register
-	    consult--source-recent-file consult--source-project-recent-file
-	    :preview-key '(:debounce 0.4 any))
+;; (define consult-configuration
+;;   (home-emacs-configuration
+;;    (packages (list (specification->package "emacs-consult")))
+;;    (init '((require 'consult)
+;; 	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
+;; 	   (setq register-preview-delay 0.5
+;; 		 register-preview-function (function consult-register-format))
+;; 	   (advice-add (function register-preview) :override (function consult-register-window))
+;; 	   (setq xref-show-xrefs-function (function consult-xref)
+;; 		 xref-show-definitions-function (function consult-xref))
+;; 	   (consult-customize
+;; 	    consult-theme :preview-key '(:debounce 0.2 any)
+;; 	    consult-ripgrep consult-git-grep consult-grep
+;; 	    consult-bookmark consult-recent-file consult-xref
+;; 	    consult--source-bookmark consult--source-file-register
+;; 	    consult--source-recent-file consult--source-project-recent-file
+;; 	    :preview-key '(:debounce 0.4 any))
 
-	   (setq consult-narrow-key "<")))))
+;; 	   (setq consult-narrow-key "<")))))
 
 (define evil-configuration
   (home-emacs-configuration
