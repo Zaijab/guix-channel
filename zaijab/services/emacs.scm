@@ -586,7 +586,7 @@
 					  "\\vspace{0.1in}\n"
 					  "{\\normalsize %a \\par}\n"
 					  "\\vspace{0.1in}\n"
-					  "{\\large \\textit{%D} \\professor \\ \\ \\hmwkduedate \\par}\n"
+					  "{\\large For \\professor \\ On \\duedate \\ \\par}\n"
 					  "\\vspace*{\\fill}\n"
 					  "\\end{titlepage}\n"))
 	   (setq org-publish-project-alist
