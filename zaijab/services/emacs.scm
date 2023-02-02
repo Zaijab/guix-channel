@@ -519,7 +519,9 @@
 (define website-configuration
   (home-emacs-configuration
    (packages (list google-chrome-unstable
-		   (specification->package "python-pygments")))
+		   (specification->package "python-pygments")
+		   (specification->package "emacs-engrave-faces")
+		   ))
    (init '((require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
 	     "For a given file, get its TITLE keyword."
@@ -578,7 +580,7 @@
 		 (make-directory pub-dir)))
 	     (apply orig-fun extension subtreep pub-dir nil))
 	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
-	   (setq org-latex-listings 'minted)
+	   (setq org-latex-listings 'engraved)
 	   (setq org-latex-title-command (concat
 					  "\\pagestyle{fancy}"
 					  "\\begin{titlepage}\n"
