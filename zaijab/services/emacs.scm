@@ -721,6 +721,8 @@
 	   (ad-activate 'org-agenda-add-time-grid-maybe)
 	   (setq org-startup-with-latex-preview t)
 	   (setq org-preview-latex-default-process 'dvisvgm)
+	   (setq org-latex-pdf-process '("latexmk -shell-escape -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"))
+	   (add-to-list 'org-latex-listings-langs '(python3 "Python"))
 	   (add-hook 'org-mode-hook 'org-fragtog-mode)
 	   (add-hook 'org-mode-hook 'flyspell-mode)
 	   (setq org-confirm-babel-evaluate nil)
