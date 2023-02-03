@@ -131,7 +131,16 @@
 			      (list
 			       (specification->package "network-manager-openvpn")
 			       (specification->package "network-manager-openconnect")
-			       (specification->package "openconnect-sso"))))))))))
+			       (specification->package "openconnect-sso")))))
+		 (guix-service-type config => (guix-configuration
+					       (inherit config)
+					       (substitute-urls
+						(append (list "https://substitutes.nonguix.org")
+							%default-substitute-urls))
+					       (authorized-keys
+						(append (list (local-file "./signing-key.pub"))
+							%default-authorized-guix-keys))))
+		 )))))
 
 
 (define-public euler-operating-system
