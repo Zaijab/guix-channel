@@ -776,7 +776,6 @@
 	      (specification->package "jupyter")
 	      (specification->package "pandoc")
 	      (specification->package "remmina")
-	      (specification->package "ungoogled-chromium")
 	      (specification->package "gtk+")
 	      (specification->package "python-pygobject")
 	      (specification->package "python-srt")
@@ -974,6 +973,8 @@
 	      ((options->transformation
 		'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
 	       (specification->package "emacs-exwm"))
+	      google-chrome-unstable
+	      (specification->package "ungoogled-chromium")
 	      (specification->package "emacs-xelb")
 	      (specification->package "picom")
 	      (specification->package "emacs-windsize")
