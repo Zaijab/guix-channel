@@ -1162,13 +1162,10 @@
 	   (customize-set-variable 'display-time-load-average-threshold 100)
 	   (customize-set-variable 'display-time-day-and-date t)
 	   (set-default 'truncate-lines t)
-	   (load-theme 'modus-operandi t)
-	   
+	   (load-theme 'modus-operandi t)           
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
-	   (which-key-mode)
-
-	   ))))
+	   (which-key-mode)))))
 
 ;;; Combine all Emacs-Configurations within module
 
