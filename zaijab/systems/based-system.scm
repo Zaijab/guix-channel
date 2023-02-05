@@ -124,6 +124,11 @@
 		(list
 		 (pam-limits-entry "@wheel" 'hard 'nofile 524288)))
 	       (modify-services %desktop-services
+		 (gdm-service-type
+		  config => (gdm-configuration
+			     (inherit config)
+			     (auto-login #t)
+			     (default-user "zjabbar")))
 		 (network-manager-service-type
 		  config => (network-manager-configuration
 			     (inherit config)
