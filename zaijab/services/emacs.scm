@@ -337,7 +337,7 @@
 	   (setq-default elfeed-search-title-max-width 100)
 	   (setq-default elfeed-search-title-min-width 100)
 	   (defun browse-url-mpv (url &optional new-window)
-	     (start-process "mpv" "*mpv*" "mpv" url))
+	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
 
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.youtube." 'browse-url-mpv))
 	   (add-hook 'elfeed-new-entry-hook
