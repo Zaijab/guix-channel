@@ -1166,6 +1166,11 @@
 	   (global-rainbow-delimiters-mode)
 	   (which-key-mode)))))
 
+(define buffer-configuration
+  (home-emacs-configuration
+   (init '())
+   (early-init '((setq switch-to-buffer-obey-display-actions t))))
+
 ;;; Combine all Emacs-Configurations within module
 
 (define home-emacs-total-configuration
