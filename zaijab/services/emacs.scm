@@ -1169,7 +1169,7 @@
 (define buffer-configuration
   (home-emacs-configuration
    (init '())
-   (early-init '((setq switch-to-buffer-obey-display-actions t))))
+   (early-init '((setq switch-to-buffer-obey-display-actions t)))))
 
 ;;; Combine all Emacs-Configurations within module
 
