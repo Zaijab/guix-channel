@@ -997,7 +997,10 @@
 	   (global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
 	   (global-set-key (kbd "s-e") (function
 					(lambda () (interactive)
-						(start-process-shell-command "google-chrome-unstable" nil "google-chrome-unstable"))))
+						(start-process-shell-command
+						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT'"
+						 nil
+						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT'"))))
 	   (global-set-key (kbd "s-r") (function eshell))
 	   (global-set-key (kbd "s-t") (function eval-region))
 	   (global-set-key (kbd "s-K") 'windsize-up)
