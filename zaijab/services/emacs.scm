@@ -1175,7 +1175,7 @@
    (init '())
    (early-init '((setq switch-to-buffer-obey-display-actions t)
 					;(desktop-save-mode 1)                 
-		 (add-hook 'after-make-frame-functions 'restore-desktop)
+		 (add-hook 'after-make-frame-functions 'desktop-read)
 		 (defun mp-toggle-window-dedication ()
 		   "Toggles window dedication in the selected window."
 		   (interactive)
