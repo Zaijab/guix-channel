@@ -42,7 +42,7 @@
 
 (define-public tao-operating-system
   (operating-system
-    (kernel linux@6.1.9)
+    (kernel linux-6.1)
     (firmware (list linux-firmware))
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
@@ -95,8 +95,8 @@
 	       (service mpd-service-type
 			(mpd-configuration
 			 (user "mpd")
-			 (music-directory "~/music")
-			 (playlist-directory "~/.config/mpd/playlists")
+			 (music-dir "~/music")
+			 (playlist-dir "~/.config/mpd/playlists")
 			 (db-file "~/.config/mpd/database")
 			 (state-file "~/.config/mpd/state")
 			 (sticker-file "~/.config/mpd/sticker.sql")
