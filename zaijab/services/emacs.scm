@@ -296,7 +296,6 @@
    (packages (list (specification->package "mpv")
 		   (specification->package "yt-dlp")
 		   (specification->package "emacs-elfeed")
-		   (specification->package "ktorrent")
 		   (specification->package "curl")
 		   emacs-elfeed-tube))
    (init '(
