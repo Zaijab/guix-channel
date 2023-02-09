@@ -297,6 +297,7 @@
 		   (specification->package "yt-dlp")
 		   (specification->package "emacs-elfeed")
 		   (specification->package "ktorrent")
+		   (specification->package "curl")
 		   emacs-elfeed-tube))
    (init '(
 	   (setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
