@@ -42,7 +42,7 @@
 
 (define-public tao-operating-system
   (operating-system
-    (kernel linux)
+    (kernel linux@6.1.9)
     (firmware (list linux-firmware))
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
