@@ -1174,7 +1174,8 @@
   (home-emacs-configuration
    (init '())
    (early-init '((setq switch-to-buffer-obey-display-actions t)
-		 (desktop-save-mode 1)
+					;(desktop-save-mode 1)                 
+		 (add-hook 'after-make-frame-functions 'restore-desktop)
 		 (defun mp-toggle-window-dedication ()
 		   "Toggles window dedication in the selected window."
 		   (interactive)
