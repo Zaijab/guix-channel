@@ -136,56 +136,6 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
 
-(define (%emacs-modules build-system)
-  (let ((which (build-system-name build-system)))
-    `((guix build ,(symbol-append which '-build-system))
-      (guix build utils)
-      (srfi srfi-1)
-      (ice-9 ftw))))
-
-(define-public emacs-next-tree-sitter
-  (let ((commit "32615c9bc124970aade150e81c2ed4a5c0492ef7")
-        (revision "5"))
-    (package
-      (inherit emacs-next)
-      (name "emacs-next-tree-sitter")
-      (version (git-version "30.0.50" revision commit))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/emacs-mirror/emacs")
-               (commit commit)))
-         (file-name (git-file-name name version))
-         (patches (search-patches
-                   "emacs-exec-path.patch"
-                   "emacs-fix-scheme-indent-function.patch"
-                   "emacs-native-comp-driver-options.patch"
-		   ))
-         (sha256
-          (base32
-           "1gv4ihns0vbghi0d34by436qxqgms96593sahb45qy4dbwxibjza"))))
-      (build-system gnu-build-system)
-      (arguments
-       (substitute-keyword-arguments (package-arguments emacs-next)
-	 ((#:configure-flags flags #~'())
-          #~(cons* "--with-xwidgets" "--with-tree-sitter" #$flags))
-	 ((#:modules _) (%emacs-modules build-system))
-	 ((#:phases phases)
-          #~(modify-phases #$phases
-              (delete 'restore-emacs-pdmp)
-              (delete 'strip-double-wrap)))))
-      
-      (inputs (modify-inputs
-	       (package-inputs emacs-next)
-	       (append tree-sitter)
-	       (append curl)
-	       (prepend webkitgtk-with-libsoup2 libxcomposite)))
-      (propagated-inputs (modify-inputs
-			  (package-inputs emacs-next)
-			  (append curl)))
-      )))
-
 (define-public emacs-dynaring
   (package
     (name "emacs-dynaring")
