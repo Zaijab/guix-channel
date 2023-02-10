@@ -94,9 +94,9 @@
 	       (service openssh-service-type)
 	       (service mpd-service-type
 			(mpd-configuration
-			 (user "mpd")
-			 (music-dir "~/music")
-			 (playlist-dir "~/.config/mpd/playlists")
+			 (user "zjabbar")
+			 (music-directory "~/music")
+			 (playlist-directory "~/.config/mpd/playlists")
 			 (db-file "~/.config/mpd/database")
 			 (state-file "~/.config/mpd/state")
 			 (sticker-file "~/.config/mpd/sticker.sql")
