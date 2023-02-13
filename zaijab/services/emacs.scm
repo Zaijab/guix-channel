@@ -976,7 +976,7 @@
 		'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
 	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
-	      (specification->package "ungoogled-chromium")
+	      ;(specification->package "ungoogled-chromium")
 	      (specification->package "emacs-xelb")
 	      (specification->package "picom")
 	      (specification->package "emacs-windsize")
