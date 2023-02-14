@@ -771,21 +771,12 @@
   (home-emacs-configuration
    (packages (list
 	      ((options->transformation		
-		'((with-branch . "emacs-jupyter=master"))) (specification->package "emacs-jupyter"))
+		'((with-branch . "emacs-jupyter=master")))
+	       (specification->package "emacs-jupyter"))
 	      (specification->package "python")
 	      (specification->package "python-lsp-server")
-	      python-tree-sitter
 	      (specification->package "jupyter")
 	      (specification->package "pandoc")
-	      (specification->package "remmina")
-	      (specification->package "gtk+")
-	      (specification->package "python-pygobject")
-	      (specification->package "python-srt")
-	      (specification->package "python-pyqt")
-	      (specification->package "glib-networking")
-	      (specification->package "qtwebkit")
-	      (specification->package "gsettings-desktop-schemas")
-	      (specification->package "webkitgtk-with-libsoup2")
 	      (specification->package "network-manager-applet")
 	      (specification->package "hicolor-icon-theme")
 	      (specification->package "python-sqlalchemy")
@@ -815,7 +806,9 @@
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
 	   (org-babel-jupyter-override-src-block "python3")
 	   (defun jupyter-ansi-color-apply-on-region (begin end)
-	     (ansi-color-apply-on-region begin end t))))))
+	     (ansi-color-apply-on-region begin end t))))
+   (early-init '((setq comp-deferred-compilation-deny-list (list "jupyter"))))
+   ))
 
 (define lisp-configuration
   (home-emacs-configuration
@@ -839,108 +832,6 @@
 	   (setq user-mail-address "zaijab2000@gmail.com")
 	   (symex-initialize)
 	   (global-set-key (kbd "s-y") 'symex-mode-interface)
-					;(require 'rigpa)
-					;(setq rigpa-mode t)
-
-					;(remove-hook 'evil-symex-state-exit-hook (function symex-disable-editing-minor-mode))
-	   ;; custom config
-					;(setq rigpa-show-menus nil)
-
-	   ;; navigating meta modes
-	   ;; (global-unset-key (kbd "s-m"))
-	   ;; (global-set-key (kbd "s-m s-m") 'rigpa-flashback-to-last-tower)
-	   ;; (global-set-key (kbd "C-<escape>")
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (when (eq rigpa--complex rigpa-meta-complex)
-	   ;; 		       (rigpa-exit-mode-mode))
-	   ;; 		     (rigpa-enter-tower-mode)))
-	   ;; (global-set-key (kbd "M-<escape>") 'rigpa-enter-mode-mode)
-	   ;; (global-set-key (kbd "s-<escape>") 'rigpa-enter-mode-mode)
-	   ;; (global-set-key (kbd "M-<return>")
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (when (eq rigpa--complex rigpa-meta-complex)
-	   ;; 		       (rigpa-enter-selected-level)
-	   ;; 		       (let ((ground (rigpa--get-ground-buffer)))
-	   ;; 			 (rigpa-exit-mode-mode)
-	   ;; 			 (switch-to-buffer ground)))))
-	   ;; (global-set-key (kbd "s-<return>")
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (when (eq rigpa--complex rigpa-meta-complex)
-	   ;; 		       (rigpa-enter-selected-level)
-	   ;; 		       (let ((ground (rigpa--get-ground-buffer)))
-	   ;; 			 (rigpa-exit-mode-mode)
-	   ;; 			 (switch-to-buffer ground)))))
-	   ;; (global-set-key (kbd "C-<return>")
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (when (eq rigpa--complex rigpa-meta-tower-complex)
-	   ;; 		       (rigpa-exit-tower-mode)
-	   ;; 		       (rigpa-enter-mode-mode))))
-
-	   ;; indexed entry to various modes
-	   (global-set-key (kbd "s-n") 'evil-normal-state)
-					;(global-set-key (kbd "s-y") ; symex mode
-					;		   (lambda ()
-					;		     (interactive)
-					;		     (rigpa-enter-mode "symex")))
-					;  (global-set-key (kbd "s-;") (kbd "s-y"))
-	   ;; (global-set-key (kbd "s-W") ; window mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "window")))
-	   ;; (global-set-key (kbd "s-v") ; view mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "view")))
-	   ;; (global-set-key (kbd "s-x") ; char mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "char")))
-	   ;; (global-set-key (kbd "s-a") ; activity mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "activity")))
-	   ;; (global-set-key (kbd "s-z") ; text mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "text")))
-	   ;; (global-set-key (kbd "s-g") ; history mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "history")))
-	   ;; (global-set-key (kbd "s-i") ; system mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "system")))
-	   ;; (global-set-key (kbd "s-b") ; buffer mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "buffer")))
-	   ;; (global-set-key (kbd "s-f") ; file mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "file")))
-	   ;; (global-set-key (kbd "s-t") ; tab mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "tab")))
-	   ;; (global-set-key (kbd "s-b") ; line mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "line")))
-	   ;; (global-set-key (kbd "s-E") ; application mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "application")))
-	   ;; (global-set-key (kbd "s-R") ; word mode
-	   ;; 		   (lambda ()
-	   ;; 		     (interactive)
-	   ;; 		     (rigpa-enter-mode "word")))
-
-					;(define-key symex-mode-map (kbd ""))
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc
