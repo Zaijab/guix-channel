@@ -770,9 +770,10 @@
 (define python-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation		
-		'((with-branch . "emacs-jupyter=master")))
-	       (specification->package "emacs-jupyter"))
+	      ;; ((options->transformation		
+	      ;; 	'((with-branch . "emacs-jupyter=master")))
+	      ;;  (specification->package "emacs-jupyter"))
+	      (specification->package "emacs-jupyter")
 	      (specification->package "python")
 	      (specification->package "python-lsp-server")
 	      (specification->package "jupyter")
