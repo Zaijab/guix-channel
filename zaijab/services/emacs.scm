@@ -770,16 +770,14 @@
 (define python-configuration
   (home-emacs-configuration
    (packages (list
-	      ;; ((options->transformation		
-	      ;; 	'((with-branch . "emacs-jupyter=master")))
-	      ;;  (specification->package "emacs-jupyter"))
-	      (specification->package "emacs-jupyter")
 	      (specification->package "python")
-	      (specification->package "python-lsp-server")
 	      (specification->package "jupyter")
+	      (specification->package "python-lsp-server")
+	      (specification->package "emacs-csv-mode")
+	      ((options->transformation		
+		'((with-branch . "emacs-jupyter=master")))
+	       (specification->package "emacs-jupyter"))
 	      (specification->package "pandoc")
-	      (specification->package "network-manager-applet")
-	      (specification->package "hicolor-icon-theme")
 	      (specification->package "python-sqlalchemy")
 	      (specification->package "python-sqlalchemy-utils")
 	      (specification->package "python-sshtunnel")
@@ -794,7 +792,7 @@
 	      (specification->package "python-numexpr")
 	      (specification->package "python-patsy")
 	      (specification->package "python-statsmodels")
-	      (specification->package "emacs-csv-mode")))
+	      ))
    (init '((setq org-babel-python-command "python3")
 	   (setq python-shell-interpreter "python3")
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
@@ -808,7 +806,10 @@
 	   (org-babel-jupyter-override-src-block "python3")
 	   (defun jupyter-ansi-color-apply-on-region (begin end)
 	     (ansi-color-apply-on-region begin end t))))
-   (early-init '((setq comp-deferred-compilation-deny-list (list "jupyter"))))
+   (early-init '(
+		 (add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")
+
+		 ))
    ))
 
 (define lisp-configuration
