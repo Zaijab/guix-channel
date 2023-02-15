@@ -794,7 +794,8 @@
 	      (specification->package "python-statsmodels")
 	      ))
    (init '((setq org-babel-python-command "python3")
-	   (setq python-shell-interpreter "python3")
+	   (setq python-shell-interpreter "ipython3")
+	   (setq python-shell-interpreter-args "--simple-prompt")
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
 								    (sql . t)
@@ -806,11 +807,7 @@
 	   (org-babel-jupyter-override-src-block "python3")
 	   (defun jupyter-ansi-color-apply-on-region (begin end)
 	     (ansi-color-apply-on-region begin end t))))
-   (early-init '(
-		 (add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")
-
-		 ))
-   ))
+   (early-init '((add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")))))
 
 (define lisp-configuration
   (home-emacs-configuration
