@@ -791,11 +791,12 @@
 	      (specification->package "python-xgboost")
 	      (specification->package "python-numexpr")
 	      (specification->package "python-patsy")
-	      (specification->package "python-statsmodels")
-	      ))
+	      (specification->package "python-statsmodels")))
    (init '((setq org-babel-python-command "python3")
 	   (setq python-shell-interpreter "ipython3")
 	   (setq python-shell-interpreter-args "--simple-prompt")
+	   (add-hook 'python-mode-hook (function run-python))
+	   (add-hook 'prog-mode-hook (function eglot-ensure))
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
 								    (sql . t)
@@ -806,14 +807,12 @@
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
 	   (org-babel-jupyter-override-src-block "python3")
 	   (defun jupyter-ansi-color-apply-on-region (begin end)
-	     (ansi-color-apply-on-region begin end t))))
-   (early-init '((add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")))))
+	     (ansi-color-apply-on-region begin end t))))))
 
 (define lisp-configuration
   (home-emacs-configuration
    (packages (list 
 	      emacs-symex
-					;emacs-rigpa
 	      (specification->package "sicp")
 	      ((options->transformation '((with-branch . "emacs-guix=master")))
 	       (specification->package "emacs-guix"))
@@ -823,8 +822,8 @@
 	      (specification->package "emacs-geiser-guile")
 	      (specification->package "guile-chickadee")))
    (init '((require 'geiser-guile)
-	   (setq geiser-default-implementation 'guile)
 	   (require 'guix)
+	   (setq geiser-default-implementation 'guile)
 	   (global-guix-prettify-mode)
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
