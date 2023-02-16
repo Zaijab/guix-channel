@@ -778,7 +778,7 @@
 	      (specification->package "emacs-py-isort")
 	      emacs-py-autopep8
 	      ((options->transformation		
-		'((with-latest . "emacs-jupyter")
+		'((with-branch . "emacs-jupyter=master")
 		  (with-latest . "emacs-zmq")))
 	       (specification->package "emacs-jupyter"))
 	      (specification->package "pandoc")
