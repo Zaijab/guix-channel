@@ -779,7 +779,7 @@
 	      emacs-py-autopep8
 	      ((options->transformation		
 		'((with-branch . "emacs-jupyter=master")
-		  (with-latest . "emacs-zmq")))
+		  (with-branch . "emacs-zmq=master")))
 	       (specification->package "emacs-jupyter"))
 	      (specification->package "pandoc")
 	      (specification->package "python-sqlalchemy")
