@@ -800,7 +800,7 @@
 	   (setq python-shell-interpreter-args "--simple-prompt")
 	   (add-hook 'python-mode-hook (function run-python))
 	   (add-hook 'python-mode-hook (function py-autopep8-mode))
-	   (add-hook 'prog-mode-hook (function eglot-ensure))
+	   (add-hook 'python-mode-hook (function eglot-ensure))
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
 								    (sql . t)
