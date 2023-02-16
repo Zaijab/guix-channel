@@ -775,6 +775,7 @@
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter-python")
 	      (specification->package "emacs-csv-mode")
+	      (specification->package "emacs-py-isort")
 	      emacs-py-autopep8
 	      ((options->transformation		
 		'((with-branch . "emacs-jupyter=master")))
@@ -798,7 +799,7 @@
 	   (setq python-shell-interpreter "ipython3")
 	   (setq python-shell-interpreter-args "--simple-prompt")
 	   (add-hook 'python-mode-hook (function run-python))
-	   (add-hook 'python-mode-hook (function python-ts-mode))
+	   (add-hook 'python-mode-hook (function py-autopep8-mode))
 	   (add-hook 'prog-mode-hook (function eglot-ensure))
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
