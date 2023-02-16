@@ -377,6 +377,7 @@ options.  See the README for more information.")
     (build-system emacs-build-system)
     (home-page "https://codeberg.org/ideasman42/emacs-py-autopep8")
     (synopsis "Use autopep8 to beautify a Python buffer")
+    (propagated-inputs (list python-autopep8))
     (description
      "This package provides the `py-autopep8-buffer command, which uses the external
 \"autopep8\" tool to tidy up the current buffer according to Python's PEP8. ;
