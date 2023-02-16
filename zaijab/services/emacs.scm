@@ -798,6 +798,7 @@
 	   (setq python-shell-interpreter "ipython3")
 	   (setq python-shell-interpreter-args "--simple-prompt")
 	   (add-hook 'python-mode-hook (function run-python))
+	   (add-hook 'python-mode-hook (function python-ts-mode))
 	   (add-hook 'prog-mode-hook (function eglot-ensure))
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
