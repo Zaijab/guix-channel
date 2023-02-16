@@ -780,8 +780,8 @@
 	      ;; ((options->transformation		
 	      ;; 	'((with-branch . "emacs-jupyter=master")))
 	      ;;  (specification->package "emacs-jupyter"))
-	      ((options->transformation		
-		'((with-source . "emacs-jupyter=https://github.com/tgbugs/emacs-jupyter.git")))
+	      ((options->transformation
+		'((with-source . "emacs-jupyter=https://github.com/tgbugs/emacs-jupyter")))
 	       (specification->package "emacs-jupyter"))
 	      (specification->package "pandoc")
 	      (specification->package "python-sqlalchemy")
