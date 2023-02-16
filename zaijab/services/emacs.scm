@@ -773,8 +773,9 @@
 	      (specification->package "python")
 	      (specification->package "jupyter")
 	      (specification->package "python-lsp-server")
+	      (specification->package "tree-sitter-python")
 	      (specification->package "emacs-csv-mode")
-	      (specification->package "emacs-py-autopep8")
+	      emacs-py-autopep8
 	      ((options->transformation		
 		'((with-branch . "emacs-jupyter=master")))
 	       (specification->package "emacs-jupyter"))
