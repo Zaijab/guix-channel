@@ -777,8 +777,11 @@
 	      (specification->package "emacs-csv-mode")
 	      (specification->package "emacs-py-isort")
 	      emacs-py-autopep8
+	      ;; ((options->transformation		
+	      ;; 	'((with-branch . "emacs-jupyter=master")))
+	      ;;  (specification->package "emacs-jupyter"))
 	      ((options->transformation		
-		'((with-branch . "emacs-jupyter=master")))
+		'((with-source . "emacs-jupyter=https://github.com/tgbugs/emacs-jupyter.git")))
 	       (specification->package "emacs-jupyter"))
 	      (specification->package "pandoc")
 	      (specification->package "python-sqlalchemy")
