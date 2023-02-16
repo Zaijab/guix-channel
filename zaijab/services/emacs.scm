@@ -778,9 +778,7 @@
 	      (specification->package "emacs-py-isort")
 	      emacs-py-autopep8
 	      ((options->transformation		
-		'((with-branch . "emacs-jupyter=master")
-		  (with-branch . "emacs-zmq=master")
-		  (with-source . "zeromq=https://github.com/zeromq/libzmq.git")))
+		'((with-branch . "emacs-jupyter=master")))
 	       (specification->package "emacs-jupyter"))
 	      (specification->package "pandoc")
 	      (specification->package "python-sqlalchemy")
