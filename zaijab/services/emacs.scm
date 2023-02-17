@@ -359,6 +359,10 @@
 					  "%(title)s.%(ext)s"
 					  (elfeed-entry-link elfeed-show-entry))))))))
 
+(define erc-configuration
+  (home-emacs-configuration
+   (init '())))
+
 (define music-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-libmpdel")

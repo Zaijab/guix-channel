@@ -91,7 +91,7 @@
 		  (name "zjabbar")
 		  (comment "Zain Jabbar")
 		  (group "users")
-		  (supplementary-groups '("wheel" "netdev" "audio" "mpd" "lp" "video")))
+		  (supplementary-groups '("wheel" "netdev" "audio" #;"mpd" "lp" "video")))
 		 %base-user-accounts))
     
     (services (cons*
