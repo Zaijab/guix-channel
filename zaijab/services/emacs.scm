@@ -651,6 +651,18 @@
 					    (tags  . " %i %-12:c")
 					    (search . " %i %-12:c")))
 
+	   (defun cfw:render-truncate (org limit-width &optional ellipsis)
+	     "[internal] Truncate a string ORG with LIMIT-WIDTH, like `truncate-string-to-width'."
+	     (setq org (replace-regexp-in-string "\n" " " org))
+	     (if (< limit-width (string-width org))
+		 (let ((str (truncate-string-to-width
+			     (substring org 0) limit-width 0 nil nil)))
+		   (cfw:tp str 'mouse-face 'highlight)
+		   (unless (get-text-property 0 'help-echo str)
+		     (cfw:tp str 'help-echo org))
+		   str)
+		 org))
+	   
 	   (defun cfw:org-get-timerange (text)
 	     "Return a range object (begin end text). If TEXT does not have a range, return nil."
 	     (let* ((dotime (cfw:org-tp text 'dotime)))
@@ -670,6 +682,7 @@
 	   
 	   (setq org-tags-column 0)
 	   (global-org-modern-mode)
+	   (global-visual-line-mode)
 	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
