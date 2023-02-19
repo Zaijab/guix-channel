@@ -91,22 +91,22 @@
 		  (name "zjabbar")
 		  (comment "Zain Jabbar")
 		  (group "users")
-		  (supplementary-groups '("wheel" "netdev" "audio" #;"mpd" "lp" "video")))
+		  (supplementary-groups '("wheel" "netdev" "audio" "mpd" "lp" "video")))
 		 %base-user-accounts))
     
     (services (cons*
 	       (service openssh-service-type)
-	       ;; (service mpd-service-type
-	       ;; 		(mpd-configuration
-	       ;; 		 (user "zjabbar")
-	       ;; 		 (music-directory "~/music")
-	       ;; 		 (playlist-directory "~/.config/mpd/playlists")
-	       ;; 		 (db-file "~/.config/mpd/database")
-	       ;; 		 (state-file "~/.config/mpd/state")
-	       ;; 		 (sticker-file "~/.config/mpd/sticker.sql")
-	       ;; 		 (outputs
-	       ;; 		  (list (mpd-output
-	       ;; 			 (type "pulse"))))))
+	       (service mpd-service-type
+			(mpd-configuration
+			 (user "zjabbar")
+			 (music-directory "~/music")
+			 (playlist-directory "~/.config/mpd/playlists")
+			 (db-file "~/.config/mpd/database")
+			 (state-file "~/.config/mpd/state")
+			 (sticker-file "~/.config/mpd/sticker.sql")
+			 (outputs
+			  (list (mpd-output
+				 (type "pulse"))))))
 	       (service syncthing-service-type
 			(syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
