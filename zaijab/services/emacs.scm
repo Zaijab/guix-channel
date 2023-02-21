@@ -889,7 +889,7 @@
 		'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
 	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
-	      ;(specification->package "ungoogled-chromium")
+					;(specification->package "ungoogled-chromium")
 	      (specification->package "emacs-xelb")
 	      (specification->package "picom")
 	      (specification->package "emacs-windsize")
@@ -962,8 +962,8 @@
 			  (concat (substring exwm-title 0 24) "...")))))
 	   
 	   ;; Add these hooks in a suitable place (e.g., as done in exwm-config-default)
-	   (add-hook 'exwm-update-class-hook 'exwm-rename-buffer-to-title)
-	   (add-hook 'exwm-update-title-hook 'exwm-rename-buffer-to-title)
+	   (add-hook 'exwm-update-class-hook 'exwm-rename-buffer)
+	   (add-hook 'exwm-update-title-hook 'exwm-rename-buffer)
 	   (defvar super-keys ())
 	   (let ((km (current-global-map)))
 	     (while km
