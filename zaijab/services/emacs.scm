@@ -683,9 +683,10 @@
 	   
 	   (setq org-tags-column 0)
 	   (global-org-modern-mode)
-	   (global-visual-line-mode)
+	   
 	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
+	   (add-hook 'org-mode-hook (function visual-line-mode))
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
 	   
 	   (setq org-agenda-files '("~/notes/"))
