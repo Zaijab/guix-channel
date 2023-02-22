@@ -1088,7 +1088,9 @@
 (define buffer-configuration
   (home-emacs-configuration
    (init '())
-   (early-init '((setq switch-to-buffer-obey-display-actions t)
+   (early-init '((setq desktop-restore-frames nil
+		       desktop-restore-in-current-display nil)
+		 (setq switch-to-buffer-obey-display-actions t)
 		 (defun mp-toggle-window-dedication ()
 		   "Toggles window dedication in the selected window."
 		   (interactive)
