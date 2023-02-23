@@ -14,6 +14,7 @@
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages fonts)
   #:use-module (non-free cuda)
+  #:use-module (tainted machine-learning)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
@@ -793,6 +794,7 @@
 	      (specification->package "python")
 	      (specification->package "jupyter")
 	      cuda
+	      python-pytorch-cuda
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter-python")
 	      (specification->package "emacs-csv-mode")
