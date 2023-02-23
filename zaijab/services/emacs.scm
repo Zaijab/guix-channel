@@ -792,7 +792,7 @@
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
-	      cuda-toolkit
+	      cuda
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter-python")
 	      (specification->package "emacs-csv-mode")
