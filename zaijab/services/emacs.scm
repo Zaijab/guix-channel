@@ -13,6 +13,7 @@
   #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages fonts)
+  #:use-module (non-free cuda)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
@@ -791,6 +792,7 @@
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
+	      cuda-toolkit
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter-python")
 	      (specification->package "emacs-csv-mode")
