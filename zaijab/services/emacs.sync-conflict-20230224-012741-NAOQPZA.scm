@@ -13,6 +13,8 @@
   #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages fonts)
+  #:use-module (non-free cuda)
+  #:use-module (tainted machine-learning)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
@@ -600,50 +602,34 @@
 					  "{\\large For \\professor \\ On \\duedate \\ \\par}\n"
 					  "\\vspace*{\\fill}\n"
 					  "\\end{titlepage}\n"))
-
 	   (setq org-publish-project-alist
 		 '(("orgfiles"
 		    :base-directory "~/notes/"
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-html-publish-to-html
 		    :exclude ".*org"
-		    :include ("20220925152629-index.org"
-			      "20220925155207-about.org"
-			      "20220925194334-categories.org"
-			      "20211210212713-topology.org") 
+		    :include ("20220925152629-index.org" "20220925155207-about.org") 
 		    :with-toc nil
 		    :html-head
-		    "<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/categories\">/categories</a></li></ul></div></header>"
+		    "<title></title><link rel=\"stylesheet\" href=\"/css/main-dark.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n</ul></div></header>"
 		    :recursive t
-		    :html-postamble nil
-		    :html-mathjax-template "
-<script>
-  MathJax = {
-    loader: {
-      load: ['[custom]/xypic.js'],
-      paths: {custom: 'https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/'}
-    },
-    tex: {
-      packages: {'[+]': ['xypic']}
-    }
-  };
-</script>
-<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js\"></script>
-"
-		    )
-		   ("static"
-		    :base-directory "~/notes/static"
+		    :html-postamble nil)
+		   ("css"
+		    :base-directory "~/notes/css"
 		    :base-extension any
-		    :recursive t
-		    :publishing-directory "~/code/zaijab.github.io/static"
+		    :publishing-directory "~/code/zaijab.github.io/css"
+		    :publishing-function org-publish-attachment)
+		   ("images"
+		    :base-directory "~/notes/attachments/"
+		    :base-extension any
+		    :publishing-directory "~/code/zaijab.github.io/attachments"
 		    :publishing-function org-publish-attachment)
 		   ("CNAME"
 		    :base-directory "~/notes/CNAME/"
 		    :base-extension any
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-publish-attachment)
-		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
-	   ))))
+		   ("zaindaman" :components ("orgfiles" "images" "css" "CNAME"))))))))
 
 
 (define org-mode-configuration
@@ -807,6 +793,8 @@
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
+	      cuda
+	      python-pytorch-cuda
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter-python")
 	      (specification->package "emacs-csv-mode")
