@@ -570,6 +570,21 @@
 		    (slug (commonplace/slugify-title title)))
 	       (concat directory slug ".html")))
 
+
+	   (defun my-trim-left (s)
+	     "Remove whitespace at the beginning of S."
+	     (declare (pure t) (side-effect-free t))
+	     (save-match-data
+	      (if (string-match "[0-9]+-" s)
+		  (replace-match "" t t s)
+		  s)))
+
+	   (advice-add 'org-export-resolve-id-link :filter-return (function my-trim-left))
+	   (defun my/org-id-path-fix (strlist)
+	     (file-name-nondirectory strlist))
+
+	   (advice-add 'org-export-resolve-id-link :filter-return #'my/org-id-path-fix)
+
 	   (defun zain-publish ()
 	     (interactive)
 	     (let ((current-prefix-arg (list 4))
@@ -1106,7 +1121,7 @@
    (init '())
    (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
-		 (desktop-save-mode)
+		 ;(desktop-save-mode)
 		 (setq switch-to-buffer-obey-display-actions t)
 		 (defun mp-toggle-window-dedication ()
 		   "Toggles window dedication in the selected window."
