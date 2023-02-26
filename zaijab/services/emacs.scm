@@ -583,7 +583,11 @@
 	   (defun my/org-id-path-fix (strlist)
 	     (file-name-nondirectory strlist))
 
-	   (advice-add 'org-export-resolve-id-link :filter-return #'my/org-id-path-fix)
+	   (advice-add 'org-export-resolve-id-link :filter-return (function my/org-id-path-fix))
+	   (defun my/org-id-underscore-fix (strlist)
+	     (s-replace-regexp "_" "-" strlist))
+
+	   (advice-add 'org-export-resolve-id-link :filter-return (function my/org-id-underscore-fix))
 
 	   (defun zain-publish ()
 	     (interactive)
