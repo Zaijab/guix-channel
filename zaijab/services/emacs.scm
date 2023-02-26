@@ -624,11 +624,12 @@
 		    :exclude ".*org"
 		    :include ("20220925152629-index.org"
 			      "20220925155207-about.org"
-			      "20220925194334-categories.org"
-			      "20211210212713-topology.org") 
+			      "20230225143306-posts.org"
+			      "20230225142818-notation.org"
+			      "20230225142533-category_theory.org") 
 		    :with-toc nil
 		    :html-head
-		    "<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/categories\">/categories</a></li></ul></div></header>"
+		    "<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/posts\">/posts</a></li></ul></div></header>"
 		    :recursive t
 		    :html-postamble nil
 		    :html-mathjax-template "
