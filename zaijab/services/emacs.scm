@@ -856,6 +856,7 @@
 	      (specification->package "python-patsy")
 	      (specification->package "python-statsmodels")))
    (init '((setq org-babel-python-command "python3")
+	   (setq python-interpreter "python3")
 	   (setq python-shell-interpreter "ipython3")
 	   (setq python-shell-interpreter-args "--simple-prompt")
 	   (add-hook 'python-mode-hook (function run-python))
