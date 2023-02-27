@@ -681,6 +681,12 @@
 	   (require 'ox)
 	   (require 'calfw)
 	   (require 'calfw-org)
+	   (require 'calfw-blocks)
+	   (defun cfw:date-before (date num)
+	     "Return the date before NUM days from DATE."
+	     (calendar-gregorian-from-absolute
+	      (- (calendar-absolute-from-gregorian date) num)))
+	   
 	   (setq org-agenda-show-log-scoped t)
 	   (setq org-agenda-prefix-format '((agenda  . "  • %?-12t% s")
 					    (timeline  . "  % s")
