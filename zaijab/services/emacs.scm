@@ -687,7 +687,7 @@
 	     (calendar-gregorian-from-absolute
 	      (- (calendar-absolute-from-gregorian date) num)))
 	   
-	   (setq calfw-blocks-lines-per-hour 4
+	   (setq calfw-blocks-lines-per-hour 6
 		 calfw-blocks-min-block-width 1
 		 calfw-blocks-earliest-visible-time '(6 0))
 	   (setq org-agenda-show-log-scoped t)
