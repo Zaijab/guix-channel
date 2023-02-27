@@ -681,11 +681,15 @@
 	   (require 'calfw)
 	   (require 'calfw-org)
 	   (require 'calfw-blocks)
+
 	   (defun cfw:date-before (date num)
 	     "Return the date before NUM days from DATE."
 	     (calendar-gregorian-from-absolute
 	      (- (calendar-absolute-from-gregorian date) num)))
 	   
+	   (setq calfw-blocks-lines-per-hour 4
+		 calfw-blocks-min-block-width 1
+		 calfw-blocks-earliest-visible-time '(6 0))
 	   (setq org-agenda-show-log-scoped t)
 	   (setq org-agenda-prefix-format '((agenda  . "  • %?-12t% s")
 					    (timeline  . "  % s")
