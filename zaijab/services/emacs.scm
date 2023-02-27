@@ -914,7 +914,8 @@
 (define sql-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-vterm")))
-   (init '((setq sql-connection-alist
+   (init '(
+	   (setq sql-connection-alist
 		 '((uhm-campus-energy
 		    (sql-product 'postgres)
 		    (sql-default-directory "/ssh:zain@128.171.46.101:")
@@ -922,13 +923,21 @@
 		    (sql-user "zain")
 		    (sql-database "uhm2023")
 		    (sql-port 5432))
+		   (campus-energy-reader
+		    (sql-product 'postgres)
+		    (sql-default-directory "/ssh:zain@128.171.46.101:")
+		    (sql-server "localhost")
+		    (sql-user "uhm_campus_energy_reader")
+		    (sql-database "uhm2022")
+		    (sql-port 5432))
 		   (zain-campus-energy
 		    (sql-product 'postgres)
 		    (sql-default-directory "/ssh:zain@128.171.46.101:")
 		    (sql-server "localhost")
 		    (sql-user "zain")
 		    (sql-database "zain")
-		    (sql-port 5432))))))))
+		    (sql-port 5432))))
+	   ))))
 
 
 
