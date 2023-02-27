@@ -394,24 +394,24 @@
 	      (specification->package "msmtp")))
    (init '((require 'mu4e)
 	   (require 'mu4e-alert)
-	   
 	   (setq mu4e-get-mail-command (format "INSIDE_EMACS=%s mbsync -c ~/.config/mbsyncrc -a" emacs-version)
 		 epa-pinentry-mode 'ask)
 	   (setq mu4e-hide-index-messages t)
 	   (setq mail-user-agent 'mu4e-user-agent)
 	   (add-hook 'after-init-hook (function mu4e-alert-enable-mode-line-display))
 	   (require 'org-msg)
-	   (setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil email:nil tex:imagemagick \\n:t"
+	   (setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil email:nil tex:imagemagick"
 		 org-msg-startup "hidestars indent inlineimages"
 		 org-msg-greeting-fmt "\nAloha%s,\n\n"
 		 org-msg-recipient-names '(("zaijab2000@gmail.com" . "Zain"))
 		 org-msg-greeting-name-limit 3
-		 ;; org-msg-default-alternatives '((new		. (text html))
-		 ;; 				(reply-to-html	. (text html))
-		 ;; 				(reply-to-text	. (text)))
+		 org-msg-default-alternatives '((new		. (text html))
+						(reply-to-html	. (text html))
+						(reply-to-text	. (text)))
 		 org-msg-convert-citation t)
 	   (org-msg-mode)
-	   (add-hook 'mu4e-compose-mode-hook 'mml-secure-message-sign)
+	   (add-hook 'org-msg-edit-mode-hook 'mml-secure-message-sign)
+	   (setq mml-secure-)
 	   (setq mu4e-change-filenames-when-moving t)
 	   (setq mu4e-update-interval 300)
 	   (setq mu4e-get-mail-command  "mbsync -a -c ~/.config/mbsyncrc")
@@ -596,7 +596,7 @@
 	       (advice-add 'org-export-output-file-name :filter-return (function commonplace/slugify-export-output-file-name))
 	       (call-interactively 'org-publish-all)
 	       (advice-remove 'org-export-output-file-name (function commonplace/slugify-export-output-file-name))
-	       (shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam" "*Messages*")))
+	       (call-process-shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam" nil 0)))
 	   (global-set-key (kbd "s-p") 'zain-publish)
 
 	   (defun org-export-output-file-name-modified (orig-fun extension &optional subtreep pub-dir)
