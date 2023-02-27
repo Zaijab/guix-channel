@@ -386,3 +386,25 @@ Usage To automatically apply when saving a python file, use the following code:
 \"autopep8\" you can set the `py-autopep8-options e.g. (setq py-autopep8-options
 (\"--max-line-length=100\" \"--aggressive\"))")
     (license #f)))
+
+(define-public emacs-calfw-blocks
+  (package
+    (name "emacs-calfw-blocks")
+    (version "d72e95bf47999df98684c0d602adee6abc4bcb17")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/ml729/calfw-blocks.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"1dimig08mx6671mc7qpqksjvq08ixsj904f3si4qlp0g6dszyiqi"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     (list 
+      `("emacs-calfw" ,(specification->package "emacs-calfw"))))
+    (home-page "https://github.com/ml729/calfw-blocks")
+    (synopsis "Visual time blocks for the Emacs Calendar Framework (calfw).")
+    (description "Visual time blocks for the Emacs Calendar Framework (calfw).")
+    (license license:gpl3+)))
