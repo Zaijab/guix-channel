@@ -674,7 +674,7 @@
 		   (specification->package "emacs-valign")
 		   (specification->package "emacs-org-present")
 		   (specification->package "emacs-calfw") 
-		   emacs-calfw-blocks
+		   ;emacs-calfw-blocks
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
 		   (specification->package "ispell")))
