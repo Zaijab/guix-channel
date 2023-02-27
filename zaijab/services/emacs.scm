@@ -411,6 +411,7 @@
 		 org-msg-convert-citation t)
 	   (org-msg-mode)
 	   (add-hook 'org-msg-edit-mode-hook 'mml-secure-message-sign)
+	   (setq mml-secure-openpgp-sign-with-sender t)
 	   (setq mu4e-change-filenames-when-moving t)
 	   (setq mu4e-update-interval 300)
 	   (setq mu4e-get-mail-command  "mbsync -a -c ~/.config/mbsyncrc")
