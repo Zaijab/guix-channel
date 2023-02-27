@@ -661,8 +661,7 @@
 		    :base-extension any
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-publish-attachment)
-		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
-	   ))))
+		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))))))
 
 
 (define org-mode-configuration
