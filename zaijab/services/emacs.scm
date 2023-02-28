@@ -730,6 +730,8 @@
 	   (setq org-tags-column 0)
 	   (global-org-modern-mode)
 	   
+	   (setq org-todo-keywords
+		 '((sequence "TODO" "WAITING" "|" "DONE")))
 	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
