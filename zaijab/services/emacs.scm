@@ -298,13 +298,12 @@
 		   (specification->package "emacs-elfeed")
 		   (specification->package "curl")
 		   emacs-elfeed-tube))
-   (init '(
-	   (setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
+   (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun pekin)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun pekin)
+					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
+					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
+					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun pekin)
+					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun pekin)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw" math grant)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCm5mt-A4w61lknZ9lCsZtBw" math brunton)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" crafter david)
@@ -632,6 +631,7 @@
 			      "20230225142818-notation.org"
 			      "20230225142533-category_theory.org") 
 		    :with-toc nil
+		    :exclude-tags ("draft")
 		    :html-head
 		    "<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/posts\">/posts</a></li></ul></div></header>"
 		    :recursive t
@@ -662,7 +662,10 @@
 		    :base-extension any
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-publish-attachment)
-		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))))))
+		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
+	   )
+	 )
+   ))
 
 
 (define org-mode-configuration
@@ -676,6 +679,7 @@
 		   emacs-calfw-blocks
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
+		   (specification->package "imagemagick")
 		   (specification->package "ispell")))
    (init '((require 'org)
 	   (require 'ox)
