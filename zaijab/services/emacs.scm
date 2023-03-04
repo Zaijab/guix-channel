@@ -425,7 +425,7 @@
 	   (setq message-sendmail-f-is-evil t)
 	   (setq mu4e-contexts
 		 (list (make-mu4e-context
-			:name "zaijab2000_gmail"
+			:name "Personal"
 			:enter-func (lambda ()
 				      (mu4e-message "Entering zaijab2000_gmail context")
 				      (when (string-match-p (buffer-name (current-buffer)) "mu4e-main")
@@ -467,7 +467,7 @@
 				   :key ?g)))))
 
 		       (make-mu4e-context
-			:name "school"
+			:name "School"
 			:enter-func (lambda ()
 				      (mu4e-message "Entering school context")
 				      (when (string-match-p (buffer-name (current-buffer)) "mu4e-main")
