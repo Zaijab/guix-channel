@@ -1153,7 +1153,7 @@
 
 (define buffer-configuration
   (home-emacs-configuration
-   (packages '(emacs-tabspaces))
+   ;(packages (list emacs-tabspaces))
    (init '((use-package tabspaces
 			;; use this next line only if you also use straight, otherwise ignore it. 
 					;:straight (:type git :host github :repo "mclear-tools/tabspaces")
