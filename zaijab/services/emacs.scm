@@ -1153,10 +1153,26 @@
 
 (define buffer-configuration
   (home-emacs-configuration
-   (init '())
+   (packages '(emacs-tabspaces))
+   (init '((use-package tabspaces
+			;; use this next line only if you also use straight, otherwise ignore it. 
+					;:straight (:type git :host github :repo "mclear-tools/tabspaces")
+			:hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup. 
+			:commands (tabspaces-switch-or-create-workspace
+				   tabspaces-open-or-create-project-and-workspace)
+			:custom
+			(tabspaces-use-filtered-buffers-as-default t)
+			(tabspaces-default-tab "Default")
+			(tabspaces-remove-to-default t)
+			(tabspaces-include-buffers '("*scratch*"))
+			;; sessions
+			(tabspaces-session t)
+			(tabspaces-session-auto-restore t))
+
+	   ))
    (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
-		 ;(desktop-save-mode)
+					;(desktop-save-mode)
 		 (setq switch-to-buffer-obey-display-actions t)
 		 (defun mp-toggle-window-dedication ()
 		   "Toggles window dedication in the selected window."

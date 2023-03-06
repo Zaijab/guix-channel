@@ -136,6 +136,36 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
 
+(define-public emacs-tabspaces
+  (package
+    (name "emacs-tabspaces")
+    (version "20230212.531")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/mclear-tools/tabspaces.git")
+                    (commit "6975c51a2154604db70fd38eba27cf784cc3c4a6")))
+              (sha256
+               (base32
+		"0i01q1fv6kdpf3fmhdagh7wlhycy3c6lmqkjkhiah55h7xymr8rk"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-project))
+    (home-page "https://github.com/mclear-tools/tabspaces")
+    (synopsis "Leverage tab-bar and project for buffer-isolated workspaces")
+    (description
+     "This package provides several functions to facilitate a single frame-based
+workflow with one workspace per tab, integration with project.el (for
+project-based workspaces) and buffer isolation per tab (i.e.  a \"tabspace\"
+workspace).  The package assumes project.el and tab-bar.el are both present
+(they are built-in to Emacs 27.1+).  This file is not part of GNU Emacs. ;
+Acknowledgements Much of the package code is inspired by: -
+https://github.com/kaz-yos/emacs -
+https://github.com/wamei/elscreen-separate-buffer-list/issues/8 -
+https://www.rousette.org.uk/archives/using-the-tab-bar-in-emacs/ -
+https://github.com/minad/consult#multiple-sources -
+https://github.com/florommel/bufferlo")
+    (license #f)))
+
 (define-public emacs-dynaring
   (package
     (name "emacs-dynaring")
