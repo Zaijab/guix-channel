@@ -369,6 +369,7 @@
    (packages (list (specification->package "emacs-libmpdel")
 		   (specification->package "alsa-utils")
 		   (specification->package "pavucontrol")
+		   (specification->package "wireplumber")
 		   (specification->package "emacs-alsamixer-el")
 		   (specification->package "emacs-bluetooth")
 		   (specification->package "mpd-mpc")
