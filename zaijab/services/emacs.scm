@@ -372,6 +372,7 @@
 		   (specification->package "emacs-alsamixer-el")
 		   (specification->package "emacs-bluetooth")
 		   (specification->package "mpd-mpc")
+		   (specification->package "xdg-desktop-portal")
 		   (specification->package "emacs-emms")))
    (init '((global-set-key (kbd "<XF86AudioPrev>") 'libmpdel-playback-previous)
 	   (global-set-key (kbd "<XF86AudioNext>") 'libmpdel-playback-next)
