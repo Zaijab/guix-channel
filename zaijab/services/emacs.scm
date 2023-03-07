@@ -891,7 +891,7 @@
 	     (ansi-color-apply-on-region begin end t))))
    (early-init '(
 
-		 (add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")
+		 ;(add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")
 
 		 ))))
 
