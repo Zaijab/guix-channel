@@ -127,7 +127,8 @@
 	       (pam-limits-service
 		(list
 		 (pam-limits-entry "@wheel" 'hard 'nofile 524288)))
-	       (modify-services %desktop-services
+	       (modify-services (remove (lambda (service) (eq? (service-kind service) pulseaudio-service-type))
+					%desktop-services)                 
 		 (gdm-service-type
 		  config => (gdm-configuration
 			     (inherit config)
