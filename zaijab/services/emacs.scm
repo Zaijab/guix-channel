@@ -886,7 +886,12 @@
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
 	   (org-babel-jupyter-override-src-block "python3")
 	   (defun jupyter-ansi-color-apply-on-region (begin end)
-	     (ansi-color-apply-on-region begin end t))))))
+	     (ansi-color-apply-on-region begin end t))))
+   (early-init '(
+
+		 (add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")
+
+		 ))))
 
 (define lisp-configuration
   (home-emacs-configuration
