@@ -7,6 +7,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu home services shells)
   #:use-module (gnu home services shepherd)
+  #:use-module (gnu home services desktop)
   #:use-module (guix gexp)
   #:use-module (srfi srfi-9)
   #:use-module (zaijab services emacs)
@@ -58,6 +59,7 @@
      (service home-emacs-service-type home-emacs-total-configuration)
      (service home-searx-service-type)
      (service home-pipewire-service-type)
+     (service home-dbus-service-type)
      (simple-service 'dotfiles
                      home-files-service-type
                      `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
