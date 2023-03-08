@@ -1142,6 +1142,8 @@
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)))
    (init '((set-face-attribute 'default nil :font "Iosevka-14")
+	   (set-fontset-font "fontset-default" 'han "IPAmjMincho-14")
+	   (set-fontset-font "fontset-default" 'kana "IPAmjMincho-14")
 	   (setq nano-modeline-position 'bottom)
 	   (nano-modeline-mode)
 	   (tab-bar-mode)
