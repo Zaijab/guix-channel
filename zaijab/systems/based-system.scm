@@ -105,9 +105,14 @@
 			 (state-file "~/.config/mpd/state")
 			 (sticker-file "~/.config/mpd/sticker.sql")
 			 (outputs
-			  (list (mpd-output
-				 (type "pipewire")
-				 (enabled? #f))))))
+			  (list
+			   (mpd-output
+			    (type "pulse")
+			    (enabled? #t))
+			   (mpd-output
+			    (type "pipewire")
+			    (enabled? #f))
+			   ))))
 	       (service syncthing-service-type
 			(syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
