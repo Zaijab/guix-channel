@@ -379,8 +379,7 @@
 		   (specification->package "mpd-mpc")
 		   (specification->package "xdg-desktop-portal")
 		   (specification->package "emacs-emms")))
-   (init '(
-	   (require 'emms-setup)
+   (init '((require 'emms-setup)
 	   (emms-all)
 	   (setq emms-player-list '(emms-player-mpv)
 		 emms-info-functions '(emms-info-native))
@@ -952,7 +951,7 @@
 		    (sql-default-directory "/ssh:zain@128.171.46.101:")
 		    (sql-server "localhost")
 		    (sql-user "uhm_campus_energy_reader")
-		    (sql-database "uhm2022")
+		    (sql-database "uhm2023")
 		    (sql-port 5432))
 		   (zain-campus-energy
 		    (sql-product 'postgres)
