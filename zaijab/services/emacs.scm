@@ -212,10 +212,7 @@
 		   (specification->package "font-ipa-mj-mincho")
 		   (specification->package "font-iosevka")
 		   font-microsoft-couirer-new))
-   (init '((require 'facemenu)
-
-	   (add-to-list 'face-font-rescale-alist (cons (font-spec :family "IPAmjMincho") 0.5) t)
-	   
+   (init '((require 'facemenu)           
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
 		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))
