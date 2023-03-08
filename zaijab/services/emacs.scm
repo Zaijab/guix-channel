@@ -1158,7 +1158,10 @@
 				     tab-bar-format-align-right
 				     tab-bar-format-global))
 
-	   (setq global-mode-string (cons "" (reverse (cdr global-mode-string)))) 
+	   (defun move-to-second (word list)
+	     (cons "" (cons word (remove word (cdr list)))))
+	   (setq global-mode-string (move-to-second 'emms-mode-line-string global-mode-string))
+	   (setq global-mode-string (move-to-second 'emms-playing-time-string global-mode-string))
 	   (customize-set-variable 'mode-line-misc-info '(""))
 	   (customize-set-variable 'display-time-load-average-threshold 100)
 	   (customize-set-variable 'display-time-day-and-date t)
