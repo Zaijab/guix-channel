@@ -213,6 +213,9 @@
 		   (specification->package "font-iosevka")
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)
+
+	   (add-to-list 'face-font-rescale-alist (cons (font-spec :family "IPAmjMincho") 0.5) t)
+	   
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
 		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))
@@ -376,9 +379,15 @@
 		   (specification->package "mpd-mpc")
 		   (specification->package "xdg-desktop-portal")
 		   (specification->package "emacs-emms")))
-   (init '((global-set-key (kbd "<XF86AudioPrev>") 'libmpdel-playback-previous)
-	   (global-set-key (kbd "<XF86AudioNext>") 'libmpdel-playback-next)
-	   (global-set-key (kbd "<XF86AudioPlay>") 'libmpdel-playback-play-pause)
+   (init '(
+	   (require 'emms-setup)
+	   (emms-all)
+	   (setq emms-player-list '(emms-player-mpv)
+		 emms-info-functions '(emms-info-native))
+
+	   (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
+	   (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
+	   (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
 	   (global-set-key (kbd "<XF86AudioRaiseVolume>") 'alsamixer-up-volume)
 	   (global-set-key (kbd "<XF86AudioLowerVolume>") 'alsamixer-down-volume)
 	   (global-set-key (kbd "<XF86AudioMute>") 'alsamixer-toggle-mute)))))
