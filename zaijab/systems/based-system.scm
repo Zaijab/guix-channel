@@ -109,9 +109,7 @@
 			   (mpd-output
 			    (type "pulse")
 			    (enabled? #t))
-			   (mpd-output
-			    (type "pipewire")
-			    (enabled? #f))
+
 			   ))))
 	       (service syncthing-service-type
 			(syncthing-configuration (user "zjabbar")))
