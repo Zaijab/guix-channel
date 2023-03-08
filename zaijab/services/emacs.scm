@@ -1149,6 +1149,7 @@
 	   (tab-bar-mode)
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
+	   (setq battery-mode-line-limit 97)
 	   (customize-set-variable 'tab-bar-format
 				   '(tab-bar-format-history
 				     tab-bar-format-tabs
@@ -1157,6 +1158,7 @@
 				     tab-bar-format-align-right
 				     tab-bar-format-global))
 
+	   (setq global-mode-string (cons "" (reverse (cdr global-mode-string)))) 
 	   (customize-set-variable 'mode-line-misc-info '(""))
 	   (customize-set-variable 'display-time-load-average-threshold 100)
 	   (customize-set-variable 'display-time-day-and-date t)
