@@ -381,6 +381,7 @@
 	   (setq emms-player-list '(emms-player-mpv)
 		 emms-info-functions '(emms-info-native))
 
+	   (emms-add-directory "~/music/octopath")
 	   (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
 	   (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
 	   (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
