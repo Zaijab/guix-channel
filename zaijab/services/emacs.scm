@@ -642,7 +642,8 @@
 		    :with-toc nil
 		    :exclude-tags ("draft")
 		    :html-head
-		    "<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/posts\">/posts</a></li></ul></div></header>"
+		    "<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/posts\">/posts</a></li></ul></div></header><script src=\"static/js/nastaliq.js\"></script>"
+		    
 		    :recursive t
 		    :html-postamble nil
 		    :html-mathjax-template "
@@ -744,7 +745,8 @@
 	   (global-org-modern-mode)
 	   
 	   (setq org-todo-keywords
-		 '((sequence "TODO" "WAITING" "|" "DONE")))
+		 '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
+	   
 	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
