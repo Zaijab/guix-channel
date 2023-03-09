@@ -615,6 +615,7 @@
 	     (apply orig-fun extension subtreep pub-dir nil))
 	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
 	   (setq org-latex-listings 'engraved)
+	   (setq org-latex-compiler "xelatex")
 	   (setq org-latex-title-command (concat
 					  "\\pagestyle{fancy}"
 					  "\\begin{titlepage}\n"
