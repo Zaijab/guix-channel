@@ -386,7 +386,14 @@
 	   (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
 	   (global-set-key (kbd "<XF86AudioRaiseVolume>") 'alsamixer-up-volume)
 	   (global-set-key (kbd "<XF86AudioLowerVolume>") 'alsamixer-down-volume)
-	   (global-set-key (kbd "<XF86AudioMute>") 'alsamixer-toggle-mute)))))
+	   (global-set-key (kbd "<XF86AudioMute>") 'alsamixer-toggle-mute)
+	   (global-set-key (kbd "<f9>") 'emms-previous)
+	   (global-set-key (kbd "<f10>") 'emms-next)
+	   (global-set-key (kbd "<f11>") 'emms-pause)
+	   (global-set-key (kbd "<f3>") 'alsamixer-up-volume)
+	   (global-set-key (kbd "<f2>") 'alsamixer-down-volume)
+	   (global-set-key (kbd "<f1>") 'alsamixer-toggle-mute)
+	   ))))
 
 (define email-configuration
   (home-emacs-configuration
@@ -1056,8 +1063,18 @@
 			  (memq 'super (event-modifiers maybe-event)))
 		     (add-to-list 'super-keys maybe-event)))
 	       (setq km (cdr km))))
-	   (setq exwm-input-prefix-keys (append super-keys '(f7
+	   (setq exwm-input-prefix-keys (append super-keys '(f1
+							     f2
+							     f3
+							     f4
+							     f5
+							     f6
+							     f7
 							     f8
+							     f9
+							     f10
+							     f11
+							     f12
 							     XF86AudioRaiseVolume
 							     XF86AudioLowerVolume
 							     XF86AudioNext
