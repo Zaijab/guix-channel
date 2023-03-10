@@ -1148,6 +1148,7 @@
 		 (tooltip-mode -1)
 		 (scroll-bar-mode -1)
 		 (menu-bar-mode -1)
+		 (global-auto-revert-mode)
 		 (fset (function yes-or-no-p) (function y-or-n-p))
 		 (push '(menu-bar-lines . 0)   default-frame-alist)
 		 (push '(tool-bar-lines . 0)   default-frame-alist)
