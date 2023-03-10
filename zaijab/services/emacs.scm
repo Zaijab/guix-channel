@@ -412,6 +412,7 @@
 	   (require 'mu4e-alert)
 	   (setq mu4e-get-mail-command (format "INSIDE_EMACS=%s mbsync -c ~/.config/mbsyncrc -a" emacs-version)
 		 epa-pinentry-mode 'ask)
+	   (setq org-msg-enforce-css "~/notes/static/css/site.css")
 	   (setq mu4e-hide-index-messages t)
 	   (setq mail-user-agent 'mu4e-user-agent)
 	   (add-hook 'after-init-hook (function mu4e-alert-enable-mode-line-display))
