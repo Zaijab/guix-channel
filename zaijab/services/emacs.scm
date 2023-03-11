@@ -105,6 +105,9 @@
 	     (setq-local completion-at-point-functions
 			 (cons (function tempel-expand)
 			       completion-at-point-functions)))
+	   (defun tempel-reload ()
+	     (interactive)
+	     (setq tempel--path-templates nil))
 	   (add-hook 'prog-mode-hook 'tempel-setup-capf)
 	   (add-hook 'text-mode-hook 'tempel-setup-capf)
 	   (define-key tempel-map (kbd "C-a") (function tempel-prev))
@@ -366,21 +369,43 @@
 
 (define music-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-libmpdel")
-		   (specification->package "alsa-utils")
-		   (specification->package "pavucontrol")
-		   (specification->package "qpwgraph")
-		   (specification->package "wireplumber")
-		   (specification->package "emacs-alsamixer-el")
-		   (specification->package "emacs-bluetooth")
-		   (specification->package "mpd-mpc")
-		   (specification->package "xdg-desktop-portal")
-		   (specification->package "emacs-emms")))
+   (packages (list
+	      (specification->package "alsa-utils")
+	      (specification->package "pavucontrol")
+	      (specification->package "qpwgraph")
+	      (specification->package "emacs-alsamixer-el")
+	      (specification->package "emacs-bluetooth")
+	      (specification->package "emacs-emms")))
    (init '((require 'emms-setup)
 	   (emms-all)
 	   (setq emms-player-list '(emms-player-mpv)
 		 emms-info-functions '(emms-info-native))
+	   (defvar emms-player-mpv-volume 100)
 
+	   (defun emms-player-mpv-get-volume ()
+	     "Sets `emms-player-mpv-volume' to the current volume value
+and sends a message of the current volume status."
+	     (emms-player-mpv-cmd '(get_property volume)
+				  #'(lambda (vol err)
+				      (unless err
+					(let ((vol (truncate vol)))
+					  (setq emms-player-mpv-volume vol)
+					  (message "Music volume: %s%%"
+						   vol))))))
+
+	   (defun emms-player-mpv-raise-volume (&optional amount)
+	     (interactive)
+	     (let* ((amount (or amount 10))
+		    (new-volume (+ emms-player-mpv-volume amount)))
+	       (if (> new-volume 100)
+		   (emms-player-mpv-cmd '(set_property volume 100))
+		   (emms-player-mpv-cmd `(add volume ,amount))))
+	     (emms-player-mpv-get-volume))
+
+	   (defun emms-player-mpv-lower-volume (&optional amount)
+	     (interactive)
+	     (emms-player-mpv-cmd `(add volume ,(- (or amount '10))))
+	     (emms-player-mpv-get-volume))
 	   (emms-add-directory "~/music/octopath")
 	   (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
 	   (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
