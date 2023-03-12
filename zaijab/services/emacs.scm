@@ -1195,6 +1195,7 @@ and sends a message of the current volume status."
    (init '((set-face-attribute 'default nil :font "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'han "IPAmjMincho-14")
 	   (set-fontset-font "fontset-default" 'kana "IPAmjMincho-14")
+	   (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho-14"
 	   (setq nano-modeline-position 'bottom)
 	   (nano-modeline-mode)
 	   (tab-bar-mode)
