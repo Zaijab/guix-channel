@@ -160,8 +160,8 @@
 		   (specification->package "emacs-xah-fly-keys") 
 		   (specification->package "emacs-evil-collection")))
    (init '((require 'evil)
-	   (require 'evil-collection)
-	   (evil-collection-init)
+	   ;(require 'evil-collection)
+	   ;(evil-collection-init)
 	   (evil-mode 1)))
    (early-init '((setq evil-want-keybinding nil)))))
 
