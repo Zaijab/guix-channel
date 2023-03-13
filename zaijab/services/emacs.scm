@@ -160,8 +160,8 @@
 		   (specification->package "emacs-xah-fly-keys") 
 		   (specification->package "emacs-evil-collection")))
    (init '((require 'evil)
-	   ;(require 'evil-collection)
-	   ;(evil-collection-init)
+	   (require 'evil-collection)
+	   (evil-collection-init)
 	   (evil-mode 1)))
    (early-init '((setq evil-want-keybinding nil)))))
 
@@ -676,7 +676,8 @@ and sends a message of the current volume status."
 			      "20220925155207-about.org"
 			      "20230225143306-posts.org"
 			      "20230225142818-notation.org"
-			      "20230225142533-category_theory.org") 
+			      "20230225142533-category_theory.org"
+			      "20230222104410-time_series_prediction.org") 
 		    :with-toc nil
 		    :exclude-tags ("draft")
 		    :html-head
