@@ -885,6 +885,16 @@ and sends a message of the current volume status."
 	   (add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
 	   
 	   (setq org-format-latex-options '(:foreground default :background default :scale 2 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+	   (setf
+	    (plist-get
+	     (alist-get 'dvisvgm org-preview-latex-process-alist)
+	     :latex-compiler)
+	    '("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+	    (plist-get
+	     (alist-get 'dvisvgm org-preview-latex-process-alist)
+	     :image-converter)
+	    '("dvisvgm %f -n -b min -c %S -o %O"))
+
 	   (setf (alist-get :title org-export-options-alist) '("TITLE" nil "Maybe, में भि میں بھی, 明媚." t))
 	   (setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex)))
 	   ))))
@@ -940,7 +950,7 @@ and sends a message of the current volume status."
 	     (ansi-color-apply-on-region begin end t))))
    (early-init '(
 
-		 ;(add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")
+					;(add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")
 
 		 ))))
 
