@@ -889,7 +889,11 @@ and sends a message of the current volume status."
 	    (plist-get
 	     (alist-get 'dvisvgm org-preview-latex-process-alist)
 	     :latex-compiler)
-	    '("xelatex -interaction nonstopmode -output-directory %o %f")
+	    '("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+	    (plist-get
+	     (alist-get 'dvisvgm org-preview-latex-process-alist)
+	     :image-input-type)
+	    "xdv"
 	    (plist-get
 	     (alist-get 'dvisvgm org-preview-latex-process-alist)
 	     :image-converter)
