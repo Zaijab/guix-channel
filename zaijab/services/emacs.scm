@@ -158,7 +158,7 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-evil")
 		   (specification->package "emacs-xah-fly-keys") 
-		   (specification->package "emacs-evil-collection")))
+		   (options->transformation '((with-branch . "emacs-evil-collection=master")) (specification->package "emacs-evil-collection"))))
    (init '((require 'evil)
 	   (require 'evil-collection)
 	   (evil-collection-init)
