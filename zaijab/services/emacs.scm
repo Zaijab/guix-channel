@@ -957,7 +957,7 @@ and sends a message of the current volume status."
 (define lisp-configuration
   (home-emacs-configuration
    (packages (list 
-	      emacs-symex
+	      ;emacs-symex
 	      (specification->package "sicp")
 	      ((options->transformation '((with-branch . "emacs-guix=master")))
 	       (specification->package "emacs-guix"))
@@ -972,8 +972,8 @@ and sends a message of the current volume status."
 	   (global-guix-prettify-mode)
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
-	   (symex-initialize)	   
-	   (global-set-key (kbd "s-y") 'symex-mode-interface)
+	   ;(symex-initialize)	   
+	   ;(global-set-key (kbd "s-y") 'symex-mode-interface)
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
 	   (setq safe-local-variable-values '((eval modify-syntax-entry 43 "'")
 					      (eval modify-syntax-entry 36 "'")
