@@ -1266,7 +1266,7 @@ and sends a message of the current volume status."
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-				     (emacs (specification->package "emacs-next-tree-sitter")) 
+				     (emacs (specification->package "emacs-next")) 
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
