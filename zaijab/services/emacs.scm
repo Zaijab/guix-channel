@@ -411,7 +411,7 @@ and sends a message of the current volume status."
 	     (interactive)
 	     (emms-player-mpv-cmd `(add volume ,(- (or amount '10))))
 	     (emms-player-mpv-get-volume))
-	   (emms-add-directory "~/music/octopath")
+	   (emms-add-directory-tree "~/music/octopath")
 	   (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
 	   (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
 	   (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
