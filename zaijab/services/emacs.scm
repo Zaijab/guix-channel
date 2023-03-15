@@ -910,7 +910,7 @@ and sends a message of the current volume status."
 	      (specification->package "python")
 	      (specification->package "jupyter")
 	      (specification->package "python-lsp-server")
-					;(specification->package "tree-sitter")
+	      (specification->package "tree-sitter")
 	      (specification->package "tree-sitter-python")
 	      (specification->package "emacs-csv-mode")
 	      (specification->package "emacs-py-isort")
@@ -1273,7 +1273,7 @@ and sends a message of the current volume status."
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-				     (emacs (specification->package "emacs-next")) 
+				     (emacs (specification->package "emacs-next-tree-sitter")) 
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
