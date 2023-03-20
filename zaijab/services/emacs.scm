@@ -945,11 +945,7 @@ and sends a message of the current volume status."
 	   (org-babel-jupyter-override-src-block "python3")
 	   (defun jupyter-ansi-color-apply-on-region (begin end)
 	     (ansi-color-apply-on-region begin end t))))
-   (early-init '(
-
-					;(add-to-list 'native-comp-deferred-compilation-deny-list ".*jupyter.*")
-
-		 ))))
+   (early-init '())))
 
 (define lisp-configuration
   (home-emacs-configuration
