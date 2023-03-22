@@ -1024,7 +1024,8 @@ and sends a message of the current volume status."
 	      (specification->package "arandr")))
    (init '((require 'exwm)
 	   (require 'xelb)
-	   (require 'windsize)
+	   (require 'windsize)	   
+	   (unbind-key (kbd "C-x C-z") 'global-map)
 	   (global-set-key (kbd "<f7>") (function
 					 (lambda () (interactive)
 						 (call-process-shell-command "loginctl suspend"))))
