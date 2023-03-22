@@ -908,6 +908,7 @@ and sends a message of the current volume status."
 	      (specification->package "tree-sitter-python")
 	      (specification->package "emacs-csv-mode")
 	      (specification->package "emacs-py-isort")
+	      (specification->package "iftop")
 	      emacs-py-autopep8
 	      ((options->transformation		
 		'((with-branch . "emacs-jupyter=next")))
