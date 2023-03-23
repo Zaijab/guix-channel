@@ -1246,6 +1246,7 @@ and sends a message of the current volume status."
 			(tabspaces-default-tab "Default")
 			(tabspaces-remove-to-default t)
 			(tabspaces-include-buffers '("*scratch*"))
+			(tab-bar-new-tab-choice "*scratch*")
 			;; sessions
 			(tabspaces-session t)
 			(tabspaces-session-auto-restore t))
