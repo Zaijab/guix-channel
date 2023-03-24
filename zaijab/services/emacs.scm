@@ -302,8 +302,7 @@
   (home-emacs-configuration
    (packages (list
 					;(specification->package "mpv")
-	      ((options->transformation '((with-branch . "yt-dlp=master")
-					  (with-input . "yt-dlp=yt-dlp@master")))
+	      ((options->transformation '((with-latest . "yt-dlp")))
 	       (specification->package "mpv"))
 	      ((options->transformation '((with-branch . "yt-dlp=master")))
 	       (specification->package "yt-dlp"))
