@@ -301,9 +301,9 @@
 (define elfeed-configuration
   (home-emacs-configuration
    (packages (list
-	      ;(specification->package "mpv")
+					;(specification->package "mpv")
 	      ((options->transformation '((with-branch . "yt-dlp=master")
-					  (with-input . "yt-dlp=yt-dlp@master"))
+					  (with-input . "yt-dlp=yt-dlp@master")))
 	       (specification->package "mpv"))
 	      ((options->transformation '((with-branch . "yt-dlp=master")))
 	       (specification->package "yt-dlp"))
