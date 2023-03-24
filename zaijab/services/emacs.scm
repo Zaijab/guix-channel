@@ -300,12 +300,16 @@
 
 (define elfeed-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "mpv")
-		   ((options->transformation '((with-branch . "yt-dlp=master")))
-		    (specification->package "yt-dlp"))
-		   (specification->package "emacs-elfeed")
-		   (specification->package "curl")
-		   emacs-elfeed-tube))
+   (packages (list
+	      ;(specification->package "mpv")
+	      ((options->transformation '((with-branch . "yt-dlp=master")
+					  (with-input . "yt-dlp=yt-dlp@master"))
+	       (specification->package "mpv"))
+	      ((options->transformation '((with-branch . "yt-dlp=master")))
+	       (specification->package "yt-dlp"))
+	      (specification->package "emacs-elfeed")
+	      (specification->package "curl")
+	      emacs-elfeed-tube))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
@@ -964,6 +968,7 @@ and sends a message of the current volume status."
 	      (specification->package "guile-chickadee")))
    (init '((require 'geiser-guile)
 	   (require 'guix)
+	   
 	   (setq geiser-default-implementation 'guile)
 	   (global-guix-prettify-mode)
 	   (setq user-full-name "Zain Jabbar")
@@ -1053,8 +1058,6 @@ and sends a message of the current volume status."
 	   (global-set-key (kbd "s-<tab>") 'switch-to-buffer)
 	   (global-set-key (kbd "s-<escape>") 'execute-extended-command)
 	   (global-set-key (kbd "s-`") 'eshell-command)
-	   (global-set-key (kbd "s-;") 'shell-command)
-	   (global-set-key (kbd "s-:") 'eval-expression)
 	   (global-set-key (kbd "s-c") (function
 					(lambda () (interactive)
 						(find-file "~/code/guix-channel/zaijab/services/emacs.scm"))))
@@ -1237,9 +1240,7 @@ and sends a message of the current volume status."
   (home-emacs-configuration
    (packages (list emacs-tabspaces))
    (init '((use-package tabspaces
-			;; use this next line only if you also use straight, otherwise ignore it. 
-					;:straight (:type git :host github :repo "mclear-tools/tabspaces")
-			:hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup. 
+			:hook (after-init . tabspaces-mode) 
 			:commands (tabspaces-switch-or-create-workspace
 				   tabspaces-open-or-create-project-and-workspace)
 			:custom
