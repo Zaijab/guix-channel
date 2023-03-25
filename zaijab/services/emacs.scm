@@ -961,6 +961,7 @@ and sends a message of the current volume status."
 	      ((options->transformation '((with-branch . "emacs-guix=master")))
 	       (specification->package "emacs-guix"))
 	      (specification->package "emacs-debbugs")
+	      (specification->package "tree-sitter-scheme")
 	      (specification->package "emacs-srfi")
 	      (specification->package "emacs-geiser")
 	      (specification->package "emacs-geiser-guile")
@@ -987,7 +988,8 @@ and sends a message of the current volume status."
 (define sql-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-vterm")
-		   (specification->package "postgresql"))
+		   (specification->package "postgresql")
+		   (specification->package "sqls")))
    (init '(
 	   (setq sql-connection-alist
 		 '((uhm-campus-energy
