@@ -963,7 +963,6 @@ and sends a message of the current volume status."
 	      (specification->package "emacs-debbugs")
 	      (specification->package "tree-sitter-scheme")
 	      (specification->package "emacs-srfi")
-	      (specification->package "emacs-geiser")
 	      (specification->package "emacs-geiser-guile")
 	      (specification->package "guile-chickadee")))
    (init '((require 'geiser-guile)
