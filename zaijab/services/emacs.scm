@@ -956,7 +956,6 @@ and sends a message of the current volume status."
 (define lisp-configuration
   (home-emacs-configuration
    (packages (list 
-	      emacs-symex
 	      (specification->package "sicp")
 	      ((options->transformation '((with-branch . "emacs-guix=master")))
 	       (specification->package "emacs-guix"))
@@ -967,22 +966,17 @@ and sends a message of the current volume status."
 	      (specification->package "guile-chickadee")))
    (init '((require 'geiser-guile)
 	   (require 'guix)
-	   
 	   (setq geiser-default-implementation 'guile)
 	   (global-guix-prettify-mode)
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
-					;(symex-initialize)	   
-					;(global-set-key (kbd "s-y") 'symex-mode-interface)
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
 	   (setq safe-local-variable-values '((eval modify-syntax-entry 43 "'")
 					      (eval modify-syntax-entry 36 "'")
 					      (eval modify-syntax-entry 126 "'")))
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc
-				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))
-
-   (early-init '((setq symex-modal-backend 'evil)))))
+				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
 
 (define sql-configuration
   (home-emacs-configuration
