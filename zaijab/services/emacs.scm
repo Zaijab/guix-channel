@@ -986,7 +986,8 @@ and sends a message of the current volume status."
 
 (define sql-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-vterm")))
+   (packages (list (specification->package "emacs-vterm")
+		   (specification->package "postgresql"))
    (init '(
 	   (setq sql-connection-alist
 		 '((uhm-campus-energy
