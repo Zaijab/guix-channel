@@ -721,6 +721,7 @@ and sends a message of the current volume status."
   (home-emacs-configuration
    (packages (list (specification->package "emacs-org-fragtog")
 		   (specification->package "emacs-org-modern")
+		   (specification->package "emacs-cdlatex")
 		   (specification->package "emacs-tempel")
 		   (specification->package "emacs-valign")
 		   (specification->package "emacs-org-present")
@@ -789,6 +790,8 @@ and sends a message of the current volume status."
 	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
+	   (add-hook 'org-mode-hook (function org-toggle-pretty-entities))
+	   (add-hook 'org-mode-hook (function org-cdlatex-mode))
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
 	   
 	   (setq org-agenda-files '("~/notes/"))
