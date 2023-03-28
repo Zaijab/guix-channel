@@ -20,4 +20,4 @@ gnew:
 
 
 gc:
-	guix gc --delete-generations=1m
+	guix gc -d 1m

@@ -211,7 +211,7 @@
 
 (define language-configuration
   (home-emacs-configuration
-   (packages (list ;(specification->package "emacs-ddskk")
+   (packages (list (specification->package "emacs-ddskk")
 		   (specification->package "font-fira-code")
 		   (specification->package "font-google-noto")
 		   (specification->package "font-lohit")
