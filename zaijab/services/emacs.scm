@@ -1269,8 +1269,8 @@ and sends a message of the current volume status."
 				     (emacs
 				      
 				      ((options->transformation
-					'((with-branch . "emacs-evil-collection=master")))
-				       (specification->package "emacs-evil-collection"))
+					'((with-branch . "emacs-next=master")))
+				       (specification->package "emacs-next"))
 
 
 					;(specification->package "emacs-next")
