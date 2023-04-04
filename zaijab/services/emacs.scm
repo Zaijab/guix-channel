@@ -433,9 +433,10 @@ and sends a message of the current volume status."
 	       (specification->package "emacs-org-msg"))
 	      (specification->package "isync")
 	      (specification->package "mu")
-	      ((options->transformation
-		'((with-git-url . "emacs-mu4e-alert=https://github.com/progfolio/mu4e-alert.git")
-		  (with-branch . "emacs-mu4e-alert=fix/mu4e--switch-context-advice"))) (specification->package "emacs-mu4e-alert"))
+	      (specification->package "emacs-mu4e-alert")
+	      ;; ((options->transformation
+	      ;; 	'((with-git-url . "emacs-mu4e-alert=https://github.com/progfolio/mu4e-alert.git")
+	      ;; 	  (with-branch . "emacs-mu4e-alert=fix/mu4e--switch-context-advice"))) (specification->package "emacs-mu4e-alert"))
 	      (specification->package "msmtp")))
    (init '((require 'mu4e)
 	   (require 'mu4e-alert)
