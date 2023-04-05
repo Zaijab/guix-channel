@@ -160,11 +160,12 @@
    (packages (list (specification->package "emacs-evil")
 		   (specification->package "emacs-xah-fly-keys")
 		   ((options->transformation
-		     '((with-branch . "emacs-evil-collection=master")))
+		     '((with-git-url . "emacs-evil-collection=https://github.com/meliache/evil-collection.git")
+		       (with-branch . "emacs-evil-collection=mu4e-development")))
 		    (specification->package "emacs-evil-collection"))))
    (init '((require 'evil)
-	   ;(require 'evil-collection)
-	   ;(evil-collection-init)
+					;(require 'evil-collection)
+					;(evil-collection-init)
 	   (evil-mode 1)))
    (early-init '((setq evil-want-keybinding nil)))))
 
