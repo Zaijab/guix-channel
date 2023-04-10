@@ -327,7 +327,7 @@
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" lecture machine-learning statistics ng)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLhhyoLH6IjfxVOdVC1P1L5z5azs0XjMsb" lecture machine-learning tensorflow intro)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLhhyoLH6IjfxeoooqP9rhU3HJIAVAJ3Vz" lecture machine-learning pytorch intro)
-				("https://www.youtube.com/feeds/videos.xml?playlist_id=UCm0MFprGs8VWcfsq743FJ7A" lecture machine-learning washington intro)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCm0MFprGs8VWcfsq743FJ7A" lecture machine-learning washington intro)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLE18841CABEA24090" lecture mit sicp)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLEC88901EBADDD980" lecture mit odes)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL221E2BBF13BECF6C" lecture mit linear)
