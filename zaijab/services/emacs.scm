@@ -1159,7 +1159,7 @@ and sends a message of the current volume status."
 (define ui-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-modus-themes")
-		   ;(specification->package "emacs-nano-modeline")
+		   (specification->package "emacs-nano-modeline")
                    (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
    (early-init '((setq gc-cons-threshold most-positive-fixnum
@@ -1210,8 +1210,8 @@ and sends a message of the current volume status."
 	   (set-fontset-font "fontset-default" 'han "IPAmjMincho-14")
 	   (set-fontset-font "fontset-default" 'kana "IPAmjMincho-14")
 	   (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho-14")
-	   ;(setq nano-modeline-position 'bottom)
-	   ;(nano-modeline-mode)
+					;(setq nano-modeline-position 'bottom)
+					;(nano-modeline-mode)
 	   (tab-bar-mode)
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
