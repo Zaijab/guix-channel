@@ -95,8 +95,8 @@
 		 corfu-preview-current 'insert
 		 corfu-preselect-first nil)
 	   (define-key corfu-map (kbd "M-<SPC>") (function corfu-insert-separator))
-	   (define-key corfu-map (kbd "<tab>") (function corfu-next))
-	   (define-key corfu-map (kbd "<backtab>") (function corfu-previous))))))
+	   (define-key corfu-map (kbd "M-}") (function corfu-next))
+	   (define-key corfu-map (kbd "M-{") (function corfu-previous))))))
 
 (define tempel-configuration
   (home-emacs-configuration
