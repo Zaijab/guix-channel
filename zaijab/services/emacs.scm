@@ -1024,6 +1024,7 @@ and sends a message of the current volume status."
 	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
 	      (specification->package "ungoogled-chromium")
+	      (specification->package "ublock-origin-chromium")
 	      (specification->package "emacs-xelb")
 	      (specification->package "picom")
 	      (specification->package "emacs-windsize")
