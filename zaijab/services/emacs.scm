@@ -406,7 +406,7 @@ and sends a message of the current volume status."
 		    (new-volume (+ emms-player-mpv-volume amount)))
 	       (if (> new-volume 100)
 		   (emms-player-mpv-cmd '(set_property volume 100))
-		   (emms-player-mpv-cmd (list 'add 'volume ,amount))))
+		   (emms-player-mpv-cmd (list 'add 'volume amount))))
 	     (emms-player-mpv-get-volume))
 	   (defun emms-player-mpv-lower-volume (&optional amount)
 	     (interactive)
