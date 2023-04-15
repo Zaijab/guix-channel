@@ -989,7 +989,8 @@ and sends a message of the current volume status."
    (packages (list (specification->package "emacs-vterm")
 		   (specification->package "postgresql")
 		   (specification->package "sqls")))
-   (init '((add-to-list 'eglot-server-programs '(sql-mode . ("sqls")))
+   (init '((require 'eglot)
+	   (add-to-list 'eglot-server-programs '(sql-mode . ("sqls")))
 
 	   (setq eglot-sync-connect 1)
 
