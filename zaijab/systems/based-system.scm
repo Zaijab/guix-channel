@@ -129,8 +129,8 @@
 			     (vpn-plugins
 			      (list
 			       (specification->package "network-manager-openvpn")
-			       (specification->package "network-manager-openconnect")
-			       (specification->package "openconnect-sso")))))
+			       #;(specification->package "network-manager-openconnect")
+			       #;(specification->package "openconnect-sso")))))
 		 (guix-service-type
 		  config => (guix-configuration
 			     (inherit config)
