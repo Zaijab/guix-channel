@@ -1217,6 +1217,7 @@ and sends a message of the current volume status."
    (early-init '((setq gc-cons-threshold most-positive-fixnum
 		       package-enable-at-startup nil
 		       comp-enable-subr-trampolines t
+		       inhibit-automatic-native-compilation nil
 		       indicate-buffer-boundaries nil
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
