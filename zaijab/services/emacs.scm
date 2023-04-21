@@ -64,6 +64,12 @@
 
 ;;; EMACS CONFIG
 
+
+(define basic-configuration
+  (home-emacs-configuration
+   (early-init '())
+   (init '((vertico-mode 1)))))
+
 ;; Completions
 
 (define orderless-configuration
@@ -989,7 +995,13 @@ and sends a message of the current volume status."
    (packages (list (specification->package "emacs-vterm")
 		   (specification->package "postgresql")
 		   (specification->package "sqls")))
-   (init '((require 'eglot)
+   (init '((defun toggle-uh-vpn ()
+	     (interactive)
+	     (if (equal "" (shell-command-to-string "nmcli -g GENERAL.STATE c s uhm_vpn"))
+		 (shell-command "nmcli connection up uhm_vpn")
+		 (shell-command "nmcli connection down uhm_vpn")))
+
+	   (require 'eglot)
 	   (add-to-list 'eglot-server-programs '(sql-mode . ("sqls")))
 
 	   (setq eglot-sync-connect 1)
