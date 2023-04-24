@@ -734,6 +734,7 @@ and sends a message of the current volume status."
 		   (specification->package "emacs-tempel")
 		   (specification->package "emacs-valign")
 		   (specification->package "emacs-org-present")
+		   (specification->package "emacs-org-tree-slide")
 		   (specification->package "emacs-calfw") 
 		   emacs-calfw-blocks
 		   (specification->package "texlive")
