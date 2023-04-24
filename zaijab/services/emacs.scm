@@ -742,6 +742,7 @@ and sends a message of the current volume status."
 		   (specification->package "imagemagick")
 		   (specification->package "ispell")))
    (init '((require 'org)
+	   (require 'org-tree-slide)
 	   (require 'ox)
 	   (require 'calfw)
 	   (require 'calfw-org)
@@ -791,7 +792,8 @@ and sends a message of the current volume status."
 			     (time-to-days
 			      (org-read-date nil t end-date))) text))))))
 	   
-	   (setq org-tags-column 0)
+	   (setq org-tags-column 0
+		 org-image-actual-width nil)
 	   (global-org-modern-mode)
 	   
 	   (setq org-todo-keywords
