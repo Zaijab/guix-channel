@@ -12,7 +12,7 @@
   #:use-module (srfi srfi-9)
   #:use-module (zaijab services emacs)
   #:use-module (zaijab services searx)
-  #:use-module (home services pipewire))
+  #:use-module (zaijab services pipewire))
 
 (define-public zains-home
   (home-environment
