@@ -691,7 +691,6 @@ and sends a message of the current volume status."
 		    :exclude-tags ("draft")
 		    :html-head
 		    "<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/posts\">/posts</a></li></ul></div></header><script src=\"static/js/nastaliq.js\"></script>"
-		    
 		    :recursive t
 		    :html-postamble nil
 		    :html-mathjax-template "
@@ -720,10 +719,7 @@ and sends a message of the current volume status."
 		    :base-extension any
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-publish-attachment)
-		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
-	   )
-	 )
-   ))
+		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))))))
 
 
 (define org-mode-configuration
