@@ -1221,8 +1221,6 @@ emacs-py-autopep8
   (home-emacs-configuration
    (packages (list (specification->package "emacs-modus-themes")
 		   (specification->package "emacs-nano-modeline")
-		   (specification->package "binutils")
-		   (specification->package "gcc-multilib")
                    (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
    (early-init '((setq gc-cons-threshold most-positive-fixnum
