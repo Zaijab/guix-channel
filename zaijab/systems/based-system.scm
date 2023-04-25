@@ -42,8 +42,8 @@
 
 (define-public tao-operating-system
   (operating-system
-    (kernel linux)
-    (firmware (list linux-firmware))
+    ;(kernel linux)
+    ;(firmware (list linux-firmware))
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
     (keyboard-layout (keyboard-layout "us"))
@@ -113,9 +113,7 @@
 									     (transmission-random-salt)
 									     (transmission-random-salt)
 									     "\"")))
-	       (pam-limits-service
-		(list
-		 (pam-limits-entry "@wheel" 'hard 'nofile 524288)))
+	       
 	       (modify-services (remove (lambda (service) (eq? (service-kind service) pulseaudio-service-type))
 					%desktop-services)                 
 		 (gdm-service-type
@@ -128,9 +126,7 @@
 			     (inherit config)
 			     (vpn-plugins
 			      (list
-			       (specification->package "network-manager-openvpn")
-			       #;(specification->package "network-manager-openconnect")
-			       #;(specification->package "openconnect-sso")))))
+			       (specification->package "network-manager-openvpn")))))
 		 (guix-service-type
 		  config => (guix-configuration
 			     (inherit config)
