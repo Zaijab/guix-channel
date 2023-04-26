@@ -914,28 +914,26 @@ and sends a message of the current volume status."
   (home-emacs-configuration
    (packages (list
 	      (specification->package "python")
-					;(specification->package "jupyter") ;
+	      #;(specification->package "jupyter") ;
+	      #;((options->transformation		
+	      '((with-branch . "emacs-jupyter=next")))
+	      (specification->package "emacs-jupyter"))
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter")
 	      (specification->package "tree-sitter-python")
 	      (specification->package "emacs-csv-mode")
 	      (specification->package "emacs-py-isort")
 	      emacs-py-autopep8
-	      #;((options->transformation		
-	      '((with-branch . "emacs-jupyter=next")))
-	      (specification->package "emacs-jupyter"))
+
 	      (specification->package "pandoc")
+
 	      (specification->package "python-sqlalchemy")
 	      (specification->package "python-pandas")
 	      (specification->package "python-matplotlib")
 	      (specification->package "python-scipy")
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
-	      (specification->package "python-seaborn")
-	      (specification->package "python-xgboost")
-	      (specification->package "python-numexpr")
-	      (specification->package "python-patsy")
-	      (specification->package "python-statsmodels")))
+	      ))
    (init '((setq org-babel-python-command "python3")
 	   (setq python-interpreter "python3")
 	   (setq python-shell-interpreter "python3")
