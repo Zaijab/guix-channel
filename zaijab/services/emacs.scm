@@ -441,12 +441,10 @@ and sends a message of the current volume status."
 	      (specification->package "isync")
 	      (specification->package "mu")
 	      (specification->package "emacs-mu4e-alert")
-	      ;; ((options->transformation
-	      ;; 	'((with-git-url . "emacs-mu4e-alert=https://github.com/progfolio/mu4e-alert.git")
-	      ;; 	  (with-branch . "emacs-mu4e-alert=fix/mu4e--switch-context-advice"))) (specification->package "emacs-mu4e-alert"))
 	      (specification->package "msmtp")))
    (init '((require 'mu4e)
 	   (require 'mu4e-alert)
+	   (defun mu4e--modeline-string () "")
 	   (setq mu4e-get-mail-command (format "INSIDE_EMACS=%s mbsync -c ~/.config/mbsyncrc -a" emacs-version)
 		 epa-pinentry-mode 'ask)
 	   (setq org-msg-enforce-css "~/notes/static/css/site.css")
@@ -924,8 +922,8 @@ and sends a message of the current volume status."
 	      (specification->package "emacs-py-isort")
 	      emacs-py-autopep8
 	      #;((options->transformation		
-		 '((with-branch . "emacs-jupyter=next")))
-		(specification->package "emacs-jupyter"))
+	      '((with-branch . "emacs-jupyter=next")))
+	      (specification->package "emacs-jupyter"))
 	      (specification->package "pandoc")
 	      (specification->package "python-sqlalchemy")
 	      (specification->package "python-sqlalchemy-utils")
