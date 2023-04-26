@@ -3,14 +3,6 @@
 (channel
  (version 0)
  (dependencies
-  #;(channel
-    (name krevedkokun)
-    (url "https://git.sr.ht/~krevedkokun/dotfiles")
-    (introduction
-     (channel-introduction
-      (version 0)
-      (commit "a5df38f03a62404fd200830a3fcb4d6a820284ba")
-      (signer "9946 5567 F17F F3EF D363  0034 8469 C699 F664 6AC6"))))
   (channel
    (name nonguix)
    (url "https://gitlab.com/nonguix/nonguix")
