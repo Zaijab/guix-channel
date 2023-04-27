@@ -161,19 +161,26 @@
 
 ;; 	   (setq consult-narrow-key "<")))))
 
-(define evil-configuration
+(define xfk-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-evil")
-		   (specification->package "emacs-xah-fly-keys")
-		   ((options->transformation
-		     '((with-git-url . "emacs-evil-collection=https://github.com/meliache/evil-collection.git")
-		       (with-branch . "emacs-evil-collection=mu4e-development")))
-		    (specification->package "emacs-evil-collection"))))
-   (init '((require 'evil)
-	   (require 'evil-collection)
-	   (evil-collection-init)
-	   (evil-mode 1)))
-   (early-init '((setq evil-want-keybinding nil)))))
+   (packages (list (specification->package "emacs-xah-fly-keys")))
+   (init '((require 'xah-fly-keys)
+	   (xah-fly-keys-set-layout "qwerty")
+	   (xah-fly-keys 1)))))
+
+#;(define evil-configuration
+(home-emacs-configuration
+(packages (list (specification->package "emacs-evil")
+(specification->package "emacs-xah-fly-keys")
+((options->transformation
+'((with-git-url . "emacs-evil-collection=https://github.com/meliache/evil-collection.git")
+(with-branch . "emacs-evil-collection=mu4e-development")))
+(specification->package "emacs-evil-collection"))))
+(init '((require 'evil)
+(require 'evil-collection)
+(evil-collection-init)
+(evil-mode 1)))
+(early-init '((setq evil-want-keybinding nil)))))
 
 ;; (define polymode-configuration
 ;;   (home-emacs-configuration
