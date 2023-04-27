@@ -552,10 +552,14 @@ and sends a message of the current volume status."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation
-		'((without-tests . "emacs-magit")))
-	       (specification->package "emacs-org-roam"))
-	      (specification->package "emacs-org-drill")))
+	      #;((options->transformation
+	      '((without-tests . "emacs-magit")))
+	      (specification->package "emacs-org-roam"))
+	      python-animdl
+	      (specification->package "emacs-org-roam")
+	      (specification->package "emacs-org-fc")
+	      (specification->package "emacs-org-drill")
+	      ))
    (init '((require 'org-roam-node)
 	   (require 'org-drill) 
 	   (setq org-drill-learn-fraction 0.4)

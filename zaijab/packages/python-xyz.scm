@@ -105,8 +105,7 @@
     (synopsis "Python package for solving partial differential equations")
     (description "Python package for solving partial differential equations")
     (license license:expat)))
-(define-public python-animdl
-  
+(define-public python-animdl  
   (package
     (name "python-animdl")
     (version "1.7.12")
