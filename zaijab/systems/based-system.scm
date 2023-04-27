@@ -89,7 +89,7 @@
     
     (users (cons (user-account
 		  (name "zjabbar")
-		  (comment "Zain Jabbar")
+		  (comment "Zain Jabbar ")
 		  (group "users")
 		  (supplementary-groups '("wheel" "netdev" "audio" "lp" "video")))
 		 %base-user-accounts))
