@@ -729,7 +729,7 @@ and sends a message of the current volume status."
 		   (specification->package "emacs-org-tree-slide")
 		   (specification->package "emacs-calfw") 
 		   emacs-calfw-blocks
-		   (specification->package "texlive-tools")
+		   (specification->package "texlive")
 		   (specification->package "imagemagick")
 		   (specification->package "ispell")))
    (init '((require 'org)
