@@ -105,6 +105,7 @@
     (synopsis "Python package for solving partial differential equations")
     (description "Python package for solving partial differential equations")
     (license license:expat)))
+
 (define-public python-animdl  
   (package
     (name "python-animdl")
@@ -137,4 +138,20 @@
     (description
      "This package provides a highly efficient, fast, powerful and light-weight anime
 downloader and streamer for your favorite anime.")
+    (license #f)))
+
+(define-public python-anchor-kr
+  (package
+    (name "python-anchor-kr")
+    (version "0.1.3")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "anchor-kr" version))
+              (sha256
+               (base32
+		"1gsbxjahyan617dj91q6bcjg6njk47vkjk6w4l1d56rmznv5bh0g"))))
+    (build-system python-build-system)
+    (home-page "https://github.com/justfoolingaround/anchor")
+    (synopsis "Me, you and anchor make your scraper complete.")
+    (description "Me, you and anchor make your scraper complete.")
     (license #f)))
