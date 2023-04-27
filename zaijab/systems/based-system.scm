@@ -99,8 +99,6 @@
 	       (service syncthing-service-type
 			(syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
-	       (bluetooth-service)
-	       (service nix-service-type)
 	       (extra-special-file "/etc/searx/settings.yml"
 				   (plain-file "settings.yml" (string-append "use_default_settings: True\n"
 									     "general:\n"
