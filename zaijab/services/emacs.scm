@@ -1312,7 +1312,6 @@ and sends a message of the current volume status."
 	   ))
    (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
-					;(desktop-save-mode)
 		 (setq switch-to-buffer-obey-display-actions t)
 		 (defun mp-toggle-window-dedication ()
 		   "Toggles window dedication in the selected window."

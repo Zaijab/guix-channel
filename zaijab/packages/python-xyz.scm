@@ -105,4 +105,37 @@
     (synopsis "Python package for solving partial differential equations")
     (description "Python package for solving partial differential equations")
     (license license:expat)))
-
+(define-public python-animdl
+  
+  (package
+    (name "python-animdl")
+    (version "1.7.12")
+    (source (origin
+              (method url-fetch)
+              (uri (pypi-uri "animdl" version))
+              (sha256
+               (base32
+		"1ww071grnrl5cz2x8kx6ayk8fsmbfsqmwchw0sa2ph87ayx36nr7"))))
+    (build-system python-build-system)
+    (propagated-inputs (list python-anchor-kr
+                             python-anitopy
+                             python-click
+                             python-comtypes
+                             python-cssselect
+                             python-httpx
+                             python-lxml
+                             python-packaging
+                             python-pkginfo
+                             python-pycryptodomex
+                             python-pyyaml
+                             python-regex
+                             python-rich
+                             python-tqdm
+                             python-yarl))
+    (home-page "")
+    (synopsis
+     "A highly efficient, fast, powerful and light-weight anime downloader and streamer for your favorite anime.")
+    (description
+     "This package provides a highly efficient, fast, powerful and light-weight anime
+downloader and streamer for your favorite anime.")
+    (license #f)))
