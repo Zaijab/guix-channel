@@ -1238,7 +1238,8 @@ and sends a message of the current volume status."
 		       frame-inhibit-implied-resize t
 		       redisplay-dont-pause t
 		       max-mini-window-height 1
-		       initial-scratch-message nil)
+		       initial-scratch-message nil
+		       mode-line-format (remove 'mode-line-modes mode-line-format))
 		 (setq org-src-fontify-natively t)
 		 (setq org-src-tab-acts-natively t)
 		 (setq org-src-preserve-indentation nil
