@@ -155,3 +155,18 @@ downloader and streamer for your favorite anime.")
     (synopsis "Me, you and anchor make your scraper complete.")
     (description "Me, you and anchor make your scraper complete.")
     (license #f)))
+
+(define-public python-anitopy
+  (package
+  (name "python-anitopy")
+  (version "2.1.1")
+  (source (origin
+            (method url-fetch)
+            (uri (pypi-uri "anitopy" version))
+            (sha256
+             (base32
+              "09lfk036mjamsgzm4lmdwrrsbs3mvhxvakiz643f8zlig36rfnsi"))))
+  (build-system python-build-system)
+  (home-page "https://github.com/igorcmoura/anitopy")
+  (synopsis "An anime video filename parser")
+  (description "An anime video filename parser"))
