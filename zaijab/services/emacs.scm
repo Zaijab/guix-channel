@@ -1013,7 +1013,7 @@ and sends a message of the current volume status."
   (home-emacs-configuration
    (packages (list
 	      (specification->package "python")
-	      #;(specification->package "jupyter") ;
+	      (specification->package "jupyter") ;
 	      #;((options->transformation		
 	      '((with-branch . "emacs-jupyter=next")))
 	      (specification->package "emacs-jupyter"))
@@ -1431,7 +1431,7 @@ and sends a message of the current volume status."
 				      ;;  (specification->package "emacs-next"))
 
 
-				      (specification->package "emacs")
+				      (specification->package "emacs-next")
 				      ) 
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
