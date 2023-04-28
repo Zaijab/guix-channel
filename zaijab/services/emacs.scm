@@ -1120,6 +1120,7 @@ and sends a message of the current volume status."
 	   (global-set-key (kbd "s-f") 'exwm-floating-toggle-floating)
 	   (global-set-key (kbd "s-<tab>") 'switch-to-buffer)
 	   (global-set-key (kbd "s-<escape>") 'execute-extended-command)
+	   (global-set-key (kbd "<escape>") 'xah-fly-command-mode-activate)
 	   (global-set-key (kbd "s-`") 'eshell-command)
 	   (global-set-key (kbd "s-c") (function
 					(lambda () (interactive)
