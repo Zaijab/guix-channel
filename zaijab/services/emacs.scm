@@ -163,7 +163,7 @@
 
 (define meow-configuration
   (home-emacs-configuration
-   (packages (specification->package "emacs-meow"))
+   (packages (list (specification->package "emacs-meow")))
    (init '((defun meow-setup ()
 	     (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
 	     (meow-motion-overwrite-define-key
@@ -1013,7 +1013,7 @@ and sends a message of the current volume status."
   (home-emacs-configuration
    (packages (list
 	      (specification->package "python")
-	      (specification->package "jupyter") ;
+	      (specification->package "jupyter")
 	      #;((options->transformation		
 	      '((with-branch . "emacs-jupyter=next")))
 	      (specification->package "emacs-jupyter"))
