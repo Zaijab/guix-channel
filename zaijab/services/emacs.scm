@@ -840,6 +840,7 @@ and sends a message of the current volume status."
 	   (require 'calfw)
 	   (require 'calfw-org)
 	   (require 'calfw-blocks)
+	   (setq org-startup-folded t)
 
 	   (defun cfw:date-before (date num)
 	     "Return the date before NUM days from DATE."
