@@ -164,7 +164,8 @@
 (define meow-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-meow")))
-   (init '((defun meow-setup ()
+   (init '((setq meow-use-clipboard t)
+	   (defun meow-setup ()
 	     (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
 	     (meow-motion-overwrite-define-key
 	      '("j" . meow-next)
