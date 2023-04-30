@@ -254,27 +254,6 @@
 	   (meow-setup)
 	   (meow-global-mode 1)))))
 
-#;(define xfk-configuration
-(home-emacs-configuration
-(packages (list (specification->package "emacs-xah-fly-keys")))
-(init '((require 'xah-fly-keys)
-(xah-fly-keys-set-layout "qwerty")
-(xah-fly-keys 1)))))
-
-#;(define evil-configuration
-(home-emacs-configuration
-(packages (list (specification->package "emacs-evil")
-(specification->package "emacs-xah-fly-keys")
-((options->transformation
-'((with-git-url . "emacs-evil-collection=https://github.com/meliache/evil-collection.git")
-(with-branch . "emacs-evil-collection=mu4e-development")))
-(specification->package "emacs-evil-collection"))))
-(init '((require 'evil)
-(require 'evil-collection)
-(evil-collection-init)
-(evil-mode 1)))
-(early-init '((setq evil-want-keybinding nil)))))
-
 ;; (define polymode-configuration
 ;;   (home-emacs-configuration
 ;;    (packages (list (specification->package "emacs-polymode")
@@ -286,9 +265,7 @@
    (packages (list (specification->package "emacs-undo-tree")))
    (init '((require 'undo-tree)
 	   (setq undo-tree-history-directory-alist  '(("." . "~/.config/emacs/undo-tree/")))
-	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)
-
-	   
+	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)	   
 	   (global-undo-tree-mode)))))
 
 (define indentation-configuration
@@ -370,8 +347,7 @@
 		 (setq words (cdr words)))
 	       (alist-get
 		(completing-read "Results: " *jisho-results*)
-		*jisho-results* nil nil 'equal)))
-	   ))))
+		*jisho-results* nil nil 'equal)))))))
 
 (define garbage-configuration
   (home-emacs-configuration
@@ -384,16 +360,10 @@
    (init '((setq browse-url-browser-function 'eww-browse-url)
 	   (setq eww-search-prefix "http://127.0.0.1:8888/search?q=")))))
 
-
 (define pdf-tools-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-pdf-tools")))
    (init '((pdf-tools-install)))))
-
-(define mmm-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-mmm-mode")))
-   (init '())))
 
 (define cryptography-configuration
   (home-emacs-configuration
@@ -408,17 +378,14 @@
 
 (define elfeed-configuration
   (home-emacs-configuration
-   (packages (list
-					;(specification->package "mpv")
-	      ((options->transformation '((with-branch . "yt-dlp=master")))
-	       (specification->package "mpv"))
-	      ((options->transformation '((with-branch . "yt-dlp=master")))
-	       (specification->package "yt-dlp"))
-	      ((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
-	       emacs-elfeed-tube)
-	      (specification->package "emacs-elfeed")
-	      (specification->package "curl")
-	      ))
+   (packages (list ((options->transformation '((with-branch . "yt-dlp=master")))
+		    (specification->package "mpv"))
+		   ((options->transformation '((with-branch . "yt-dlp=master")))
+		    (specification->package "yt-dlp"))
+		   ((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
+		    emacs-elfeed-tube)
+		   (specification->package "emacs-elfeed")
+		   (specification->package "curl")))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
@@ -498,8 +465,6 @@
 		 emms-info-functions '(emms-info-native))
 	   (defvar emms-player-mpv-volume 100)
 	   (defun emms-player-mpv-get-volume ()
-	     "Sets `emms-player-mpv-volume' to the current volume value
-and sends a message of the current volume status."
 	     (emms-player-mpv-cmd '(get_property volume)
 				  (function (lambda (vol err)
 					      (unless err
@@ -679,8 +644,7 @@ and sends a message of the current volume status."
   (home-emacs-configuration
    (packages (list 
 	      (specification->package "python-pygments")
-	      (specification->package "emacs-engrave-faces")
-	      ))
+	      (specification->package "emacs-engrave-faces")))
    (init '((require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
 	     "For a given file, get its TITLE keyword."
