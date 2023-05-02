@@ -522,7 +522,10 @@
 	   (setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil title:nil email:nil tex:imagemagick"
 		 org-msg-startup "hidestars indent inlineimages"
 		 org-msg-greeting-fmt "\nAloha%s,\n\n"
-		 org-msg-recipient-names '(("zaijab2000@gmail.com" . "Zain"))
+		 org-msg-recipient-names '(("zaijab2000@gmail.com" . "Zain")
+					   ("pyw@hawaii.edu" . "Dr. Washington")
+					   ("sue@math.hawaii.edu" . "Sue")
+					   ("epeppard@hawaii.edu" . "Eileen"))
 		 org-msg-greeting-name-limit 3
 		 org-msg-default-alternatives '((new		. (text html))
 						(reply-to-html	. (text html))
