@@ -983,9 +983,9 @@
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
-	      #;((options->transformation		
-	      '((with-branch . "emacs-jupyter=next")))
-	      (specification->package "emacs-jupyter"))
+	      ((options->transformation		
+		'((with-branch . "emacs-jupyter=next")))
+	       (specification->package "emacs-jupyter"))
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter")
 	      (specification->package "tree-sitter-python")
