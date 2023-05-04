@@ -12,6 +12,7 @@
   #:use-module (zaijab packages emacs-xyz)
   #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages chrome)
+  #:use-module (nongnu packages messaging)
   #:use-module (nongnu packages fonts)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
@@ -67,9 +68,9 @@
 
 (define proprietary-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "zoom")))
+   (packages (list zoom))
    (early-init '())
-   (init '((vertico-mode 1)))))
+   (init '())))
 
 ;; Completions
 
