@@ -65,8 +65,9 @@
 ;;; EMACS CONFIG
 
 
-(define basic-configuration
+(define proprietary-configuration
   (home-emacs-configuration
+   (packages (list (specification->package "zoom")))
    (early-init '())
    (init '((vertico-mode 1)))))
 
@@ -513,7 +514,8 @@
 	   (require 'mu4e-alert)
 	   (defun mu4e--modeline-string () "")
 	   (setq mu4e-get-mail-command (format "INSIDE_EMACS=%s mbsync -c ~/.config/mbsyncrc -a" emacs-version)
-		 epa-pinentry-mode 'ask)
+		 epa-pinentry-mode 'ask
+		 mu4e-sent-messages-behavior 'delete)
 	   (setq org-msg-enforce-css "~/notes/static/css/site.css")
 	   (setq mu4e-hide-index-messages t)
 	   (setq mail-user-agent 'mu4e-user-agent)
