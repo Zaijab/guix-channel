@@ -68,7 +68,8 @@
 
 (define proprietary-configuration
   (home-emacs-configuration
-   (packages (list zoom))
+   (packages (list zoom
+		   google-chrome-stable))
    (early-init '())
    (init '())))
 
