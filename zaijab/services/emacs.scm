@@ -73,6 +73,13 @@
    (early-init '())
    (init '())))
 
+(define package-configuration
+  (home-emacs-configuration
+   (packages (list emacs-system-packages))
+   (early-init '())
+   (init '())))
+
+
 ;; Completions
 
 (define orderless-configuration
