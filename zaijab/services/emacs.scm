@@ -1413,7 +1413,7 @@
 				      ;;  (specification->package "emacs-next"))
 
 
-				      (specification->package "emacs-next")
+				      (specification->package "emacs-next-tree-sitter")
 				      ) 
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
