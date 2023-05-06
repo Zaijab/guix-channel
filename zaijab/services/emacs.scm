@@ -1007,6 +1007,7 @@
 	      (specification->package "pandoc")
 
 	      (specification->package "python-sqlalchemy")
+	      (specification->package "python-cookiecutter")
 	      (specification->package "python-pandas")
 	      (specification->package "python-matplotlib")
 	      (specification->package "python-scipy")
