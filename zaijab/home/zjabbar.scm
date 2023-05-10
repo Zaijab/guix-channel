@@ -19,7 +19,7 @@
    (packages (list (specification->package "xmodmap")
 		   (specification->package "unzip") 
                    (specification->package "xset")
-		   (specification->package "jami")
+		   ;(specification->package "jami")
                    (specification->package "font-iosevka")))
    (services
     (list

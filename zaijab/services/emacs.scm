@@ -465,7 +465,7 @@
    (packages (list
 	      (specification->package "alsa-utils")
 	      (specification->package "pavucontrol")
-	      (specification->package "qpwgraph")
+	      ;(specification->package "qpwgraph")
 	      (specification->package "emacs-alsamixer-el")
 	      (specification->package "emacs-bluetooth")
 	      (specification->package "emacs-emms")))
