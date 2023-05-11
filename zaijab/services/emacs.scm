@@ -997,8 +997,8 @@
 	      (specification->package "python")
 	      (specification->package "jupyter")
 	      ((options->transformation		
-		'((with-git-url . "emacs-jupyter=https://github.com/tgbugs/emacs-jupyter.git")
-		  #;(with-branch . "emacs-jupyter=master")))
+		'(#;(with-git-url . "emacs-jupyter=https://github.com/tgbugs/emacs-jupyter.git")
+		  (with-branch . "emacs-jupyter=master")))
 	       (specification->package "emacs-jupyter"))
 	      (specification->package "python-lsp-server")
 					;(specification->package "tree-sitter")
