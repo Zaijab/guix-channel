@@ -997,7 +997,7 @@
 	      (specification->package "python")
 	      (specification->package "jupyter")
 	      ((options->transformation		
-		'((with-branch . "emacs-jupyter=next")))
+		'((with-branch . "emacs-jupyter=master")))
 	       (specification->package "emacs-jupyter"))
 	      (specification->package "python-lsp-server")
 	      ;(specification->package "tree-sitter")
