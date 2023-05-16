@@ -810,7 +810,9 @@
 		   (specification->package "emacs-org-present")
 		   (specification->package "emacs-org-tree-slide")
 		   (specification->package "emacs-calfw") 
-		   emacs-calfw-blocks
+		   ((options->transformation
+		     '((with-branch . "emacs-calfw-blocks=master")))
+		    emacs-calfw-blocks)
 		   (specification->package "texlive")
 		   (specification->package "imagemagick")
 		   (specification->package "ispell")))

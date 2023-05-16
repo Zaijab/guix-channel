@@ -416,7 +416,6 @@ Usage To automatically apply when saving a python file, use the following code:
 \"autopep8\" you can set the `py-autopep8-options e.g. (setq py-autopep8-options
 (\"--max-line-length=100\" \"--aggressive\"))")
     (license #f)))
-
 (define-public emacs-calfw-blocks
   (package
     (name "emacs-calfw-blocks")
