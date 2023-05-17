@@ -71,7 +71,7 @@
    (packages (list zoom
 		   google-chrome-stable))
    (early-init '())
-   (init '())))
+   (init '((defun reload-init () (interactive) (load "~/code/guix-channel/zaijab/files/init.el"))))))
 
 (define package-configuration
   (home-emacs-configuration
@@ -882,7 +882,7 @@
 	   (add-hook 'org-mode-hook (function org-cdlatex-mode))
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
 	   
-	   (setq org-agenda-files '("~/notes/"))
+	   (setq org-agenda-files '("~/notes/20211224040925-todo.org"))
 	   
 	   (setq org-startup-with-inline-images t)
 

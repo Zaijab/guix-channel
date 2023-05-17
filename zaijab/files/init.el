@@ -17,3 +17,7 @@
 	      read-file-name-completion-ignore-case t
 	      read-buffer-completion-ignore-case t))
 
+(use-package vertico
+  :ensure-system-package emacs-vertico
+  :init (vertico-mode 1))
+
