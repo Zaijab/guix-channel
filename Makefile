@@ -1,4 +1,4 @@
-all: gnew gpull gpackage zjabbar #gsystem
+all: gnew gpull gpackage gsystem zjabbar
 
 gc:
 	guix gc -d 1m
@@ -19,4 +19,4 @@ gsystem:
 	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades
 
 zjabbar:
-	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm -v 4 --allow-downgrades
+	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades
