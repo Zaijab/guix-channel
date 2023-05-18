@@ -1,6 +1,7 @@
 (define-module (zaijab packages emacs-xyz)
   #:use-module (guix packages)
   #:use-module (gnu packages)
+  #:use-module (gnu packages emacs)
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix build-system emacs)
@@ -135,6 +136,34 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
+
+(define-public emacs-next-tree-sitter-xwidgets
+  (let ((commit "ac7ec87a7a0db887e4ae7fe9005aea517958b778")
+        (revision "0"))
+    (package
+      (inherit emacs-next-tree-sitter)
+      (name "emacs-next-tree-sitter-xwidgets")
+      (version (git-version "30.0.50" revision commit))
+      (source
+       (origin
+         (inherit (package-source emacs-next))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://git.savannah.gnu.org/git/emacs.git/")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1akq6dbllwwqwx21wnwnv6aax1nsi2ypbd7j3i79sw62s3gf399z"))))
+      (arguments
+       (substitute-keyword-arguments (package-arguments emacs-next-tree-sitter)
+	 ((#:configure-flags flags #~'())
+          #~(cons "--with-xwidgets" #$flags))))
+      (inputs
+       (modify-inputs (package-inputs emacs-next-tree-sitter)
+		      (prepend gsettings-desktop-schemas webkitgtk-with-libsoup2)))
+      (synopsis "Emacs text editor with @code{tree-sitter} support")
+      (description "This Emacs build supports tree-sitter."))))
 
 (define-public emacs-tabspaces
   (package

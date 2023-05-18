@@ -860,13 +860,12 @@
 			   (end-date (nth 1 (nth 1 matches)))
 			   (extra (cfw:org-tp text 'extra)))
 		      (if (string-match "(\\([0-9]+\\)/\\([0-9]+\\)): " extra)
-			  ( list( calendar-gregorian-from-absolute
-				  (time-to-days
-				   (org-read-date nil t start-date))
-				  )
-			    (calendar-gregorian-from-absolute
-			     (time-to-days
-			      (org-read-date nil t end-date))) text))))))
+			  (list( calendar-gregorian-from-absolute
+				 (time-to-days
+				  (org-read-date nil t start-date)))
+			       (calendar-gregorian-from-absolute
+				(time-to-days
+				 (org-read-date nil t end-date))) text))))))
 	   
 	   (setq org-tags-column 0
 		 org-image-actual-width nil)
@@ -933,11 +932,11 @@
 			 ad-do-it))
 		 ad-do-it))
 	   (ad-activate 'org-agenda-add-time-grid-maybe)
+	   (setq org-confirm-babel-evaluate nil)
 	   (setq org-startup-with-latex-preview t)
 	   (setq org-preview-latex-default-process 'dvisvgm)
 	   (add-hook 'org-mode-hook 'org-fragtog-mode)
 	   (add-hook 'org-mode-hook 'flyspell-mode)
-	   (setq org-confirm-babel-evaluate nil)
 	   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 	   (add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
 	   (setq python-indent-guess-indent-offset-verbose nil)
@@ -998,14 +997,13 @@
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
-	      ((options->transformation		
-		'(#;(with-git-url . "emacs-jupyter=https://github.com/tgbugs/emacs-jupyter.git")
-		  (with-branch . "emacs-jupyter=master")))
-	       (specification->package "emacs-jupyter"))
+	      
 	      (specification->package "python-lsp-server")
-					;(specification->package "tree-sitter")
-					;(specification->package "tree-sitter-python")
+	      (specification->package "tree-sitter")
+	      (specification->package "tree-sitter-python")
+
 	      (specification->package "emacs-csv-mode")
+	      (specification->package "emacs-ein")	      
 	      (specification->package "emacs-py-isort")
 	      emacs-py-autopep8
 
@@ -1023,7 +1021,6 @@
 	   (setq python-interpreter "python3")
 	   (setq python-shell-interpreter "python3")
 	   (setq treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
-					;(setq python-shell-interpreter-args "--simple-prompt") ;
 	   (add-hook 'python-mode-hook (function run-python))
 	   (add-hook 'python-mode-hook (function py-autopep8-mode))
 	   (add-hook 'python-mode-hook (function eglot-ensure))
@@ -1031,14 +1028,8 @@
 								    (python . t)
 								    (sql . t)
 								    (eshell . t)
-					;(R . t)
-								    (shell . t)
-					;(jupyter . t)
-								    ))
-	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
-	   #;(org-babel-jupyter-override-src-block "python3")
-	   #;(defun jupyter-ansi-color-apply-on-region (begin end)
-	   (ansi-color-apply-on-region begin end t))))
+								    (shell . t)))
+	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))))
    (early-init '())))
 
 (define lisp-configuration
@@ -1163,6 +1154,7 @@
 	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
 	      (specification->package "ungoogled-chromium")
+	      (specification->package "ublock-origin-chromium")
 	      (specification->package "ublock-origin-chromium")
 	      (specification->package "emacs-xelb")
 	      (specification->package "picom")
