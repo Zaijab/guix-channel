@@ -158,7 +158,12 @@
       (arguments
        (substitute-keyword-arguments (package-arguments emacs-next-tree-sitter)
 	 ((#:configure-flags flags #~'())
-          #~(cons "--with-xwidgets" #$flags))))
+          #~(cons "--with-xwidgets" #$flags))
+	 ((#:modules _) (%emacs-modules build-system))
+	 ((#:phases phases)
+          #~(modify-phases #$phases
+              (delete 'restore-emacs-pdmp)
+              (delete 'strip-double-wrap)))))
       (inputs
        (modify-inputs (package-inputs emacs-next-tree-sitter)
 		      (prepend gsettings-desktop-schemas webkitgtk-with-libsoup2)))
