@@ -19,4 +19,4 @@ gsystem:
 	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades
 
 zjabbar:
-	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades
+	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm -v 4 --allow-downgrades
