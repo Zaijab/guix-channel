@@ -1003,7 +1003,8 @@
 	      (specification->package "tree-sitter-python")
 
 	      (specification->package "emacs-csv-mode")
-	      (specification->package "emacs-ein")	      
+	      ((options->transformation '((with-branch . "emacs-ein=master")))
+	       (specification->package "emacs-ein"))
 	      (specification->package "emacs-py-isort")
 	      emacs-py-autopep8
 
