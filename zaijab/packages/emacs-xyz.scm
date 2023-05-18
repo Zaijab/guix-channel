@@ -4,6 +4,7 @@
   #:use-module (gnu packages emacs)
   #:use-module (guix download)
   #:use-module (guix git-download)
+  #:use-module (guix build-system)
   #:use-module (guix build-system emacs)
   #:use-module (gnu packages video)
   #:use-module (gnu packages curl)
