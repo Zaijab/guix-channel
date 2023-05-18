@@ -138,6 +138,13 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
 
+(define (%emacs-modules build-system)
+  (let ((which (build-system-name build-system)))
+    `((guix build ,(symbol-append which '-build-system))
+      (guix build utils)
+      (srfi srfi-1)
+      (ice-9 ftw))))
+
 (define-public emacs-next-tree-sitter-xwidgets
   (let ((commit "ac7ec87a7a0db887e4ae7fe9005aea517958b778")
         (revision "0"))
