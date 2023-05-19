@@ -1017,18 +1017,20 @@
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
 	      ))
-   (init '((require 'ein)
-	   (require 'ein-notebook)
-					;(require 'ein-subpackages)
-	   (setq org-babel-python-command "python3")
-	   (setq python-interpreter "python3")
-	   (setq python-shell-interpreter "python3")
-	   (setq treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
+   (init '((require 'ob-ipython)
+	   
+	   (setq org-babel-python-command "python3"
+		 python-interpreter "python3"
+		 python-shell-interpreter "python3"
+		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
+	   
 	   (add-hook 'python-mode-hook (function run-python))
 	   (add-hook 'python-mode-hook (function py-autopep8-mode))
 	   (add-hook 'python-mode-hook (function eglot-ensure))
+	   
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
+								    (ipython . t)
 								    (sql . t)
 								    (eshell . t)
 								    (shell . t)
