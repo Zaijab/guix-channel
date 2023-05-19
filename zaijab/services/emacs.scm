@@ -1016,9 +1016,7 @@
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
 	      ))
-   (init '((require 'ob-ipython)
-	   
-	   (setq org-babel-python-command "python3"
+   (init '((setq org-babel-python-command "python3"
 		 python-interpreter "python3"
 		 python-shell-interpreter "python3"
 		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
@@ -1029,7 +1027,6 @@
 	   
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
-								    (ipython . t)
 								    (sql . t)
 								    (eshell . t)
 								    (shell . t)))
