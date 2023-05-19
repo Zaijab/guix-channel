@@ -1033,8 +1033,7 @@
 								    (ipython . t)
 								    (sql . t)
 								    (eshell . t)
-								    (shell . t)
-								    (ein . t)))
+								    (shell . t)))
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))))
    (early-init '())))
 
