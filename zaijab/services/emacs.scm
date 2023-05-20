@@ -1046,7 +1046,7 @@
 		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
 	   
 	   (add-hook 'python-mode-hook (function run-python))
-	   (add-hook 'python-mode-hook (function py-autopep8-mode))
+	   (add-hook 'python-mode-hook (function python-black-on-save-mode))
 	   (add-hook 'python-mode-hook (function eglot-ensure))
 	   
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
