@@ -170,6 +170,32 @@
 ;; 	    :preview-key '(:debounce 0.4 any))
 
 ;; 	   (setq consult-narrow-key "<")))))
+(define buffer-configuration
+  (home-emacs-configuration
+   (packages (list emacs-tabspaces))
+   (init '((use-package tabspaces
+			:hook (after-init . tabspaces-mode) 
+			:commands (tabspaces-switch-or-create-workspace
+				   tabspaces-open-or-create-project-and-workspace)
+			:custom
+			(tabspaces-use-filtered-buffers-as-default t)
+			(tabspaces-default-tab "Default")
+			(tabspaces-remove-to-default t)
+			(tabspaces-include-buffers '("*scratch*"))
+			(tab-bar-new-tab-choice "*scratch*")
+			;; sessions
+			(tabspaces-session t)
+			(tabspaces-session-auto-restore t))
+
+	   ))
+   (early-init '((setq desktop-restore-frames nil
+		       desktop-restore-in-current-display nil)
+		 (setq switch-to-buffer-obey-display-actions t)
+		 (defun mp-toggle-window-dedication ()
+		   "Toggles window dedication in the selected window."
+		   (interactive)
+		   (set-window-dedicated-p (selected-window)
+					   (not (window-dedicated-p (selected-window)))))))))
 
 (define meow-configuration
   (home-emacs-configuration
@@ -263,12 +289,6 @@
 	   (require 'meow)
 	   (meow-setup)
 	   (meow-global-mode 1)))))
-
-;; (define polymode-configuration
-;;   (home-emacs-configuration
-;;    (packages (list (specification->package "emacs-polymode")
-;; 		   (specification->package "emacs-polymode-org")))
-;;    (init '(()))))
 
 (define undo-configuration
   (home-emacs-configuration
@@ -465,7 +485,7 @@
    (packages (list
 	      (specification->package "alsa-utils")
 	      (specification->package "pavucontrol")
-					;(specification->package "qpwgraph")
+	      (specification->package "ffmpeg")
 	      (specification->package "emacs-alsamixer-el")
 	      (specification->package "emacs-bluetooth")
 	      (specification->package "emacs-emms")))
@@ -473,6 +493,7 @@
 	   (emms-all)
 	   (setq emms-player-list '(emms-player-mpv)
 		 emms-info-functions '(emms-info-native))
+
 	   (defvar emms-player-mpv-volume 100)
 	   (defun emms-player-mpv-get-volume ()
 	     (emms-player-mpv-cmd '(get_property volume)
@@ -497,6 +518,7 @@
 	     (emms-player-mpv-get-volume))
 	   (emms-add-directory-tree "~/music/piano")
 	   (emms-shuffle)
+
 	   (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
 	   (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
 	   (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
@@ -1005,7 +1027,8 @@
 
 	      (specification->package "emacs-csv-mode")
 	      (specification->package "emacs-py-isort")
-	      emacs-py-autopep8
+	      (specification->package "emacs-python-black")
+	      
 
 	      (specification->package "pandoc")
 
@@ -1377,32 +1400,6 @@
 	   (global-rainbow-delimiters-mode)
 	   (which-key-mode)))))
 
-(define buffer-configuration
-  (home-emacs-configuration
-   (packages (list emacs-tabspaces))
-   (init '((use-package tabspaces
-			:hook (after-init . tabspaces-mode) 
-			:commands (tabspaces-switch-or-create-workspace
-				   tabspaces-open-or-create-project-and-workspace)
-			:custom
-			(tabspaces-use-filtered-buffers-as-default t)
-			(tabspaces-default-tab "Default")
-			(tabspaces-remove-to-default t)
-			(tabspaces-include-buffers '("*scratch*"))
-			(tab-bar-new-tab-choice "*scratch*")
-			;; sessions
-			(tabspaces-session t)
-			(tabspaces-session-auto-restore t))
-
-	   ))
-   (early-init '((setq desktop-restore-frames nil
-		       desktop-restore-in-current-display nil)
-		 (setq switch-to-buffer-obey-display-actions t)
-		 (defun mp-toggle-window-dedication ()
-		   "Toggles window dedication in the selected window."
-		   (interactive)
-		   (set-window-dedicated-p (selected-window)
-					   (not (window-dedicated-p (selected-window)))))))))
 
 ;;; Combine all Emacs-Configurations within module
 
