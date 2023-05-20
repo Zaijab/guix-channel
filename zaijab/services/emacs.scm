@@ -73,13 +73,6 @@
    (early-init '())
    (init '((defun reload-init () (interactive) (load "~/code/guix-channel/zaijab/files/init.el"))))))
 
-(define package-configuration
-  (home-emacs-configuration
-   (packages (list emacs-system-packages))
-   (early-init '())
-   (init '())))
-
-
 ;; Completions
 
 (define orderless-configuration
@@ -1064,7 +1057,7 @@
 	      ((options->transformation '((with-branch . "emacs-guix=master")))
 	       (specification->package "emacs-guix"))
 	      (specification->package "emacs-debbugs")
-	      ;(specification->package "tree-sitter-scheme")
+	      (specification->package "tree-sitter-scheme")
 	      (specification->package "emacs-srfi")
 	      (specification->package "emacs-geiser-guile")
 	      (specification->package "guile-chickadee")))
@@ -1166,8 +1159,7 @@
 		    (sql-server "localhost")
 		    (sql-user "zain")
 		    (sql-database "zain")
-		    (sql-port 5432))))
-	   ))))
+		    (sql-port 5432))))))))
 
 
 
@@ -1215,7 +1207,6 @@
 	   (global-set-key (kbd "s-f") 'exwm-floating-toggle-floating)
 	   (global-set-key (kbd "s-<tab>") 'switch-to-buffer)
 	   (global-set-key (kbd "s-<escape>") 'execute-extended-command)
-	   (global-set-key (kbd "<escape>") 'xah-fly-command-mode-activate)
 	   (global-set-key (kbd "s-`") 'eshell-command)
 	   (global-set-key (kbd "s-c") (function
 					(lambda () (interactive)
