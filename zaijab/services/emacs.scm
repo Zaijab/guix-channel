@@ -670,7 +670,7 @@
 	   (add-hook 'org-fc-before-review-hook
 		     (lambda ()
 		       (setq org-roam-buffer-prepare-hook nil)
-		       (setq +org-roam-open-buffer-on-find-file nil)))
+		       (setq my/org-roam-open-buffer-on-find-file nil)))
 
 	   (defun my/enable-org-roam-buf ()
 	     (setq org-roam-buffer-prepare-hook
@@ -678,7 +678,7 @@
 		     org-roam-buffer--insert-title
 		     org-roam-buffer--insert-backlinks
 		     org-roam-buffer--insert-ref-links))
-	     (setq +org-roam-open-buffer-on-find-file t))
+	     (setq my/org-roam-open-buffer-on-find-file t))
 	   (add-hook 'org-fc-after-review-hook (function my/enable-org-roam-buf))
 
 	   (defun jisho-word->japanese-part (jisho-word)
@@ -768,7 +768,7 @@ Processes all holes in the card text."
 	   (defun org-fc-type-cloze-update ()
 	     "Update the review data & deletions of the current heading."
 	     (let* ((end (org-fc-type-cloze--end))
-		    (hole-id (1+ (org-fc-type-cloze-max-hole-id)))
+		    (hole-id (+ 1 (org-fc-type-cloze-max-hole-id)))
 		    ids)
 	       (save-excursion
 		(while (re-search-forward org-fc-type-cloze-hole-re end t)
@@ -785,7 +785,7 @@ Processes all holes in the card text."
 		    (push (format "%s" id) ids))))
 	       (org-set-property
 		org-fc-type-cloze-max-hole-property
-		(format "%s" (1- hole-id)))
+		(format "%s" (- hole-id 1)))
 	       (org-fc-review-data-update (reverse ids))))
 
 	   (org-fc-register-type
