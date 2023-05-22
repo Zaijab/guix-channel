@@ -327,50 +327,7 @@
 		   (specification->package "font-ipa-mj-mincho")
 		   (specification->package "font-iosevka")
 		   font-microsoft-couirer-new))
-   (init '((require 'facemenu)           
-	   (defun jisho-word->japanese-part (jisho-word)
-	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
-		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))
-	   (defun jisho-word->english-part (jisho-word)
-	     (gethash "english_definitions" (elt (gethash "senses" jisho-word) 0)))
-	   (defun kanji-word->drill (word)
-	     (apply 'format "%s :fc:Japanese:\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n** Kanji\n%s [%s]\n** English\n%s\n" (cons (car word) word)))
-	   (defun kana-word->drill (word)
-	     (apply 'format "%s :fc:Japanese:\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n** Kana\n%s\n** English\n%s\n" (cons (car word) word)))
-	   (defun word->drill (word)
-	     (if (car word)
-		 (kanji-word->drill word)
-		 (kana-word->drill (cdr word))))
-	   (defun my-presorted-completion-table (completions)
-	     (lambda (string pred action)
-	       (if (eq action 'metadata)
-		   `(metadata (display-sort-function . ,(function identity)))
-		   (complete-with-action action completions string pred))))
-	   (defvar *jisho-results* ())
-	   (defun jisho-search->completing-read ()
-	     (interactive)
-	     (let* ((search-term (read-string "Search JISHO: "))
-		    (url (concat "https://www.jisho.org/api/v1/search/words?keyword=" search-term)) ; Get correct URL to access Jisho API ; ; ;
-		    ;; Get JSON File from URL
-		    (contents (with-temp-buffer
-			       (url-insert-file-contents url)
-			       (json-parse-buffer :array-type 'list)))
-		    ;; JSON File contains metadata on status, then a list of words
-		    (status (gethash "meta" contents))
-		    (words (gethash "data" contents))
-		    ;; We will iterate over all words via word, and return a certain list in results
-		    (word)
-		    (vertico-sort-override-function (function identity)))
-	       ;; Build Results
-	       (setq *jisho-results* ())
-	       (while words
-		 (setq word (car words))
-		 (setq total-word (append (jisho-word->japanese-part word) (jisho-word->english-part word)))
-		 (setq *jisho-results* (append *jisho-results* (list (cons (string-join total-word " ") total-word))))
-		 (setq words (cdr words)))
-	       (alist-get
-		(completing-read "Results: " *jisho-results*)
-		*jisho-results* nil nil 'equal)))))))
+   (init '((require 'facemenu)))))
 
 (define garbage-configuration
   (home-emacs-configuration
