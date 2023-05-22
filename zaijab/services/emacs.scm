@@ -800,7 +800,7 @@ Processes all holes in the card text."
 	     "Hide holes of a card of TYPE in relation to POSITION."
 	     (org-fc-with-point-at-entry
 	      (let* ((type (intern (org-entry-get (point) org-fc-type-cloze-type-property)))
-		     (end (1+ (org-fc-type-cloze--end)))
+		     (end (+ 1 (org-fc-type-cloze--end)))
 		     (holes-index (org-fc-type-cloze--parse-holes position end))
 		     (holes (car holes-index))
 		     (current-index (cdr holes-index)))
