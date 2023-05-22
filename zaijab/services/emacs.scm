@@ -679,7 +679,7 @@
 		     org-roam-buffer--insert-backlinks
 		     org-roam-buffer--insert-ref-links))
 	     (setq +org-roam-open-buffer-on-find-file t))
-	   (add-hook 'org-fc-after-review-hook #'my/enable-org-roam-buf)
+	   (add-hook 'org-fc-after-review-hook (function my/enable-org-roam-buf))
 
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
