@@ -689,6 +689,60 @@
 	   (defun kana-word->drill (word)
 	     (apply 'format "{{%s}} :Japanese:\n{{%s}}\n" word))
 
+	   (defvar cram-mode nil)
+
+	   (defun org-fc-review-cram (context)
+	     "Start a review session for all cards in CONTEXT.
+Called interactively, prompt for the context.
+Valid contexts:
+- 'all, all cards in `org-fc-directories'
+- 'buffer, all cards in the current buffer
+- a list of paths"
+	     (interactive (list (org-fc-select-context)))
+	     (setq cram-mode t)
+	     (if org-fc-review--session
+		 (when (yes-or-no-p "Flashcards are already being reviewed. Resume? ")
+		   (org-fc-review-resume))
+		 (let* ((index (org-fc-index context))
+			(cards index))
+		   (if org-fc-shuffle-positions
+		       (setq cards (org-fc-index-shuffled-positions cards))
+		       (setq cards (org-fc-index-positions cards)))
+		   (if (null cards)
+		       (message "No cards due right now")
+		       (progn
+			(setq org-fc-review--session
+			      (org-fc-make-review-session cards))
+			(run-hooks 'org-fc-before-review-hook)
+			(org-fc-review-next-card)))))
+	     (setq cram-mode nil))
+	   (defun org-fc-review-rate (rating)
+	     "Rate the card at point with RATING."
+	     (interactive)
+	     (condition-case err
+			     (org-fc-review-with-current-item card
+							      (let* ((path (plist-get card :path))
+								     (id (plist-get card :id))
+								     (position (plist-get card :position))
+								     (now (time-to-seconds (current-time)))
+								     (delta (- now org-fc-review--timestamp)))
+								(org-fc-review-add-rating org-fc-review--session rating)
+								(if cram-mode
+								    (org-fc-review-update-data path id position rating delta))
+								(org-fc-review-reset)
+
+								(if (and (eq rating 'again) org-fc-append-failed-cards)
+								    (with-slots (cards) org-fc-review--session
+										(setf cards (append cards (list card)))))
+
+								(save-buffer)
+								(if org-fc-reviewing-existing-buffer
+								    (org-fc-review-reset)
+								    (kill-buffer))
+								(org-fc-review-next-card)))
+			     (error
+			      (org-fc-review-quit)
+			      (signal (car err) (cdr err)))))
 	   (defun org-fc-type-cloze-single-complement-init (type)
 	     "Initialize the current heading for use as a cloze card of subtype TYPE.
 Processes all holes in the card text."
