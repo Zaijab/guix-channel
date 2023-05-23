@@ -468,6 +468,7 @@
 	     (emms-player-mpv-get-volume))
 	   (emms-add-directory-tree "~/music/piano")
 	   (emms-shuffle)
+	   (emms-player-mpv-lower-volume 30)
 
 	   (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
 	   (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
@@ -1050,7 +1051,7 @@ Processes all holes in the card text."
 	     (calendar-gregorian-from-absolute
 	      (- (calendar-absolute-from-gregorian date) num)))
 	   
-	   (setq calfw-blocks-lines-per-hour 6
+	   (setq calfw-blocks-lines-per-hour 3
 		 calfw-blocks-min-block-width 1
 		 calfw-blocks-earliest-visible-time '(6 0))
 	   (setq org-agenda-show-log-scoped t)
