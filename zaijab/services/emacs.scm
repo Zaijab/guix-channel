@@ -25,8 +25,8 @@
    (file-like (specification->package "emacs-next"))
    "The Emacs package to use.")
   (packages
-   (file-likes '())
-   "The packages this configuration will add to home-profile.
+   (file-likes '()))
+  "The packages this configuration will add to home-profile.
     Usually these will be emacs-* packages.)"
   (early-init
    (list '())
