@@ -27,7 +27,7 @@
   (packages
    (file-likes '())
    "The packages this configuration will add to home-profile.
-    Usually these will be emacs-* packages.")
+    Usually these will be emacs-* packages.)"
   (early-init
    (list '())
    "A list whose contents will inserted into @file{$XDG_CONFIG_HOME/emacs/early-init.el}")
