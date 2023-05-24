@@ -620,12 +620,6 @@
 	   (setq org-roam-capture-templates
 		 '(("i" "Default" plain "%?"
 		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-		    :unnarrowed t)
-		   ("j" "Japanese" entry "* %(word->drill (jisho-search->completing-read))"
-		    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "\n")
-		    :unnarrowed t)
-		   ("d" "Drill" entry "* TITLE\n:PROPERTIES:\n:DRILL_CARD_TYPE: twosided\n:END:\n\n** \n\n** \n\n"
-		    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "\n")
 		    :unnarrowed t)))
 	   (require 'org-fc)
 	   (setq org-fc-directories '("~/notes/"))
@@ -653,6 +647,10 @@
 	   (defun word->drill (word)
 	     (if (car word)
 		 (kanji-word->drill word)
+		 (kana-word->drill (cdr word))))
+	   (defun simple-word->drill (word)
+	     (if (car word)
+		 (simple-kanji-word->drill word)
 		 (kana-word->drill (cdr word))))
 
 	   (defun my-presorted-completion-table (completions)
@@ -693,6 +691,9 @@
 
 	   (defun kana-word->drill (word)
 	     (apply 'format "{{%s}} :Japanese:\n{{%s}}\n" word))
+	   
+	   (defun simple-kanji-word->drill (word)
+	     (apply 'format "%s :Japanese:\n{{%s}} {{%s}}\n" word))
 
 	   (defvar cram-mode nil)
 
@@ -879,8 +880,14 @@ Processes all holes in the card text."
 				 (end-of-buffer)
 				 (insert (concat "* " (word->drill (jisho-search->completing-read))))
 				 (org-fc-type-cloze-init 'single)))
+	   (defun simple-jisho->fc ()
+	     (interactive)
+	     (org-roam-with-file "~/notes/20211210212624-japanese.org" t
+				 (end-of-buffer)
+				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read))))
+				 (org-fc-type-cloze-init 'single)))
 
-	   (global-set-key (kbd "s-i") (function org-roam-capture))))))
+	   (global-set-key (kbd "s-i") (function simple-jisho->fc))))))
 
 (define website-configuration
   (home-emacs-configuration
