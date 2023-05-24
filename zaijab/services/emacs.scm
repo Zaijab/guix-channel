@@ -337,7 +337,8 @@
 
 (define eww-configuration
   (home-emacs-configuration
-   (init '((setq browse-url-browser-function 'eww-browse-url)
+   (init '((require 'xwidget)
+	   (setq browse-url-browser-function 'eww-browse-url)
 	   (define-key xwidget-webkit-edit-mode-map (kbd "<escape>") (function xwidget-webkit-edit-mode))
 	   (add-hook 'xwidget-webkit-mode-hook (lambda () (interactive) (meow-mode -1)))
 	   (setq eww-search-prefix "http://127.0.0.1:8888/search?q=")))))
