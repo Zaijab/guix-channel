@@ -337,6 +337,7 @@
 
 (define eww-configuration
   (home-emacs-configuration
+   (packages (list emacs-xwwp))
    (init '((require 'xwidget)
 	   (setq browse-url-browser-function 'eww-browse-url)
 	   (define-key xwidget-webkit-edit-mode-map (kbd "<escape>") (function xwidget-webkit-edit-mode))
