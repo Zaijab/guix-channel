@@ -887,7 +887,8 @@ Processes all holes in the card text."
 				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read))))
 				 (org-fc-type-cloze-init 'single)))
 
-	   (global-set-key (kbd "s-i") (function simple-jisho->fc))))))
+	   (global-set-key (kbd "s-i") (function simple-jisho->fc))
+	   ))))
 
 (define website-configuration
   (home-emacs-configuration

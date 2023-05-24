@@ -179,6 +179,29 @@
       (synopsis "Emacs text editor with @code{tree-sitter} support")
       (description "This Emacs build supports tree-sitter."))))
 
+(define-public emacs-xwwp
+  (package
+    ((name "emacs-xwwp")
+     (version "20200917.643")
+     (source (origin
+               (method git-fetch)
+               (uri (git-reference
+                     (url "https://github.com/canatella/xwwp.git")
+                     (commit "f67e070a6e1b233e60274deb717274b000923231")))
+               (sha256 (base32
+			"1ikhgi3gc86w7y3cjmw875c8ccsmj22yn1zm3abprdzbjqlyzhhg"))))
+     (build-system emacs-build-system)
+     (arguments '(#:include '("^xwwp.el$" "^xwwp-follow-link.el$"
+                              "^xwwp-follow-link-ido.el$")
+                  #:exclude '()))
+     (home-page "https://github.com/canatella/xwwp")
+     (synopsis "Enhance xwidget webkit browser")
+     (description
+      "This package provides the common functionnality for other xwidget webkit plus
+packages.  It provides the customize group and a framework to inject css and
+javascript functions into an `xwidget-webkit session.")
+     (license #f))))
+
 (define-public emacs-tabspaces
   (package
     (name "emacs-tabspaces")
