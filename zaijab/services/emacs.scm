@@ -341,7 +341,14 @@
    (init '((require 'xwidget)
 	   (setq browse-url-browser-function 'eww-browse-url)
 	   (define-key xwidget-webkit-edit-mode-map (kbd "<escape>") (function xwidget-webkit-edit-mode))
-	   (add-hook 'xwidget-webkit-mode-hook (lambda () (interactive) (meow-mode -1)))
+	   (define-key xwidget-webkit-mode-map (kbd "f") (function xwwp-follow-link))
+	   (define-key xwidget-webkit-mode-map (kbd "F") (function xwwp-browse-url-other-window))
+	   (define-key xwidget-webkit-mode-map (kbd "L") (function xwidget-webkit-forward))
+	   (define-key xwidget-webkit-mode-map (kbd "H") (function xwidget-webkit-back))
+	   (define-key xwidget-webkit-mode-map (kbd "i") (function xwidget-webkit-edit-mode))
+
+	   (add-hook 'xwidget-webkit-edit-mode-hook (lambda () (interactive) (meow-mode 'toggle)))
+
 	   (setq eww-search-prefix "http://127.0.0.1:8888/search?q=")))))
 
 (define pdf-tools-configuration
