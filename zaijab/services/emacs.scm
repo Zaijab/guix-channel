@@ -365,7 +365,9 @@
 		   (specification->package "gnupg")
 		   (specification->package "openssh")
 		   (specification->package "openconnect")))
-   (init '((pinentry-start)))))
+   (init '((defun pinentry-reload () (interactive)
+	     (shell-command "echo RELOADAGENT | gpg-connect-agent"))
+	   (pinentry-start)))))
 
 (define elfeed-configuration
   (home-emacs-configuration
