@@ -5,7 +5,9 @@
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu services)
   #:use-module (gnu packages)
+  #:use-module (gnu packages gnupg)
   #:use-module (gnu home services shells)
+  #:use-module (gnu home services gnupg)
   #:use-module (gnu home services shepherd)
   #:use-module (gnu home services desktop)
   #:use-module (guix gexp)
@@ -19,7 +21,6 @@
    (packages (list (specification->package "xmodmap")
 		   (specification->package "unzip") 
                    (specification->package "xset")
-		   ;(specification->package "jami")
                    (specification->package "font-iosevka")))
    (services
     (list
@@ -46,21 +47,28 @@
                 (list
                  (mixed-text-file "profile.sh"
                                   "xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'\n"
-                                  "unset SSH_AGENT_PID\nif [ \"${gnupg_SSH_AUTH_SOCK_by:-0}\" -ne $$ ];"
-                                  " then\nexport SSH_AUTH_SOCK=\"$(gpgconf --list-dirs agent-ssh-socket)\"\nfi\n"
-                                  "export GPG_TTY=$(tty)\ngpg-connect-agent updatestartuptty /bye >/dev/null\n"
+                                  ;; "unset SSH_AGENT_PID\nif [ \"${gnupg_SSH_AUTH_SOCK_by:-0}\" -ne $$ ];"
+                                  ;; " then\nexport SSH_AUTH_SOCK=\"$(gpgconf --list-dirs agent-ssh-socket)\"\nfi\n"
+                                  ;; "export GPG_TTY=$(tty)\ngpg-connect-agent updatestartuptty /bye >/dev/null\n"
                                   "export HOSTNAME\n"
                                   "eval \"$(direnv hook bash)\"\n"
-				  "source /run/current-system/profile/etc/profile.d/nix.sh")))
+				  
+				  )))
 	       (bashrc
 		(list
 		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
-				  "source /run/current-system/profile/etc/profile.d/nix.sh")))))
+				  )))))
      (service home-emacs-service-type home-emacs-total-configuration)
      (service home-searx-service-type)
      (service home-pipewire-service-type)
      (service home-dbus-service-type)
+     (service home-gpg-agent-service-type
+              (home-gpg-agent-configuration
+               (pinentry-program
+                (file-append pinentry-emacs "/bin/pinentry-emacs"))
+               (ssh-support? #t)))
+
      (simple-service 'dotfiles
                      home-files-service-type
                      `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))

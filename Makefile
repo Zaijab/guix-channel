@@ -1,4 +1,4 @@
-all: gnew gpull gpackage gsystem zjabbar
+all: gpull gpackage gsystem zjabbar
 
 gc:
 	guix gc -d 1m

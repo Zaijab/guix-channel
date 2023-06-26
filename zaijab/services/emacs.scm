@@ -367,7 +367,8 @@
 		   (specification->package "openconnect")))
    (init '((defun pinentry-reload () (interactive)
 	     (shell-command "gpg-connect-agent reloadagent /bye"))
-	   (agent-start)))))
+	   ;(agent-start)
+	   ))))
 
 (define elfeed-configuration
   (home-emacs-configuration

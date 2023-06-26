@@ -25,7 +25,6 @@
   #:use-module (gnu services virtualization)
   #:use-module (gnu services vpn)
   #:use-module (gnu services mail)
-  #:use-module (gnu services nix)
   #:use-module (gnu services networking)
   #:use-module (gnu services syncthing)
   #:use-module (gnu services ssh)
@@ -61,7 +60,6 @@
 	       (specification->package "nss-certs")
 	       (specification->package "pulseaudio")
 	       (specification->package "network-manager-applet")
-	       (specification->package "nix")
 	       (specification->package "searx") 
 	       (specification->package "gsettings-desktop-schemas")
 	       ((options->transformation
