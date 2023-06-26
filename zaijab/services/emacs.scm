@@ -1617,6 +1617,7 @@ Processes all holes in the card text."
 	   (tab-bar-mode)
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
+	   (display-battery-mode)
 	   (setq battery-mode-line-limit 97)
 	   (customize-set-variable 'tab-bar-format
 				   '(tab-bar-format-history
