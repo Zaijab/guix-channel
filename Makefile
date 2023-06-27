@@ -20,3 +20,6 @@ gsystem:
 
 zjabbar:
 	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades
+
+init:
+	mkdir ~/.mail/zaijab2000

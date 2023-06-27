@@ -122,7 +122,7 @@
 	   (add-hook 'text-mode-hook 'tempel-setup-capf)
 	   (define-key tempel-map (kbd "C-a") (function tempel-prev))
 	   (define-key tempel-map (kbd "C-d") (function tempel-next))
-	   (define-key tempel-map (kbd "M-+") (function tempel-complete))
+	   (global-set-key (kbd "M-+") (function tempel-complete))
 	   ))))
 
 (define cape-configuration
@@ -369,7 +369,7 @@
 		   (specification->package "openconnect")))
    (init '((defun pinentry-reload () (interactive)
 	     (shell-command "gpg-connect-agent reloadagent /bye"))
-	   ;(agent-start)
+	   (pinentry-start)
 	   ))))
 
 (define elfeed-configuration
@@ -1617,7 +1617,6 @@ Processes all holes in the card text."
 	   (tab-bar-mode)
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
-	   (display-battery-mode)
 	   (setq battery-mode-line-limit 97)
 	   (customize-set-variable 'tab-bar-format
 				   '(tab-bar-format-history
