@@ -11,7 +11,6 @@ org-mode
 (itemize "\\begin{itemize}\n\\item " r> n> "\\end{itemize}")
 (def "#+BEGIN_DEFINITION" p n> r> n> "#+END_DEFINITION")
 (thm "#+BEGIN_THEOREM" p n> r> n> "#+END_THEOREM")
-(lemma "#+BEGIN_LEMMA" p n> r> n> "#+END_LEMMA")
 (proof "#+BEGIN_PROOF" p n> r> n> "#+END_PROOF")
 (frac "\\frac{" p "}{" q "}" p)
 (pdiff "\\frac{ \\partial " p "}{ \\partial " q "}" p)
