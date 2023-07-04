@@ -1026,6 +1026,7 @@ Processes all holes in the card text."
 			      "20230225143306-posts.org"
 			      "20230225142818-notation.org"
 			      "20230225142533-category_theory.org"
+			      "20230523124504-applied_qualifying_exam.org"
 			      "20230222104410-time_series_prediction.org") 
 		    :with-toc nil
 		    :exclude-tags ("draft")
@@ -1059,7 +1060,8 @@ Processes all holes in the card text."
 		    :base-extension any
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-publish-attachment)
-		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))))))
+		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
+	   ))))
 
 
 (define org-mode-configuration
