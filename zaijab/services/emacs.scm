@@ -1650,8 +1650,7 @@ Processes all holes in the card text."
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-					;(emacs (specification->package "emacs-next-tree-sitter"))
-				     (emacs emacs-next-tree-sitter-xwidgets)
+				     (emacs (specification->package "emacs-next-tree-sitter"))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
