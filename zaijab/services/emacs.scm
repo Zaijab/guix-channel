@@ -1523,7 +1523,7 @@ Processes all holes in the card text."
 							     f10
 							     f11
 							     f12
-							     escape
+							     ;escape
 							     XF86AudioRaiseVolume
 							     XF86AudioLowerVolume
 							     XF86AudioNext
