@@ -73,6 +73,15 @@
    (early-init '())
    (init '((defun reload-init () (interactive) (load "~/code/guix-channel/zaijab/files/init.el"))))))
 
+(define game-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "ppsspp")
+		   (specification->package "p7zip")
+		   ))
+					;(early-init '())
+					;(init '((defun reload-init () (interactive) (load "~/code/guix-channel/zaijab/files/init.el"))))
+   ))
+
 ;; Completions
 
 (define orderless-configuration
