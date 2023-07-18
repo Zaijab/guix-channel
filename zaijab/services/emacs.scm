@@ -1105,6 +1105,7 @@ Processes all holes in the card text."
 	   (setq calfw-blocks-lines-per-hour 3
 		 calfw-blocks-min-block-width 1
 		 calfw-blocks-earliest-visible-time '(6 0))
+	   (setq org-cycle-separator-lines 1)
 	   (setq org-agenda-show-log-scoped t)
 	   (setq org-agenda-prefix-format '((agenda  . "  • %?-12t% s")
 					    (timeline  . "  % s")
