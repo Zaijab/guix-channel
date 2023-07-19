@@ -1433,8 +1433,8 @@ Processes all holes in the card text."
 		'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
 	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
-	      (specification->package "ungoogled-chromium")
-	      (specification->package "ublock-origin-chromium")
+	      ;(specification->package "ungoogled-chromium")
+	      ;(specification->package "ublock-origin-chromium")
 	      (specification->package "glib-networking")
 	      (specification->package "emacs-xelb")
 	      (specification->package "picom")
