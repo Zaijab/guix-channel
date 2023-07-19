@@ -68,8 +68,7 @@
 
 (define proprietary-configuration
   (home-emacs-configuration
-   (packages (list zoom
-		   google-chrome-stable))
+   (packages (list zoom))
    (early-init '())
    (init '((defun reload-init () (interactive) (load "~/code/guix-channel/zaijab/files/init.el"))))))
 
@@ -1433,8 +1432,8 @@ Processes all holes in the card text."
 		'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
 	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
-	      ;(specification->package "ungoogled-chromium")
-	      ;(specification->package "ublock-origin-chromium")
+					;(specification->package "ungoogled-chromium")
+					;(specification->package "ublock-origin-chromium")
 	      (specification->package "glib-networking")
 	      (specification->package "emacs-xelb")
 	      (specification->package "picom")
@@ -1533,7 +1532,7 @@ Processes all holes in the card text."
 							     f10
 							     f11
 							     f12
-							     ;escape
+					;escape
 							     XF86AudioRaiseVolume
 							     XF86AudioLowerVolume
 							     XF86AudioNext
