@@ -1270,52 +1270,53 @@ Processes all holes in the card text."
 	   ))))
 
 
-(define python-configuration
-  (home-emacs-configuration
-   (packages (list
-	      (specification->package "python")
-	      (specification->package "jupyter")
-	      
-	      (specification->package "python-lsp-server")
-	      (specification->package "tree-sitter")
-	      (specification->package "tree-sitter-python")
+#;(define python-configuration
+   (home-emacs-configuration
+    (packages (list
+	       (specification->package "python")
+					;(specification->package "jupyter")
+	       
+	       (specification->package "python-lsp-server")
+	       (specification->package "tree-sitter")
+	       (specification->package "tree-sitter-python")
 
-	      (specification->package "emacs-csv-mode")
-	      (specification->package "emacs-py-isort")
-	      (specification->package "emacs-python-black")
-	      
+	       (specification->package "emacs-csv-mode")
+	       (specification->package "emacs-py-isort")
+	       (specification->package "emacs-python-black")
+	       
 
-	      (specification->package "pandoc")
+	       (specification->package "pandoc")
 
-	      (specification->package "python-sqlalchemy")
-	      (specification->package "python-cookiecutter")
-	      (specification->package "python-pandas")
-	      (specification->package "python-matplotlib")
-	      (specification->package "python-scipy")
-	      (specification->package "python-sympy")
-	      (specification->package "python-scikit-learn")
-	      ))
-   (init '((setq org-babel-python-command "python3"
-		 python-interpreter "python3"
-		 python-shell-interpreter "python3"
-		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
-	   
-	   (add-hook 'python-mode-hook (function run-python))
-	   (add-hook 'python-mode-hook (function python-black-on-save-mode))
-	   (add-hook 'python-mode-hook (function eglot-ensure))
-	   
-	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
-								    (python . t)
-								    (sql . t)
-								    (eshell . t)
-								    (shell . t)))
-	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))))
-   (early-init '())))
+	       (specification->package "python-sqlalchemy")
+	       (specification->package "python-cookiecutter")
+	       (specification->package "python-pandas")
+	       (specification->package "python-matplotlib")
+	       (specification->package "python-scipy")
+	       (specification->package "python-sympy")
+	       (specification->package "python-scikit-learn")
+	       ))
+    (init '((setq org-babel-python-command "python3"
+		  python-interpreter "python3"
+		  python-shell-interpreter "python3"
+		  treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
+	    
+	    (add-hook 'python-mode-hook (function run-python))
+	    (add-hook 'python-mode-hook (function python-black-on-save-mode))
+	    (add-hook 'python-mode-hook (function eglot-ensure))
+	    
+	    (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
+								     (python . t)
+								     (sql . t)
+								     (eshell . t)
+								     (shell . t)))
+	    (add-to-list 'org-src-lang-modes (cons "python3" 'python))))
+    (early-init '())))
 
 (define lisp-configuration
   (home-emacs-configuration
    (packages (list 
 	      (specification->package "sicp")
+	      (specification->package "xdot")
 	      ((options->transformation '((with-branch . "emacs-guix=master")))
 	       (specification->package "emacs-guix"))
 	      (specification->package "emacs-debbugs")
