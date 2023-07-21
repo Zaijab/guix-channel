@@ -1323,7 +1323,7 @@ Processes all holes in the card text."
 	      (specification->package "tree-sitter-scheme")
 	      (specification->package "emacs-srfi")
 	      (specification->package "emacs-geiser-guile")
-	      (specification->package "guile-chickadee")))
+	      ))
    (init '((require 'geiser-guile)
 	   (require 'guix)
 	   (setq geiser-default-implementation 'guile)
@@ -1338,92 +1338,91 @@ Processes all holes in the card text."
 	   (with-eval-after-load 'envrc
 				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
 
-(define sql-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-vterm")
-		   (specification->package "postgresql")
-		   (specification->package "sqls")))
-   (init '((defun toggle-uh-vpn ()
-	     (interactive)
-	     (if (equal "" (shell-command-to-string "nmcli -g GENERAL.STATE c s uhm_vpn"))
-		 (shell-command "nmcli connection up uhm_vpn")
-		 (shell-command "nmcli connection down uhm_vpn")))
+#;(define sql-configuration
+(home-emacs-configuration
+(packages (list (specification->package "emacs-vterm")
+(specification->package "postgresql")
+(specification->package "sqls")))
+(init '((defun toggle-uh-vpn ()
+(interactive)
+(if (equal "" (shell-command-to-string "nmcli -g GENERAL.STATE c s uhm_vpn"))
+(shell-command "nmcli connection up uhm_vpn")
+(shell-command "nmcli connection down uhm_vpn")))
 
-	   (require 'eglot)
-	   (add-to-list 'eglot-server-programs '(sql-mode . ("sqls")))
+(require 'eglot)
+(add-to-list 'eglot-server-programs '(sql-mode . ("sqls")))
 
-	   (setq eglot-sync-connect 1)
+(setq eglot-sync-connect 1)
 
-	   (add-to-list 'display-buffer-alist
-			'("\\*sqls\\*"
-			  (display-buffer-reuse-window display-buffer-at-bottom)
-			  (reusable-frames . visible)
-			  (window-height . 0.3)))
+(add-to-list 'display-buffer-alist
+'("\\*sqls\\*"
+(display-buffer-reuse-window display-buffer-at-bottom)
+(reusable-frames . visible)
+(window-height . 0.3)))
 
-	   (defclass eglot-sqls (eglot-lsp-server) () :documentation "SQL's Language Server")
-					;(add-to-list 'eglot-server-programs '(sql-mode . (eglot-sqls "sqls")))
-	   (cl-defmethod eglot-execute-command
-			 ((server eglot-sqls) (command (eql executeQuery)) arguments)
-			 "For executeQuery."
-			 ;; (ignore-errors
-			 (let* ((beg (eglot--pos-to-lsp-position (if (use-region-p) (region-beginning) (point-min))))
-				(end (eglot--pos-to-lsp-position (if (use-region-p) (region-end) (point-max))))
-				(res (jsonrpc-request server :workspace/executeCommand
-						      `(:command ,(format "%s" command) :arguments ,arguments
-							:timeout 0.5 :range (:start ,beg :end ,end))))
-				(buffer (generate-new-buffer "*sqls*")))
-			   (with-current-buffer buffer
-						(eglot--apply-text-edits `[
-									   (:range
-									    (:start
-									     (:line 0 :character 0)
-									     :end
-									     (:line 0 :character 0))
-									    :newText ,res)
-									   ]
-									 )
-						(org-mode))
-			   (pop-to-buffer buffer))
-			 )
-	   (cl-defmethod eglot-execute-command
-			 ((server eglot-sqls) (_cmd (eql switchDatabase)) arguments)
-			 "For switchDatabase."
-			 (let* ((res (jsonrpc-request server :workspace/executeCommand
-						      `(:command "showDatabases" :arguments ,arguments :timeout 0.5)))
-				(menu-items (split-string res "\n"))
-				(menu `("Eglot code actions:" ("dummy" ,@menu-items)))
-				(db (if (listp last-nonmenu-event)
-					(x-popup-menu last-nonmenu-event menu)
-					(completing-read "[eglot] Pick an database: "
-							 menu-items nil t
-							 nil nil (car menu-items))
-					))
-				)
-			   (jsonrpc-request server :workspace/executeCommand
-					    `(:command "switchDatabase" :arguments [,db] :timeout 0.5))))
-	   (setq sql-connection-alist
-		 '((uhm-campus-energy
-		    (sql-product 'postgres)
-		    (sql-default-directory "/ssh:zain@128.171.46.101:")
-		    (sql-server "localhost")
-		    (sql-user "zain")
-		    (sql-database "uhm2023")
-		    (sql-port 5432))
-		   (campus-energy-reader
-		    (sql-product 'postgres)
-		    (sql-default-directory "/ssh:zain@128.171.46.101:")
-		    (sql-server "localhost")
-		    (sql-user "uhm_campus_energy_reader")
-		    (sql-database "uhm2023")
-		    (sql-port 5432))
-		   (zain-campus-energy
-		    (sql-product 'postgres)
-		    (sql-default-directory "/ssh:zain@128.171.46.101:")
-		    (sql-server "localhost")
-		    (sql-user "zain")
-		    (sql-database "zain")
-		    (sql-port 5432))))))))
-
+(defclass eglot-sqls (eglot-lsp-server) () :documentation "SQL's Language Server")
+					;(add-to-list 'eglot-server-programs '(sql-mode . (eglot-sqls "sqls"))) ; ;
+(cl-defmethod eglot-execute-command
+((server eglot-sqls) (command (eql executeQuery)) arguments)
+"For executeQuery."
+;; (ignore-errors
+(let* ((beg (eglot--pos-to-lsp-position (if (use-region-p) (region-beginning) (point-min))))
+(end (eglot--pos-to-lsp-position (if (use-region-p) (region-end) (point-max))))
+(res (jsonrpc-request server :workspace/executeCommand
+`(:command ,(format "%s" command) :arguments ,arguments
+:timeout 0.5 :range (:start ,beg :end ,end))))
+(buffer (generate-new-buffer "*sqls*")))
+(with-current-buffer buffer
+(eglot--apply-text-edits `[
+(:range
+(:start
+(:line 0 :character 0)
+:end
+(:line 0 :character 0))
+:newText ,res)
+]
+)
+(org-mode))
+(pop-to-buffer buffer))
+)
+(cl-defmethod eglot-execute-command
+((server eglot-sqls) (_cmd (eql switchDatabase)) arguments)
+"For switchDatabase."
+(let* ((res (jsonrpc-request server :workspace/executeCommand
+`(:command "showDatabases" :arguments ,arguments :timeout 0.5)))
+(menu-items (split-string res "\n"))
+(menu `("Eglot code actions:" ("dummy" ,@menu-items)))
+(db (if (listp last-nonmenu-event)
+(x-popup-menu last-nonmenu-event menu)
+(completing-read "[eglot] Pick an database: "
+menu-items nil t
+nil nil (car menu-items))
+))
+)
+(jsonrpc-request server :workspace/executeCommand
+`(:command "switchDatabase" :arguments [,db] :timeout 0.5))))
+(setq sql-connection-alist
+'((uhm-campus-energy
+(sql-product 'postgres)
+(sql-default-directory "/ssh:zain@128.171.46.101:")
+(sql-server "localhost")
+(sql-user "zain")
+(sql-database "uhm2023")
+(sql-port 5432))
+(campus-energy-reader
+(sql-product 'postgres)
+(sql-default-directory "/ssh:zain@128.171.46.101:")
+(sql-server "localhost")
+(sql-user "uhm_campus_energy_reader")
+(sql-database "uhm2023")
+(sql-port 5432))
+(zain-campus-energy
+(sql-product 'postgres)
+(sql-default-directory "/ssh:zain@128.171.46.101:")
+(sql-server "localhost")
+(sql-user "zain")
+(sql-database "zain")
+(sql-port 5432))))))))
 
 
 (define exwm-configuration
@@ -1433,13 +1432,10 @@ Processes all holes in the card text."
 		'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
 	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
-					;(specification->package "ungoogled-chromium")
-					;(specification->package "ublock-origin-chromium")
-	      (specification->package "glib-networking")
-	      (specification->package "emacs-xelb")
-	      (specification->package "picom")
+					;(specification->package "glib-networking")
+					;(specification->package "emacs-xelb")
 	      (specification->package "emacs-windsize")
-	      (specification->package "unclutter") 
+					;(specification->package "unclutter")
 	      (specification->package "xrandr")
 	      (specification->package "arandr")))
    (init '((require 'exwm)
