@@ -1283,7 +1283,6 @@ Processes all holes in the card text."
 	      (specification->package "emacs-csv-mode")
 	      (specification->package "emacs-py-isort")
 	      (specification->package "emacs-python-black")
-	      
 
 	      (specification->package "pandoc")
 
