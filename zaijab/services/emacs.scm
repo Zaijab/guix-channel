@@ -77,6 +77,7 @@
    (packages (list (specification->package "ppsspp")
 		   (specification->package "p7zip")
 		   (specification->package "desmume")
+		   (specification->package "hicolor-icon-theme")
 		   ))
 					;(early-init '())
 					;(init '((defun reload-init () (interactive) (load "~/code/guix-channel/zaijab/files/init.el"))))
