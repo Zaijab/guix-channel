@@ -76,6 +76,7 @@
   (home-emacs-configuration
    (packages (list (specification->package "ppsspp")
 		   (specification->package "p7zip")
+		   (specification->package "desmume")
 		   ))
 					;(early-init '())
 					;(init '((defun reload-init () (interactive) (load "~/code/guix-channel/zaijab/files/init.el"))))
@@ -549,8 +550,7 @@
 		 org-msg-greeting-fmt "\nAloha%s,\n\n"
 		 org-msg-recipient-names '(("zaijab2000@gmail.com" . "Zain")
 					   ("pyw@hawaii.edu" . "Dr. Washington")
-					   ("sue@math.hawaii.edu" . "Sue")
-					   ("epeppard@hawaii.edu" . "Eileen"))
+					   ("sue@math.hawaii.edu" . "Sue"))
 		 org-msg-greeting-name-limit 3
 		 org-msg-default-alternatives '((new		. (text html))
 						(reply-to-html	. (text html))
