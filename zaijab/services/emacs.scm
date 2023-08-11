@@ -1276,6 +1276,7 @@ Processes all holes in the card text."
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
+	      (specification->package "emacs-jupyter")
 	      
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter")
