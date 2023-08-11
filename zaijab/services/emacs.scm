@@ -1087,6 +1087,7 @@ Processes all holes in the card text."
 		     '((with-branch . "emacs-calfw-blocks=master")))
 		    emacs-calfw-blocks)
 		   (specification->package "texlive")
+		   (specification->package "texlive-bin")
 		   (specification->package "imagemagick")
 		   (specification->package "ispell")))
    (init '((require 'org)
@@ -1276,7 +1277,7 @@ Processes all holes in the card text."
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
-	      ;(specification->package "emacs-jupyter")
+					;(specification->package "emacs-jupyter")
 	      
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter")
