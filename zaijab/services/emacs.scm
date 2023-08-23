@@ -1106,6 +1106,8 @@ Processes all holes in the card text."
 	   (setq calfw-blocks-lines-per-hour 3
 		 calfw-blocks-min-block-width 1
 		 calfw-blocks-earliest-visible-time '(6 0))
+	   (define-key cfw:calendar-mode-map (kbd "W") (function calfw-blocks-change-view-block-week))
+	   (define-key cfw:calendar-mode-map (kbd "D") (lambda () (interactive) (calfw-blocks-change-view-block-nday 3)))
 	   (setq org-cycle-separator-lines 1)
 	   (setq org-agenda-show-log-scoped t)
 	   (setq org-agenda-prefix-format '((agenda  . "  • %?-12t% s")
