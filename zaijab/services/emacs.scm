@@ -1156,7 +1156,8 @@ Processes all holes in the card text."
 	   (add-hook 'org-mode-hook (function org-cdlatex-mode))
 	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
 	   
-	   (setq org-agenda-files '("~/notes/20211224040925-todo.org"))
+	   (setq org-agenda-files '("~/notes/20211224040925-todo.org"
+				    "/home/zjabbar/notes/20230822144411-math_607_gawlik.org"))
 	   (setq cdlatex-math-modify-alist '((?b "\\mathbb" nil t nil nil)))
 					;(add-to-list 'cdlatex-math-modify-alist
 					;	'(?b "\\mathbb" nil t nil nil))
