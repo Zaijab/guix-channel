@@ -1160,7 +1160,8 @@ Processes all holes in the card text."
 	   
 	   (setq org-agenda-files '("~/notes/20211224040925-todo.org"
 				    "/home/zjabbar/notes/20230822144411-math_607_gawlik.org"
-				    "/home/zjabbar/notes/20230822145746-math_649k_mileyko.org"))
+				    "/home/zjabbar/notes/20230822145746-math_649k_mileyko.org"
+				    "/home/zjabbar/notes/20230824144930-ics_690_sadowski.org"))
 	   (setq cdlatex-math-modify-alist '((?b "\\mathbb" nil t nil nil)))
 					;(add-to-list 'cdlatex-math-modify-alist
 					;	'(?b "\\mathbb" nil t nil nil))
