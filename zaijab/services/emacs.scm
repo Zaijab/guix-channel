@@ -1468,7 +1468,7 @@ nil nil (car menu-items))
 		((and (string-match-p (regexp-quote "scratch") (buffer-name)) (= 1 (length buffer-list))) (set-buffer-modified-p nil) (erase-buffer))
 		((and (not (string-match-p (regexp-quote "scratch") (buffer-name))) (= 1 (length buffer-list))) (let ((buf (current-buffer))) (scratch-buffer) (kill-buffer buf))))))
 
-	   (global-set-key (kbd "s-y") (function my/tabspace-kill-current-buffer))
+	   (global-set-key (kbd "s-q") (function my/tabspace-kill-current-buffer))
 
 
 	   (global-set-key (kbd "<f8>") 'toggle-exwm-input-line-mode-passthrough)
@@ -1477,7 +1477,7 @@ nil nil (car menu-items))
 	   (global-set-key (kbd "s-2") 'split-window-below)
 	   (global-set-key (kbd "s-3") 'split-window-right)
 	   (global-set-key (kbd "s-5") 'exwm-workspace-switch)
-	   (global-set-key (kbd "s-q") (function (lambda () (interactive) (kill-buffer (current-buffer)))))
+	   ;(global-set-key (kbd "s-q") (function (lambda () (interactive) (kill-buffer (current-buffer)))))
 	   (global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
 	   (global-set-key (kbd "s-e") (function
 					(lambda () (interactive)
