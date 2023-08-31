@@ -528,7 +528,7 @@
 (define email-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation '((with-git-url . "emacs-org-msg=https://github.com/jeremy-compostella/org-msg.git")
+	      ((options->transformation '((with-git-url . "emacs-org-msg=https://github.com/jeremy-compostella/org-msg")
 					  (with-branch . "emacs-org-msg=master")))
 	       (specification->package "emacs-org-msg"))
 	      (specification->package "isync")
@@ -1436,7 +1436,7 @@ nil nil (car menu-items))
   (home-emacs-configuration
    (packages (list
 	      ((options->transformation
-		'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")))
+		'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
 	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
 					;(specification->package "glib-networking")
