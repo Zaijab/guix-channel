@@ -384,14 +384,15 @@
 
 (define elfeed-configuration
   (home-emacs-configuration
-   (packages (list ((options->transformation '((with-branch . "yt-dlp=master")))
-		    (specification->package "mpv"))
-		   ((options->transformation '((with-branch . "yt-dlp=master")))
-		    (specification->package "yt-dlp"))
-		   ((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
-		    emacs-elfeed-tube)
-		   (specification->package "emacs-elfeed")
-		   (specification->package "curl")))
+   (packages (list
+	      (identity ;(options->transformation '((with-branch . "yt-dlp=master")))
+	       (specification->package "mpv"))
+	      (identity ;(options->transformation '((with-branch . "yt-dlp=master")))
+	       (specification->package "yt-dlp"))
+	      (identity ;(options->transformation '((with-branch . "emacs-elfeed-tube=master")))
+	       emacs-elfeed-tube)
+	      (specification->package "emacs-elfeed")
+	      (specification->package "curl")))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
@@ -528,8 +529,8 @@
 (define email-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation '((with-git-url . "emacs-org-msg=https://github.com/jeremy-compostella/org-msg")
-					  (with-branch . "emacs-org-msg=master")))
+	      (identity ;(options->transformation '((with-git-url . "emacs-org-msg=https://github.com/jeremy-compostella/org-msg")
+					;			  (with-branch . "emacs-org-msg=master")))
 	       (specification->package "emacs-org-msg"))
 	      (specification->package "isync")
 	      (specification->package "mu")
@@ -1083,8 +1084,8 @@ Processes all holes in the card text."
 		   (specification->package "emacs-org-present")
 		   (specification->package "emacs-org-tree-slide")
 		   (specification->package "emacs-calfw") 
-		   ((options->transformation
-		     '((with-branch . "emacs-calfw-blocks=master")))
+		   (identity;(options->transformation
+					;'((with-branch . "emacs-calfw-blocks=master")))
 		    emacs-calfw-blocks)
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
@@ -1324,7 +1325,7 @@ Processes all holes in the card text."
    (packages (list 
 	      (specification->package "sicp")
 	      (specification->package "xdot")
-	      ((options->transformation '((with-branch . "emacs-guix=master")))
+	      (identity ;(options->transformation '((with-branch . "emacs-guix=master")))
 	       (specification->package "emacs-guix"))
 	      (specification->package "emacs-debbugs")
 	      (specification->package "tree-sitter-scheme")
@@ -1435,9 +1436,9 @@ nil nil (car menu-items))
 (define exwm-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation
-		'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
-	       (specification->package "emacs-exwm"))
+	      (identity ;(options->transformation
+			 ;'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
+			(specification->package "emacs-exwm"))
 	      google-chrome-unstable
 					;(specification->package "glib-networking")
 					;(specification->package "emacs-xelb")
@@ -1478,7 +1479,7 @@ nil nil (car menu-items))
 	   (global-set-key (kbd "s-2") 'split-window-below)
 	   (global-set-key (kbd "s-3") 'split-window-right)
 	   (global-set-key (kbd "s-5") 'exwm-workspace-switch)
-	   ;(global-set-key (kbd "s-q") (function (lambda () (interactive) (kill-buffer (current-buffer)))))
+					;(global-set-key (kbd "s-q") (function (lambda () (interactive) (kill-buffer (current-buffer)))))
 	   (global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
 	   (global-set-key (kbd "s-e") (function
 					(lambda () (interactive)
