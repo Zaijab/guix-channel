@@ -1157,15 +1157,18 @@ Processes all holes in the card text."
 	   (add-hook 'org-mode-hook (function visual-line-mode))
 	   (add-hook 'org-mode-hook (function org-toggle-pretty-entities))
 	   (add-hook 'org-mode-hook (function org-cdlatex-mode))
-	   (setq cfw:org-agenda-schedule-args '(:scheduled :sexp :closed :deadline :todo :timestamp))
+	   (setq cfw:org-agenda-schedule-args '(:scheduled
+						:sexp
+						:closed
+						:deadline
+						:todo
+						:timestamp))
 	   
 	   (setq org-agenda-files '("~/notes/20211224040925-todo.org"
 				    "/home/zjabbar/notes/20230822144411-math_607_gawlik.org"
 				    "/home/zjabbar/notes/20230822145746-math_649k_mileyko.org"
 				    "/home/zjabbar/notes/20230824144930-ics_690_sadowski.org"))
 	   (setq cdlatex-math-modify-alist '((?b "\\mathbb" nil t nil nil)))
-					;(add-to-list 'cdlatex-math-modify-alist
-					;	'(?b "\\mathbb" nil t nil nil))
 
 	   (setq org-startup-with-inline-images t
 		 cdlatex-simplify-sub-super-scripts nil
@@ -1227,10 +1230,9 @@ Processes all holes in the card text."
 	   (add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
 	   (setq python-indent-guess-indent-offset-verbose nil)
 	   (setq org-preview-latex-image-directory "/home/zjabbar/.cache/dvisvgm/")
-	   (with-eval-after-load 'evil-maps (define-key evil-motion-state-map (kbd "TAB") nil))
 	   (add-hook 'org-mode-hook (function (lambda () (set-syntax-table
 							  (let ((table (make-syntax-table)))
-							    (modify-syntax-entry ?< "w" table)
+							    (modify-syntax-entry ?< "w" table) 
 							    (modify-syntax-entry ?> "w" table)
 							    table)))))
 	   (setq org-startup-with-inline-images t)
@@ -1258,7 +1260,15 @@ Processes all holes in the card text."
 
 	   (add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
 	   
-	   (setq org-format-latex-options '(:foreground default :background default :scale 2 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+	   (setq org-format-latex-options '(:foreground default
+					    :background default
+					    :scale 2
+					    :html-foreground "Black"
+					    :html-background "Transparent"
+					    :html-scale 1.0
+					    :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+
+	   (setq org-latex-pdf-process "xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
 	   (setf
 	    (plist-get
 	     (alist-get 'dvisvgm org-preview-latex-process-alist)
