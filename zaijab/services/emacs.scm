@@ -1268,12 +1268,12 @@ Processes all holes in the card text."
 					    :html-scale 1.0
 					    :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 
-	   (setq org-latex-pdf-process "xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+	   (setq org-latex-pdf-process '("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f"))
 	   (setf
 	    (plist-get
 	     (alist-get 'dvisvgm org-preview-latex-process-alist)
 	     :latex-compiler)
-	    '("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f")
+	    '("xelatex -no-pdf -interaction -nonstopmode -shell-escape -output-directory %o %f")
 	    (plist-get
 	     (alist-get 'dvisvgm org-preview-latex-process-alist)
 	     :image-input-type)
@@ -1281,7 +1281,7 @@ Processes all holes in the card text."
 	    (plist-get
 	     (alist-get 'dvisvgm org-preview-latex-process-alist)
 	     :image-converter)
-	    '("dvisvgm %f -n -b min -c %S -o %O"))
+	    '("dvisvgm %f --no-fonts --exact-bbox -n -b min -c %S -o %O"))
 
 	   (setf (alist-get :title org-export-options-alist) '("TITLE" nil "Maybe, में भि میں بھی, 明媚." t))
 	   (setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex)))
