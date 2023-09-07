@@ -1151,7 +1151,21 @@ Processes all holes in the card text."
 	   
 	   (setq org-todo-keywords
 		 '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
-	   
+	   (defconst org-latex-math-environments-re
+	     (format
+	      "\\`[ \t]*\\\\begin{%s\\*?}"
+	      (regexp-opt
+	       '("equation" "eqnarray" "math" "displaymath"
+		 "align"  "gather" "multline" "flalign"  "alignat"
+		 "xalignat" "xxalignat"
+		 "subequations" "lflalign"
+		 ;; breqn
+		 "dmath" "dseries" "dgroup" "darray"
+		 ;; empheq
+		 "empheq")))
+	     "Regexp of LaTeX math environments.")
+
+
 	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
@@ -1268,7 +1282,7 @@ Processes all holes in the card text."
 					    :html-scale 1.0
 					    :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 
-	   (setq org-latex-pdf-process '("xelatex -no-pdf -interaction nonstopmode -output-directory %o %f"))
+	   (setq org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"))
 	   (setf
 	    (plist-get
 	     (alist-get 'dvisvgm org-preview-latex-process-alist)
