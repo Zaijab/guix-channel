@@ -1011,6 +1011,7 @@ Processes all holes in the card text."
 	     (apply orig-fun extension subtreep pub-dir nil))
 	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
 	   (setq org-latex-listings 'engraved)
+	   (setq texmathp-tex-commands '(("lflalign" env-on)))
 	   (setq org-latex-compiler "xelatex")
 	   (setq org-latex-title-command (concat
 					  "\\pagestyle{fancy}"
@@ -1461,8 +1462,8 @@ nil nil (car menu-items))
   (home-emacs-configuration
    (packages (list
 	      (identity ;(options->transformation
-			 ;'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
-			(specification->package "emacs-exwm"))
+					;'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
+	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
 					;(specification->package "glib-networking")
 					;(specification->package "emacs-xelb")
