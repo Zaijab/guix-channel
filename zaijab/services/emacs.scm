@@ -1245,6 +1245,10 @@ Processes all holes in the card text."
 	   (add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
 	   (setq python-indent-guess-indent-offset-verbose nil)
 	   (setq org-preview-latex-image-directory "/home/zjabbar/.cache/dvisvgm/")
+
+	   (defun clear-latex-cache () (interactive)
+	     (mapc (function delete-file) (file-expand-wildcards (s-concat org-preview-latex-image-directory "*"))))
+
 	   (add-hook 'org-mode-hook (function (lambda () (set-syntax-table
 							  (let ((table (make-syntax-table)))
 							    (modify-syntax-entry ?< "w" table) 
