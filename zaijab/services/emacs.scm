@@ -1354,12 +1354,13 @@ Processes all holes in the card text."
    (packages (list 
 	      (specification->package "sicp")
 	      (specification->package "xdot")
-	      (identity ;(options->transformation '((with-branch . "emacs-guix=master")))
-	       (specification->package "emacs-guix"))
 	      (specification->package "emacs-debbugs")
+	      (specification->package "guix-emacs")
 	      (specification->package "tree-sitter-scheme")
 	      (specification->package "emacs-srfi")
 	      (specification->package "emacs-geiser-guile")
+	      (specification->package "guile-aiscm")
+	      
 	      ))
    (init '((require 'geiser-guile)
 	   (require 'guix)
