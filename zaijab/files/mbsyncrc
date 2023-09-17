@@ -38,6 +38,6 @@ Inbox ~/.mail/zjabbar/Inbox
 Channel zjabbar_hawaii
 Far :zjabbar_hawaii-remote:
 Near :zjabbar_hawaii-local:
-Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+Patterns * ![Gmail]* "\[Gmail\]/Sent Mail" "\[Gmail\]/Starred" "\[Gmail\]/All Mail"
 Create Both
 SyncState *
