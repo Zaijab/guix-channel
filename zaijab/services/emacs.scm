@@ -1355,7 +1355,7 @@ Processes all holes in the card text."
 	      (specification->package "sicp")
 	      (specification->package "xdot")
 	      (specification->package "emacs-debbugs")
-	      (specification->package "guix-emacs")
+	      (specification->package "emacs-guix")
 	      (specification->package "tree-sitter-scheme")
 	      (specification->package "emacs-srfi")
 	      (specification->package "emacs-geiser-guile")
