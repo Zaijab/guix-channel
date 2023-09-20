@@ -16,7 +16,7 @@ Inbox ~/.mail/zaijab2000/Inbox
 Channel gmail
 Far :zaijab2000_gmail-remote:
 Near :zaijab2000_gmail-local:
-Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+Patterns * ![Gmail]* "[Gmail]/Sent Mail"
 Create Both
 SyncState *
 
@@ -38,7 +38,7 @@ Inbox ~/.mail/zjabbar/Inbox
 Channel zjabbar_hawaii
 Far :zjabbar_hawaii-remote:
 Near :zjabbar_hawaii-local:
-Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+Patterns * ![Gmail]* "[Gmail]/Sent Mail"
 Create Both
 SyncState *
 
