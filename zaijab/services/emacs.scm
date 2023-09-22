@@ -1038,7 +1038,7 @@ Processes all holes in the card text."
 			      "20230225142818-notation.org"
 			      "20230225142533-category_theory.org"
 			      "20230523124504-applied_qualifying_exam.org"
-			      "20230222104410-time_series_prediction.org") 
+			      "20221213173629-statistics.org") 
 		    :with-toc nil
 		    :exclude-tags ("draft")
 		    :html-head
@@ -1094,6 +1094,8 @@ Processes all holes in the card text."
 		   (specification->package "ispell")))
    (init '((require 'org)
 	   (require 'org-tree-slide)
+	   (setq org-tree-slide-cursor-init nil)
+	   
 	   (require 'ox)
 	   (require 'calfw)
 	   (require 'calfw-org)
