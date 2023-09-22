@@ -509,7 +509,7 @@
 	     (interactive)
 	     (emms-player-mpv-cmd (list 'add 'volume (- (or amount '10))))
 	     (emms-player-mpv-get-volume))
-	   (emms-add-directory-tree "~/music/piano")
+	   (emms-add-directory-tree "~/music")
 	   (emms-shuffle)
 	   (emms-player-mpv-lower-volume 30)
 

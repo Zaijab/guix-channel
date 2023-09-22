@@ -62,10 +62,7 @@
 	       (specification->package "network-manager-applet")
 	       (specification->package "searx") 
 	       (specification->package "gsettings-desktop-schemas")
-	       (identity;(options->transformation
-					; '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")
-					;   (with-input . "emacs=emacs-next")))
-		(specification->package "emacs-exwm"))               
+	       (specification->package "emacs-exwm")
 	       %base-packages))
     
     (host-name "tao")
