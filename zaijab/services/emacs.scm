@@ -344,7 +344,8 @@
 (define garbage-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-gcmh")
-		   (specification->package "emacs-explain-pause-mode")))
+		   ;(specification->package "emacs-explain-pause-mode")
+		   ))
    (init '((gcmh-mode 1)))))
 
 (define eww-configuration
