@@ -1469,13 +1469,15 @@ nil nil (car menu-items))
 (define exwm-configuration
   (home-emacs-configuration
    (packages (list
-	      (identity ;(options->transformation
-					;'((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
+	      ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
 	       (specification->package "emacs-exwm"))
 	      google-chrome-unstable
 					;(specification->package "glib-networking")
 					;(specification->package "emacs-xelb")
 	      (specification->package "emacs-windsize")
+	      (specification->package "binutils")
+	      (specification->package "coreutils")
+	      (specification->package "gcc-toolchain")
 	      (specification->package "emacs-vterm")
 					;(specification->package "emacs-blight")
 					;(specification->package "unclutter")
@@ -1717,7 +1719,8 @@ nil nil (car menu-items))
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-				     (emacs (specification->package "emacs-next"))
+				     (emacs (identity;(options->tranformation '((with-latest "gcc-toolchain")))
+					     (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
