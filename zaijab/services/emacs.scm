@@ -467,7 +467,7 @@
 				  (mapconcat (lambda (word)
 					       (cond
 						((member word '("“" "”"))
-						 "\"")
+						 "")
 						((member word '("AND" "OR" "IF" "ON" "IT" "TO"
 								"A" "OF" "VS" "IN" "FOR" "WAS"
 								"IS" "BE"))
