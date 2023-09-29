@@ -450,6 +450,35 @@
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL6763F57A61FE6FE8" lecture topology wildberger)))
 	   (require 'elfeed-tube)
 	   (elfeed-tube-setup)
+	   (add-hook 'elfeed-new-entry-hook #'elfeed-declickbait-entry)
+
+	   (defun elfeed-declickbait-entry (entry)
+	     (let ((title (elfeed-entry-title entry)))
+	       (setf (elfeed-meta entry :title)
+		     (elfeed-title-transform title))))
+
+	   (defun elfeed-title-transform (title)
+	     "Declickbait string TITLE."
+	     (let* ((trim "\\(?:\\(?:\\.\\.\\.\\|[!?]\\)+\\)")
+		    (arr (split-string title nil t trim))
+		    (s-table (copy-syntax-table)))
+	       (modify-syntax-entry ?\' "w" s-table)
+	       (with-syntax-table s-table
+				  (mapconcat (lambda (word)
+					       (cond
+						((member word '("“" "”"))
+						 "\"")
+						((member word '("AND" "OR" "IF" "ON" "IT" "TO"
+								"A" "OF" "VS" "IN" "FOR" "WAS"
+								"IS" "BE"))
+						 (downcase word))
+						((member word '("WE" "DAY" "HOW" "WHY" "NOW" "OLD"
+								"NEW" "MY" "TOO" "GOT" "GET" "THE"
+								"ONE" "DO" "YOU"))
+						 (capitalize word))
+						((> (length word) 3) (capitalize word))
+						(t word)))
+					     arr " "))))
 	   (setq-default elfeed-search-filter "-fun -crafter")
 	   (setq-default elfeed-search-title-max-width 100)
 	   (setq-default elfeed-search-title-min-width 100)
@@ -1637,7 +1666,7 @@ nil nil (car menu-items))
                    (specification->package "emacs-which-key")))
    (early-init '((setq gc-cons-threshold most-positive-fixnum
 		       package-enable-at-startup nil
-		       comp-enable-subr-trampolines t
+		       comp-enable-subr-trampolines nil
 		       inhibit-automatic-native-compilation nil
 		       indicate-buffer-boundaries nil
 		       native-comp-enable-subr-trampolines nil
