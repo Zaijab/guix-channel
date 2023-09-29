@@ -1640,6 +1640,7 @@ nil nil (car menu-items))
 		       comp-enable-subr-trampolines t
 		       inhibit-automatic-native-compilation nil
 		       indicate-buffer-boundaries nil
+		       native-comp-enable-subr-trampolines nil
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
 		       tool-bar-mode nil
