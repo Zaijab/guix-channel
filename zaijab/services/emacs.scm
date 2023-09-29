@@ -450,7 +450,7 @@
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL6763F57A61FE6FE8" lecture topology wildberger)))
 	   (require 'elfeed-tube)
 	   (elfeed-tube-setup)
-	   (add-hook 'elfeed-new-entry-hook #'elfeed-declickbait-entry)
+	   (add-hook 'elfeed-new-entry-hook (function elfeed-declickbait-entry))
 
 	   (defun elfeed-declickbait-entry (entry)
 	     (let ((title (elfeed-entry-title entry)))
