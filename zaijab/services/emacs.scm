@@ -460,7 +460,7 @@
 	   (defun elfeed-title-transform (title)
 	     "Declickbait string TITLE."
 	     (let* ((trim "\\(?:\\(?:\\.\\.\\.\\|[!?]\\)+\\)")
-		    (arr (split-string title nil t trim))
+		    (arr (split-string (s-replace-regexp "[“”]" "\"" title) nil t trim))
 		    (s-table (copy-syntax-table)))
 	       (modify-syntax-entry ?\' "w" s-table)
 	       (with-syntax-table s-table
