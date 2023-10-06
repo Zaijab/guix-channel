@@ -1366,7 +1366,8 @@ Processes all holes in the card text."
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
 	      ))
-   (init '((setq org-babel-python-command "python3"
+   (init '((require 'jupyter)
+	   (setq org-babel-python-command "python3"
 		 python-interpreter "python3"
 		 python-shell-interpreter "python3"
 		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
