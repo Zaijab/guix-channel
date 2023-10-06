@@ -366,7 +366,9 @@
 
 (define pdf-tools-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-pdf-tools")))
+   (packages (list (specification->package "emacs-pdf-tools")
+		   (specification->package "emacs-nov-el")
+		   ))
    (init '((pdf-tools-install)))))
 
 (define cryptography-configuration
