@@ -485,6 +485,8 @@
 	   (defun browse-url-mpv (url &optional new-window)
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
 
+	   (defun browse-url-mpv (url &optional new-window)
+	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?720]+bestaudio/best" url))
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.youtube." 'browse-url-mpv))
 	   (add-hook 'elfeed-new-entry-hook
 		     (elfeed-make-tagger :feed-url "youtube\\.com"
@@ -1377,8 +1379,11 @@ Processes all holes in the card text."
 								    (python . t)
 								    (sql . t)
 								    (eshell . t)
-								    (shell . t)))
-	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))))
+								    (shell . t)
+								    (jupyter . t)))
+	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
+	   )
+	 )
    (early-init '())))
 
 (define lisp-configuration
@@ -1715,6 +1720,8 @@ nil nil (car menu-items))
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)))
    (init '((set-face-attribute 'default nil :font "Iosevka-14")
+	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
+	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'han "IPAmjMincho")
 	   (set-fontset-font "fontset-default" 'kana "IPAmjMincho")
 	   (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho")
