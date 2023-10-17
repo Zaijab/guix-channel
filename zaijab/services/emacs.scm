@@ -1401,7 +1401,7 @@ Processes all holes in the card text."
 	      (specification->package "emacs-srfi")
 	      (specification->package "emacs-geiser-guile")
 	      (specification->package "guile-aiscm")
-	      
+	      (specification->package "guile-minikanren")
 	      ))
    (init '((require 'geiser-guile)
 	   (require 'guix)
@@ -1414,8 +1414,7 @@ Processes all holes in the card text."
 					      (eval modify-syntax-entry 36 "'")
 					      (eval modify-syntax-entry 126 "'")))
 	   (add-hook 'after-init-hook 'envrc-global-mode)
-	   (with-eval-after-load 'envrc
-				 (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
+	   (with-eval-after-load 'envrc (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
 
 #;(define sql-configuration
 (home-emacs-configuration
