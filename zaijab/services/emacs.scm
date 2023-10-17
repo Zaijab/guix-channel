@@ -1185,7 +1185,8 @@ Processes all holes in the card text."
 	   (setq org-tags-column 0
 		 org-image-actual-width nil)
 	   (global-org-modern-mode)
-	   
+	   (add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
+
 	   (setq org-todo-keywords
 		 '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
 	   (defconst org-latex-math-environments-re
