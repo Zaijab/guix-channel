@@ -370,7 +370,9 @@
    (packages (list (specification->package "emacs-pdf-tools")
 		   (specification->package "emacs-nov-el")
 		   ))
-   (init '((pdf-tools-install)))))
+   (init '((pdf-tools-install)
+	   (setq special-mode-map (make-sparse-keymap))
+	   ))))
 
 (define cryptography-configuration
   (home-emacs-configuration
