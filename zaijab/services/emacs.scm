@@ -175,6 +175,7 @@
 ;; 	    :preview-key '(:debounce 0.4 any))
 
 ;; 	   (setq consult-narrow-key "<")))))
+
 (define buffer-configuration
   (home-emacs-configuration
    (packages (list emacs-tabspaces))
@@ -1556,9 +1557,15 @@ nil nil (car menu-items))
 	   (global-set-key (kbd "s-e") (function
 					(lambda () (interactive)
 						(start-process-shell-command
-						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT'"
+						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""
 						 nil
-						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT'"))))
+						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""))))
+	   (global-set-key (kbd "s-v") (function
+					(lambda () (interactive)
+						(start-process-shell-command
+						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\""
+						 nil
+						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\""))))
 	   (global-set-key (kbd "s-r") (function eshell))
 	   (global-set-key (kbd "s-t") (function eval-region))
 	   (global-set-key (kbd "s-K") 'windsize-up)
