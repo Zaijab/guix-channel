@@ -371,7 +371,9 @@
 		   (specification->package "emacs-nov-el")
 		   ))
    (init '((pdf-tools-install)
-	   (setq special-mode-map (make-sparse-keymap))
+	   (define-key pdf-view-mode-map (kbd "h") (function image-backward-hscroll))
+	   (define-key pdf-view-mode-map (kbd "l") (function image-forward-hscroll))
+	   (define-key pdf-history-minor-mode-map (kbd "l") (function image-forward-hscroll))
 	   ))))
 
 (define cryptography-configuration
