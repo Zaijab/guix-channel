@@ -397,8 +397,8 @@
 	       (specification->package "mpv"))
 	      (identity ;(options->transformation '((with-branch . "yt-dlp=master")))
 	       (specification->package "yt-dlp"))
-	      (identity ;(options->transformation '((with-branch . "emacs-elfeed-tube=master")))
-	       emacs-elfeed-tube)
+	      (identity (options->transformation '((with-branch . "emacs-elfeed-tube=master")))
+			emacs-elfeed-tube)
 	      (specification->package "emacs-elfeed")
 	      (specification->package "curl")))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
@@ -1446,7 +1446,7 @@ Processes all holes in the card text."
 (window-height . 0.3)))
 
 (defclass eglot-sqls (eglot-lsp-server) () :documentation "SQL's Language Server")
-					;(add-to-list 'eglot-server-programs '(sql-mode . (eglot-sqls "sqls"))) ; ;
+					;(add-to-list 'eglot-server-programs '(sql-mode . (eglot-sqls "sqls"))) ; ; ;
 (cl-defmethod eglot-execute-command
 ((server eglot-sqls) (command (eql executeQuery)) arguments)
 "For executeQuery."
@@ -1564,6 +1564,12 @@ nil nil (car menu-items))
 						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""
 						 nil
 						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""))))
+	   (global-set-key (kbd "s-E") (function
+					(lambda () (interactive)
+						(start-process-shell-command
+						 "google-chrome-unstable --incognito --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""
+						 nil
+						 "google-chrome-unstable --incognito --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""))))
 	   (global-set-key (kbd "s-v") (function
 					(lambda () (interactive)
 						(start-process-shell-command
