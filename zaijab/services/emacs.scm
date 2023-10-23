@@ -393,10 +393,10 @@
 (define elfeed-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation '((with-branch . "yt-dlp=master")))
+	      (identity;(options->transformation '((with-branch . "yt-dlp=master")))
 	       (specification->package "mpv"))
-	      ((options->transformation '((with-branch . "yt-dlp=master")))
-	       (specification->package "yt-dlp"))
+	      (identity;(options->transformation '((with-branch . "yt-dlp=master")))
+		       (specification->package "yt-dlp"))
 	      ((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
 	       emacs-elfeed-tube)
 	      (specification->package "emacs-elfeed")
