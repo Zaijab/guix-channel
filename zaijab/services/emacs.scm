@@ -370,10 +370,12 @@
    (packages (list (specification->package "emacs-pdf-tools")
 		   (specification->package "emacs-nov-el")
 		   ))
-   (init '((pdf-tools-install)
-	   (define-key pdf-view-mode-map (kbd "h") (function image-backward-hscroll))
-	   (define-key pdf-view-mode-map (kbd "l") (function image-forward-hscroll))
-	   (define-key pdf-history-minor-mode-map (kbd "l") (function image-forward-hscroll))
+   (init '(;(use-package pdf-tools)
+
+	   (pdf-tools-install)
+	   ;(define-key pdf-view-mode-map (kbd "h") (function image-backward-hscroll))
+	   ;(define-key pdf-view-mode-map (kbd "l") (function image-forward-hscroll))
+	   ;(define-key pdf-history-minor-mode-map (kbd "l") (function image-forward-hscroll))
 	   ))))
 
 (define cryptography-configuration
