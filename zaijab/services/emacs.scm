@@ -393,12 +393,12 @@
 (define elfeed-configuration
   (home-emacs-configuration
    (packages (list
-	      (identity ;(options->transformation '((with-branch . "yt-dlp=master")))
+	      ((options->transformation '((with-branch . "yt-dlp=master")))
 	       (specification->package "mpv"))
-	      (identity ;(options->transformation '((with-branch . "yt-dlp=master")))
+	      ((options->transformation '((with-branch . "yt-dlp=master")))
 	       (specification->package "yt-dlp"))
-	      ;((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
-	      ; emacs-elfeed-tube)
+	      ((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
+	       emacs-elfeed-tube)
 	      (specification->package "emacs-elfeed")
 	      (specification->package "curl")))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
@@ -568,8 +568,8 @@
 (define email-configuration
   (home-emacs-configuration
    (packages (list
-	      (identity ;(options->transformation '((with-git-url . "emacs-org-msg=https://github.com/jeremy-compostella/org-msg")
-					;			  (with-branch . "emacs-org-msg=master")))
+	      ((options->transformation '((with-git-url . "emacs-org-msg=https://github.com/jeremy-compostella/org-msg")
+					  (with-branch . "emacs-org-msg=master")))
 	       (specification->package "emacs-org-msg"))
 	      (specification->package "isync")
 	      (specification->package "mu")
@@ -1124,8 +1124,8 @@ Processes all holes in the card text."
 		   (specification->package "emacs-org-present")
 		   (specification->package "emacs-org-tree-slide")
 		   (specification->package "emacs-calfw") 
-		   (identity;(options->transformation
-					;'((with-branch . "emacs-calfw-blocks=master")))
+		   ((options->transformation
+		     '((with-branch . "emacs-calfw-blocks=master")))
 		    emacs-calfw-blocks)
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
