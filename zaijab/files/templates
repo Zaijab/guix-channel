@@ -2,7 +2,7 @@
 org-mode
 
 (src "#+BEGIN_SRC " p n> r> n> "#+END_SRC")
-(psrc "#+BEGIN_SRC jupyter-python3" p n> r> n> "#+END_SRC")
+(psrc "#+BEGIN_SRC jupyter-python" p n> r> n> "#+END_SRC")
 (ssrc "#+BEGIN_SRC scheme" p n> r> n> "#+END_SRC")
 (mm "\\( " p " \\) ")
 (dm "\\[ " p " \\]" n)
