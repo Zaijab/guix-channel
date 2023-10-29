@@ -218,6 +218,78 @@ areas.")
      "This package provides a simple, cross-platform module for obtaining GUI
 information on application's windows.")
     (license license:bsd-3)))
+(define-public python-pyperclip
+  (package
+    (name "python-pyperclip")
+    (version "1.8.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "pyperclip" version))
+       (sha256
+        (base32 "0mxzm43z2anr55gyz7awagvam4d5c2rlxhp9hjyg0d29n2l58lhh"))))
+    (build-system pyproject-build-system)
+    (home-page "https://github.com/asweigart/pyperclip")
+    (synopsis
+     "A cross-platform clipboard module for Python. (Only handles plain text for now.)")
+    (description
+     "This package provides a cross-platform clipboard module for Python. (Only
+handles plain text for now.)")
+    (license license:bsd-3)))
+
+(define-public python-jeepney
+  (package
+    (name "python-jeepney")
+    (version "0.8.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "jeepney" version))
+       (sha256
+        (base32 "01jqrk7pn94i7bpmj834pjrw7id659gfag6wpbv04fcpap94izjy"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-async-timeout
+                             python-async-generator
+                             python-pytest
+                             python-pytest-asyncio
+                             python-pytest-trio
+                             python-testpath
+                             python-trio))
+    (home-page "https://gitlab.com/takluyver/jeepney")
+    (synopsis "Low-level, pure Python DBus protocol wrapper.")
+    (description "Low-level, pure Python DBus protocol wrapper.")
+    (license #f)))
+(define-public python-pytest
+  (package
+    (name "python-pytest")
+    (version "7.4.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "pytest" version))
+       (sha256
+        (base32 "1mcch6h9vgfydplgn49csn74xil1sn587k5bknrf7r1dk0vd32fr"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-colorama
+                             python-exceptiongroup
+                             python-importlib-metadata
+                             python-iniconfig
+                             python-packaging
+                             python-pluggy
+                             python-tomli))
+    (native-inputs (list python-argcomplete
+                         python-attrs
+                         python-hypothesis
+                         python-mock
+                         python-nose
+                         python-pygments
+                         python-requests
+                         python-setuptools
+                         python-xmlschema))
+    (home-page "https://docs.pytest.org/en/latest/")
+    (synopsis "pytest: simple powerful testing with Python")
+    (description "pytest: simple powerful testing with Python")
+    (license license:expat)))
 
 (define-public python-mouseinfo
   (package
@@ -260,3 +332,56 @@ currently under the mouse.  Works on Python 2 and 3.")
      "@code{PyAutoGUI} lets Python control the mouse and keyboard, and other GUI
 automation tasks.  For Windows, @code{macOS}, and Linux, on Python 3 and 2.")
     (license license:bsd-3)))
+(define-public python-pytest-asyncio
+  (package
+    (name "python-pytest-asyncio")
+    (version "0.21.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "pytest-asyncio" version))
+       (sha256
+        (base32 "0kdnxvlkh4n0x0b83qws0rdv22j093m5as4q0jvcf8pdvpkfm9s0"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-pytest python-typing-extensions))
+    (native-inputs (list python-coverage python-flaky python-hypothesis
+                         python-mypy python-pytest-trio))
+    (home-page "https://github.com/pytest-dev/pytest-asyncio")
+    (synopsis "Pytest support for asyncio")
+    (description "Pytest support for asyncio")
+    (license license:asl2.0)))
+
+(define-public python-pytest-trio
+  (package
+    (name "python-pytest-trio")
+    (version "0.8.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "pytest-trio" version))
+       (sha256
+        (base32 "0bmmdyjqj5v4a637i4rzm55crv6v3nj268as6x9nr7m76rixnqw3"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-outcome python-pytest python-trio))
+    (home-page "https://github.com/python-trio/pytest-trio")
+    (synopsis "Pytest plugin for trio")
+    (description "Pytest plugin for trio")
+    (license #f)))
+
+(define-public python-testpath
+  (package
+    (name "python-testpath")
+    (version "0.6.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "testpath" version))
+       (sha256
+        (base32 "03sy50q5qd2j1w02af5gl6p7r2h267sq9g81pqg6h0ic8kk9f6rg"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-pytest))
+    (home-page "")
+    (synopsis "Test utilities for code working with files and commands")
+    (description "Test utilities for code working with files and commands")
+    (license #f)))
+
