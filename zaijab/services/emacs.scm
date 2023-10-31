@@ -1721,6 +1721,7 @@ nil nil (car menu-items))
 		 (setq org-src-tab-acts-natively t)
 		 (setq org-src-preserve-indentation nil
 		       org-edit-src-content-indentation 0)
+		 (setq auto-window-vscroll nil)
 		 (tooltip-mode -1)
 		 (scroll-bar-mode -1)
 		 (menu-bar-mode -1)
