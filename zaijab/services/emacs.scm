@@ -68,20 +68,12 @@
 
 (define proprietary-configuration
   (home-emacs-configuration
-   (packages (list zoom))
+   (packages (list zoom
+		   google-chrome-unstable))
    (early-init '())
-   (init '((defun reload-init () (interactive) (load "~/code/guix-channel/zaijab/files/init.el"))))))
-
-(define game-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "ppsspp")
-		   (specification->package "p7zip")
-		   (specification->package "desmume")
-		   (specification->package "hicolor-icon-theme")
-		   ))
-					;(early-init '())
-					;(init '((defun reload-init () (interactive) (load "~/code/guix-channel/zaijab/files/init.el"))))
-   ))
+   (init '((defun reload-init ()
+	     (interactive)
+	     (load "~/code/guix-channel/zaijab/files/init.el"))))))
 
 ;; Completions
 
@@ -395,21 +387,21 @@
 (define elfeed-configuration
   (home-emacs-configuration
    (packages (list
-	      (identity;(options->transformation '((with-branch . "yt-dlp=master")))
+	      ((options->transformation '((with-branch . "yt-dlp=master")))
 	       (specification->package "mpv"))
-	      (identity;(options->transformation '((with-branch . "yt-dlp=master")))
-		       (specification->package "yt-dlp"))
+	      ((options->transformation '((with-branch . "yt-dlp=master")))
+	       (specification->package "yt-dlp"))
 	      ((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
 	       emacs-elfeed-tube)
 	      (specification->package "emacs-elfeed")
 	      (specification->package "curl")))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCjKIkpn1ZK6Wqigen1YBAYA" fun hcbailly)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun pekin)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun pekin)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCjKIkpn1ZK6Wqigen1YBAYA" fun hcbailly)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun pekin)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun pekin)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw" math grant)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCm5mt-A4w61lknZ9lCsZtBw" math brunton)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" crafter david)
@@ -1517,7 +1509,6 @@ nil nil (car menu-items))
    (packages (list
 	      ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
 	       (specification->package "emacs-exwm"))
-	      google-chrome-unstable
 	      (specification->package "emacs-windsize")
 	      (specification->package "binutils")
 	      (specification->package "coreutils")
