@@ -388,13 +388,11 @@
 (define elfeed-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation '((with-branch . "yt-dlp=master")))
-	       (specification->package "mpv"))
-	      ((options->transformation '((with-branch . "yt-dlp=master")))
-	       (specification->package "yt-dlp"))
+	      (specification->package "mpv")
+	      (specification->package "yt-dlp")
+	      (specification->package "emacs-elfeed")
 	      ((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
 	       emacs-elfeed-tube)
-	      (specification->package "emacs-elfeed")
 	      (specification->package "curl")))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 					;("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
