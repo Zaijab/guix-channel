@@ -120,7 +120,7 @@
        (uri (pypi-uri "pytweening" version))
        (sha256
         (base32 "1nyygvyhhic50j6lwwp6klkrlvbpzhfdv4pnx4f6rdsppzqk8wbn"))))
-    (build-system pyproject-build-system)
+    (build-system python-build-system)
     (home-page "https://github.com/asweigart/pytweening")
     (synopsis "A collection of tweening / easing functions.")
     (description
