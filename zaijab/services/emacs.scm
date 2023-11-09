@@ -380,9 +380,9 @@
 		   (specification->package "openssh")
 		   (specification->package "openconnect")))
    (init '(
-	   ;; (defun pinentry-reload () (interactive)
-	   ;;   (shell-command "gpg-connect-agent reloadagent /bye"))
-	   ;; (pinentry-start)
+	   (defun pinentry-reload () (interactive)
+	     (shell-command "gpg-connect-agent reloadagent /bye"))
+	   (pinentry-start)
 	   ))))
 
 (define elfeed-configuration
