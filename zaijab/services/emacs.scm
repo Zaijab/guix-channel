@@ -14,6 +14,7 @@
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages messaging)
   #:use-module (nongnu packages fonts)
+  #:use-module (nonguix multiarch-container)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
@@ -69,7 +70,8 @@
 (define proprietary-configuration
   (home-emacs-configuration
    (packages (list zoom
-		   google-chrome-unstable))
+		   google-chrome-unstable
+		   steam))
    (early-init '())
    (init '((defun reload-init ()
 	     (interactive)
@@ -1202,7 +1204,7 @@ Processes all holes in the card text."
 	     "Regexp of LaTeX math environments.")
 
 
-	   (custom-set-variables '(org-modern-table nil))
+	   (custom-set-variables '(org-modern-table t))
 	   (add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
 	   (add-hook 'org-mode-hook (function org-toggle-pretty-entities))
