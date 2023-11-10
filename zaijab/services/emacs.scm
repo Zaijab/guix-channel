@@ -14,7 +14,6 @@
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages messaging)
   #:use-module (nongnu packages fonts)
-  #:use-module (nonguix multiarch-container)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
@@ -70,8 +69,7 @@
 (define proprietary-configuration
   (home-emacs-configuration
    (packages (list zoom
-		   google-chrome-unstable
-		   steam))
+		   google-chrome-unstable))
    (early-init '())
    (init '((defun reload-init ()
 	     (interactive)
