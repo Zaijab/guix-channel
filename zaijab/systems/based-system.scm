@@ -43,6 +43,12 @@
   (operating-system
     (kernel linux)
     (firmware (list linux-firmware))
+    (kernel-arguments '("intel_iommu=on" "iommu=pt" "pcie_acs_override=downstream,multifunction"))
+    (initrd (lambda (file-systems . rest)
+	      (apply base-initrd file-systems
+		     #:extra-modules '("vfio-pci" "vfio_iommu_type1")
+		     rest)))
+    
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
     (keyboard-layout (keyboard-layout "us"))
