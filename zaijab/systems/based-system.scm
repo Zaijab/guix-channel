@@ -140,6 +140,11 @@
 (define-public euler-operating-system
   (operating-system
     (inherit tao-operating-system)
+    
+    (kernel-arguments '("intel_iommu=on"
+			"iommu=pt"
+			"pcie_acs_override=downstream,multifunction"
+			"vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38"))
     (host-name "euler")
     (file-systems (cons*
 		   (file-system
