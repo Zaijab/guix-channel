@@ -144,7 +144,7 @@
     (kernel-arguments '("intel_iommu=on"
 			"iommu=pt"
 			"pcie_acs_override=downstream,multifunction"
-			"vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38"))
+			"vfio-pci.ids=1022:1632,1022:1635,1002:164c,1002:1637,1022:15df,1022:1639,1022:15e2,1022:15e3"))
     (host-name "euler")
     (file-systems (cons*
 		   (file-system
