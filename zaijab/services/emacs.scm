@@ -1,3 +1,6 @@
+;;; The module zaijab / services / emacs
+;; Creates the module "Emacs" in the "Services" for the "zaijab" Channel
+
 (define-module (zaijab services emacs)
   #:use-module (gnu home)
   #:use-module (gnu packages)
@@ -62,7 +65,7 @@
 		(default-value (home-emacs-configuration))
 		(description "Configures Emacs and installs packages to home-profile.")))
 
-
+
 ;;; EMACS CONFIG
 
 
@@ -124,15 +127,13 @@
 	   (add-hook 'text-mode-hook 'tempel-setup-capf)
 	   (define-key tempel-map (kbd "C-a") (function tempel-prev))
 	   (define-key tempel-map (kbd "C-d") (function tempel-next))
-	   (global-set-key (kbd "M-+") (function tempel-complete))
-	   ))))
+	   (global-set-key (kbd "M-+") (function tempel-complete))))))
 
 (define cape-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-cape")))
    (init '((setq tab-always-indent 'complete)
-					;(add-to-list 'completion-at-point-functions (function cape-file))
-	   ))))
+	   (add-to-list 'completion-at-point-functions (function cape-file))))))
 
 (define marginalia-configuration
   (home-emacs-configuration
@@ -148,25 +149,25 @@
 			  nil
 			  (window-parameters (mode-line-format . none))))))))
 
-;; (define consult-configuration
-;;   (home-emacs-configuration
-;;    (packages (list (specification->package "emacs-consult")))
-;;    (init '((require 'consult)
-;; 	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
-;; 	   (setq register-preview-delay 0.5
-;; 		 register-preview-function (function consult-register-format))
-;; 	   (advice-add (function register-preview) :override (function consult-register-window))
-;; 	   (setq xref-show-xrefs-function (function consult-xref)
-;; 		 xref-show-definitions-function (function consult-xref))
-;; 	   (consult-customize
-;; 	    consult-theme :preview-key '(:debounce 0.2 any)
-;; 	    consult-ripgrep consult-git-grep consult-grep
-;; 	    consult-bookmark consult-recent-file consult-xref
-;; 	    consult--source-bookmark consult--source-file-register
-;; 	    consult--source-recent-file consult--source-project-recent-file
-;; 	    :preview-key '(:debounce 0.4 any))
+(define consult-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-consult")))
+   (init '((require 'consult)
+	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
+	   (setq register-preview-delay 0.5
+		 register-preview-function (function consult-register-format))
+	   (advice-add (function register-preview) :override (function consult-register-window))
+	   (setq xref-show-xrefs-function (function consult-xref)
+		 xref-show-definitions-function (function consult-xref))
+	   (consult-customize
+	    consult-theme :preview-key '(:debounce 0.2 any)
+	    consult-ripgrep consult-git-grep consult-grep
+	    consult-bookmark consult-recent-file consult-xref
+	    consult--source-bookmark consult--source-file-register
+	    consult--source-recent-file consult--source-project-recent-file
+	    :preview-key '(:debounce 0.4 any))
 
-;; 	   (setq consult-narrow-key "<")))))
+	   (setq consult-narrow-key "<")))))
 
 (define buffer-configuration
   (home-emacs-configuration
@@ -183,9 +184,7 @@
 			(tab-bar-new-tab-choice "*scratch*")
 			;; sessions
 			(tabspaces-session t)
-			(tabspaces-session-auto-restore t))
-
-	   ))
+			(tabspaces-session-auto-restore t))))
    (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
 		 (setq switch-to-buffer-obey-display-actions t)
@@ -334,13 +333,6 @@
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)))))
 
-(define garbage-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-gcmh")
-		   ;(specification->package "emacs-explain-pause-mode")
-		   ))
-   (init '((gcmh-mode 1)))))
-
 (define eww-configuration
   (home-emacs-configuration
    (packages (list emacs-xwwp))
@@ -352,23 +344,14 @@
 	   (define-key xwidget-webkit-mode-map (kbd "L") (function xwidget-webkit-forward))
 	   (define-key xwidget-webkit-mode-map (kbd "H") (function xwidget-webkit-back))
 	   (define-key xwidget-webkit-mode-map (kbd "i") (function xwidget-webkit-edit-mode))
-
 	   (add-hook 'xwidget-webkit-edit-mode-hook (lambda () (interactive) (meow-mode 'toggle)))
-
 	   (setq eww-search-prefix "http://127.0.0.1:8888/search?q=")))))
 
 (define pdf-tools-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-pdf-tools")
-		   (specification->package "emacs-nov-el")
-		   ))
-   (init '(;(use-package pdf-tools)
-
-	   (pdf-tools-install)
-	   ;(define-key pdf-view-mode-map (kbd "h") (function image-backward-hscroll))
-	   ;(define-key pdf-view-mode-map (kbd "l") (function image-forward-hscroll))
-	   ;(define-key pdf-history-minor-mode-map (kbd "l") (function image-forward-hscroll))
-	   ))))
+		   (specification->package "emacs-nov-el")))
+   (init '((pdf-tools-install)))))
 
 (define cryptography-configuration
   (home-emacs-configuration
@@ -379,11 +362,9 @@
 		   (specification->package "gnupg")
 		   (specification->package "openssh")
 		   (specification->package "openconnect")))
-   (init '(
-	   (defun pinentry-reload () (interactive)
+   (init '((defun pinentry-reload () (interactive)
 	     (shell-command "gpg-connect-agent reloadagent /bye"))
-	   (pinentry-start)
-	   ))))
+	   (pinentry-start)))))
 
 (define elfeed-configuration
   (home-emacs-configuration
@@ -1765,7 +1746,8 @@ nil nil (car menu-items))
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-				     (emacs (specification->package "emacs-next"))
+				     (emacs ((options->transformation '((with-branch . "emacs-next=master")))
+					     (specification->package "emacs-next")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
