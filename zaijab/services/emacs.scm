@@ -1751,8 +1751,8 @@ nil nil (car menu-items))
 	   (customize-set-variable 'display-time-day-and-date t)
 	   (set-default 'truncate-lines t)
 	   (load-theme 'modus-operandi t)           
-	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
-	   (global-rainbow-delimiters-mode)
+	   ;(define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
+	   ;(global-rainbow-delimiters-mode)
 	   (which-key-mode)))))
 
 
