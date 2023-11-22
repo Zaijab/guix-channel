@@ -1684,6 +1684,19 @@ nil nil (car menu-items))
 		       max-mini-window-height 1
 		       initial-scratch-message nil
 		       large-file-warning-threshold 100000000)
+		 (defcustom password-colon-equivalents
+		   '(?\u003a ; ?\N{COLON}
+		     ?\uff1a ; ?\N{FULLWIDTH COLON}
+		     ?\ufe55 ; ?\N{SMALL COLON}
+		     ?\ufe13 ; ?\N{PRESENTATION FORM FOR VERTICAL COLON}
+		     ?\u17d6 ; ?\N{KHMER SIGN CAMNUC PII KUUH}
+		     )
+		   "List of characters equivalent to trailing colon in \"password\" prompts."
+		   :type '(repeat character)
+		   :version "30.1"
+		   :group 'processes)
+
+
 		 
 		 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
 		 (setq org-src-fontify-natively t)
