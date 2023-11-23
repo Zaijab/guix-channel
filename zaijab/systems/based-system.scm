@@ -47,7 +47,7 @@
     ;; (kernel-arguments '("intel_iommu=on" "iommu=pt" "pcie_acs_override=downstream,multifunction"))
     (initrd (lambda (file-systems . rest)
 	      (apply base-initrd file-systems
-		     #:extra-modules '("vfio-pci" "vfio_iommu_type1" "vfio_virqfd")
+		     #:extra-modules '("vfio-pci" "vfio_iommu_type1")
 		     rest)))
 					;(initrd-modules (cons* "vfio" "vfio_iommu_type1" "vfio_virqfd" "vfio_pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9" %base-initrd-modules))
     (kernel-arguments '("iommu=pt"
