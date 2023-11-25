@@ -55,6 +55,9 @@
 			"pcie_acs_override=downstream,multifunction"
 			"vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9"
 			"usbcore.autosuspend=0"
+			"disable_lps_deep=Y"
+			"disable_msi=Y"
+			"disable_aspm=Y"
 			))
     
     (locale "en_US.utf8")
