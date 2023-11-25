@@ -54,7 +54,7 @@
 			"intel_iommu=on"
 			"pcie_acs_override=downstream,multifunction"
 			"vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9"
-			"blacklist nvidia"
+			"usbcore.autosuspend=0"
 			))
     
     (locale "en_US.utf8")
