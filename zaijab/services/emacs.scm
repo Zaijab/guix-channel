@@ -1343,7 +1343,7 @@ Processes all holes in the card text."
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
-	      ;(specification->package "emacs-jupyter")
+					;(specification->package "emacs-jupyter")
 	      ((options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
 	       (specification->package "emacs-jupyter"))
 
@@ -1364,6 +1364,9 @@ Processes all holes in the card text."
 	      (specification->package "python-scipy")
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
+	      (specification->package "python-numpy-documentation")
+	      (specification->package "python-matplotlib-documentation")
+	      
 	      ))
    (init '((require 'jupyter)
 	   (setq org-babel-python-command "python3"
