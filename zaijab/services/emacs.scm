@@ -1570,7 +1570,7 @@ nil nil (car menu-items))
 	   (global-set-key (kbd "s-K") 'windsize-up)
 	   (global-set-key (kbd "s-J") 'windsize-down)
 	   (global-set-key (kbd "s-f") 'exwm-floating-toggle-floating)
-	   (global-set-key (kbd "s-<tab>") 'switch-to-buffer)
+	   (global-set-key (kbd "s-<tab>") 'consult-buffer)
 	   (global-set-key (kbd "s-<escape>") 'execute-extended-command)
 	   (global-set-key (kbd "s-`") 'eshell-command)
 	   (global-set-key (kbd "s-c") (function
