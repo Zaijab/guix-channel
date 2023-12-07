@@ -167,32 +167,52 @@
 	    consult--source-recent-file consult--source-project-recent-file
 	    :preview-key '(:debounce 0.4 any))
 
-	   (setq consult-narrow-key "<")))))
+	   (setq consult-narrow-key "<")
+	   (consult-customize consult--source-buffer :hidden t :default nil)
+	   ;; set consult-workspace buffer list
+	   (defvar consult--source-workspace
+	     (list :name     "Workspace Buffers"
+		   :narrow   ?w
+		   :history  'buffer-name-history
+		   :category 'buffer
+		   :state    #'consult--buffer-state
+		   :default  t
+		   :items    (lambda () (consult--buffer-query
+					 :predicate #'tabspaces--local-buffer-p
+					 :sort 'visibility
+					 :as #'buffer-name)))
+
+	     "Set workspace buffer list for consult-buffer.")
+	   (add-to-list 'consult-buffer-sources 'consult--source-workspace))
+
+
+
+	 ))))
 
 (define buffer-configuration
-  (home-emacs-configuration
-   (packages (list emacs-tabspaces))
-   (init '((use-package tabspaces
-			:hook (after-init . tabspaces-mode) 
-			:commands (tabspaces-switch-or-create-workspace
-				   tabspaces-open-or-create-project-and-workspace)
-			:custom
-			(tabspaces-use-filtered-buffers-as-default t)
-			(tabspaces-default-tab "Default")
-			(tabspaces-remove-to-default t)
-			(tabspaces-include-buffers '("*scratch*"))
-			(tab-bar-new-tab-choice "*scratch*")
-			;; sessions
-			(tabspaces-session t)
-			(tabspaces-session-auto-restore t))))
-   (early-init '((setq desktop-restore-frames nil
-		       desktop-restore-in-current-display nil)
-		 (setq switch-to-buffer-obey-display-actions t)
-		 (defun mp-toggle-window-dedication ()
-		   "Toggles window dedication in the selected window."
-		   (interactive)
-		   (set-window-dedicated-p (selected-window)
-					   (not (window-dedicated-p (selected-window)))))))))
+(home-emacs-configuration
+ (packages (list emacs-tabspaces))
+ (init '((use-package tabspaces
+		      :hook (after-init . tabspaces-mode) 
+		      :commands (tabspaces-switch-or-create-workspace
+				 tabspaces-open-or-create-project-and-workspace)
+		      :custom
+		      (tabspaces-use-filtered-buffers-as-default t)
+		      (tabspaces-default-tab "Default")
+		      (tabspaces-remove-to-default t)
+		      (tabspaces-include-buffers '("*scratch*"))
+		      (tab-bar-new-tab-choice "*scratch*")
+		      ;; sessions
+		      (tabspaces-session t)
+		      (tabspaces-session-auto-restore t))))
+ (early-init '((setq desktop-restore-frames nil
+		     desktop-restore-in-current-display nil)
+	       (setq switch-to-buffer-obey-display-actions t)
+	       (defun mp-toggle-window-dedication ()
+		 "Toggles window dedication in the selected window."
+		 (interactive)
+		 (set-window-dedicated-p (selected-window)
+					 (not (window-dedicated-p (selected-window)))))))))
 
 (define meow-configuration
   (home-emacs-configuration
@@ -377,6 +397,7 @@
 	      (specification->package "curl")))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCDnwlb3IQDPJtFysPUJbDFQ" health chatterjee)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCjKIkpn1ZK6Wqigen1YBAYA" fun hcbailly)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
@@ -658,6 +679,9 @@
 		   (specification->package "emacs-org-fc")
 		   (specification->package "emacs-org-drill")))
    (init '((require 'org-roam-node)
+	   (setq org-roam-node-display-template
+		 (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
+
 	   (setq org-roam-directory "~/notes")
 	   (setq org-roam-v2-ack t)
 	   (org-roam-db-autosync-mode)
