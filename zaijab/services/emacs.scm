@@ -175,12 +175,12 @@
 		   :narrow   ?w
 		   :history  'buffer-name-history
 		   :category 'buffer
-		   :state    #'consult--buffer-state
+		   :state    (function consult--buffer-state)
 		   :default  t
 		   :items    (lambda () (consult--buffer-query
 					 :predicate #'tabspaces--local-buffer-p
 					 :sort 'visibility
-					 :as #'buffer-name)))
+					 :as (function buffer-name))))
 
 	     "Set workspace buffer list for consult-buffer.")
 	   (add-to-list 'consult-buffer-sources 'consult--source-workspace)
