@@ -1364,8 +1364,6 @@ Processes all holes in the card text."
 	      (specification->package "python-scipy")
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
-	      (specification->package "python-numpy-documentation")
-	      (specification->package "python-matplotlib-documentation")
 	      
 	      ))
    (init '((require 'jupyter)
