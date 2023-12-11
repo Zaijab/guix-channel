@@ -6,7 +6,7 @@
   (channel
    (name nonguix)
    (url "https://gitlab.com/nonguix/nonguix")
-   (commit "0f7c8e3e2b72c19d8a60b2a7e94a9ca8783d4754")
+   ;(commit "0f7c8e3e2b72c19d8a60b2a7e94a9ca8783d4754")
    (introduction
     (channel-introduction
      (version 0)
@@ -15,7 +15,7 @@
   (channel
    (name guix)
    (url "https://git.savannah.gnu.org/git/guix.git")
-   (commit "06f25a9a85be1bbe7a709e58ce41c1a834e5f1ae")
+   ;(commit "06f25a9a85be1bbe7a709e58ce41c1a834e5f1ae")
    (introduction
     (channel-introduction
      (version 0)
