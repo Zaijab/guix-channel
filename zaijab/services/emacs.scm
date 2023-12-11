@@ -684,9 +684,15 @@
 	   (setq org-roam-v2-ack t)
 	   (org-roam-db-autosync-mode)
 	   (setq org-roam-capture-templates
-		 '(("i" "Default" plain "%?"
+		 '(
+		   ("i" "Default" plain "%?"
 		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
-		    :unnarrowed t)))
+		    :unnarrowed t)
+		   ("msd" "Definition" plain "%?"
+		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+FILETAGS: :Mathematics:Statistics:Definition:")
+		    :unnarrowed t)
+
+		   ))
 	   (require 'org-fc)
 	   (setq org-fc-directories '("~/notes/"))
 	   (add-hook 'org-fc-before-review-hook
