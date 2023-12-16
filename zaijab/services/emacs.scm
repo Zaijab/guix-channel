@@ -694,7 +694,9 @@
 
 		   ))
 	   (require 'org-fc)
-	   (setq org-fc-directories '("~/notes/"))
+	   (setq org-fc-directories '("~/notes/")
+		 org-fc-flashcard-tag "FC"
+		 org-fc-suspended-tag "Suspended")
 	   (add-hook 'org-fc-before-review-hook
 		     (lambda ()
 		       (setq org-roam-buffer-prepare-hook nil)
