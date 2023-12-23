@@ -369,7 +369,9 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-pdf-tools")
 		   (specification->package "emacs-nov-el")))
-   (init '((pdf-tools-install)))))
+   (init '((pdf-tools-install)
+	   ;(add-hook 'pdf-view-mode-hook #'pdf-view-midnight-minor-mode)
+	   ))))
 
 (define cryptography-configuration
   (home-emacs-configuration
@@ -1777,9 +1779,10 @@ nil nil (car menu-items))
 	   (customize-set-variable 'display-time-load-average-threshold 100)
 	   (customize-set-variable 'display-time-day-and-date t)
 	   (set-default 'truncate-lines t)
-	   (load-theme 'modus-operandi t)           
-	   ;(define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
-	   ;(global-rainbow-delimiters-mode)
+	   (load-theme 'modus-operandi t)
+	   
+					;(define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
+					;(global-rainbow-delimiters-mode)
 	   (which-key-mode)))))
 
 
