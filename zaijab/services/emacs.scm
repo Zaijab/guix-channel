@@ -317,13 +317,14 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-aggressive-indent")
 		   (specification->package "emacs-smart-hungry-delete")))
-   (init '((require 'aggressive-indent)
+   (init '(;(require 'aggressive-indent)
 	   (require 'smart-hungry-delete)
 	   (smart-hungry-delete-add-default-hooks)
 	   (global-set-key (kbd "<backspace>") 'smart-hungry-delete-backward-char)
 	   (global-set-key (kbd "<delete>") 'smart-hungry-delete-backward-char)
 	   (global-set-key (kbd "C-d") 'smart-hungry-delete-forward-char)           
-	   (global-aggressive-indent-mode 1)))))
+	   ;(global-aggressive-indent-mode 1)
+	   ))))
 
 (define project-configuration
   (home-emacs-configuration
@@ -370,7 +371,18 @@
    (packages (list (specification->package "emacs-pdf-tools")
 		   (specification->package "emacs-nov-el")))
    (init '((pdf-tools-install)
-	   ;(add-hook 'pdf-view-mode-hook #'pdf-view-midnight-minor-mode)
+	   (defvar *current-mode* 'light)
+
+	   (defun my/dark-mode ()
+	     (interactive)
+	     (cond ((eq *current-mode* 'light)
+		    (modus-themes-toggle)
+		    (add-hook 'pdf-view-mode-hook (function pdf-view-midnight-minor-mode)))
+		   (t
+		    (modus-themes-toggle)
+		    (remove-hook 'pdf-view-mode-hook (function pdf-view-midnight-minor-mode)))
+		   ))
+
 	   ))))
 
 (define cryptography-configuration
