@@ -1137,6 +1137,8 @@ Processes all holes in the card text."
 		   (specification->package "emacs-valign")
 		   (specification->package "emacs-org-present")
 		   (specification->package "emacs-org-tree-slide")
+		   (specification->package "emacs-consult-org-roam")
+		   
 		   (specification->package "emacs-calfw") 
 		   ((options->transformation
 		     '((with-branch . "emacs-calfw-blocks=master")))
@@ -1524,19 +1526,15 @@ nil nil (car menu-items))
 (sql-port 5432))))))))
 
 (define blight-configuration '())
-
 (if (string= (read-delimited "\n" (open-input-pipe "echo $HOSTNAME")) "euler")
     (set! blight-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "emacs-blight")))
-   (init '((require 'blight)
-	   (setq my/blight (blight-sysfs))
-	   (blight-sysfs :min 0)
-	   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
-	   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))
-
-	  )
-    )
+	  (home-emacs-configuration
+	   (packages (list (specification->package "emacs-blight")))
+	   (init '((require 'blight)
+		   (setq my/blight (blight-sysfs))
+		   (blight-sysfs :min 0)
+		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
+		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
 
 (define exwm-configuration
   (home-emacs-configuration
@@ -1549,7 +1547,7 @@ nil nil (car menu-items))
 	      (specification->package "coreutils")
 	      (specification->package "gcc-toolchain")
 	      (specification->package "emacs-vterm")
-	      	      (specification->package "unclutter")
+	      (specification->package "unclutter")
 	      (specification->package "xhost")
 	      (specification->package "xrandr")
 	      (specification->package "arandr")))
@@ -1557,7 +1555,6 @@ nil nil (car menu-items))
 	   (require 'xelb)
 	   (require 'windsize)
 	   
-
 	   (unbind-key (kbd "C-x C-z") 'global-map)
 	   (global-set-key (kbd "<f7>") (function
 					 (lambda () (interactive)
@@ -1580,7 +1577,6 @@ nil nil (car menu-items))
 	   (global-set-key (kbd "s-2") 'split-window-below)
 	   (global-set-key (kbd "s-3") 'split-window-right)
 	   (global-set-key (kbd "s-5") 'exwm-workspace-switch)
-					;(global-set-key (kbd "s-q") (function (lambda () (interactive) (kill-buffer (current-buffer)))))
 	   (global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
 	   (global-set-key (kbd "s-e") (function
 					(lambda () (interactive)
