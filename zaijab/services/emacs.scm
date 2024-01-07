@@ -1232,10 +1232,10 @@ Processes all holes in the card text."
 						:todo
 						:timestamp))
 	   
-	   (setq org-agenda-files '("~/notes/20211224040925-todo.org"
-				    "/home/zjabbar/notes/20230822144411-math_607_gawlik.org"
-				    "/home/zjabbar/notes/20230822145746-math_649k_mileyko.org"
-				    "/home/zjabbar/notes/20230824144930-ics_690_sadowski.org"))
+	   (setq org-agenda-files '(
+				    "~/notes/20211224040925-todo.org"
+				    "/home/zjabbar/notes/20240105195957-math_699_gawlik.org"
+				    ))
 	   (setq cdlatex-math-modify-alist '((?b "\\mathbb" nil t nil nil)))
 
 	   (setq org-startup-with-inline-images t
@@ -1520,6 +1520,16 @@ nil nil (car menu-items))
 (sql-database "zain")
 (sql-port 5432))))))))
 
+(if (string= (read-delimited "\n" (open-input-pipe "echo $HOSTNAME")) "euler")
+(define blight-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-blight")))
+   (init '((require 'blight)
+	   (setq my/blight (blight-sysfs))
+	   (blight-sysfs :min 0)
+	   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
+	   (global-set-key (kbd "<f6>") (blight-step my/blight 10))))))
+)
 
 (define exwm-configuration
   (home-emacs-configuration
@@ -1532,8 +1542,7 @@ nil nil (car menu-items))
 	      (specification->package "coreutils")
 	      (specification->package "gcc-toolchain")
 	      (specification->package "emacs-vterm")
-	      (specification->package "emacs-blight")
-	      (specification->package "unclutter")
+	      	      (specification->package "unclutter")
 	      (specification->package "xhost")
 	      (specification->package "xrandr")
 	      (specification->package "arandr")))
@@ -1541,11 +1550,6 @@ nil nil (car menu-items))
 	   (require 'xelb)
 	   (require 'windsize)
 	   
-	   ;; (require 'blight)
-	   ;; (setq my/blight (blight-sysfs))
-	   ;; (blight-sysfs :min 0)
-	   ;; (global-set-key (kbd "<f5>") (blight-step my/blight -10))
-	   ;; (global-set-key (kbd "<f6>") (blight-step my/blight 10))
 
 	   (unbind-key (kbd "C-x C-z") 'global-map)
 	   (global-set-key (kbd "<f7>") (function
