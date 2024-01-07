@@ -10,6 +10,9 @@
   #:use-module (gnu services configuration)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 pretty-print)
+  #:use-module (ice-9 textual-ports)
+  #:use-module (ice-9 rdelim)
+  #:use-module (ice-9 popen)
   #:use-module (guix transformations)
   #:use-module (guix gexp)
   #:use-module (zaijab packages emacs-xyz)
@@ -1520,16 +1523,20 @@ nil nil (car menu-items))
 (sql-database "zain")
 (sql-port 5432))))))))
 
+(define blight-configuration '())
+
 (if (string= (read-delimited "\n" (open-input-pipe "echo $HOSTNAME")) "euler")
-(define blight-configuration
+    (set! blight-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-blight")))
    (init '((require 'blight)
 	   (setq my/blight (blight-sysfs))
 	   (blight-sysfs :min 0)
 	   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
-	   (global-set-key (kbd "<f6>") (blight-step my/blight 10))))))
-)
+	   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))
+
+	  )
+    )
 
 (define exwm-configuration
   (home-emacs-configuration
