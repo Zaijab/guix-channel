@@ -1241,7 +1241,9 @@ Processes all holes in the card text."
 				    "~/notes/20211224040925-todo.org"
 				    "/home/zjabbar/notes/20240105195957-math_699_gawlik.org"
 				    ))
-	   (setq cdlatex-math-modify-alist '((?b "\\mathbb" nil t nil nil)))
+	   (setq cdlatex-math-modify-alist
+		 '((?a "\\mathbf" nil t nil nil)
+		   (?b "\\mathbb" nil t nil nil)))
 
 	   (setq org-startup-with-inline-images t
 		 cdlatex-simplify-sub-super-scripts nil
@@ -1559,6 +1561,9 @@ nil nil (car menu-items))
 	   (global-set-key (kbd "<f7>") (function
 					 (lambda () (interactive)
 						 (call-process-shell-command "loginctl suspend"))))
+	   (global-set-key (kbd "<f4>") (function
+					 (lambda () (interactive)
+						 (call-process-shell-command "xset dpms force off"))))
 
 	   (defun my/tabspace-kill-current-buffer () (interactive)
 	     (let ((buffer-list (cl-remove-if (lambda (buf) (string-match-p (regexp-quote "*Minibuf-") (buffer-name buf))) (tabspaces--buffer-list))))
