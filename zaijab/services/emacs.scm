@@ -1532,7 +1532,8 @@ nil nil (car menu-items))
     (set! blight-configuration
 	  (home-emacs-configuration
 	   (packages (list (specification->package "emacs-blight")))
-	   (init '((require 'blight)
+	   (init '((shell-command "sudo chmod 777 /sys/class/backlight/amdgpu_bl0/brightness")
+		   (require 'blight)
 		   (setq my/blight (blight-sysfs))
 		   (blight-sysfs :min 0)
 		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
