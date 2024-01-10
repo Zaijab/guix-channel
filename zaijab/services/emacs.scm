@@ -1428,7 +1428,16 @@ Processes all holes in the card text."
 	      (specification->package "guile-ares-rs")
 	      (specification->package "guile-next")
 	      ))
-   (init '((require 'geiser-guile)
+   (init '((with-eval-after-load 'guix-repl
+				 (setq guix-guile-program  '("guix" "repl")
+				       guix-config-scheme-compiled-directory  nil
+				       guix-repl-use-latest  nil
+				       guix-repl-use-server  nil))
+
+
+
+	   
+	   (require 'geiser-guile)
 	   (require 'guix)
 	   (setq geiser-default-implementation 'guile)
 	   (global-guix-prettify-mode)
