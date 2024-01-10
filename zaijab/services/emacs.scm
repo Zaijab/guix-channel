@@ -1599,9 +1599,9 @@ nil nil (car menu-items))
 	   (global-set-key (kbd "s-v") (function
 					(lambda () (interactive)
 						(start-process-shell-command
-						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\""
+						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\" https://workbench.researchallofus.org"
 						 nil
-						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\""))))
+						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\" https://workbench.researchallofus.org"))))
 	   (global-set-key (kbd "s-V") (function xwidget-webkit-browse-url))
 	   
 	   (global-set-key (kbd "s-r") (function eshell))
