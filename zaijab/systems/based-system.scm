@@ -45,20 +45,20 @@
     (kernel linux)
     (firmware (list linux-firmware))
     ;; (kernel-arguments '("intel_iommu=on" "iommu=pt" "pcie_acs_override=downstream,multifunction"))
-    (initrd (lambda (file-systems . rest)
-	      (apply base-initrd file-systems
-		     #:extra-modules '("vfio" "vfio_pci" "vfio_iommu_type1")
-		     rest)))
-					;(initrd-modules (cons* "vfio" "vfio_iommu_type1" "vfio_virqfd" "vfio_pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9" %base-initrd-modules))
-    (kernel-arguments '("iommu=pt"
-			"intel_iommu=on"
-			"pcie_acs_override=downstream,multifunction"
-			"vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9"
-			"usbcore.autosuspend=0"
-			"disable_lps_deep=Y"
-			"disable_msi=Y"
-			"disable_aspm=Y"
-			))
+    ;; (initrd (lambda (file-systems . rest)
+    ;; 	      (apply base-initrd file-systems
+    ;; 		     #:extra-modules '("vfio" "vfio_pci" "vfio_iommu_type1")
+    ;; 		     rest)))
+    ;; 					;(initrd-modules (cons* "vfio" "vfio_iommu_type1" "vfio_virqfd" "vfio_pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9" %base-initrd-modules))
+    ;; (kernel-arguments '("iommu=pt"
+    ;; 			"intel_iommu=on"
+    ;; 			"pcie_acs_override=downstream,multifunction"
+    ;; 			"vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9"
+    ;; 			"usbcore.autosuspend=0"
+    ;; 			"disable_lps_deep=Y"
+    ;; 			"disable_msi=Y"
+    ;; 			"disable_aspm=Y"
+    ;; 			))
     
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
@@ -107,8 +107,8 @@
 		 %base-user-accounts))
     
     (services (cons*
-	       (service kernel-module-loader-service-type
-                        '("vfio_pci" "vfio" "vfio_iommu_type1" #;"vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9"))
+	       ;; (service kernel-module-loader-service-type
+               ;;          '("vfio_pci" "vfio" "vfio_iommu_type1" #;"vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9"))
 	       (service openssh-service-type)
 	       (service syncthing-service-type
 			(syncthing-configuration (user "zjabbar")))
@@ -154,9 +154,9 @@
   (operating-system
     (inherit tao-operating-system)
     
-    (kernel-arguments '("iommu=pt"
-			"pcie_acs_override=downstream,multifunction"
-			"vfio-pci.ids=1022:1632,1022:1635,1002:164c,1002:1637,1022:15df,1022:1639,1022:15e2,1022:15e3"))
+    ;; (kernel-arguments '("iommu=pt"
+    ;; 			"pcie_acs_override=downstream,multifunction"
+    ;; 			"vfio-pci.ids=1022:1632,1022:1635,1002:164c,1002:1637,1022:15df,1022:1639,1022:15e2,1022:15e3"))
     (host-name "euler")
     (file-systems (cons*
 		   (file-system
