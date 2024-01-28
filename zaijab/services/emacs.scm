@@ -1137,7 +1137,6 @@ Processes all holes in the card text."
 		   (specification->package "emacs-org-present")
 		   (specification->package "emacs-org-tree-slide")
 		   (specification->package "emacs-consult-org-roam")
-		   
 		   (specification->package "emacs-calfw") 
 		   ((options->transformation
 		     '((with-branch . "emacs-calfw-blocks=master")))
