@@ -513,7 +513,7 @@
 					  "%(title)s.%(ext)s"
 					  (elfeed-entry-link elfeed-show-entry))))))))
 
-#;(define music-configuration
+(define music-configuration
   (home-emacs-configuration
    (packages (list
 	      (specification->package "alsa-utils")
