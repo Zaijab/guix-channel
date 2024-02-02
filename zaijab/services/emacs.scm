@@ -1155,6 +1155,12 @@ Processes all holes in the card text."
 	   (require 'calfw-blocks)
 	   (setq org-startup-folded t)
 
+	   (setq org-structure-template-alist
+		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
+		   ("e" . "example") ("E" . "export") ("h" . "export html")
+		   ("l" . "export latex") ("q" . "quote") ("s" . "src") ("v" . "verse")
+		   ("p" . "PROOF") ("t" . "THEOREM")))
+	   
 	   (defun cfw:date-before (date num)
 	     "Return the date before NUM days from DATE."
 	     (calendar-gregorian-from-absolute
