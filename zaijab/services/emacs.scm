@@ -375,6 +375,28 @@
 		   (specification->package "emacs-nov-el")))
    (init '((pdf-tools-install)
 	   (defvar *current-mode* 'light)
+(defun pdf-view-redisplay (&optional window)
+  "Redisplay page in WINDOW.
+
+If WINDOW is t, redisplay pages in all windows."
+  (setq window nil)
+  (unless pdf-view-inhibit-redisplay
+    (if (not (eq t window))
+        (pdf-view-display-page
+         (pdf-view-current-page window)
+         window)
+      (dolist (win (get-buffer-window-list nil nil t))
+        (pdf-view-display-page
+         (pdf-view-current-page win)
+         win))
+      (when (consp image-mode-winprops-alist)
+        (dolist (window (mapcar #'car image-mode-winprops-alist))
+          (unless (or (not (window-live-p window))
+                      (eq (current-buffer)
+                          (window-buffer window)))
+            (setf (pdf-view-window-needs-redisplay window) t)))))
+    (force-mode-line-update)))
+
 
 	   (defun my/dark-mode ()
 	     (interactive)
@@ -413,10 +435,10 @@
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCDnwlb3IQDPJtFysPUJbDFQ" health chatterjee)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun pekin)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun pekin)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun pekin)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun pekin)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw" math grant)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCm5mt-A4w61lknZ9lCsZtBw" math brunton)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" crafter david)
