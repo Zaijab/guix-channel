@@ -1580,7 +1580,7 @@ nil nil (car menu-items))
 (define exwm-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
+	      ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/emacs-exwm/exwm")))
 	       (specification->package "emacs-exwm"))
 	      (specification->package "jami")
 	      (specification->package "emacs-windsize")
