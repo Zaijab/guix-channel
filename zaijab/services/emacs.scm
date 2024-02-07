@@ -1753,7 +1753,7 @@ nil nil (car menu-items))
    (packages (list (specification->package "emacs-modus-themes")
                    (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
-   (early-init '((setq gc-cons-threshold most-positive-fixnum
+   (early-init '((setq gc-cons-threshold 800000 ;most-positive-fixnum
 		       package-enable-at-startup nil
 		       comp-enable-subr-trampolines nil
 		       inhibit-automatic-native-compilation nil
@@ -1855,7 +1855,7 @@ nil nil (car menu-items))
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-				     ;(emacs (specification->package "emacs-xwidgets"))
+				     (emacs (specification->package "emacs-xwidgets"))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
