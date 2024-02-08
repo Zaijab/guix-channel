@@ -434,7 +434,7 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "curl")))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCDnwlb3IQDPJtFysPUJbDFQ" health chatterjee)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCDnwlb3IQDPJtFysPUJbDFQ" health chatterjee)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun pekin)
