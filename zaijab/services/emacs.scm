@@ -712,7 +712,7 @@ If WINDOW is t, redisplay pages in all windows."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-org-roam")
-		   (specification->package "emacs-org-roam-ui")
+		   ;(specification->package "emacs-org-roam-ui")
 		   (specification->package "emacs-org-fc")
 		   (specification->package "emacs-org-drill")))
    (init '((require 'org-roam-node)
