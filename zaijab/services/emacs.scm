@@ -18,6 +18,7 @@
   #:use-module (zaijab packages emacs-xyz)
   #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages chrome)
+  #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages messaging)
   #:use-module (nongnu packages fonts)
   #:export (home-emacs-service-type
@@ -712,7 +713,7 @@ If WINDOW is t, redisplay pages in all windows."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-org-roam")
-		   ;(specification->package "emacs-org-roam-ui")
+		   emacs-org-roam-ui
 		   (specification->package "emacs-org-fc")
 		   (specification->package "emacs-org-drill")))
    (init '((require 'org-roam-node)
