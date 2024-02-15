@@ -1767,7 +1767,7 @@ nil nil (car menu-items))
    (packages (list (specification->package "emacs-modus-themes")
                    (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
-   (early-init '((setq gc-cons-threshold 800000 ;most-positive-fixnum
+   (early-init '((setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
 		       comp-enable-subr-trampolines nil
 		       inhibit-automatic-native-compilation nil
@@ -1792,6 +1792,8 @@ nil nil (car menu-items))
 		       max-mini-window-height 1
 		       initial-scratch-message nil
 		       large-file-warning-threshold 100000000)
+		 (set-face-attribute 'mode-line nil :box nil)
+		 (set-face-attribute 'mode-line-inactive nil :box nil)
 		 (defcustom password-colon-equivalents
 		   '(?\u003a ; ?\N{COLON}
 		     ?\uff1a ; ?\N{FULLWIDTH COLON}
