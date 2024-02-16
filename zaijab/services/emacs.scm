@@ -1428,6 +1428,8 @@ Processes all holes in the card text."
 	      (specification->package "emacs-python-black")
 
 	      (specification->package "pandoc")
+	      (specification->package "python-numpy")
+	      (specification->package "python-keras")
 
 	      (specification->package "python-sqlalchemy")
 	      (specification->package "python-cookiecutter")
