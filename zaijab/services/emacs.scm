@@ -99,7 +99,7 @@
    (packages (list (specification->package "emacs-vertico")))
    (init '((setq minibuffer-prompt-properties
 		 '(read-only t cursor-intangible t face minibuffer-prompt))
-	   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+	   (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
 	     (defun crm-indicator (args)
     (cons (format "[CRM%s] %s"
                   (replace-regexp-in-string
@@ -107,7 +107,7 @@
                    crm-separator)
                   (car args))
           (cdr args)))
-	     (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+	     (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
 	     (setq enable-recursive-minibuffers t)
 	   (vertico-mode 1)))))
 
@@ -403,7 +403,7 @@ If WINDOW is t, redisplay pages in all windows."
          (pdf-view-current-page win)
          win))
       (when (consp image-mode-winprops-alist)
-        (dolist (window (mapcar #'car image-mode-winprops-alist))
+        (dolist (window (mapcar (function car image-mode-winprops-alist)))
           (unless (or (not (window-live-p window))
                       (eq (current-buffer)
                           (window-buffer window)))
