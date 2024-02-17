@@ -348,7 +348,7 @@ information on application's windows.")
        (sha256
         (base32 "1rznyzv6w9f8bfq2x5b0ik0dqyk5ghlhmkiw1998waq6hn4gnqic"))))
     (build-system pyproject-build-system)
-    (propagated-inputs (list python-pyperclip))
+    (propagated-inputs (list python-pyperclip python-xlib))
     (home-page "https://github.com/asweigart/mouseinfo")
     (synopsis
      "An application to display XY position and RGB color information for the pixel currently under the mouse. Works on Python 2 and 3.")
