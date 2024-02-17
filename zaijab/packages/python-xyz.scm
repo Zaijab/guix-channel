@@ -263,3 +263,119 @@
 ;;      "@code{PyAutoGUI} lets Python control the mouse and keyboard, and other GUI
 ;; automation tasks.  For Windows, @code{macOS}, and Linux, on Python 3 and 2.")
 ;;     (license license:bsd-3)))
+(define-public python-pytweening
+  (package
+    (name "python-pytweening")
+    (version "1.1.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "pytweening" version))
+       (sha256
+        (base32 "0a086ylhcdqqc3dza1kyi712zzmmvxbnga549anidn4xaapi93hd"))))
+    (build-system pyproject-build-system)
+    (home-page "https://github.com/asweigart/pytweening")
+    (synopsis "A collection of tweening / easing functions.")
+    (description
+     "This package provides a collection of tweening / easing functions.")
+    (license license:expat)))
+
+(define-public python-pyscreeze
+  (package
+    (name "python-pyscreeze")
+    (version "0.1.30")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "PyScreeze" version))
+       (sha256
+        (base32 "1lb7g8a3npaaljvwry99r2w5ji7r78s46qpsvhqn4sp79388l2bl"))))
+    (build-system pyproject-build-system)
+    (home-page "https://github.com/asweigart/pyscreeze")
+    (synopsis "A simple, cross-platform screenshot module for Python 2 and 3.")
+    (description
+     "This package provides a simple, cross-platform screenshot module for Python 2
+and 3.")
+    (license license:expat)))
+
+(define-public python-pyrect
+  (package
+    (name "python-pyrect")
+    (version "0.2.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "PyRect" version))
+       (sha256
+        (base32 "0y4vl13zpgvlh0bhsn1vkm2fankwjk05gggzr9krp4lvvzv5algn"))))
+    (build-system pyproject-build-system)
+    (home-page "https://github.com/asweigart/pyrect")
+    (synopsis
+     "PyRect is a simple module with a Rect class for Pygame-like rectangular areas.")
+    (description
+     "@code{PyRect} is a simple module with a Rect class for Pygame-like rectangular
+areas.")
+    (license license:bsd-3)))
+
+(define-public python-pygetwindow
+  (package
+    (name "python-pygetwindow")
+    (version "0.0.9")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "PyGetWindow" version))
+       (sha256
+        (base32 "1256s0nj9w7vyzv29klhi9lw25s07047fw9dhg6hbcyjwxal728p"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-pyrect))
+    (home-page "https://github.com/asweigart/pygetwindow")
+    (synopsis
+     "A simple, cross-platform module for obtaining GUI information on application's windows.")
+    (description
+     "This package provides a simple, cross-platform module for obtaining GUI
+information on application's windows.")
+    (license license:bsd-3)))
+
+(define-public python-mouseinfo
+  (package
+    (name "python-mouseinfo")
+    (version "0.1.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "MouseInfo" version))
+       (sha256
+        (base32 "1rznyzv6w9f8bfq2x5b0ik0dqyk5ghlhmkiw1998waq6hn4gnqic"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-pyperclip))
+    (home-page "https://github.com/asweigart/mouseinfo")
+    (synopsis
+     "An application to display XY position and RGB color information for the pixel currently under the mouse. Works on Python 2 and 3.")
+    (description
+     "An application to display XY position and RGB color information for the pixel
+currently under the mouse.  Works on Python 2 and 3.")
+    (license #f)))
+
+(define-public python-pyautogui
+  (package
+    (name "python-pyautogui")
+    (version "0.9.54")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "PyAutoGUI" version))
+       (sha256
+        (base32 "1ch4mvrnkz4wyc27p75raf98xzy6wmbxyx1z375l328izpl2j7fx"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-mouseinfo python-pygetwindow
+                             python-pymsgbox python-pyscreeze
+                             python-pytweening))
+    (home-page "https://github.com/asweigart/pyautogui")
+    (synopsis
+     "PyAutoGUI lets Python control the mouse and keyboard, and other GUI automation tasks. For Windows, macOS, and Linux, on Python 3 and 2.")
+    (description
+     "@code{PyAutoGUI} lets Python control the mouse and keyboard, and other GUI
+automation tasks.  For Windows, @code{macOS}, and Linux, on Python 3 and 2.")
+    (license license:bsd-3)))
+
