@@ -1430,7 +1430,6 @@ If WINDOW is t, redisplay pages in all windows."
 
 	      (specification->package "pandoc")
 	      (specification->package "python-numpy")
-	      (specification->package "python-pyautogui")
 
 	      (specification->package "python-sqlalchemy")
 	      (specification->package "python-cookiecutter")
