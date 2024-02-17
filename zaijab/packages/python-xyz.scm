@@ -291,6 +291,8 @@
        (sha256
         (base32 "1lb7g8a3npaaljvwry99r2w5ji7r78s46qpsvhqn4sp79388l2bl"))))
     (build-system pyproject-build-system)
+    (propagated-inputs (list python-xlib))
+
     (home-page "https://github.com/asweigart/pyscreeze")
     (synopsis "A simple, cross-platform screenshot module for Python 2 and 3.")
     (description
