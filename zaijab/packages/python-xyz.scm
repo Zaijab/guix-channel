@@ -370,7 +370,7 @@ currently under the mouse.  Works on Python 2 and 3.")
     (build-system pyproject-build-system)
     (propagated-inputs (list python-mouseinfo python-pygetwindow
                              python-pymsgbox python-pyscreeze
-                             python-pytweening))
+                             python-pytweening python-xlib))
     (home-page "https://github.com/asweigart/pyautogui")
     (synopsis
      "PyAutoGUI lets Python control the mouse and keyboard, and other GUI automation tasks. For Windows, macOS, and Linux, on Python 3 and 2.")
