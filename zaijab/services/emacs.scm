@@ -1415,10 +1415,9 @@ If WINDOW is t, redisplay pages in all windows."
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
-	      (specification->package "emacs-jupyter")
 
-	      ;((options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
-	      ; (specification->package "emacs-jupyter"))
+	      ((options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
+	       (specification->package "emacs-jupyter"))
 
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter")
