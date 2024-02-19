@@ -447,17 +447,41 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "curl")))
    (init '((setq elfeed-feeds '(("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCDnwlb3IQDPJtFysPUJbDFQ" health chatterjee)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun pekin)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun pekin)
+				
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun league nicob)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun league pekin)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCIkcvRgwGlzEtfGf7k2oL3g" fun league virkayu)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCc3cbGWviHbC1OLJKFDfogA" fun league virkayu)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCwE00vEJFzpO6j1rDJMLDfg" fun league virkayu)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkaw-9Mo41X_N8sT15EyRzA" fun league eagz)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCu-3KO4dBHSuz-57j4RHTKw" fun league hidon)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCcWrPkUDJRSPqt4kAF9DVsA" fun league leo)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCOQe4ma4be9SZ1n8B2ijihQ" fun league rogue)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCeTAV9jFkjdtgi-OP7Ntj3g" fun ow awkward)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCzxgSHk0g-D-eErxMiDy9UA" fun ow awkward)
+
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw" math grant)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCgBRykS2v-WV2YYUpR2V9jw" math allangles)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCPb7xe-MQ0KiJpaKBWFZtTA" math normal)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCr22xikWUK2yUW4YxOKXclQ" math beautiful)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCm5mt-A4w61lknZ9lCsZtBw" math brunton)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCoxcjq-8xIDTYp3uz647V5A" math numberphile)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCU8Nm_HV-GouPa-WmujPltQ" math barker)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UC6jM0RFkr4eSkzT5Gx0HOAw" math penn)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCSju5G2aFaWMqn-_0YBtq5A" math parker)
+
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" crafter david)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCuj_loxODrOPxSsXDfJmpng" crafter andrew)
+				
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkdmU8hGK4Fg3LghTVtKltQ" japanese cure-dolly)
-				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLg9uYxuZf8x_A-vcqqyOFZu06WlhnypWj" japanese cure-dolly organic-japanese)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2_krAagEXVPftDXZCDiVZA" japanese kanamenaito)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCiX01KrL5XyKsxhjRhCC7oA" japanese takashi)
+
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2Zs9v2hL2qZZ7vsAENsg4w" learning sung)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCjmynbA3C3Tm0koVy_8pfLw" learning sung)
+				
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCm0MFprGs8VWcfsq743FJ7A" lecture machine-learning washington intro)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL5B3KLQNAC5j46Ro64xF7hLV6Uf-gHUHL" lecture continuum-mechanics)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" lecture machine-learning statistics ng)
@@ -475,7 +499,6 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLo4jXE-LdDTTIIIRwqK35CbFJieSJEcVR" lecture functional)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLLq_gUfXAnkkvL_UoCGivS0wOYhwCtczI" lecture pde ictp-2016)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLp0hSY2uBeP_mPvDhVS-MwLy2xYrINRrU" lecture pde ictp-2020)
-				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLlXfTHzgMRUK56vbQgzCVM9vxjKxc8DCr" lecture pde beautiful)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLGCj8f6sgswntUil8yzohR_qazOfYZCg_" lecture pde tisdell)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLF6061160B55B0203" lecture pde commutant)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLdgVBOaXkb9Ab7UM8sCfQWgdbzxkXTNVD" lecture pde khan)
@@ -490,7 +513,6 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLp0hSY2uBeP_HDgkCSrG5pccHYfudTJYI" lecture topology pavel)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLBEeOnR8lrBHNZWwk8-pHOQLQnP3u8bO8" lecture topology clark)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL6763F57A61FE6FE8" lecture topology wildberger)))
-
 	   (require 'elfeed-tube)
 	   (elfeed-tube-setup)
 	   (add-hook 'elfeed-new-entry-hook (function elfeed-declickbait-entry))
@@ -1415,7 +1437,7 @@ If WINDOW is t, redisplay pages in all windows."
    (packages (list
 	      (specification->package "python")
 	      (specification->package "jupyter")
-	      ;; python-pyautogui
+
 	      ((options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
 	       (specification->package "emacs-jupyter"))
 
