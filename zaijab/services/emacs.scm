@@ -495,6 +495,7 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLUl4u3cNGP61MdtwGTqZA0MreSaDybji8" lecture mit prob)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLEC88901EBADDD980" lecture mit odes)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL221E2BBF13BECF6C" lecture mit linear)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLNfNKbfMcu1GohKHv_u7Kf0AQwD2uyFew" lecture arnold feec)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLUl4u3cNGP63micsJp_--fRAjZXPrQzW_" lecture mit functional)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLo4jXE-LdDTTIIIRwqK35CbFJieSJEcVR" lecture functional)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLLq_gUfXAnkkvL_UoCGivS0wOYhwCtczI" lecture pde ictp-2016)
@@ -561,14 +562,25 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq youtube-dl-path "yt-dlp --sponsorblock-remove all")
 	   (setq youtube-dl-output-dir "~/lectures/")
 
-	   (defun elfeed-download-video ()
+	   (defun elfeed-download-video-best-quality ()
 	     "Download a video using youtube-dl."
 	     (interactive)
 	     (async-shell-command (format "%s -o \"%s%s\" -f bestvideo+bestaudio %s"
 					  youtube-dl-path
 					  youtube-dl-output-dir
 					  "%(title)s.%(ext)s"
-					  (elfeed-entry-link elfeed-show-entry))))))))
+					  (elfeed-entry-link elfeed-show-entry))))
+
+	   (defun elfeed-download-video-audio-only ()
+	     "Download a video using youtube-dl."
+	     (interactive)
+	     (async-shell-command (format "%s -o \"%s%s\" -x %s"
+					  youtube-dl-path
+					  youtube-dl-output-dir
+					  "%(title)s.%(ext)s"
+					  (elfeed-entry-link elfeed-show-entry))))
+
+	   ))))
 
 (define music-configuration
   (home-emacs-configuration
