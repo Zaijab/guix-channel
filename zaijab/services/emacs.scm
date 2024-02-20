@@ -847,13 +847,13 @@ If WINDOW is t, redisplay pages in all windows."
 		*jisho-results* nil nil 'equal)))
 
 	   (defun kanji-word->drill (word)
-	     (apply 'format "{{%s}} :Japanese:\n{{%s}} {{%s}}\n" word))
+	     (apply 'format "{{%s}}\n{{%s}} {{%s}}\n" word))
 
 	   (defun kana-word->drill (word)
-	     (apply 'format "{{%s}} :Japanese:\n{{%s}}\n" word))
+	     (apply 'format "{{%s}}\n{{%s}}\n" word))
 	   
 	   (defun simple-kanji-word->drill (word)
-	     (apply 'format "%s :Japanese:\n{{%s}} {{%s}}\n" word))
+	     (apply 'format "%s\n{{%s}} {{%s}}\n" word))
 
 ;; 	   (defvar cram-mode nil)
 
