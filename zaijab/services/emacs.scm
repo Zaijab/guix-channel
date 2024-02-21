@@ -766,7 +766,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq org-roam-node-display-template
 		 (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 
-	   (setq org-roam-directory "~/notes")
+	   (setq org-roam-directory"~/notes")
 	   (setq org-roam-v2-ack t)
 	   (org-roam-db-autosync-mode)
 	   (setq org-roam-capture-templates
@@ -1707,6 +1707,7 @@ nil nil (car menu-items))
 					(lambda () (interactive)
 						(find-file (read-file-name "" "~/books/")))))
 	   (global-set-key (kbd "s-n") 'org-roam-node-find)
+	   (global-set-key (kbd "s-N") 'org-roam-dailies-capture-today)
 	   (global-set-key (kbd "C-x C-t") 'vterm)
 	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
 	   (global-set-key (kbd "s-a") 'cfw:open-org-calendar)
