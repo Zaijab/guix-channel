@@ -459,7 +459,7 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCu-3KO4dBHSuz-57j4RHTKw" fun league hidon)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCcWrPkUDJRSPqt4kAF9DVsA" fun league leo)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCOQe4ma4be9SZ1n8B2ijihQ" fun league rogue)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCeTAV9jFkjdtgi-OP7Ntj3g" fun ow awkward)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCF_b_1kpeajcy03cb36zCkQ" fun ow awkward)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCzxgSHk0g-D-eErxMiDy9UA" fun ow awkward)
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw" math grant)
@@ -1320,7 +1320,9 @@ If WINDOW is t, redisplay pages in all windows."
 				    ))
 	   (setq cdlatex-math-modify-alist
 		 '((?a "\\mathbf" nil t nil nil)
-		   (?b "\\mathbb" nil t nil nil)))
+		   (?b "\\mathbb" nil t nil nil)
+		   (?f "\\mathfrak" nil t nil nil)
+		   ))
 
 	   (setq org-startup-with-inline-images t
 		 cdlatex-simplify-sub-super-scripts nil
