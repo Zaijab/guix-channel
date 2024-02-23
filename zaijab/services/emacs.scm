@@ -1829,7 +1829,7 @@ nil nil (car menu-items))
 		       byte-compile-root-dir nil
 		       frame-inhibit-implied-resize t
 		       redisplay-dont-pause t
-		       max-mini-window-height 1
+		       max-mini-window-height 10
 		       initial-scratch-message nil
 		       large-file-warning-threshold 100000000)
 		 (set-face-attribute 'mode-line nil :box nil)
@@ -1901,9 +1901,8 @@ nil nil (car menu-items))
 	   (customize-set-variable 'display-time-day-and-date t)
 	   (set-default 'truncate-lines t)
 	   (load-theme 'modus-operandi t)
-	   
-					;(define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
-					;(global-rainbow-delimiters-mode)
+	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
+	   (global-rainbow-delimiters-mode)
 	   (which-key-mode)))))
 
 
