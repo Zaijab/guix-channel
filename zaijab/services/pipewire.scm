@@ -1,9 +1,7 @@
 (define-module (zaijab services pipewire)
   #:use-module (guix gexp)
-
   #:use-module (gnu packages linux)
   #:use-module (gnu packages pulseaudio)
-
   #:use-module (gnu home services)
   #:use-module (gnu home services shepherd))
 

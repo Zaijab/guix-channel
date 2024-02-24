@@ -368,6 +368,13 @@
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)))))
 
+(define graphical-browser-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "icecat")
+		   (specification->package "ublock-origin-icecat")))
+   (early-init '())
+   (init '())))
+
 (define eww-configuration
   (home-emacs-configuration
    (packages (list emacs-xwwp))
@@ -1903,7 +1910,8 @@ nil nil (car menu-items))
 	   (load-theme 'modus-operandi t)
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
-	   (which-key-mode)))))
+	   (which-key-mode)
+	   ))))
 
 
 ;;; Combine all Emacs-Configurations within module
