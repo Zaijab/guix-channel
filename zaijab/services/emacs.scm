@@ -1642,10 +1642,7 @@ nil nil (car menu-items))
   (home-emacs-configuration
    (packages (list
 	      (specification->package "jami")
-	      ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/emacs-exwm/exwm.git")))
-	       (specification->package "emacs-exwm"))
-
-	      ;; (specification->package "emacs-exwm")
+	      (specification->package "emacs-exwm")
 	      (specification->package "emacs-windsize")
 	      (specification->package "binutils")
 	      (specification->package "coreutils")
@@ -1922,7 +1919,8 @@ nil nil (car menu-items))
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-				     (emacs (emacs->emacs-next (specification->package "emacs-xwidgets")))
+				     ;; (emacs (emacs->emacs-next (specification->package "emacs-xwidgets")))
+				     (emacs (specification->package "emacs-xwidgets"))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
