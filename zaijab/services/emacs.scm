@@ -1918,7 +1918,8 @@ nil nil (car menu-items))
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-				     (emacs (specification->package "emacs-xwidgets"))
+				     (emacs ((options->transformation '((with-input . "emacs=emacs-next")))
+					     (specification->package "emacs-xwidgets")))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
