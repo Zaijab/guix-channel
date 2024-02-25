@@ -1642,7 +1642,10 @@ nil nil (car menu-items))
   (home-emacs-configuration
    (packages (list
 	      (specification->package "jami")
-	      (specification->package "emacs-exwm")
+	      ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/emacs-exwm/exwm.git")))
+	       (specification->package "emacs-exwm"))
+
+	      ;; (specification->package "emacs-exwm")
 	      (specification->package "emacs-windsize")
 	      (specification->package "binutils")
 	      (specification->package "coreutils")
