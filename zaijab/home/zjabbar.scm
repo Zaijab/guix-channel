@@ -34,6 +34,7 @@
 		  ("bluepillar" . "~/code/gp-saml-gui/gp_saml_gui.py -S --gateway --clientos=Linux galileo.enterprise.its.hawaii.edu")))
                (environment-variables
                 '(("GNUPGHOME" . "~/.config/gnupg")
+                  ("PASSWORD_STORE_SYSTEM_EXTENSION_DIR" . "/home/zjabbar/.guix-profile/lib/password-store/extensions/")
                   ("PASSWORD_STORE_ENABLE_EXTENSIONS" . "true")
                   ("GIO_MODULE_DIR" . "/home/zjabbar/.guix-home/profile/lib/gio/modules/")
                   ("EDITOR" . "emacsclient")
@@ -41,7 +42,6 @@
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
                   ("TF_CPP_MIN_LOG_LEVEL" . "3")
                   ("DISABLE_RTKIT" . "1")
-                  ("PASSWORD_STORE_SYSTEM_EXTENSION_DIR" . "/home/zjabbar/.guix-profile/lib/password-store/extensions/")
                   ("GUILE_LOAD_PATH" . "$GUILE_LOAD_PATH:/home/zjabbar/.config/guix/current/share/guile/site/3.0/:/home/zjabbar/.guix-profile/share/guile/site/3.0/:/home/zjabbar/.guix-home/profile/share/guile/site/3.0/:/home/zjabbar/code/guix-channel/")))
                (bash-profile
                 (list
