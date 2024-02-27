@@ -370,7 +370,7 @@
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)))))
 
-(define graphical-browser-configuration
+#;(define graphical-browser-configuration
   (home-emacs-configuration
    (packages (list (specification->package "icecat")
 		   (specification->package "ublock-origin-icecat")))
