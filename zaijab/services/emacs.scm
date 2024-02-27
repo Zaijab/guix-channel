@@ -437,6 +437,7 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "emacs-pinentry")
 		   (specification->package "pinentry-emacs")
 		   (specification->package "password-store")
+		   (specification->package "pass-otp")
 		   (specification->package "emacs-pass")
 		   ;(specification->package "emacs-password-store")
 		   (specification->package "emacs-password-store-otp")
