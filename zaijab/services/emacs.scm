@@ -99,24 +99,24 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-vertico")))
    (init '(
-	   ;; (setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
-	   ;; (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
+	   (setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
+	   (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
 
-	   ;; (defun crm-indicator (args)
-	   ;;   (cons (format "[CRM%s] %s"
-	   ;; 		   (replace-regexp-in-string
-	   ;; 		    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-	   ;; 		    crm-separator)
-	   ;; 		   (car args))
-	   ;; 	   (cdr args)))
-	   ;; (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
+	   (defun crm-indicator (args)
+	     (cons (format "[CRM%s] %s"
+			   (replace-regexp-in-string
+			    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+			    crm-separator)
+			   (car args))
+		   (cdr args)))
+	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
 	   ;; (setq enable-recursive-minibuffers t)
 	   (vertico-mode 1)))))
 
 (define corfu-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-corfu")))
-   (init '((global-corfu-mode)
+   (init '(;(global-corfu-mode)
 	   (corfu-history-mode)
 	   (setq corfu-cycle t
 		 corfu-auto t
@@ -1647,10 +1647,6 @@ nil nil (car menu-items))
   (home-emacs-configuration
    (packages (list
 	      (specification->package "jami")
-	      ;; ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm.git")
-	      ;; 				  (with-commit . "emacs-exwm=798dc60a9b926e3fb3e48198ac507c8f9cc7299c")))
-	      ;;  (specification->package "emacs-exwm"))
-
 	      (specification->package "emacs-exwm")
 	      (specification->package "emacs-windsize")
 	      (specification->package "binutils")
