@@ -98,18 +98,18 @@
 (define vertico-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-vertico")))
-   (init '((setq minibuffer-prompt-properties
-		 '(read-only t cursor-intangible t face minibuffer-prompt))
+   (init '((setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
 	   (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
-	     (defun crm-indicator (args)
-    (cons (format "[CRM%s] %s"
-                  (replace-regexp-in-string
-                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                   crm-separator)
-                  (car args))
-          (cdr args)))
-	     (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
-	     (setq enable-recursive-minibuffers t)
+
+	   (defun crm-indicator (args)
+	     (cons (format "[CRM%s] %s"
+			   (replace-regexp-in-string
+			    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+			    crm-separator)
+			   (car args))
+		   (cdr args)))
+	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
+	   (setq enable-recursive-minibuffers t)
 	   (vertico-mode 1)))))
 
 (define corfu-configuration
@@ -1646,7 +1646,11 @@ nil nil (car menu-items))
   (home-emacs-configuration
    (packages (list
 	      (specification->package "jami")
-	      (specification->package "emacs-exwm")
+	      ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/emacs-exwm/exwm.git")
+					  (with-commit . "emacs-exwm=798dc60a9b926e3fb3e48198ac507c8f9cc7299c")))
+	       (specification->package "emacs-exwm"))
+
+	      ;; (specification->package "emacs-exwm")
 	      (specification->package "emacs-windsize")
 	      (specification->package "binutils")
 	      (specification->package "coreutils")
