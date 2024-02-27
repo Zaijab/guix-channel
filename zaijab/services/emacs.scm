@@ -447,7 +447,14 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "openconnect")))
    (init '((defun pinentry-reload () (interactive)
 	     (shell-command "gpg-connect-agent reloadagent /bye"))
-	   (pinentry-start)))))
+	   (pinentry-start)
+	   (defun password-store-otp-token (entry)
+	     "Return an OTP token from ENTRY."
+	     (password-store-otp--related-error
+	      (caddr (s-split "\n" (password-store--run "otp" entry)))))
+
+
+	   ))))
 
 (define elfeed-configuration
   (home-emacs-configuration
