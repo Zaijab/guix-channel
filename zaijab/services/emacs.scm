@@ -448,6 +448,9 @@ If WINDOW is t, redisplay pages in all windows."
    (init '((defun pinentry-reload () (interactive)
 	     (shell-command "gpg-connect-agent reloadagent /bye"))
 	   (pinentry-start)
+	   (require 'password-store)
+	   (require 'password-store-otp)
+
 	   (defun password-store-otp-token (entry)
 	     "Return an OTP token from ENTRY."
 	     (password-store-otp--related-error
