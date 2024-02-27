@@ -98,18 +98,19 @@
 (define vertico-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-vertico")))
-   (init '((setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
-	   (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
+   (init '(
+	   ;; (setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
+	   ;; (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
 
-	   (defun crm-indicator (args)
-	     (cons (format "[CRM%s] %s"
-			   (replace-regexp-in-string
-			    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-			    crm-separator)
-			   (car args))
-		   (cdr args)))
-	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
-	   (setq enable-recursive-minibuffers t)
+	   ;; (defun crm-indicator (args)
+	   ;;   (cons (format "[CRM%s] %s"
+	   ;; 		   (replace-regexp-in-string
+	   ;; 		    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+	   ;; 		    crm-separator)
+	   ;; 		   (car args))
+	   ;; 	   (cdr args)))
+	   ;; (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
+	   ;; (setq enable-recursive-minibuffers t)
 	   (vertico-mode 1)))))
 
 (define corfu-configuration
