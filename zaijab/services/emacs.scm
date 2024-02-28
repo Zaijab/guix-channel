@@ -440,7 +440,7 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "password-store")
 		   (specification->package "pass-otp")
 		   (specification->package "emacs-pass")
-		   ;(specification->package "emacs-password-store")
+		   (specification->package "emacs-password-store")
 		   (specification->package "emacs-password-store-otp")
 		   (specification->package "gnupg")
 		   (specification->package "openssh")
@@ -472,7 +472,7 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun league nicob)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun league pekin)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCIkcvRgwGlzEtfGf7k2oL3g" fun league virkayu)
