@@ -9,6 +9,9 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages python)
+  #:use-module (gnu packages machine-learning)
+  #:use-module (gnu packages check)
+  #:use-module (gnu packages version-control)
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages python-science)
   #:use-module (gnu packages python-xyz))
@@ -44,7 +47,7 @@
     (build-system pyproject-build-system)
     (propagated-inputs (list python-deprecated python-importlib-metadata
                              python-pandas python-scikit-learn))
-    (native-inputs (list python-pre-commit
+    (native-inputs (list pre-commit
                          python-pytest
                          python-pytest-cov
                          python-pytest-mock
