@@ -360,7 +360,7 @@
 
 (define language-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-ddskk")
+   (packages (list ;(specification->package "emacs-ddskk")
 		   (specification->package "font-fira-code")
 		   (specification->package "font-google-noto")
 		   (specification->package "font-lohit")
@@ -883,185 +883,6 @@ If WINDOW is t, redisplay pages in all windows."
 	   (defun simple-kanji-word->drill (word)
 	     (apply 'format "%s\n{{%s}} {{%s}}\n" word))
 
-;; 	   (defvar cram-mode nil)
-
-;; 	   (defun org-fc-review-cram (context)
-;; 	     "Start a review session for all cards in CONTEXT.
-;; Called interactively, prompt for the context.
-;; Valid contexts:
-;; - 'all, all cards in `org-fc-directories'
-;; - 'buffer, all cards in the current buffer
-;; - a list of paths"
-;; 	     (interactive (list (org-fc-select-context)))
-;; 	     (setq cram-mode t)
-;; 	     (if org-fc-review--session
-;; 		 (when (yes-or-no-p "Flashcards are already being reviewed. Resume? ")
-;; 		   (org-fc-review-resume))
-;; 		 (let* ((index (org-fc-index context))
-;; 			(cards index))
-;; 		   (if org-fc-shuffle-positions
-;; 		       (setq cards (org-fc-index-shuffled-positions cards))
-;; 		       (setq cards (org-fc-index-positions cards)))
-;; 		   (if (null cards)
-;; 		       (message "No cards due right now")
-;; 		       (progn
-;; 			(setq org-fc-review--session
-;; 			      (org-fc-make-review-session cards))
-;; 			(run-hooks 'org-fc-before-review-hook)
-;; 			(org-fc-review-next-card)))))
-;; 	     (setq cram-mode nil))
-;; 	   (defun org-fc-review-rate (rating)
-;; 	     "Rate the card at point with RATING."
-;; 	     (interactive)
-;; 	     (condition-case err
-;; 			     (org-fc-review-with-current-item card
-;; 							      (let* ((path (plist-get card :path))
-;; 								     (id (plist-get card :id))
-;; 								     (position (plist-get card :position))
-;; 								     (now (time-to-seconds (current-time)))
-;; 								     (delta (- now org-fc-review--timestamp)))
-;; 								(org-fc-review-add-rating org-fc-review--session rating)
-;; 								(if cram-mode
-;; 								    (org-fc-review-update-data path id position rating delta))
-;; 								(org-fc-review-reset)
-
-;; 								(if (and (eq rating 'again) org-fc-append-failed-cards)
-;; 								    (with-slots (cards) org-fc-review--session
-;; 										(setf cards (append cards (list card)))))
-
-;; 								(save-buffer)
-;; 								(if org-fc-reviewing-existing-buffer
-;; 								    (org-fc-review-reset)
-;; 								    (kill-buffer))
-;; 								(org-fc-review-next-card)))
-;; 			     (error
-;; 			      (org-fc-review-quit)
-;; 			      (signal (car err) (cdr err)))))
-;; 	   (defun org-fc-type-cloze-single-complement-init (type)
-;; 	     "Initialize the current heading for use as a cloze card of subtype TYPE.
-;; Processes all holes in the card text."
-;; 	     (interactive (list
-;; 			   (intern
-;; 			    (completing-read "Cloze Type: " org-fc-type-cloze-types))))
-;; 	     (unless (member type org-fc-type-cloze-types)
-;; 	       (error "Invalid cloze card type: %s" type))
-;; 	     (org-fc--init-card "cloze")
-;; 	     (org-fc-type-cloze-update)
-;; 	     (org-set-property org-fc-type-cloze-type-property (format "%s" type)))
-
-;; 	   (defun org-fc-type-cloze-setup (position)
-;; 	     "Prepare POSITION of a cloze card for review."
-;; 	     (setq org-fc-type-cloze--text nil)
-;; 	     (setq org-fc-type-cloze--hint nil)
-;; 	     (outline-hide-subtree)
-;; 	     (org-show-entry)
-;; 	     (org-fc-type-cloze-hide-holes (string-to-number position)))
-
-;; 	   (defun org-fc-type-cloze-flip ()
-;; 	     "Flip a cloze card."
-;; 	     (org-show-children)
-;; 	     (overlay-put org-fc-type-cloze--text 'invisible nil)
-;; 	     (org-fc-show-latex)
-;; 	     ;; Remove all overlays in the region of the hint to get rid of
-;; 	     ;; latex overlays in the hint, then hide the region again.
-;; 	     (let* ((hint-start (overlay-start org-fc-type-cloze--hint))
-;; 		    (hint-end (overlay-end org-fc-type-cloze--hint)))
-;; 	       (remove-overlays)
-;; 					;(org-fc-hide-region hint-start hint-end)
-;; 	       ))
-
-;; 	   (defun org-fc-type-cloze-update ()
-;; 	     "Update the review data & deletions of the current heading."
-;; 	     (let* ((end (org-fc-type-cloze--end))
-;; 		    (hole-id (+ 1 (org-fc-type-cloze-max-hole-id)))
-;; 		    ids)
-;; 	       (save-excursion
-;; 		(while (re-search-forward org-fc-type-cloze-hole-re end t)
-;; 		  (let ((id (match-string 3))
-;; 			(hole-end (match-end 0)))
-;; 		    (unless id
-;; 		      (setq id hole-id)
-;; 		      (cl-incf hole-id 1)
-;; 		      (let ((id-str (number-to-string id)))
-;; 			(cl-incf end (+ 1 (length id-str)))
-;; 			(goto-char hole-end)
-;; 			(backward-char)
-;; 			(insert "@" id-str)))
-;; 		    (push (format "%s" id) ids))))
-;; 	       (org-set-property
-;; 		org-fc-type-cloze-max-hole-property
-;; 		(format "%s" (- hole-id 1)))
-;; 	       (org-fc-review-data-update (reverse ids))))
-
-;; 	   (org-fc-register-type
-;; 	    'cloze
-;; 	    'org-fc-type-cloze-setup
-;; 	    'org-fc-type-cloze-flip
-;; 	    'org-fc-type-cloze-update)
-
-
-
-;; 	   (defun org-fc-type-cloze-hide-holes (position)
-;; 	     "Hide holes of a card of TYPE in relation to POSITION."
-;; 	     (org-fc-with-point-at-entry
-;; 	      (let* ((type (intern (org-entry-get (point) org-fc-type-cloze-type-property)))
-;; 		     (end (+ 1 (org-fc-type-cloze--end)))
-;; 		     (holes-index (org-fc-type-cloze--parse-holes position end))
-;; 		     (holes (car holes-index))
-;; 		     (current-index (cdr holes-index)))
-;; 		(cl-loop
-;; 		 for i below (length holes)
-;; 		 for (hole-beg hole-end text-beg text-end hint-beg hint-end) in holes
-;; 		 do
-;; 		 (progn
-;; 		  ;; Fake position if there is no hint
-;; 		  (unless hint-beg (setq hint-beg text-end))
-;; 		  (unless hint-end (setq hint-end text-end))
-;; 		  (cond
-;; 		   ;; If the hole is the one currently being reviewed, hide all
-;; 		   ;; the hole markup, hide the answer, format the hint as
-;; 		   ;; "[...hint]" and set the font for the whole hole.
-;; 		   ((= i current-index)
-;; 		    (cond ((eq type 'single)
-;; 			   (org-fc-hide-region hole-beg text-beg "")
-;; 			   (remove-overlays text-beg text-end)
-;; 			   (setq org-fc-type-cloze--text
-;; 				 (org-fc-make-overlay text-beg text-end ;'invisible t
-;; 						      ))
-;; 			   (org-fc-hide-region text-end hint-beg "")
-;; 			   (setq org-fc-type-cloze--hint
-;; 				 (org-fc-overlay-surround
-;; 				  (org-fc-make-overlay hint-beg hint-end)
-;; 				  "" "" 'org-fc-type-cloze-hole-face))
-;; 			   (org-fc-hide-region hint-end hole-end "")
-;; 			   (org-fc-make-overlay
-;; 			    hole-beg hole-end
-;; 			    'face 'org-fc-type-cloze-hole-face)
-;; 			   )
-;; 			  (t
-;; 			   (org-fc-hide-region hole-beg text-beg "")
-;; 			   (remove-overlays text-beg text-end)
-;; 			   (setq org-fc-type-cloze--text
-;; 				 (org-fc-make-overlay text-beg text-end 'invisible t))
-;; 			   (org-fc-hide-region text-end hint-beg "")
-;; 			   (setq org-fc-type-cloze--hint
-;; 				 (org-fc-overlay-surround
-;; 				  (org-fc-make-overlay hint-beg hint-end)
-;; 				  "[..." "]" 'org-fc-type-cloze-hole-face))
-;; 			   (org-fc-hide-region hint-end hole-end "")
-;; 			   (org-fc-make-overlay
-;; 			    hole-beg hole-end
-;; 			    'face 'org-fc-type-cloze-hole-face))
-;; 			  ))
-;; 		   ;; If the text of another hole should be visible,
-;; 		   ;; hide the hole markup and the hint
-;; 		   ((org-fc-type-cloze--hole-visible-p type i current-index)
-;; 		    (org-fc-hide-region hole-beg text-beg)
-;; 		    (org-fc-hide-region text-end hole-end))
-;; 		   ;; If the text of another hole should not be visible,
-;; 		   ;; hide the whole hole
-;; 		   (t (org-fc-hide-region hole-beg hole-end "..."))))))))
-
 	   (defun jisho->fc ()
 	     (interactive)
 	     (org-roam-with-file "~/notes/20211210212624-japanese.org" t
@@ -1558,91 +1379,6 @@ If WINDOW is t, redisplay pages in all windows."
 	   (add-hook 'after-init-hook 'envrc-global-mode)
 	   (with-eval-after-load 'envrc (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
 
-#;(define sql-configuration
-(home-emacs-configuration
-(packages (list (specification->package "emacs-vterm")
-(specification->package "postgresql")
-(specification->package "sqls")))
-(init '((defun toggle-uh-vpn ()
-(interactive)
-(if (equal "" (shell-command-to-string "nmcli -g GENERAL.STATE c s uhm_vpn"))
-(shell-command "nmcli connection up uhm_vpn")
-(shell-command "nmcli connection down uhm_vpn")))
-
-(require 'eglot)
-(add-to-list 'eglot-server-programs '(sql-mode . ("sqls")))
-
-(setq eglot-sync-connect 1)
-
-(add-to-list 'display-buffer-alist
-'("\\*sqls\\*"
-(display-buffer-reuse-window display-buffer-at-bottom)
-(reusable-frames . visible)
-(window-height . 0.3)))
-
-(defclass eglot-sqls (eglot-lsp-server) () :documentation "SQL's Language Server")
-					;(add-to-list 'eglot-server-programs '(sql-mode . (eglot-sqls "sqls"))) ; ; ;
-(cl-defmethod eglot-execute-command
-((server eglot-sqls) (command (eql executeQuery)) arguments)
-"For executeQuery."
-;; (ignore-errors
-(let* ((beg (eglot--pos-to-lsp-position (if (use-region-p) (region-beginning) (point-min))))
-(end (eglot--pos-to-lsp-position (if (use-region-p) (region-end) (point-max))))
-(res (jsonrpc-request server :workspace/executeCommand
-`(:command ,(format "%s" command) :arguments ,arguments
-:timeout 0.5 :range (:start ,beg :end ,end))))
-(buffer (generate-new-buffer "*sqls*")))
-(with-current-buffer buffer
-(eglot--apply-text-edits `[
-(:range
-(:start
-(:line 0 :character 0)
-:end
-(:line 0 :character 0))
-:newText ,res)
-]
-)
-(org-mode))
-(pop-to-buffer buffer))
-)
-(cl-defmethod eglot-execute-command
-((server eglot-sqls) (_cmd (eql switchDatabase)) arguments)
-"For switchDatabase."
-(let* ((res (jsonrpc-request server :workspace/executeCommand
-`(:command "showDatabases" :arguments ,arguments :timeout 0.5)))
-(menu-items (split-string res "\n"))
-(menu `("Eglot code actions:" ("dummy" ,@menu-items)))
-(db (if (listp last-nonmenu-event)
-(x-popup-menu last-nonmenu-event menu)
-(completing-read "[eglot] Pick an database: "
-menu-items nil t
-nil nil (car menu-items))
-))
-)
-(jsonrpc-request server :workspace/executeCommand
-`(:command "switchDatabase" :arguments [,db] :timeout 0.5))))
-(setq sql-connection-alist
-'((uhm-campus-energy
-(sql-product 'postgres)
-(sql-default-directory "/ssh:zain@128.171.46.101:")
-(sql-server "localhost")
-(sql-user "zain")
-(sql-database "uhm2023")
-(sql-port 5432))
-(campus-energy-reader
-(sql-product 'postgres)
-(sql-default-directory "/ssh:zain@128.171.46.101:")
-(sql-server "localhost")
-(sql-user "uhm_campus_energy_reader")
-(sql-database "uhm2023")
-(sql-port 5432))
-(zain-campus-energy
-(sql-product 'postgres)
-(sql-default-directory "/ssh:zain@128.171.46.101:")
-(sql-server "localhost")
-(sql-user "zain")
-(sql-database "zain")
-(sql-port 5432))))))))
 
 (define blight-configuration '())
 (if (string= (read-delimited "\n" (open-input-pipe "echo $HOSTNAME")) "euler")
@@ -1660,14 +1396,7 @@ nil nil (car menu-items))
   (home-emacs-configuration
    (packages (list
 	      (specification->package "jami")
-	      ;; ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")
-	      ;; 				  (with-branch . "emacs-exwm=master")))
-	      ;;  (specification->package "emacs-exwm"))
-	      ;; ((options->transformation '((with-branch . "emacs-exwm=master")))
-	      ;; ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")))
-	      ;;  (specification->package "emacs-exwm")))
-
-	      ;; (specification->package "emacs-exwm")
+	      (specification->package "emacs-exwm")
 	      (specification->package "emacs-windsize")
 	      (specification->package "binutils")
 	      (specification->package "coreutils")
@@ -1878,9 +1607,6 @@ nil nil (car menu-items))
 		   :type '(repeat character)
 		   :version "30.1"
 		   :group 'processes)
-
-
-		 
 		 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
 		 (setq org-src-fontify-natively t)
 		 (setq org-src-tab-acts-natively t)
@@ -1923,7 +1649,6 @@ nil nil (car menu-items))
 				     tab-bar-format-add-tab
 				     tab-bar-format-align-right
 				     tab-bar-format-global))
-
 	   
 	   (defun move-to-second (word list)
 	     (cons "" (cons word (remove word (cdr list)))))
@@ -1936,16 +1661,12 @@ nil nil (car menu-items))
 	   (load-theme 'modus-operandi t)
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
-	   (which-key-mode)
-	   ))))
-
+	   (which-key-mode)))))
 
 ;;; Combine all Emacs-Configurations within module
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-				     ;; (emacs (emacs->emacs-next (specification->package "emacs-xwidgets")))
-				     ;; (emacs (specification->package "emacs-xwidgets"))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)
