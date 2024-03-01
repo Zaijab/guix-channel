@@ -1600,44 +1600,45 @@ If WINDOW is t, redisplay pages in all windows."
 	   ;; 	       large-file-warning-threshold 100000000)
 	   ;; 	 (set-face-attribute 'mode-line nil :box nil)
 	   ;; 	 (set-face-attribute 'mode-line-inactive nil :box nil)
-	   ;; 	 (defcustom password-colon-equivalents
-	   ;; 	   '(?\u003a ; ?\N{COLON}
-	   ;; 	     ?\uff1a ; ?\N{FULLWIDTH COLON}
-	   ;; 	     ?\ufe55 ; ?\N{SMALL COLON}
-	   ;; 	     ?\ufe13 ; ?\N{PRESENTATION FORM FOR VERTICAL COLON}
-	   ;; 	     ?\u17d6 ; ?\N{KHMER SIGN CAMNUC PII KUUH}
-	   ;; 	     )
-	   ;; 	   "List of characters equivalent to trailing colon in \"password\" prompts."
-	   ;; 	   :type '(repeat character)
-	   ;; 	   :version "30.1"
-	   ;; 	   :group 'processes)
-	   ;; 	 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
-	   ;; 	 (setq org-src-fontify-natively t)
-	   ;; 	 (setq org-src-tab-acts-natively t)
-	   ;; 	 (setq org-src-preserve-indentation nil
-	   ;; 	       org-edit-src-content-indentation 0)
-	   ;; 	 (setq auto-window-vscroll nil)
-	   ;; 	 (tooltip-mode -1)
-	   ;; 	 (tool-bar-mode -1)
-	   ;; 	 (scroll-bar-mode -1)
-	   ;; 	 (menu-bar-mode -1)
-	   ;; 	 (global-auto-revert-mode)
-	   ;; 	 (fset (function yes-or-no-p) (function y-or-n-p))
-	   ;; 	 (push '(menu-bar-lines . 0)   default-frame-alist)
-	   ;; 	 (push '(tool-bar-lines . 0)   default-frame-alist)
-	   ;; 	 (push '(vertical-scroll-bars) default-frame-alist)
-	   ;; 	 (blink-cursor-mode 0)
-	   ;; 	 (setq comp-async-report-warnings-errors nil)
-	   ;; 	 (setq native-comp-async-report-warnings-errors nil) 
-	   ;; 	 (setq warning-suppress-log-types '((comp) (comp)))
-	   ;; 	 (setq warning-suppress-types '((comp) (comp)))
-	   ;; 	 (setq user-emacs-directory "~/.config/emacs")
-	   ;; 	 (setq byte-compile-warnings '(cl-functions))
-	   ;; 	 (setq make-backup-files nil)
-	   ;; 	 (setq auto-save-default nil)
-	   ;; 	 (setq create-lockfiles nil)
-	   ;; 	 (pixel-scroll-precision-mode)
-
+;;Bruh
+	   (defcustom password-colon-equivalents
+		   '(?\u003a ; ?\N{COLON}
+		     ?\uff1a ; ?\N{FULLWIDTH COLON}
+		     ?\ufe55 ; ?\N{SMALL COLON}
+		     ?\ufe13 ; ?\N{PRESENTATION FORM FOR VERTICAL COLON}
+		     ?\u17d6 ; ?\N{KHMER SIGN CAMNUC PII KUUH}
+		     )
+		   "List of characters equivalent to trailing colon in \"password\" prompts."
+		   :type '(repeat character)
+		   :version "30.1"
+		   :group 'processes)
+		 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
+		 (setq org-src-fontify-natively t)
+		 (setq org-src-tab-acts-natively t)
+		 (setq org-src-preserve-indentation nil
+		       org-edit-src-content-indentation 0)
+		 (setq auto-window-vscroll nil)
+		 (tooltip-mode -1)
+		 (tool-bar-mode -1)
+		 (scroll-bar-mode -1)
+		 (menu-bar-mode -1)
+		 (global-auto-revert-mode)
+		 (fset (function yes-or-no-p) (function y-or-n-p))
+		 (push '(menu-bar-lines . 0)   default-frame-alist)
+		 (push '(tool-bar-lines . 0)   default-frame-alist)
+		 (push '(vertical-scroll-bars) default-frame-alist)
+		 (blink-cursor-mode 0)
+		 (setq comp-async-report-warnings-errors nil)
+		 (setq native-comp-async-report-warnings-errors nil) 
+		 (setq warning-suppress-log-types '((comp) (comp)))
+		 (setq warning-suppress-types '((comp) (comp)))
+		 (setq user-emacs-directory "~/.config/emacs")
+		 (setq byte-compile-warnings '(cl-functions))
+		 (setq make-backup-files nil)
+		 (setq auto-save-default nil)
+		 (setq create-lockfiles nil)
+		 (pixel-scroll-precision-mode)
+;; End Bruh
 	   (set-face-attribute 'default nil :font "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
