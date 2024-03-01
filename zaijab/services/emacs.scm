@@ -1574,15 +1574,15 @@ If WINDOW is t, redisplay pages in all windows."
     		 ))
    (init '(
 	   (setq gc-cons-threshold 800000
-	   ;; 	       package-enable-at-startup nil
-	   ;; 	       comp-enable-subr-trampolines nil
+		       package-enable-at-startup nil
+		       ;; comp-enable-subr-trampolines nil
 	   ;; 	       inhibit-automatic-native-compilation nil
 	   ;; 	       indicate-buffer-boundaries nil
-	   ;; 	       native-comp-enable-subr-trampolines nil
+		       ;; native-comp-enable-subr-trampolines nil
 	   ;; 	       indicate-empty-lines nil
-	   ;; 	       menu-bar-mode nil
-	   ;; 	       tool-bar-mode nil
-	   ;; 	       scroll-bar-mode nil
+		       menu-bar-mode nil
+		       tool-bar-mode nil
+		       scroll-bar-mode nil
 	   ;; ;; 	       window-divider-default-places t
 	   ;; 	       window-divider-default-bottom-width 1
 	   ;; 	       window-divider-default-right-width 1
