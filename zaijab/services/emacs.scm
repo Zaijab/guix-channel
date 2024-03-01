@@ -1569,70 +1569,70 @@ If WINDOW is t, redisplay pages in all windows."
    (packages (list (specification->package "emacs-modus-themes")
                    (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
-   (early-init '((setq gc-cons-threshold 800000
-		       package-enable-at-startup nil
-		       comp-enable-subr-trampolines nil
-		       inhibit-automatic-native-compilation nil
-		       indicate-buffer-boundaries nil
-		       native-comp-enable-subr-trampolines nil
-		       indicate-empty-lines nil
-		       menu-bar-mode nil
-		       tool-bar-mode nil
-		       scroll-bar-mode nil
-		       window-divider-default-places t
-		       window-divider-default-bottom-width 1
-		       window-divider-default-right-width 1
-		       use-dialog-box nil
-		       x-gtk-use-system-tooltips nil
-		       ring-bell-function 'ignore
-		       inhibit-splash-screen t
-		       inhibit-startup-message t
-		       nitial-scratch-message nil
-		       byte-compile-root-dir nil
-		       frame-inhibit-implied-resize t
-		       redisplay-dont-pause t
-		       max-mini-window-height 10
-		       initial-scratch-message nil
-		       large-file-warning-threshold 100000000)
-		 (set-face-attribute 'mode-line nil :box nil)
-		 (set-face-attribute 'mode-line-inactive nil :box nil)
-		 (defcustom password-colon-equivalents
-		   '(?\u003a ; ?\N{COLON}
-		     ?\uff1a ; ?\N{FULLWIDTH COLON}
-		     ?\ufe55 ; ?\N{SMALL COLON}
-		     ?\ufe13 ; ?\N{PRESENTATION FORM FOR VERTICAL COLON}
-		     ?\u17d6 ; ?\N{KHMER SIGN CAMNUC PII KUUH}
-		     )
-		   "List of characters equivalent to trailing colon in \"password\" prompts."
-		   :type '(repeat character)
-		   :version "30.1"
-		   :group 'processes)
-		 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
-		 (setq org-src-fontify-natively t)
-		 (setq org-src-tab-acts-natively t)
-		 (setq org-src-preserve-indentation nil
-		       org-edit-src-content-indentation 0)
-		 (setq auto-window-vscroll nil)
-		 (tooltip-mode -1)
-		 (scroll-bar-mode -1)
-		 (menu-bar-mode -1)
-		 (global-auto-revert-mode)
-		 (fset (function yes-or-no-p) (function y-or-n-p))
-		 (push '(menu-bar-lines . 0)   default-frame-alist)
-		 (push '(tool-bar-lines . 0)   default-frame-alist)
-		 (push '(vertical-scroll-bars) default-frame-alist)
-		 (blink-cursor-mode 0)
-		 (setq comp-async-report-warnings-errors nil)
-		 (setq native-comp-async-report-warnings-errors nil) 
-		 (setq warning-suppress-log-types '((comp) (comp)))
-		 (setq warning-suppress-types '((comp) (comp)))
-		 (setq user-emacs-directory "~/.config/emacs")
-		 (setq byte-compile-warnings '(cl-functions))
-		 (setq make-backup-files nil)
-		 (setq auto-save-default nil)
-		 (setq create-lockfiles nil)
-		 (pixel-scroll-precision-mode)
-		 ))
+   ;; (early-init '((setq gc-cons-threshold 800000
+   ;; 		       package-enable-at-startup nil
+   ;; 		       comp-enable-subr-trampolines nil
+   ;; 		       inhibit-automatic-native-compilation nil
+   ;; 		       indicate-buffer-boundaries nil
+   ;; 		       native-comp-enable-subr-trampolines nil
+   ;; 		       indicate-empty-lines nil
+   ;; 		       menu-bar-mode nil
+   ;; 		       tool-bar-mode nil
+   ;; 		       scroll-bar-mode nil
+   ;; 		       window-divider-default-places t
+   ;; 		       window-divider-default-bottom-width 1
+   ;; 		       window-divider-default-right-width 1
+   ;; 		       use-dialog-box nil
+   ;; 		       x-gtk-use-system-tooltips nil
+   ;; 		       ring-bell-function 'ignore
+   ;; 		       inhibit-splash-screen t
+   ;; 		       inhibit-startup-message t
+   ;; 		       nitial-scratch-message nil
+   ;; 		       byte-compile-root-dir nil
+   ;; 		       frame-inhibit-implied-resize t
+   ;; 		       redisplay-dont-pause t
+   ;; 		       max-mini-window-height 10
+   ;; 		       initial-scratch-message nil
+   ;; 		       large-file-warning-threshold 100000000)
+   ;; 		 (set-face-attribute 'mode-line nil :box nil)
+   ;; 		 (set-face-attribute 'mode-line-inactive nil :box nil)
+   ;; 		 (defcustom password-colon-equivalents
+   ;; 		   '(?\u003a ; ?\N{COLON}
+   ;; 		     ?\uff1a ; ?\N{FULLWIDTH COLON}
+   ;; 		     ?\ufe55 ; ?\N{SMALL COLON}
+   ;; 		     ?\ufe13 ; ?\N{PRESENTATION FORM FOR VERTICAL COLON}
+   ;; 		     ?\u17d6 ; ?\N{KHMER SIGN CAMNUC PII KUUH}
+   ;; 		     )
+   ;; 		   "List of characters equivalent to trailing colon in \"password\" prompts."
+   ;; 		   :type '(repeat character)
+   ;; 		   :version "30.1"
+   ;; 		   :group 'processes)
+   ;; 		 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
+   ;; 		 (setq org-src-fontify-natively t)
+   ;; 		 (setq org-src-tab-acts-natively t)
+   ;; 		 (setq org-src-preserve-indentation nil
+   ;; 		       org-edit-src-content-indentation 0)
+   ;; 		 (setq auto-window-vscroll nil)
+   ;; 		 (tooltip-mode -1)
+   ;; 		 (scroll-bar-mode -1)
+   ;; 		 (menu-bar-mode -1)
+   ;; 		 (global-auto-revert-mode)
+   ;; 		 (fset (function yes-or-no-p) (function y-or-n-p))
+   ;; 		 (push '(menu-bar-lines . 0)   default-frame-alist)
+   ;; 		 (push '(tool-bar-lines . 0)   default-frame-alist)
+   ;; 		 (push '(vertical-scroll-bars) default-frame-alist)
+   ;; 		 (blink-cursor-mode 0)
+   ;; 		 (setq comp-async-report-warnings-errors nil)
+   ;; 		 (setq native-comp-async-report-warnings-errors nil) 
+   ;; 		 (setq warning-suppress-log-types '((comp) (comp)))
+   ;; 		 (setq warning-suppress-types '((comp) (comp)))
+   ;; 		 (setq user-emacs-directory "~/.config/emacs")
+   ;; 		 (setq byte-compile-warnings '(cl-functions))
+   ;; 		 (setq make-backup-files nil)
+   ;; 		 (setq auto-save-default nil)
+   ;; 		 (setq create-lockfiles nil)
+   ;; 		 (pixel-scroll-precision-mode)
+    		 ;; ))
    (init '((set-face-attribute 'default nil :font "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
@@ -1660,6 +1660,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (customize-set-variable 'display-time-day-and-date t)
 	   (set-default 'truncate-lines t)
 	   (load-theme 'modus-operandi t)
+	   (require 'rainbow-delimiters)
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
 	   (which-key-mode)
