@@ -473,8 +473,10 @@ If WINDOW is t, redisplay pages in all windows."
 				
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
+				("https://twitchrss.appspot.com/vod/nicob" fun nicob)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun league pekin)
+				("https://twitchrss.appspot.com/vod/pekinwoof" fun league pekin)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCIkcvRgwGlzEtfGf7k2oL3g" fun league virkayu)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCc3cbGWviHbC1OLJKFDfogA" fun league virkayu)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCwE00vEJFzpO6j1rDJMLDfg" fun league virkayu)
@@ -579,6 +581,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (defun browse-url-mpv (url &optional new-window)
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.youtube." 'browse-url-mpv))
+	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.twitch." 'browse-url-mpv))
 	   (add-hook 'elfeed-new-entry-hook
 		     (elfeed-make-tagger :feed-url "youtube\\.com"
 					 :add '(video youtube)))
@@ -1657,11 +1660,8 @@ nil nil (car menu-items))
   (home-emacs-configuration
    (packages (list
 	      (specification->package "jami")
-	      ((options->transformation '((with-git-url . "emacs-exwm=https://github.com/ch11ng/exwm")
-					  (with-branch . "emacs-exwm=master")))
-	       (specification->package "emacs-exwm"))
 
-	      ;(specification->package "emacs-exwm")
+	      (specification->package "emacs-exwm")
 	      (specification->package "emacs-windsize")
 	      (specification->package "binutils")
 	      (specification->package "coreutils")
