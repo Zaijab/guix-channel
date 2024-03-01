@@ -1392,7 +1392,7 @@ If WINDOW is t, redisplay pages in all windows."
 		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
 		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
 
-#;(define exwm-configuration
+(define exwm-configuration
   (home-emacs-configuration
    (packages (list
 	      (specification->package "jami")
