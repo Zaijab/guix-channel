@@ -1579,12 +1579,12 @@ If WINDOW is t, redisplay pages in all windows."
 	   ;; 	       inhibit-automatic-native-compilation nil
 	   ;; 	       indicate-buffer-boundaries nil
 		       ;; native-comp-enable-subr-trampolines nil
-	   ;; 	       indicate-empty-lines nil
+		       indicate-empty-lines nil
 		       menu-bar-mode nil
 		       tool-bar-mode nil
 		       scroll-bar-mode nil
-	   ;; ;; 	       window-divider-default-places t
-	   ;; 	       window-divider-default-bottom-width 1
+		       window-divider-default-places t
+		       ;; window-divider-default-bottom-width 1
 	   ;; 	       window-divider-default-right-width 1
 	   ;; 	       use-dialog-box nil
 	   ;; 	       x-gtk-use-system-tooltips nil
