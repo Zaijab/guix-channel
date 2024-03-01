@@ -1573,7 +1573,7 @@ If WINDOW is t, redisplay pages in all windows."
 
     		 ))
    (init '(
-	   		 (setq gc-cons-threshold 800000
+	   (setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
 		       comp-enable-subr-trampolines nil
 		       inhibit-automatic-native-compilation nil
@@ -1618,6 +1618,7 @@ If WINDOW is t, redisplay pages in all windows."
 		       org-edit-src-content-indentation 0)
 		 (setq auto-window-vscroll nil)
 		 (tooltip-mode -1)
+		 (tool-bar-mode -1)
 		 (scroll-bar-mode -1)
 		 (menu-bar-mode -1)
 		 (global-auto-revert-mode)
@@ -1637,37 +1638,37 @@ If WINDOW is t, redisplay pages in all windows."
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)
 
-	   (set-face-attribute 'default nil :font "Iosevka-14")
-	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
-	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
-	   (set-fontset-font "fontset-default" 'han "IPAmjMincho")
-	   (set-fontset-font "fontset-default" 'kana "IPAmjMincho")
-	   (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho")
-	   (tab-bar-mode)
-	   (set-face-attribute 'tab-bar nil :height 140)
-	   (display-time-mode)
-	   (setq battery-mode-line-limit 97)
-	   (customize-set-variable 'tab-bar-format
-				   '(tab-bar-format-history
-				     tab-bar-format-tabs
-				     tab-bar-separator
-				     tab-bar-format-add-tab
-				     tab-bar-format-align-right
-				     tab-bar-format-global))
+	   ;; (set-face-attribute 'default nil :font "Iosevka-14")
+	   ;; (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
+	   ;; (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
+	   ;; (set-fontset-font "fontset-default" 'han "IPAmjMincho")
+	   ;; (set-fontset-font "fontset-default" 'kana "IPAmjMincho")
+	   ;; (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho")
+	   ;; (tab-bar-mode)
+	   ;; (set-face-attribute 'tab-bar nil :height 140)
+	   ;; (display-time-mode)
+	   ;; (setq battery-mode-line-limit 97)
+	   ;; (customize-set-variable 'tab-bar-format
+	   ;; 			   '(tab-bar-format-history
+	   ;; 			     tab-bar-format-tabs
+	   ;; 			     tab-bar-separator
+	   ;; 			     tab-bar-format-add-tab
+	   ;; 			     tab-bar-format-align-right
+	   ;; 			     tab-bar-format-global))
 	   
-	   (defun move-to-second (word list)
-	     (cons "" (cons word (remove word (cdr list)))))
-	   (setq global-mode-string (move-to-second 'emms-mode-line-string global-mode-string))
-	   (setq global-mode-string (move-to-second 'emms-playing-time-string global-mode-string))
-	   (customize-set-variable 'mode-line-misc-info '(""))
-	   (customize-set-variable 'display-time-load-average-threshold 100)
-	   (customize-set-variable 'display-time-day-and-date t)
-	   (set-default 'truncate-lines t)
-	   (load-theme 'modus-operandi t)
-	   (require 'rainbow-delimiters)
-	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
-	   (global-rainbow-delimiters-mode)
-	   (which-key-mode)
+	   ;; (defun move-to-second (word list)
+	   ;;   (cons "" (cons word (remove word (cdr list)))))
+	   ;; (setq global-mode-string (move-to-second 'emms-mode-line-string global-mode-string))
+	   ;; (setq global-mode-string (move-to-second 'emms-playing-time-string global-mode-string))
+	   ;; (customize-set-variable 'mode-line-misc-info '(""))
+	   ;; (customize-set-variable 'display-time-load-average-threshold 100)
+	   ;; (customize-set-variable 'display-time-day-and-date t)
+	   ;; (set-default 'truncate-lines t)
+	   ;; (load-theme 'modus-operandi t)
+	   ;; (require 'rainbow-delimiters)
+	   ;; (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
+	   ;; (global-rainbow-delimiters-mode)
+	   ;; (which-key-mode)
 	   ))))
 
 ;;; Combine all Emacs-Configurations within module
