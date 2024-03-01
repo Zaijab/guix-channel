@@ -1573,7 +1573,7 @@ If WINDOW is t, redisplay pages in all windows."
 
     		 ))
    (init '(
-	   ;; (setq gc-cons-threshold 800000
+	   (setq gc-cons-threshold 800000
 	   ;; 	       package-enable-at-startup nil
 	   ;; 	       comp-enable-subr-trampolines nil
 	   ;; 	       inhibit-automatic-native-compilation nil
@@ -1596,8 +1596,8 @@ If WINDOW is t, redisplay pages in all windows."
 	   ;; 	       frame-inhibit-implied-resize t
 	   ;; 	       redisplay-dont-pause t
 	   ;; 	       max-mini-window-height 10
-	   ;; 	       initial-scratch-message nil
-	   ;; 	       large-file-warning-threshold 100000000)
+	    	       initial-scratch-message nil
+	    	       large-file-warning-threshold 100000000)
 	   
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
