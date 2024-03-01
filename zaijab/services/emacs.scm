@@ -85,7 +85,7 @@
 
 ;; Completions
 
-#;(define orderless-configuration
+(define orderless-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-orderless")))
    (init '((setq completion-styles '(orderless basic)
@@ -96,7 +96,7 @@
 		 read-buffer-completion-ignore-case t)
 	   ))))
 
-#;(define vertico-configuration
+(define vertico-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-vertico")))
    (init '(
@@ -132,7 +132,7 @@
 	   (define-key corfu-map (kbd "M-}") (function corfu-next))
 	   (define-key corfu-map (kbd "M-{") (function corfu-previous))))))
 
-#;(define tempel-configuration
+(define tempel-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-tempel")))
    (init '((require 'tempel)
@@ -149,18 +149,18 @@
 	   (define-key tempel-map (kbd "C-d") (function tempel-next))
 	   (global-set-key (kbd "M-+") (function tempel-complete))))))
 
-#;(define cape-configuration
+(define cape-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-cape")))
    (init '((setq tab-always-indent 'complete)
 	   (add-to-list 'completion-at-point-functions (function cape-file))))))
 
-#;(define marginalia-configuration
+(define marginalia-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-marginalia")))
    (init '((marginalia-mode)))))
 
-#;(define embark-configuration
+(define embark-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-embark")))
    (init '((require 'embark)
@@ -169,7 +169,7 @@
 			  nil
 			  (window-parameters (mode-line-format . none))))))))
 
-#;(define consult-configuration
+(define consult-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-consult")))
    (init '((require 'consult)
@@ -207,7 +207,7 @@
 
 	   ))))
 
-#;(define buffer-configuration
+(define buffer-configuration
 (home-emacs-configuration
  (packages (list emacs-tabspaces))
  (init '((use-package tabspaces
@@ -232,7 +232,7 @@
 		 (set-window-dedicated-p (selected-window)
 					 (not (window-dedicated-p (selected-window)))))))))
 
-#;(define meow-configuration
+(define meow-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-meow")))
    (init '((setq meow-use-clipboard t)
@@ -325,7 +325,7 @@
 	   (meow-setup)
 	   (meow-global-mode 1)))))
 
-#;(define undo-configuration
+(define undo-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-undo-tree")))
    (init '((require 'undo-tree)
@@ -333,7 +333,7 @@
 	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)	   
 	   (global-undo-tree-mode)))))
 
-#;(define indentation-configuration
+(define indentation-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-aggressive-indent")
 		   (specification->package "emacs-smart-hungry-delete")))
@@ -346,7 +346,7 @@
 	   ;(global-aggressive-indent-mode 1)
 	   ))))
 
-#;(define project-configuration
+(define project-configuration
   (home-emacs-configuration
    (packages (list (specification->package "git")
 		   (specification->package "direnv")
@@ -360,7 +360,7 @@
 	   (add-hook 'org-mode-hook (function colorize-compilation-buffer))
 	   ))))
 
-#;(define language-configuration
+(define language-configuration
   (home-emacs-configuration
    (packages (list ;(specification->package "emacs-ddskk")
 		   (specification->package "font-fira-code")
@@ -372,14 +372,14 @@
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)))))
 
-#;(define graphical-browser-configuration
+(define graphical-browser-configuration
   (home-emacs-configuration
    (packages (list (specification->package "icecat")
 		   (specification->package "ublock-origin-icecat")))
    (early-init '())
    (init '())))
 
-#;(define eww-configuration
+(define eww-configuration
   (home-emacs-configuration
    (packages (list emacs-xwwp))
    (init '((require 'xwidget)
@@ -393,7 +393,7 @@
 	   (add-hook 'xwidget-webkit-edit-mode-hook (lambda () (interactive) (meow-mode 'toggle)))
 	   (setq eww-search-prefix "http://127.0.0.1:8888/search?q=")))))
 
-#;(define pdf-tools-configuration
+(define pdf-tools-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-pdf-tools")
 		   (specification->package "emacs-nov-el")))
@@ -432,7 +432,7 @@ If WINDOW is t, redisplay pages in all windows."
 
 	   ))))
 
-#;(define cryptography-configuration
+(define cryptography-configuration
   (home-emacs-configuration
    (packages (list (specification->package "pinentry")
 		   (specification->package "emacs-pinentry")
@@ -459,7 +459,7 @@ If WINDOW is t, redisplay pages in all windows."
 
 	   ))))
 
-#;(define elfeed-configuration
+(define elfeed-configuration
   (home-emacs-configuration
    (packages (list
 	      (specification->package "mpv")
@@ -610,7 +610,7 @@ If WINDOW is t, redisplay pages in all windows."
 
 	   ))))
 
-#;(define music-configuration
+(define music-configuration
   (home-emacs-configuration
    (packages (list
 	      (specification->package "alsa-utils")
@@ -663,7 +663,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (global-set-key (kbd "<f2>") 'alsamixer-down-volume)
 	   (global-set-key (kbd "<f1>") 'alsamixer-toggle-mute)))))
 
-#;(define email-configuration
+(define email-configuration
   (home-emacs-configuration
    (packages (list
 	      ((options->transformation '((with-git-url . "emacs-org-msg=https://github.com/jeremy-compostella/org-msg")
@@ -784,7 +784,7 @@ If WINDOW is t, redisplay pages in all windows."
 						  :query "maildir:/zjabbar/Inbox AND flag:unread AND NOT flag:trashed"
 						  :key ?u)))))))))))
 
-#;(define notes-configuration
+(define notes-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-org-roam")
 		   emacs-org-roam-ui
@@ -899,7 +899,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (global-set-key (kbd "s-i") (function simple-jisho->fc))
 	   ))))
 
-#;(define website-configuration
+(define website-configuration
   (home-emacs-configuration
    (packages (list 
 	      (specification->package "python-pygments")
@@ -1046,7 +1046,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   ))))
 
 
-#;(define org-mode-configuration
+(define org-mode-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-org-fragtog")
 		   (specification->package "emacs-org-modern")
@@ -1295,7 +1295,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   ))))
 
 
-#;(define python-configuration
+(define python-configuration
   (home-emacs-configuration
    (packages (list
 	      (specification->package "python")
@@ -1345,7 +1345,7 @@ If WINDOW is t, redisplay pages in all windows."
 	 )
    (early-init '())))
 
-#;(define lisp-configuration
+(define lisp-configuration
   (home-emacs-configuration
    (packages (list 
 	      (specification->package "sicp")
@@ -1380,8 +1380,8 @@ If WINDOW is t, redisplay pages in all windows."
 	   (with-eval-after-load 'envrc (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
 
 
-#;(define blight-configuration '())
-#;(if (string= (read-delimited "\n" (open-input-pipe "echo $HOSTNAME")) "euler")
+(define blight-configuration '())
+(if (string= (read-delimited "\n" (open-input-pipe "echo $HOSTNAME")) "euler")
     (set! blight-configuration
 	  (home-emacs-configuration
 	   (packages (list (specification->package "emacs-blight")))
@@ -1573,102 +1573,102 @@ If WINDOW is t, redisplay pages in all windows."
 
     		 ))
    (init '(
-	   (setq gc-cons-threshold 800000
-		       package-enable-at-startup nil
-		       comp-enable-subr-trampolines nil
-		       inhibit-automatic-native-compilation nil
-		       indicate-buffer-boundaries nil
-		       native-comp-enable-subr-trampolines nil
-		       indicate-empty-lines nil
-		       menu-bar-mode nil
-		       tool-bar-mode nil
-		       scroll-bar-mode nil
-		       window-divider-default-places t
-		       window-divider-default-bottom-width 1
-		       window-divider-default-right-width 1
-		       use-dialog-box nil
-		       x-gtk-use-system-tooltips nil
-		       ring-bell-function 'ignore
-		       inhibit-splash-screen t
-		       inhibit-startup-message t
-		       nitial-scratch-message nil
-		       byte-compile-root-dir nil
-		       frame-inhibit-implied-resize t
-		       redisplay-dont-pause t
-		       max-mini-window-height 10
-		       initial-scratch-message nil
-		       large-file-warning-threshold 100000000)
-		 (set-face-attribute 'mode-line nil :box nil)
-		 (set-face-attribute 'mode-line-inactive nil :box nil)
-		 (defcustom password-colon-equivalents
-		   '(?\u003a ; ?\N{COLON}
-		     ?\uff1a ; ?\N{FULLWIDTH COLON}
-		     ?\ufe55 ; ?\N{SMALL COLON}
-		     ?\ufe13 ; ?\N{PRESENTATION FORM FOR VERTICAL COLON}
-		     ?\u17d6 ; ?\N{KHMER SIGN CAMNUC PII KUUH}
-		     )
-		   "List of characters equivalent to trailing colon in \"password\" prompts."
-		   :type '(repeat character)
-		   :version "30.1"
-		   :group 'processes)
-		 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
-		 (setq org-src-fontify-natively t)
-		 (setq org-src-tab-acts-natively t)
-		 (setq org-src-preserve-indentation nil
-		       org-edit-src-content-indentation 0)
-		 (setq auto-window-vscroll nil)
-		 (tooltip-mode -1)
-		 (tool-bar-mode -1)
-		 (scroll-bar-mode -1)
-		 (menu-bar-mode -1)
-		 (global-auto-revert-mode)
-		 (fset (function yes-or-no-p) (function y-or-n-p))
-		 (push '(menu-bar-lines . 0)   default-frame-alist)
-		 (push '(tool-bar-lines . 0)   default-frame-alist)
-		 (push '(vertical-scroll-bars) default-frame-alist)
-		 (blink-cursor-mode 0)
-		 (setq comp-async-report-warnings-errors nil)
-		 (setq native-comp-async-report-warnings-errors nil) 
-		 (setq warning-suppress-log-types '((comp) (comp)))
-		 (setq warning-suppress-types '((comp) (comp)))
-		 (setq user-emacs-directory "~/.config/emacs")
-		 (setq byte-compile-warnings '(cl-functions))
-		 (setq make-backup-files nil)
-		 (setq auto-save-default nil)
-		 (setq create-lockfiles nil)
-		 (pixel-scroll-precision-mode)
+	   ;; (setq gc-cons-threshold 800000
+	   ;; 	       package-enable-at-startup nil
+	   ;; 	       comp-enable-subr-trampolines nil
+	   ;; 	       inhibit-automatic-native-compilation nil
+	   ;; 	       indicate-buffer-boundaries nil
+	   ;; 	       native-comp-enable-subr-trampolines nil
+	   ;; 	       indicate-empty-lines nil
+	   ;; 	       menu-bar-mode nil
+	   ;; 	       tool-bar-mode nil
+	   ;; 	       scroll-bar-mode nil
+	   ;; 	       window-divider-default-places t
+	   ;; 	       window-divider-default-bottom-width 1
+	   ;; 	       window-divider-default-right-width 1
+	   ;; 	       use-dialog-box nil
+	   ;; 	       x-gtk-use-system-tooltips nil
+	   ;; 	       ring-bell-function 'ignore
+	   ;; 	       inhibit-splash-screen t
+	   ;; 	       inhibit-startup-message t
+	   ;; 	       initial-scratch-message nil
+	   ;; 	       byte-compile-root-dir nil
+	   ;; 	       frame-inhibit-implied-resize t
+	   ;; 	       redisplay-dont-pause t
+	   ;; 	       max-mini-window-height 10
+	   ;; 	       initial-scratch-message nil
+	   ;; 	       large-file-warning-threshold 100000000)
+	   ;; 	 (set-face-attribute 'mode-line nil :box nil)
+	   ;; 	 (set-face-attribute 'mode-line-inactive nil :box nil)
+	   ;; 	 (defcustom password-colon-equivalents
+	   ;; 	   '(?\u003a ; ?\N{COLON}
+	   ;; 	     ?\uff1a ; ?\N{FULLWIDTH COLON}
+	   ;; 	     ?\ufe55 ; ?\N{SMALL COLON}
+	   ;; 	     ?\ufe13 ; ?\N{PRESENTATION FORM FOR VERTICAL COLON}
+	   ;; 	     ?\u17d6 ; ?\N{KHMER SIGN CAMNUC PII KUUH}
+	   ;; 	     )
+	   ;; 	   "List of characters equivalent to trailing colon in \"password\" prompts."
+	   ;; 	   :type '(repeat character)
+	   ;; 	   :version "30.1"
+	   ;; 	   :group 'processes)
+	   ;; 	 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
+	   ;; 	 (setq org-src-fontify-natively t)
+	   ;; 	 (setq org-src-tab-acts-natively t)
+	   ;; 	 (setq org-src-preserve-indentation nil
+	   ;; 	       org-edit-src-content-indentation 0)
+	   ;; 	 (setq auto-window-vscroll nil)
+	   ;; 	 (tooltip-mode -1)
+	   ;; 	 (tool-bar-mode -1)
+	   ;; 	 (scroll-bar-mode -1)
+	   ;; 	 (menu-bar-mode -1)
+	   ;; 	 (global-auto-revert-mode)
+	   ;; 	 (fset (function yes-or-no-p) (function y-or-n-p))
+	   ;; 	 (push '(menu-bar-lines . 0)   default-frame-alist)
+	   ;; 	 (push '(tool-bar-lines . 0)   default-frame-alist)
+	   ;; 	 (push '(vertical-scroll-bars) default-frame-alist)
+	   ;; 	 (blink-cursor-mode 0)
+	   ;; 	 (setq comp-async-report-warnings-errors nil)
+	   ;; 	 (setq native-comp-async-report-warnings-errors nil) 
+	   ;; 	 (setq warning-suppress-log-types '((comp) (comp)))
+	   ;; 	 (setq warning-suppress-types '((comp) (comp)))
+	   ;; 	 (setq user-emacs-directory "~/.config/emacs")
+	   ;; 	 (setq byte-compile-warnings '(cl-functions))
+	   ;; 	 (setq make-backup-files nil)
+	   ;; 	 (setq auto-save-default nil)
+	   ;; 	 (setq create-lockfiles nil)
+	   ;; 	 (pixel-scroll-precision-mode)
 
-	   ;; (set-face-attribute 'default nil :font "Iosevka-14")
-	   ;; (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
-	   ;; (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
-	   ;; (set-fontset-font "fontset-default" 'han "IPAmjMincho")
-	   ;; (set-fontset-font "fontset-default" 'kana "IPAmjMincho")
-	   ;; (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho")
-	   ;; (tab-bar-mode)
-	   ;; (set-face-attribute 'tab-bar nil :height 140)
-	   ;; (display-time-mode)
-	   ;; (setq battery-mode-line-limit 97)
-	   ;; (customize-set-variable 'tab-bar-format
-	   ;; 			   '(tab-bar-format-history
-	   ;; 			     tab-bar-format-tabs
-	   ;; 			     tab-bar-separator
-	   ;; 			     tab-bar-format-add-tab
-	   ;; 			     tab-bar-format-align-right
-	   ;; 			     tab-bar-format-global))
+	   (set-face-attribute 'default nil :font "Iosevka-14")
+	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
+	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
+	   (set-fontset-font "fontset-default" 'han "IPAmjMincho")
+	   (set-fontset-font "fontset-default" 'kana "IPAmjMincho")
+	   (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho")
+	   (tab-bar-mode)
+	   (set-face-attribute 'tab-bar nil :height 140)
+	   (display-time-mode)
+	   (setq battery-mode-line-limit 97)
+	   (customize-set-variable 'tab-bar-format
+				   '(tab-bar-format-history
+				     tab-bar-format-tabs
+				     tab-bar-separator
+				     tab-bar-format-add-tab
+				     tab-bar-format-align-right
+				     tab-bar-format-global))
 	   
-	   ;; (defun move-to-second (word list)
-	   ;;   (cons "" (cons word (remove word (cdr list)))))
-	   ;; (setq global-mode-string (move-to-second 'emms-mode-line-string global-mode-string))
-	   ;; (setq global-mode-string (move-to-second 'emms-playing-time-string global-mode-string))
-	   ;; (customize-set-variable 'mode-line-misc-info '(""))
-	   ;; (customize-set-variable 'display-time-load-average-threshold 100)
-	   ;; (customize-set-variable 'display-time-day-and-date t)
-	   ;; (set-default 'truncate-lines t)
-	   ;; (load-theme 'modus-operandi t)
-	   ;; (require 'rainbow-delimiters)
-	   ;; (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
-	   ;; (global-rainbow-delimiters-mode)
-	   ;; (which-key-mode)
+	   (defun move-to-second (word list)
+	     (cons "" (cons word (remove word (cdr list)))))
+	   (setq global-mode-string (move-to-second 'emms-mode-line-string global-mode-string))
+	   (setq global-mode-string (move-to-second 'emms-playing-time-string global-mode-string))
+	   (customize-set-variable 'mode-line-misc-info '(""))
+	   (customize-set-variable 'display-time-load-average-threshold 100)
+	   (customize-set-variable 'display-time-day-and-date t)
+	   (set-default 'truncate-lines t)
+	   (load-theme 'modus-operandi t)
+	   (require 'rainbow-delimiters)
+	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
+	   (global-rainbow-delimiters-mode)
+	   (which-key-mode)
 	   ))))
 
 ;;; Combine all Emacs-Configurations within module
