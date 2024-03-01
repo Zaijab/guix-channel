@@ -1577,25 +1577,24 @@ If WINDOW is t, redisplay pages in all windows."
 		       package-enable-at-startup nil
 		       ;; comp-enable-subr-trampolines nil
 	   ;; 	       inhibit-automatic-native-compilation nil
-	   ;; 	       indicate-buffer-boundaries nil
 		       ;; native-comp-enable-subr-trampolines nil
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
 		       tool-bar-mode nil
 		       scroll-bar-mode nil
 		       window-divider-default-places t
-		       ;; window-divider-default-bottom-width 1
-	   ;; 	       window-divider-default-right-width 1
-	   ;; 	       use-dialog-box nil
-	   ;; 	       x-gtk-use-system-tooltips nil
-	   ;; 	       ring-bell-function 'ignore
-	   ;; 	       inhibit-splash-screen t
-	   ;; 	       inhibit-startup-message t
-	   ;; 	       initial-scratch-message nil
-	   ;; 	       byte-compile-root-dir nil
-	   ;; 	       frame-inhibit-implied-resize t
-	   ;; 	       redisplay-dont-pause t
-	   ;; 	       max-mini-window-height 10
+		       window-divider-default-bottom-width 1
+		       window-divider-default-right-width 1
+		       use-dialog-box nil
+		       x-gtk-use-system-tooltips nil
+		       ring-bell-function 'ignore
+		       inhibit-splash-screen t
+		       inhibit-startup-message t
+		       initial-scratch-message nil
+		       byte-compile-root-dir nil
+		       frame-inhibit-implied-resize t
+		       redisplay-dont-pause t
+		       max-mini-window-height 10
 	    	       initial-scratch-message nil
 	    	       large-file-warning-threshold 100000000)
 	   
