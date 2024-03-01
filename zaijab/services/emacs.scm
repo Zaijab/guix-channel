@@ -1564,7 +1564,7 @@ If WINDOW is t, redisplay pages in all windows."
 		  (message "emacs receives all the keys now")))
 	     (force-mode-line-update))))))
 
-#;(define ui-configuration
+(define ui-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-modus-themes")
                    (specification->package "emacs-rainbow-delimiters")
