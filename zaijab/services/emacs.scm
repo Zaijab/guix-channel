@@ -93,7 +93,8 @@
 	   (setq orderless-smart-case nil
 		 completion-ignore-case t
 		 read-file-name-completion-ignore-case t
-		 read-buffer-completion-ignore-case t)))))
+		 read-buffer-completion-ignore-case t)
+	   ))))
 
 (define vertico-configuration
   (home-emacs-configuration
@@ -111,7 +112,8 @@
 		   (cdr args)))
 	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
 	   ;; (setq enable-recursive-minibuffers t)
-	   (vertico-mode 1)))))
+	   (vertico-mode 1)
+	   ))))
 
 (define corfu-configuration
   (home-emacs-configuration
@@ -167,7 +169,7 @@
 			  nil
 			  (window-parameters (mode-line-format . none))))))))
 
-(define consult-configuration
+#;(define consult-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-consult")))
    (init '((require 'consult)
@@ -205,7 +207,7 @@
 
 	   ))))
 
-(define buffer-configuration
+#;(define buffer-configuration
 (home-emacs-configuration
  (packages (list emacs-tabspaces))
  (init '((use-package tabspaces
@@ -1631,7 +1633,8 @@ If WINDOW is t, redisplay pages in all windows."
 		 (setq make-backup-files nil)
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
-		 (pixel-scroll-precision-mode)))
+		 (pixel-scroll-precision-mode)
+		 ))
    (init '((set-face-attribute 'default nil :font "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
@@ -1661,7 +1664,8 @@ If WINDOW is t, redisplay pages in all windows."
 	   (load-theme 'modus-operandi t)
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
-	   (which-key-mode)))))
+	   (which-key-mode)
+	   ))))
 
 ;;; Combine all Emacs-Configurations within module
 
