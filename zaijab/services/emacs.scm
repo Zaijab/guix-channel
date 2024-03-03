@@ -1575,9 +1575,6 @@ If WINDOW is t, redisplay pages in all windows."
    (init '(
 	   (setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
-		       ;; comp-enable-subr-trampolines nil
-	   ;; 	       inhibit-automatic-native-compilation nil
-		       ;; native-comp-enable-subr-trampolines nil
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
 		       tool-bar-mode nil
