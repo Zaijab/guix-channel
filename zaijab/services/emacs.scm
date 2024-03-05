@@ -486,6 +486,7 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCOQe4ma4be9SZ1n8B2ijihQ" fun league rogue)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCF_b_1kpeajcy03cb36zCkQ" fun ow awkward)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCzxgSHk0g-D-eErxMiDy9UA" fun ow awkward)
+				("https://twitchrss.appspot.com/vod/awkward" fun ow awkward)
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw" math grant)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCgBRykS2v-WV2YYUpR2V9jw" math allangles)
