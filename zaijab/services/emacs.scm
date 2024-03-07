@@ -1571,10 +1571,7 @@ If WINDOW is t, redisplay pages in all windows."
                    (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
    (early-init '(
-
-    		 ))
-   (init '(
-	   (setq gc-cons-threshold 800000
+		 	   (setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
@@ -1635,6 +1632,10 @@ If WINDOW is t, redisplay pages in all windows."
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)
+
+    		 ))
+   (init '(
+
 	   (set-face-attribute 'default nil :font "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
