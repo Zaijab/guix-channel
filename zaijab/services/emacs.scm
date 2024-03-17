@@ -362,7 +362,7 @@
 
 (define language-configuration
   (home-emacs-configuration
-   (packages (list ;(specification->package "emacs-ddskk")
+   (packages (list (specification->package "emacs-ddskk")
 		   (specification->package "font-fira-code")
 		   (specification->package "font-google-noto")
 		   (specification->package "font-lohit")
@@ -455,6 +455,9 @@ If WINDOW is t, redisplay pages in all windows."
 	     "Return an OTP token from ENTRY."
 	     (password-store-otp--related-error
 	      (caddr (s-split "\n" (password-store--run "otp" entry)))))
+	   (defun copy-zjabbar-hawaii-otp ()
+	     (interactive)
+	     (password-store-otp-token-copy "hawaii_edu_otp"))
 
 
 	   ))))
