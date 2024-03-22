@@ -1676,8 +1676,8 @@ If WINDOW is t, redisplay pages in all windows."
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
-				     (emacs emacs-next-xwidgets
-					    ;(specification->package "emacs-next")
+				     (emacs ;emacs-next-xwidgets
+					    (specification->package "emacs-xwidgets")
 					    )
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
