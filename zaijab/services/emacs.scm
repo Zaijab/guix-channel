@@ -372,12 +372,12 @@
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)))))
 
-(define graphical-browser-configuration
-  (home-emacs-configuration
-   (packages (list (specification->package "icecat")
-		   (specification->package "ublock-origin-icecat")))
-   (early-init '())
-   (init '())))
+;; (define graphical-browser-configuration
+;;   (home-emacs-configuration
+;;    (packages (list (specification->package "icecat")
+;; 		   (specification->package "ublock-origin-icecat")))
+;;    (early-init '())
+;;    (init '())))
 
 (define eww-configuration
   (home-emacs-configuration
@@ -1676,6 +1676,7 @@ If WINDOW is t, redisplay pages in all windows."
 
 (define home-emacs-total-configuration
   (fold (lambda (config-1 config-2) (home-emacs-configuration
+				     (emacs (specification->package "emacs-next"))
 				     (init (append (home-emacs-configuration-init config-1)
 						   (home-emacs-configuration-init config-2)))
 				     (early-init (append (home-emacs-configuration-early-init config-1)

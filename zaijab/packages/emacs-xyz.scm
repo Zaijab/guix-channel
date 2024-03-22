@@ -138,6 +138,21 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz))
 
+(define* (emacs->emacs-next emacs #:optional name
+                            #:key (version (package-version emacs-next-minimal))
+                            (source (package-source emacs-next-minimal)))
+  (package
+    (inherit emacs)
+    (name (or name
+              (and (string-prefix? "emacs" (package-name emacs))
+                   (string-append "emacs-next"
+                                  (string-drop (package-name emacs)
+                                               (string-length "emacs"))))))
+    (version version)
+    (source source)))
+
+(define-public emacs-next-xwidgets (emacs->emacs-next emacs-xwidgets))
+
 (define (%emacs-modules build-system)
   (let ((which (build-system-name build-system)))
     `((guix build ,(symbol-append which '-build-system))
