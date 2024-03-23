@@ -370,7 +370,20 @@
 		   (specification->package "font-ipa-mj-mincho")
 		   (specification->package "font-iosevka")
 		   font-microsoft-couirer-new))
-   (init '((require 'facemenu)))))
+   (init '((require 'facemenu)
+	   (advice-add
+ 'skk-previous-candidate :around
+ (lambda (func &optional arg)
+   (interactive "p")
+   (if (and (not (eq skk-henkan-mode 'active))
+            (not (eq last-command 'skk-kakutei-henkan))
+            last-command-event
+            (eq last-command-event
+                (seq-first (car (where-is-internal
+                                 'meow-prev
+                                 meow-normal-state-keymap)))))
+       (previous-line)
+     (funcall func arg))))))))
 
 ;; (define graphical-browser-configuration
 ;;   (home-emacs-configuration

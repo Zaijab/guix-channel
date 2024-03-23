@@ -136,7 +136,17 @@
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages emacs)
-  #:use-module (gnu packages emacs-xyz))
+  #:use-module (gnu packages emacs-xyz)
+  #:use-module (guix channels)
+  #:use-module (guix inferior))
+
+
+(define inferior-guix-with-old-webkit
+  (inferior-for-channels
+   (list (channel
+	  (name 'guix)
+	  (url "https://git.savannah.gnu.org/git/guix.git")
+	  (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714")))))
 
 (define* (emacs->emacs-next emacs #:optional name
                             #:key (version (package-version emacs-next-minimal))
