@@ -140,13 +140,34 @@
   #:use-module (guix channels)
   #:use-module (guix inferior))
 
+(use-modules (guix inferior) (guix channels)
+             (srfi srfi-1))   ;for 'first'
 
-(define inferior-guix-with-old-webkit
-  (inferior-for-channels
-   (list (channel
-	  (name 'guix)
-	  (url "https://git.savannah.gnu.org/git/guix.git")
-	  (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714")))))
+(define channels
+  ;; This is the old revision from which we want to
+  ;; extract guile-json.
+  (list (channel
+         (name 'guix)
+         (url "https://git.savannah.gnu.org/git/guix.git")
+         (commit
+          "65956ad3526ba09e1f7a40722c96c6ef7c0936fe"))))
+
+(define inferior
+  ;; An inferior representing the above revision.
+  (inferior-for-channels channels))
+
+;; Now create a manifest with the current "guile" package
+;; and the old "guile-json" package.
+(packages->manifest
+ (list (first (lookup-inferior-packages inferior "guile-json"))
+       (specification->package "guile")))
+
+;; (define inferior-guix-with-old-webkit
+;;   (inferior-for-channels
+;;    (list (channel
+;; 	  (name 'guix)
+;; 	  (url "https://git.savannah.gnu.org/git/guix.git")
+;; 	  (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714")))))
 
 (define* (emacs->emacs-next emacs #:optional name
                             #:key (version (package-version emacs-next-minimal))
