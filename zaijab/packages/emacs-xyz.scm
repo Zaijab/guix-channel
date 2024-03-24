@@ -148,15 +148,7 @@
 
   )
 
-(define-public inferior-guix-with-old-webkit
-  (inferior-for-channels
-   (list (channel
-	  (name 'guix)
-	  (url "https://git.savannah.gnu.org/git/guix.git")
-	  (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714")))))
-
-
-(define* (emacs->emacs-next-with-old-webkit emacs #:optional name
+(define* (emacs->emacs-next emacs #:optional name
                             #:key (version (package-version emacs-next-minimal))
                             (source (package-source emacs-next-minimal)))
   (package
@@ -167,13 +159,9 @@
                                   (string-drop (package-name emacs)
                                                (string-length "emacs"))))))
     (version version)
-    (source source)
-    (inputs
-     (modify-inputs (package-inputs emacs-next-tree-sitter)
-		    (prepend (first (lookup-inferior-packages inferior-guix-with-old-webkit "webkitgtk-with-libsoup2")))))
-    ))
+    (source source)))
 
-(define-public emacs-next-xwidgets (emacs->emacs-next-with-old-webkit emacs-xwidgets))
+(define-public emacs-next-xwidgets (emacs->emacs-next emacs-xwidgets))
 
 (define (%emacs-modules build-system)
   (let ((which (build-system-name build-system)))
