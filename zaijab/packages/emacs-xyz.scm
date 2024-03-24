@@ -138,38 +138,25 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (guix channels)
-  #:use-module (guix inferior))
+  #:use-module (guix inferior)
+  #:use-module (guix profiles)
+  #:use-module (guix channels)
+  #:use-module (guix transformations)
+  #:use-module (gnu packages)
+  #:use-module (gnu packages emacs)
+  #:use-module (srfi srfi-1)
 
-;; (use-modules (guix inferior) (guix channels)
-;;              (srfi srfi-1))   ;for 'first'
+  )
 
-;; (define channels
-;;   ;; This is the old revision from which we want to
-;;   ;; extract guile-json.
-;;   (list (channel
-;;          (name 'guix)
-;;          (url "https://git.savannah.gnu.org/git/guix.git")
-;;          (commit
-;;           "65956ad3526ba09e1f7a40722c96c6ef7c0936fe"))))
+(define-public inferior-guix-with-old-webkit
+  (inferior-for-channels
+   (list (channel
+	  (name 'guix)
+	  (url "https://git.savannah.gnu.org/git/guix.git")
+	  (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714")))))
 
-;; (define inferior
-;;   ;; An inferior representing the above revision.
-;;   (inferior-for-channels channels))
 
-;; ;; Now create a manifest with the current "guile" package
-;; ;; and the old "guile-json" package.
-;; (packages->manifest
-;;  (list (first (lookup-inferior-packages inferior "guile-json"))
-;;        (specification->package "guile")))
-
-;; (define inferior-guix-with-old-webkit
-;;   (inferior-for-channels
-;;    (list (channel
-;; 	  (name 'guix)
-;; 	  (url "https://git.savannah.gnu.org/git/guix.git")
-;; 	  (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714")))))
-
-(define* (emacs->emacs-next emacs #:optional name
+(define* (emacs->emacs-next-with-old-webkit emacs #:optional name
                             #:key (version (package-version emacs-next-minimal))
                             (source (package-source emacs-next-minimal)))
   (package
@@ -180,9 +167,13 @@
                                   (string-drop (package-name emacs)
                                                (string-length "emacs"))))))
     (version version)
-    (source source)))
+    (source source)
+    (inputs
+     (modify-inputs (package-inputs emacs-next-tree-sitter)
+		    (prepend (first (lookup-inferior-packages inferior-guix-with-old-webkit "webkitgtk-with-libsoup2")))))
+    ))
 
-(define-public emacs-next-xwidgets (emacs->emacs-next emacs-xwidgets))
+(define-public emacs-next-xwidgets (emacs->emacs-next-with-old-webkit emacs-xwidgets))
 
 (define (%emacs-modules build-system)
   (let ((which (build-system-name build-system)))
