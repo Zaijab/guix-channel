@@ -159,7 +159,9 @@
                                   (string-drop (package-name emacs)
                                                (string-length "emacs"))))))
     (version version)
-    (source source)))
+    (source source)
+    
+    ))
 
 (define-public emacs-next-xwidgets (emacs->emacs-next emacs-xwidgets))
 
