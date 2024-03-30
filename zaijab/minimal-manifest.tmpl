@@ -1,14 +1,94 @@
 ;; -*- mode: scheme -*-
 (define-module (zaijab home minimal-manifest)
+  #:use-module (guix inferior)
+  #:use-module (guix profiles)
+  #:use-module (guix channels)
+  #:use-module (guix transformations)
+  #:use-module (guix packages)
+  #:use-module (guix gexp)
+  #:use-module (guix utils)
+  
   #:use-module (gnu packages)
-  #:use-module (guix profiles))
+  #:use-module (gnu packages emacs)
+  #:use-module (gnu packages emacs-xyz)
+  #:use-module (gnu packages xorg)
+  #:use-module (srfi srfi-1))
+
+
+(define-public emacs-old-xwidgets
+  (package/inherit emacs
+    (name "emacs-old-xwidgets")
+    (synopsis "The extensible, customizable, self-documenting text
+editor (with xwidgets support)")
+    (arguments
+     (substitute-keyword-arguments (package-arguments emacs)
+       ((#:configure-flags flags #~'())
+        #~(cons "--with-xwidgets" #$flags))))
+    (inputs
+     (modify-inputs (package-inputs emacs)
+		    (prepend
+		     (first (lookup-inferior-packages
+			     (inferior-for-channels
+			      (list (channel
+				     (name 'guix)
+				     (url "https://git.savannah.gnu.org/git/guix.git")
+				     (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714"))))
+			     "webkitgtk-with-libsoup2"))		    
+			     libxcomposite)))))
+
+
+;; (define* (emacs->emacs-next emacs #:optional name
+;;                             #:key (version (package-version emacs-next-minimal))
+;;                             (source (package-source emacs-next-minimal)))
+;;   (package
+;;     (inherit emacs)
+;;     (name (or name
+;;               (and (string-prefix? "emacs" (package-name emacs))
+;;                    (string-append "emacs-next"
+;;                                   (string-drop (package-name emacs)
+;;                                                (string-length "emacs"))))))
+;;     (version version)
+;;     (source source)
+    
+;;     ))
+
+;; (define-public emacs-next-xwidgets
+;;   (package
+;;     (inherit emacs-xwidgets)
+;;     (name "emacs-next-xwidgets")
+;;     (version (package-version emacs-next-minimal))
+;;     (source (package-source emacs-next-minimal))
+;;     (inputs (modify-inputs (package-inputs (emacs->emacs-next emacs-xwidgets)) (replace "webkitgtk-with-libsoup2"
+;; 									      (first (lookup-inferior-packages
+;; 										      (inferior-for-channels
+;; 										       (list (channel
+;; 											      (name 'guix)
+;; 											      (url "https://git.savannah.gnu.org/git/guix.git")
+;; 											      (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714"))))
+;; 										      "webkitgtk-with-libsoup2")
+;; 										     ))))
+;; ;;     )
+
+;;    )
+
+
+;; (define-public emacs-next-xwidgets
+;;   (modify-inputs (package-inputs (emacs->emacs-next emacs-xwidgets)) (replace "webkitgtk-with-libsoup2"
+;; 									      (first (lookup-inferior-packages
+;; 										      (inferior-for-channels
+;; 										       (list (channel
+;; 											      (name 'guix)
+;; 											      (url "https://git.savannah.gnu.org/git/guix.git")
+;; 											      (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714"))))
+;; 										      "webkitgtk-with-libsoup2")))))
 
 (packages->manifest (list (specification->package "make")
 			  (specification->package "git")
 			  (specification->package "xauth")
 			  (specification->package "gnupg")
 			  (specification->package "pinentry-emacs")
-			  (specification->package "emacs-next")
+			  ;; emacs-next-xwidgets
+			  emacs-old-xwidgets
 			  (specification->package "tree")
 			  (specification->package "scrot")
 			  (specification->package "mpv")))

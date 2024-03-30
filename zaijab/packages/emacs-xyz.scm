@@ -148,30 +148,31 @@
 
   )
 
-(define* (emacs->emacs-next emacs #:optional name
-                            #:key (version (package-version emacs-next-minimal))
-                            (source (package-source emacs-next-minimal)))
-  (package
-    (inherit emacs)
-    (name (or name
-              (and (string-prefix? "emacs" (package-name emacs))
-                   (string-append "emacs-next"
-                                  (string-drop (package-name emacs)
-                                               (string-length "emacs"))))))
-    (version version)
-    (source source)
+;; (define* (emacs->emacs-next emacs #:optional name
+;;                             #:key (version (package-version emacs-next-minimal))
+;;                             (source (package-source emacs-next-minimal)))
+;;   (package
+;;     (inherit emacs)
+;;     (name (or name
+;;               (and (string-prefix? "emacs" (package-name emacs))
+;;                    (string-append "emacs-next"
+;;                                   (string-drop (package-name emacs)
+;;                                                (string-length "emacs"))))))
+;;     (version version)
+;;     (source source)
     
-    ))
+;;     )
+;;   )
 
-(define-public emacs-next-xwidgets
-  (modify-inputs (package-inputs (emacs->emacs-next emacs-xwidgets)) (replace "webkitgtk-with-libsoup2"
-									      (first (lookup-inferior-packages
-										      (inferior-for-channels
-										       (list (channel
-											      (name 'guix)
-											      (url "https://git.savannah.gnu.org/git/guix.git")
-											      (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714"))))
-										      "webkitgtk-with-libsoup2")))))
+;; (define-public emacs-next-xwidgets
+;;   (modify-inputs (package-inputs (emacs->emacs-next emacs-xwidgets)) (replace "webkitgtk-with-libsoup2"
+;; 									      (first (lookup-inferior-packages
+;; 										      (inferior-for-channels
+;; 										       (list (channel
+;; 											      (name 'guix)
+;; 											      (url "https://git.savannah.gnu.org/git/guix.git")
+;; 											      (commit "8e2f32cee982d42a79e53fc1e9aa7b8ff0514714"))))
+;; 										      "webkitgtk-with-libsoup2")))))
 
 
 (define (%emacs-modules build-system)
