@@ -27,9 +27,9 @@
      (service home-bash-service-type
               (home-bash-configuration
                (aliases
-                '(("grep" . "--color auto")
+                '(("grep" . "--color=auto")
                   ("ll"   . "ls -l")
-                  ("ls"   . "-p --color auto")
+                  ("ls"   . "-p --color=auto")
                   ("mbsync" . "mbsync -c ~/.config/mbsyncrc")
 		  ("bluepillar" . "~/code/gp-saml-gui/gp_saml_gui.py -S --gateway --clientos=Linux galileo.enterprise.its.hawaii.edu")))
                (environment-variables
