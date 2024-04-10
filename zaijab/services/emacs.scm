@@ -1139,7 +1139,7 @@ If WINDOW is t, redisplay pages in all windows."
 
 
 	   (custom-set-variables '(org-modern-table nil))
-	   (add-hook 'org-mode-hook (function valign-mode))
+	   ;(add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
 	   (add-hook 'org-mode-hook (function org-toggle-pretty-entities))
 	   (add-hook 'org-mode-hook (function org-cdlatex-mode))
