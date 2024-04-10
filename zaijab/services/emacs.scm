@@ -670,7 +670,7 @@ If WINDOW is t, redisplay pages in all windows."
 		 mu4e-sent-messages-behavior 'delete)
 	   (setq org-msg-enforce-css "~/notes/static/css/site.css")
 	   (setq mu4e-hide-index-messages t)
-	   (setq mu4e-mu-home "/home/zjabbar/.mail")
+	   (setq mu4e-mu-home "/home/zjabbar/.cache/mu")
 	   (setq mail-user-agent 'mu4e-user-agent)
 	   (add-hook 'after-init-hook (function mu4e-alert-enable-mode-line-display))
 	   (require 'org-msg)
