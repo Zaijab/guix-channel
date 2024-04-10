@@ -1310,7 +1310,7 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "python-matplotlib")
 	      (specification->package "python-scipy")
 	      (specification->package "python-sympy")
-	      ;(specification->package "python-scikit-learn")
+	      (specification->package "python-scikit-learn")
 	      
 	      ))
    (init '((require 'jupyter)
@@ -1425,6 +1425,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (global-set-key (kbd "s-3") 'split-window-right)
 	   (global-set-key (kbd "s-5") 'exwm-workspace-switch)
 	   (global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
+
 	   (global-set-key (kbd "s-e") (function
 					(lambda () (interactive)
 						(start-process-shell-command
