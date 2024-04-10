@@ -1049,6 +1049,7 @@ If WINDOW is t, redisplay pages in all windows."
 		   ((options->transformation
 		     '((with-branch . "emacs-calfw-blocks=master")))
 		    emacs-calfw-blocks)
+		   emacs-phscroll
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
 		   (specification->package "imagemagick")
@@ -1137,7 +1138,7 @@ If WINDOW is t, redisplay pages in all windows."
 	     "Regexp of LaTeX math environments.")
 
 
-	   (custom-set-variables '(org-modern-table t))
+	   (custom-set-variables '(org-modern-table nil))
 	   (add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
 	   (add-hook 'org-mode-hook (function org-toggle-pretty-entities))

@@ -469,3 +469,22 @@ Usage To automatically apply when saving a python file, use the following code:
     (synopsis "Visual time blocks for the Emacs Calendar Framework (calfw).")
     (description "Visual time blocks for the Emacs Calendar Framework (calfw).")
     (license license:gpl3+)))
+
+(define-public emacs-phscroll
+  (package
+    (name "emacs-phscroll")
+    (version "582abedb4cf6aba216cdb5fe7217d612a1d68d5a")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/misohena/phscroll.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"0cp0ffgdg6livjyb36m54mai0apwr2qf80v32x92v76q00542j9f"))))
+    (build-system emacs-build-system)
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license license:gpl3+)))
