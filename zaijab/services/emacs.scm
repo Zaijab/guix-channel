@@ -1632,6 +1632,11 @@ If WINDOW is t, redisplay pages in all windows."
 	   (set-fontset-font "fontset-default" 'han "IPAmjMincho-14")
 	   (set-fontset-font "fontset-default" 'kana "IPAmjMincho-14")
 	   (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho-14")
+	   (require 'phscroll)
+	   (setq org-startup-truncated nil)
+	   (with-eval-after-load "org"
+				 (require 'org-phscroll))
+
 	   (tab-bar-mode)
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
