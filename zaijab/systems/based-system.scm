@@ -144,10 +144,13 @@
 		  config => (guix-configuration
 			     (inherit config)
 			     (substitute-urls
-			      (append (list "https://substitutes.nonguix.org")
+			      (append (list "https://substitutes.nonguix.org"
+					    "https://guix.bordeaux.inria.fr")
 				      %default-substitute-urls))
 			     (authorized-keys
-			      (append (list (local-file "./signing-key.pub"))
+			      (append (list (local-file "./nonguix.pub")
+					    (local-file "./bordeaux.pub")
+					    )
 				      %default-authorized-guix-keys)))))))))
 
 
