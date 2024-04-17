@@ -1322,6 +1322,7 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
 	      (specification->package "python-pytorch")
+	      (specification->package "python-torchvision")
 	      
 	      ))
    (init '((require 'jupyter)
