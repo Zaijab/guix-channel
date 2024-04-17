@@ -113,6 +113,7 @@
 	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
 	   ;; (setq enable-recursive-minibuffers t)
 	   (vertico-mode 1)
+	   (vertico-multiform-mode 1)
 	   ))))
 
 (define corfu-configuration
@@ -1072,7 +1073,6 @@ If WINDOW is t, redisplay pages in all windows."
 	   (keymap-global-set "C-M-$" (function jinx-languages))
 	   (add-to-list 'vertico-multiform-categories
 			'(jinx grid (vertico-grid-annotate . 20)))
-	   (vertico-multiform-mode 1)
 
 	   (setq org-structure-template-alist
 		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
