@@ -1055,6 +1055,7 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "imagemagick")
 		   (specification->package "nuspell")
 		   (specification->package "emacs-jinx")
+		   (specification->package "hunspell-dict-en")
 		   
 		   ))
    (init '((require 'org)
