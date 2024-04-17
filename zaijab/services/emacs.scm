@@ -1068,7 +1068,12 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'calfw-blocks)
 	   (setq org-startup-folded t)
 	   (add-hook 'emacs-startup-hook (function global-jinx-mode))
-	   
+	   (keymap-global-set "M-$" (function jinx-correct))
+	   (keymap-global-set "C-M-$" (function jinx-languages))
+	   (add-to-list 'vertico-multiform-categories
+			'(jinx grid (vertico-grid-annotate . 20)))
+	   (vertico-multiform-mode 1)
+
 	   (setq org-structure-template-alist
 		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
 		   ("e" . "example") ("E" . "export") ("h" . "export html")
