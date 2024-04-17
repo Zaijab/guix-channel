@@ -1053,7 +1053,10 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
 		   (specification->package "imagemagick")
-		   (specification->package "ispell")))
+		   (specification->package "nuspell")
+		   (specification->package "emacs-jinx")
+		   
+		   ))
    (init '((require 'org)
 	   (require 'org-tree-slide)
 	   (setq org-tree-slide-cursor-init nil)
