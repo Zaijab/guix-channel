@@ -1067,8 +1067,8 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'calfw-org)
 	   (require 'calfw-blocks)
 	   (setq org-startup-folded t)
-	   (add-hook 'emacs-startup-hook #'global-jinx-mode)
-
+	   (add-hook 'emacs-startup-hook (function global-jinx-mode))
+	   
 	   (setq org-structure-template-alist
 		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
 		   ("e" . "example") ("E" . "export") ("h" . "export html")
