@@ -1067,6 +1067,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'calfw-org)
 	   (require 'calfw-blocks)
 	   (setq org-startup-folded t)
+	   (add-hook 'emacs-startup-hook #'global-jinx-mode)
 
 	   (setq org-structure-template-alist
 		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
@@ -1222,7 +1223,6 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq org-startup-with-latex-preview t)
 	   (setq org-preview-latex-default-process 'dvisvgm)
 	   (add-hook 'org-mode-hook 'org-fragtog-mode)
-	   (add-hook 'org-mode-hook 'flyspell-mode)
 	   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 	   (add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
 	   (setq python-indent-guess-indent-offset-verbose nil)
