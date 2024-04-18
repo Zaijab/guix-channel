@@ -75,7 +75,7 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       (specification->package "nss-certs")
+	       ;; (specification->package "nss-certs")
 	       (specification->package "pulseaudio")
 	       (specification->package "network-manager-applet")
 	       (specification->package "searx") 
