@@ -1071,6 +1071,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (add-hook 'emacs-startup-hook (function global-jinx-mode))
 	   (keymap-global-set "M-$" (function jinx-correct))
 	   (keymap-global-set "C-M-$" (function jinx-languages))
+	   (setq ispell-alternate-dictionary "/home/zjabbar/.guix-home/profile/share/hunspell/en_US-large.dic")
 	   ;(add-to-list 'vertico-multiform-categories
 		;	'(jinx grid (vertico-grid-annotate . 20)))
 
