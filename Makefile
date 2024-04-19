@@ -13,13 +13,13 @@ gpull:
 	guix upgrade
 
 gpackage:
-	guix package -m /home/zjabbar/code/guix-channel/zaijab/minimal-manifest.tmpl
+	guix package -m /home/zjabbar/code/guix-channel/zaijab/minimal-manifest.tmpl --no-grafts
 
 gsystem:
-	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades
+	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades --no-grafts
 
 zjabbar:
-	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades
+	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades --no-grafts
 
 init:
 	mkdir ~/.mail/zaijab2000
