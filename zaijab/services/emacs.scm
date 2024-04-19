@@ -784,18 +784,17 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq org-roam-node-display-template
 		 (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 
-	   (setq org-roam-directory"~/notes")
+	   (setq org-roam-directory "~/notes")
 	   (setq org-roam-v2-ack t)
 	   (org-roam-db-autosync-mode)
 	   (setq org-roam-capture-templates
 		 '(
 		   ("i" "Default" plain "%?"
-		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n")
+		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org")
 		    :unnarrowed t)
-		   ("msd" "Definition" plain "%?"
-		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+FILETAGS: :Mathematics:Statistics:Definition:")
+		   ("p" "Python" plain "%?"
+		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
 		    :unnarrowed t)
-
 		   ))
 	   (require 'org-fc)
 	   (setq org-fc-directories '("~/notes/")
@@ -1055,7 +1054,9 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "texlive-bin")
 		   (specification->package "imagemagick")
 		   (specification->package "nuspell")
-		   (specification->package "emacs-jinx")
+		   ((options->transformation '((with-source . "enchant=https://github.com/AbiWord/enchant/releases/download/v2.3.1/enchant-2.3.1.tar.gz")))
+		    (specification->package "emacs-jinx"))
+
 		   (specification->package "hunspell-dict-en")
 		   
 		   ))
