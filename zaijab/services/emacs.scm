@@ -22,6 +22,7 @@
   #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages messaging)
   #:use-module (nongnu packages fonts)
+  #:use-module (guix-science packages python)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
@@ -1326,7 +1327,7 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "python-pytorch")
 	      ((options->transformation '((with-input . "python-pytorch@1.13.1=python-pytorch@2.2.1")))
 	       (specification->package "python-torchvision"))
-	      (specification->package "python-tensorflow")
+	      python-tensorflow
 	      ))
    (init '((require 'jupyter)
 	   (setq org-babel-python-command "python3"
