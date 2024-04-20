@@ -16,10 +16,10 @@ gpackage:
 	guix package -m /home/zjabbar/code/guix-channel/zaijab/minimal-manifest.tmpl --no-grafts
 
 gsystem:
-	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades --no-grafts
+	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades --no-grafts -c 2
 
 zjabbar:
-	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades --no-grafts
+	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades --no-grafts -c 2
 
 init:
 	mkdir ~/.mail/zaijab2000
