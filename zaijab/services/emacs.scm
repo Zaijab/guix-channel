@@ -96,6 +96,16 @@
 		 read-file-name-completion-ignore-case t
 		 read-buffer-completion-ignore-case t)
 	   ))))
+(define debbugs-configuration
+  (home-emacs-configuration
+   (packages (list (specification->package "emacs-orderless")))
+   (init '((setq completion-styles '(orderless basic)
+		 completion-category-overrides '((file (styles basic partial-completion))))
+	   (setq orderless-smart-case nil
+		 completion-ignore-case t
+		 read-file-name-completion-ignore-case t
+		 read-buffer-completion-ignore-case t)
+	   ))))
 
 (define vertico-configuration
   (home-emacs-configuration
