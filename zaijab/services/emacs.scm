@@ -1395,17 +1395,17 @@ If WINDOW is t, redisplay pages in all windows."
 	   (with-eval-after-load 'envrc (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
 
 
-(define blight-configuration '())
-(if (string= (read-delimited "\n" (open-input-pipe "echo $HOSTNAME")) "euler")
-    (set! blight-configuration
-	  (home-emacs-configuration
-	   (packages (list (specification->package "emacs-blight")))
-	   (init '((shell-command "sudo chmod 777 /sys/class/backlight/amdgpu_bl0/brightness")
-		   (require 'blight)
-		   (setq my/blight (blight-sysfs))
-		   (blight-sysfs :min 0)
-		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
-		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
+;; (define blight-configuration '())
+;; (if (string= (read-delimited "\n" (open-input-pipe "echo $HOSTNAME")) "euler")
+;;     (set! blight-configuration
+;; 	  (home-emacs-configuration
+;; 	   (packages (list (specification->package "emacs-blight")))
+;; 	   (init '((shell-command "sudo chmod 777 /sys/class/backlight/amdgpu_bl0/brightness")
+;; 		   (require 'blight)
+;; 		   (setq my/blight (blight-sysfs))
+;; 		   (blight-sysfs :min 0)
+;; 		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
+;; 		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
 
 (define exwm-configuration
   (home-emacs-configuration
