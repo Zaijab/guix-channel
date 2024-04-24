@@ -42,8 +42,9 @@
 
 (define-public tao-operating-system
   (operating-system
-    ;(kernel linux)
-    ;(firmware (list linux-firmware))
+    (kernel linux)
+    (firmware (list linux-firmware))
+    
     ;; (kernel-arguments '("intel_iommu=on" "iommu=pt" "pcie_acs_override=downstream,multifunction"))
     ;; (initrd (lambda (file-systems . rest)
     ;; 	      (apply base-initrd file-systems
