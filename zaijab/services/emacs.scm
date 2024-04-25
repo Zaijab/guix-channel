@@ -1051,6 +1051,7 @@ If WINDOW is t, redisplay pages in all windows."
    (packages (list (specification->package "emacs-org-fragtog")
 		   (specification->package "emacs-org-modern")
 		   (specification->package "emacs-cdlatex")
+		   (specification->package "font-latin-modern")
 		   (specification->package "emacs-tempel")
 		   (specification->package "emacs-valign")
 		   (specification->package "emacs-org-present")
