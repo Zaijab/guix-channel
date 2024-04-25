@@ -111,7 +111,8 @@
 	       ;; (service kernel-module-loader-service-type
                ;;          '("vfio_pci" "vfio" "vfio_iommu_type1" #;"vfio-pci.ids=10de:1e89,10de:10f8,10de:1ad8,10de,1ad9"))
 	       (service openssh-service-type)
-	       (service opendht-service-type)
+	       (service opendht-service-type
+			(opendht-configuration (peer-discovery? #t)))
 	       
 	       (service syncthing-service-type
 			(syncthing-configuration (user "zjabbar")))
