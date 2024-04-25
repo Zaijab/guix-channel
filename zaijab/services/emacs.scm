@@ -1061,7 +1061,7 @@ If WINDOW is t, redisplay pages in all windows."
 		     '((with-branch . "emacs-calfw-blocks=master")))
 		    emacs-calfw-blocks)
 		   emacs-phscroll
-		   (specification->package "texlive")
+		   ;; (specification->package "texlive")
 		   (specification->package "texlive-bin")
 		   (specification->package "imagemagick")
 		   (specification->package "nuspell")
