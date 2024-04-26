@@ -893,7 +893,7 @@ If WINDOW is t, redisplay pages in all windows."
 				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read))))
 				 (org-fc-type-cloze-init 'single)))
 
-	   (global-set-key (kbd "s-i") (function simple-jisho->fc))
+	   ;; (global-set-key (kbd "s-i") (function simple-jisho->fc))
 	   ))))
 
 (define website-configuration
@@ -1487,6 +1487,7 @@ If WINDOW is t, redisplay pages in all windows."
 					(lambda () (interactive)
 						(find-file (read-file-name "" "~/books/")))))
 	   (global-set-key (kbd "s-n") 'org-roam-node-find)
+	   (global-set-key (kbd "s-i") 'org-roam-node-insert)
 	   (global-set-key (kbd "s-N") 'org-roam-dailies-capture-today)
 	   (global-set-key (kbd "C-x C-t") 'vterm)
 	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
