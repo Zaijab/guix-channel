@@ -1067,7 +1067,6 @@ If WINDOW is t, redisplay pages in all windows."
 		    (specification->package "emacs-jinx"))
 
 		   (specification->package "hunspell-dict-en")
-		   (specification->package "hunspell-dict-jp")
 		   
 		   ))
    (init '((require 'org)
@@ -1083,9 +1082,6 @@ If WINDOW is t, redisplay pages in all windows."
 	   (keymap-global-set "M-$" (function jinx-correct))
 	   (keymap-global-set "C-M-$" (function jinx-languages))
 	   (setq ispell-alternate-dictionary "/home/zjabbar/.guix-home/profile/share/hunspell/en_US.dic")
-	   ;(setq ispell-alternate-dictionary "/home/zjabbar/.guix-home/profile/share/hunspell/.dic")
-	   ;(add-to-list 'vertico-multiform-categories
-		;	'(jinx grid (vertico-grid-annotate . 20)))
 
 	   (setq org-structure-template-alist
 		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
