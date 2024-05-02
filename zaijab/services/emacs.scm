@@ -673,7 +673,7 @@ If WINDOW is t, redisplay pages in all windows."
   (home-emacs-configuration
    (packages (list
 	      ((options->transformation '((with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")
-					  ;(with-branch . "emacs-org-msg=master")
+					  (with-branch . "emacs-org-msg=1.12")
 					  ))
 	       (specification->package "emacs-org-msg"))
 	      (specification->package "isync")
