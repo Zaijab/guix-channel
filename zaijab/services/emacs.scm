@@ -672,10 +672,7 @@ If WINDOW is t, redisplay pages in all windows."
 (define email-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation '((with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")
-					  (with-branch . "emacs-org-msg=1.12")
-					  (with-commit . "emacs-org-msg=4dcd70f14c0046e316dcab54dde0eb7b082ce632")))
-	       (specification->package "emacs-org-msg"))
+	      (specification->package "emacs-org-msg")
 	      (specification->package "isync")
 	      (specification->package "mu")
 	      (specification->package "emacs-mu4e-alert")
