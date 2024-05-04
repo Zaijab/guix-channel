@@ -448,6 +448,7 @@ Usage To automatically apply when saving a python file, use the following code:
 \"autopep8\" you can set the `py-autopep8-options e.g. (setq py-autopep8-options
 (\"--max-line-length=100\" \"--aggressive\"))")
     (license #f)))
+
 (define-public emacs-calfw-blocks
   (package
     (name "emacs-calfw-blocks")
@@ -462,9 +463,7 @@ Usage To automatically apply when saving a python file, use the following code:
 	       (base32
 		"1p2yqp9s2p1rk3z2d09lzy8dimn2rwdf5qxajhq6jms0315dyggs"))))
     (build-system emacs-build-system)
-    (propagated-inputs
-     (list 
-      `("emacs-calfw" ,(specification->package "emacs-calfw"))))
+    (propagated-inputs (list (specification->package "emacs-calfw")))
     (home-page "https://github.com/ml729/calfw-blocks")
     (synopsis "Visual time blocks for the Emacs Calendar Framework (calfw).")
     (description "Visual time blocks for the Emacs Calendar Framework (calfw).")
@@ -488,3 +487,5 @@ Usage To automatically apply when saving a python file, use the following code:
     (synopsis "")
     (description "")
     (license license:gpl3+)))
+
+emacs-calfw-blocks
