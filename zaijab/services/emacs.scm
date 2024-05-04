@@ -575,6 +575,7 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLBEeOnR8lrBHNZWwk8-pHOQLQnP3u8bO8" lecture topology clark)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL6763F57A61FE6FE8" lecture topology wildberger)))
 	   (require 'elfeed-tube)
+	   (require 'elfeed-tube-fill)
 	   (elfeed-tube-setup)
 	   (setq-default elfeed-search-filter "-fun")
 	   (setq-default elfeed-search-title-max-width 100)
@@ -796,6 +797,9 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "emacs-org-fc")
 		   (specification->package "emacs-org-drill")))
    (init '((require 'org-roam-node)
+	   (setq org-roam-db-node-include-function
+		 (lambda ()
+		   (not (member "FC" (org-get-tags)))))
 	   (setq org-roam-node-display-template
 		 (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 
@@ -812,6 +816,8 @@ If WINDOW is t, redisplay pages in all windows."
 		    :unnarrowed t)
 		   ))
 	   (require 'org-fc)
+	   (add-hook 'org-fc-review-flip-mode-hook (function meow-insert-mode))
+
 	   (setq org-fc-directories '("~/notes/")
 		 org-fc-flashcard-tag "FC"
 		 org-fc-suspended-tag "Suspended")
