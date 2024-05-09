@@ -581,7 +581,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq-default elfeed-search-title-max-width 100)
 	   (setq-default elfeed-search-title-min-width 100)
 	   (defun browse-url-mpv (url &optional new-window)
-	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
+	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=\"bestvideo[height<?720]\"" url))
 
 	   (defun browse-url-mpv (url &optional new-window)
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?720]+bestaudio/best" url))
