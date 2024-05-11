@@ -1348,7 +1348,7 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "python-pytorch")
 	      ((options->transformation '((with-input . "python-pytorch@1.13.1=python-pytorch@2.2.1")))
 	       (specification->package "python-torchvision"))
-	      ;; python-tensorflow
+	      python-tensorflow
 	      ))
    (init '((require 'jupyter)
 	   (setq org-babel-python-command "python3"
@@ -1662,7 +1662,8 @@ If WINDOW is t, redisplay pages in all windows."
 
     		 ))
    (init '(
-
+	   (add-hook 'compilation-filter-hook 'comint-truncate-buffer)
+	   (setq comint-buffer-maximum-size 2000)
 	   (set-face-attribute 'default nil :font "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
 	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
