@@ -130,8 +130,9 @@
 									     (transmission-random-salt)
 									     "\"")))
 	       
-	       (modify-services (remove (lambda (service) (eq? (service-kind service) pulseaudio-service-type))
-					%desktop-services)                 
+	       (modify-services
+		   (remove (lambda (service) (eq? (service-kind service) pulseaudio-service-type))
+			   %desktop-services)
 		 (gdm-service-type
 		  config => (gdm-configuration
 			     (inherit config)
