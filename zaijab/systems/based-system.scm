@@ -63,7 +63,6 @@
     
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
-    ;; (timezone "Asia/Tokyo")
     (keyboard-layout (keyboard-layout "us"))
     (sudoers-file
      (plain-file "sudoers"
