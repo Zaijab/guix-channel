@@ -1349,6 +1349,7 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
 	      (specification->package "python-pytorch")
+	      ((package-input-rewriting `((,python-pytorch ,python-pytorch2))) ((specification->package "python-torchvision"))
 	      ((options->transformation '((with-input . "python-pytorch@1.13.1=python-pytorch@2.2.1")))
 	       (specification->package "python-torchvision"))
 	      ;; python-tensorflow
@@ -1392,13 +1393,12 @@ If WINDOW is t, redisplay pages in all windows."
 				       guix-repl-use-latest  nil
 				       guix-repl-use-server  nil))
 
-
-
-	   
-	   (require 'geiser-guile)
 	   (require 'guix)
-	   (setq geiser-default-implementation 'guile)
 	   (global-guix-prettify-mode)
+
+	   (defun guile-arei-server-start () (interactive)
+	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '((@ (nrepl server) run-nrepl-server) #:port 7888)'"))
+
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
@@ -1484,7 +1484,6 @@ If WINDOW is t, redisplay pages in all windows."
 						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\" https://workbench.researchallofus.org"
 						 nil
 						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\" https://workbench.researchallofus.org"))))
-	   (global-set-key (kbd "s-V") (function xwidget-webkit-browse-url))
 	   
 	   (global-set-key (kbd "s-r") (function eshell))
 	   (global-set-key (kbd "s-t") (function eval-region))
@@ -1509,7 +1508,6 @@ If WINDOW is t, redisplay pages in all windows."
 	   (global-set-key (kbd "s-s") (function jisho->fc))
 
 	   (global-set-key (kbd "s-m") 'mu4e)
-	   (global-set-key (kbd "s-d") (function geiser-guile))
 	   (global-set-key (kbd "s-z") (function elfeed))
 	   (global-set-key (kbd "s-g") (function guix))
 	   (global-set-key (kbd "s-x") (function eww))
@@ -1557,7 +1555,6 @@ If WINDOW is t, redisplay pages in all windows."
 							     f10
 							     f11
 							     f12
-					;escape
 							     XF86AudioRaiseVolume
 							     XF86AudioLowerVolume
 							     XF86AudioNext
