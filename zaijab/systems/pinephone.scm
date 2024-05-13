@@ -83,18 +83,18 @@
   (let ((linux-package
          (customize-linux
           #:name "linux-pinephone-pro"
-          #:linux linux-libre-arm64-generic
+          #:linux linux-arm64-generic
           #:defconfig
           ;; It could be "pinephone_pro_defconfig", but with a small patch
           ;; TODO: Rewrite it to the simple patch for the source code
           (local-file "./pinephone_pro_defconfig")
           #:extra-version "arm64-pinephone-pro"
-          #:source (origin (method url-fetch)
+          #;#:source #;(origin (method url-fetch)
                            (uri "https://github.com/sailfish-on-dontbeevil/kernel-megi/archive/refs/tags/orange-pi-6.2-20230330-1609.tar.gz")
                            (sha256 (base32 "1iz92k42rpxrw8k0z01gvkm7dm96haap6qb1i8j1i1vim4alrk37"))))
 	 ))
     (package
-     (inherit linux)
+     (inherit linux-package)
      (version "opi5")
      (inputs (list pinephone-pro-firmware))
      (arguments
@@ -115,7 +115,7 @@
 
 (define pinephone-pro-os
   (operating-system
-    (kernel linux-pinephone-pro)
+    (kernel linux-arm64-generic)
     (kernel-arguments
      (append
       (list
