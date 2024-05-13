@@ -1340,7 +1340,7 @@ If WINDOW is t, redisplay pages in all windows."
 
 	      (specification->package "pandoc")
 	      (specification->package "python-numpy")
-
+	      
 	      (specification->package "python-sqlalchemy")
 	      (specification->package "python-cookiecutter")
 	      (specification->package "python-pandas")
@@ -1395,7 +1395,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'guix)
 	   (global-guix-prettify-mode)
 
-	   (defun guile-arei-server-start () (interactive)
+	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
 	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '((@ (nrepl server) run-nrepl-server) #:port 7888)'"))
 
 	   (setq user-full-name "Zain Jabbar")
