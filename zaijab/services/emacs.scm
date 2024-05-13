@@ -1349,8 +1349,7 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
 	      (specification->package "python-pytorch")
-	      ((package-input-rewriting `((,python-pytorch ,python-pytorch2))) ((specification->package "python-torchvision"))
-	      ((options->transformation '((with-input . "python-pytorch@1.13.1=python-pytorch@2.2.1")))
+	      ((options->transformation '((with-input . "python-pytorch@1.13.1=python-pytorch@2.0.1")))
 	       (specification->package "python-torchvision"))
 	      ;; python-tensorflow
 	      ))
