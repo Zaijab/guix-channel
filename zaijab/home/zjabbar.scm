@@ -12,6 +12,8 @@
   #:use-module (gnu home services desktop)
   #:use-module (guix gexp)
   #:use-module (srfi srfi-9)
+  #:use-module (nongnu packages chrome)
+  #:use-module (nongnu packages messaging)
   #:use-module (zaijab services emacs)
   #:use-module (zaijab services searx)
   #:use-module (zaijab services pipewire))
@@ -21,7 +23,9 @@
    (packages (list (specification->package "xmodmap")
 		   (specification->package "unzip") 
                    (specification->package "xset")
-                   (specification->package "font-iosevka")))
+                   (specification->package "font-iosevka")
+		   zoom
+		   google-chrome-unstable))
    (services
     (list
      (service home-bash-service-type
