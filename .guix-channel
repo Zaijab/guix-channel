@@ -14,7 +14,6 @@
   (channel
    (name guix-science)
    (url "https://github.com/guix-science/guix-science.git")
-   (commit "f85279b8aeac3cc3e6e2aec866841c722c5663fe")
    (introduction
     (channel-introduction
      (version 0)
