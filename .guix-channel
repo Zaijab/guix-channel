@@ -11,7 +11,7 @@
      (version 0)
      (commit "897c1a470da759236cc11798f4e0a5f7d4d59fbc")
      (signer "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
-  #;(channel
+  (channel
    (name guix-science)
    (url "https://github.com/guix-science/guix-science.git")
    (introduction
@@ -19,7 +19,7 @@
      (version 0)
      (commit "b1fe5aaff3ab48e798a4cce02f0212bc91f423dc")
      (signer "CA4F 8CF4 37D7 478F DA05  5FD4 4213 7701 1A37 8446"))))
-  #;(channel
+  (channel
    (name guix-science-nonfree)
    (url "https://github.com/guix-science/guix-science-nonfree.git")
    (introduction
@@ -27,12 +27,13 @@
      (version 0)
      (commit "58661b110325fd5d9b40e6f0177cc486a615817e")
      (signer "CA4F 8CF4 37D7 478F DA05  5FD4 4213 7701 1A37 8446"))))
-  #;(channel
+  (channel
    (name guix-hpc)
    (url "https://gitlab.inria.fr/guix-hpc/guix-hpc.git"))
   (channel
    (name guix)
    (url "https://git.savannah.gnu.org/git/guix.git")
+   (commit "6ba29e02108ed144da1234b4b5512ee03865dcf6")
    (introduction
     (channel-introduction
      (version 0)
