@@ -32,8 +32,7 @@
               (home-bash-configuration
                (aliases
                 '(("ll"   . "ls -l")
-                  ("mbsync" . "mbsync -c ~/.config/mbsyncrc")
-		  ))
+                  ("mbsync" . "mbsync -c ~/.config/mbsyncrc")))
                (environment-variables
                 '(("GNUPGHOME" . "~/.config/gnupg")
                   ("PASSWORD_STORE_SYSTEM_EXTENSION_DIR" . "/home/zjabbar/.guix-profile/lib/password-store/extensions/")

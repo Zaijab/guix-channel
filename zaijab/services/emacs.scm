@@ -1499,7 +1499,10 @@ If WINDOW is t, redisplay pages in all windows."
 	   (global-set-key (kbd "s-`") 'eshell-command)
 	   (global-set-key (kbd "s-c") (function
 					(lambda () (interactive)
-						(find-file "~/code/guix-channel/zaijab/services/emacs.scm"))))
+						(find-file "~/code/guix-channel/zaijab/services/emacs.scm")
+						(forward-page)
+						(recenter-top-bottom)
+						(recenter-top-bottom))))
 	   (global-set-key (kbd "s-b") (function
 					(lambda () (interactive)
 						(find-file (read-file-name "" "~/books/")))))
