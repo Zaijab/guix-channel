@@ -17,10 +17,7 @@
   #:use-module (guix transformations)
   #:use-module (guix gexp)
   #:use-module (zaijab packages emacs-xyz)
-  #:use-module (zaijab packages python-xyz)
-  #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages emacs)
-  #:use-module (nongnu packages messaging)
   #:use-module (nongnu packages fonts)
   #:use-module (guix-science packages python)
   #:export (home-emacs-service-type
