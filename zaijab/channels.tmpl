@@ -1,9 +1,13 @@
 ;; -*- mode: scheme -*-
-(use-modules (guix ci)
-	     (guix channels))
+(define-module (zaijab channels)
+  #:use-module (guix ci)
+  #:use-module (guix channels))
 
-(list
- (channel
-  (name 'zaijab)
-  (url "/home/zjabbar/code/guix-channel/")
-  (branch "main")))
+(define-public channel-zaijab
+  (list
+   (channel
+    (name 'zaijab)
+    (url "/home/zjabbar/code/guix-channel/")
+    (branch "main"))))
+
+channel-zaijab

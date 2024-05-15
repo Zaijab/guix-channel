@@ -129,9 +129,8 @@
 									     (transmission-random-salt)
 									     "\"")))
 	       
-	       (modify-services
-		   (remove (lambda (service) (eq? (service-kind service) pulseaudio-service-type))
-			   %desktop-services)
+	       (modify-services %desktop-services
+		 (delete pulseaudio-service-type)
 		 (gdm-service-type
 		  config => (gdm-configuration
 			     (inherit config)
@@ -147,14 +146,13 @@
 		  config => (guix-configuration
 			     (inherit config)
 			     (substitute-urls
-			      (append (list "https://substitutes.nonguix.org"
-					    "https://guix.bordeaux.inria.fr")
-				      %default-substitute-urls))
+			      (cons* "https://substitutes.nonguix.org"
+				     "https://guix.bordeaux.inria.fr"
+				     %default-substitute-urls))
 			     (authorized-keys
-			      (append (list (local-file "./nonguix.pub")
-					    (local-file "./bordeaux.pub")
-					    )
-				      %default-authorized-guix-keys)))))))))
+			      (cons* (local-file "./nonguix.pub")
+				     (local-file "./bordeaux.pub")
+				     %default-authorized-guix-keys)))))))))
 
 
 (define-public euler-operating-system
