@@ -33,7 +33,6 @@
   (channel
    (name guix)
    (url "https://git.savannah.gnu.org/git/guix.git")
-   (commit "6ba29e02108ed144da1234b4b5512ee03865dcf6")
    (introduction
     (channel-introduction
      (version 0)
