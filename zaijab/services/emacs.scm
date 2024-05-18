@@ -790,6 +790,7 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "emacs-org-fc")
 		   (specification->package "emacs-org-drill")))
    (init '((require 'org-roam-node)
+	   
 	   (setq org-roam-db-node-include-function
 		 (lambda ()
 		   (not (member "FC" (org-get-tags)))))
