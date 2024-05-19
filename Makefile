@@ -1,4 +1,4 @@
-all: gnew gpull gsystem zjabbar
+all: gnew gpull gsystem
 
 gc:
 	guix gc -d 1m
@@ -17,9 +17,6 @@ gpackage:
 
 gsystem:
 	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades --no-grafts -c 2 -v 4
-
-zjabbar:
-	guix home reconfigure /home/zjabbar/code/guix-channel/zaijab/home/zjabbar.scm --allow-downgrades --no-grafts -c 2 -v 4
 
 init:
 	mkdir ~/.mail/zaijab2000
