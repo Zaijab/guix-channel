@@ -9,6 +9,8 @@
   #:use-module (nongnu packages linux)
   #:use-module (gnu)
   #:use-module (gnu system)
+  #:use-module (gnu home)
+  
   #:use-module (gnu packages)
   #:use-module (gnu packages linux)
   #:use-module (gnu services linux)
@@ -38,7 +40,8 @@
   #:use-module (gnu services dbus) 
   #:use-module (gnu services vpn) 
   #:use-module (gnu services mcron) 
-  #:use-module (gnu services virtualization))
+  #:use-module (gnu services virtualization)
+  #:use-module (zaijab home zjabbar))
 
 (define-public tao-operating-system
   (operating-system
@@ -94,19 +97,7 @@
 	       (service opendht-service-type (opendht-configuration (peer-discovery? #t)))
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
-
-	       (extra-special-file "/etc/searx/settings.yml"
-				   (plain-file "settings.yml" (string-append "use_default_settings: True\n"
-									     "general:\n"
-									     "  instance_name : \"searx\" # displayed name\n"
-									     "server:\n"
-									     "  bind_address : \"0.0.0.0\"\n"
-									     "  secret_key : \""
-									     (transmission-random-salt)
-									     (transmission-random-salt)
-									     (transmission-random-salt)
-									     (transmission-random-salt)
-									     "\"")))
+	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
