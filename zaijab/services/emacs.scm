@@ -1073,6 +1073,8 @@ If WINDOW is t, redisplay pages in all windows."
 		   ((options->transformation '((with-source . "enchant=https://github.com/AbiWord/enchant/releases/download/v2.3.1/enchant-2.3.1.tar.gz")))
 		    (specification->package "emacs-jinx"))
 
+		   
+		   (specification->package "hunspell")
 		   (specification->package "hunspell-dict-en")
 		   
 		   ))
@@ -1088,6 +1090,8 @@ If WINDOW is t, redisplay pages in all windows."
 	   (add-hook 'emacs-startup-hook (function global-jinx-mode))
 	   (keymap-global-set "M-$" (function jinx-correct))
 	   (keymap-global-set "C-M-$" (function jinx-languages))
+	   (setq ispell-program-name (executable-find "hunspell")
+		 ispell-dictionary   "de_DE")
 	   (setq ispell-alternate-dictionary "/home/zjabbar/.guix-home/profile/share/hunspell/en_US.dic")
 
 	   (setq org-structure-template-alist
