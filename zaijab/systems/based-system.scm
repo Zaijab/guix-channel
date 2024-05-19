@@ -10,8 +10,7 @@
   #:use-module (gnu)
   #:use-module (gnu system)
   #:use-module (gnu home)
-  #:use-module (gnu services guix)
-  
+  #:use-module (gnu services guix)  
   #:use-module (gnu packages)
   #:use-module (gnu packages linux)
   #:use-module (gnu services linux)
