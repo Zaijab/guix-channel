@@ -61,11 +61,8 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       (specification->package "pulseaudio")
 	       (specification->package "network-manager-applet")
-	       (specification->package "searx") 
 	       (specification->package "gsettings-desktop-schemas")
-	       (specification->package "emacs-exwm")
 	       %base-packages))
     
     (host-name "tao")
