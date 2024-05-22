@@ -394,7 +394,8 @@
   (home-emacs-configuration
    (packages (list (specification->package "icecat")
 		   (specification->package "ublock-origin-icecat")
-		   (specification->package "passff-icecat")))))
+		   (specification->package "passff-icecat")
+		   (specification->package "emacs-exwm-firefox")))))
 
 (define eww-configuration
   (home-emacs-configuration
@@ -492,10 +493,10 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
 				;; ("https://twitchrss.appspot.com/vod/nicob" fun nicob twitch)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun league pekin)
 				;; ("https://twitchrss.appspot.com/vod/pekinwoof" fun league pekin twitch)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCIkcvRgwGlzEtfGf7k2oL3g" fun league virkayu)
@@ -1483,6 +1484,18 @@ If WINDOW is t, redisplay pages in all windows."
 						 "google-chrome-unstable --incognito --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""
 						 nil
 						 "google-chrome-unstable --incognito --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""))))
+	   (global-set-key (kbd "s-e") (function
+					(lambda () (interactive)
+						(start-process-shell-command
+						 "icecat"
+						 nil
+						 "icecat"))))
+	   (global-set-key (kbd "s-E") (function
+					(lambda () (interactive)
+						(start-process-shell-command
+						 "icecat --private-window"
+						 nil
+						 "icecat --private-window"))))
 	   (global-set-key (kbd "s-v") (function
 					(lambda () (interactive)
 						(start-process-shell-command
