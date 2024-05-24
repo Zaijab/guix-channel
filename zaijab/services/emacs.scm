@@ -1069,11 +1069,12 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
 		   (specification->package "imagemagick")
-		   (specification->package "nuspell")
 		   ((options->transformation '((with-source . "enchant=https://github.com/AbiWord/enchant/releases/download/v2.3.1/enchant-2.3.1.tar.gz")))
 		    (specification->package "emacs-jinx"))
 
 		   
+		   (specification->package "nuspell")
+		   (specification->package "aspell")
 		   (specification->package "hunspell")
 		   (specification->package "hunspell-dict-en")
 		   
@@ -1087,6 +1088,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'calfw-org)
 	   (require 'calfw-blocks)
 	   (setq org-startup-folded t)
+	   
 	   (add-hook 'emacs-startup-hook (function global-jinx-mode))
 	   (keymap-global-set "M-$" (function jinx-correct))
 	   (keymap-global-set "C-M-$" (function jinx-languages))
