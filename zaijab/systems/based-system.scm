@@ -117,8 +117,9 @@
 				     "https://guix.bordeaux.inria.fr"
 				     %default-substitute-urls))
 			     (authorized-keys
-			      (cons* (local-file "./nonguix.pub")
-				     (local-file "./bordeaux.pub")
+			      (cons*
+			       (local-file "./nonguix.pub")
+			       (local-file "./bordeaux.pub")
 				     %default-authorized-guix-keys)))))))))
 
 

@@ -498,7 +498,7 @@ If WINDOW is t, redisplay pages in all windows."
 				;; ("https://twitchrss.appspot.com/vod/nicob" fun nicob twitch)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun league pekin)
-				;; ("https://twitchrss.appspot.com/vod/pekinwoof" fun league pekin twitch)
+				("https://twitchrss.appspot.com/vodonly/pekinwoof" fun league pekin twitch)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCIkcvRgwGlzEtfGf7k2oL3g" fun league virkayu)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCc3cbGWviHbC1OLJKFDfogA" fun league virkayu)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCwE00vEJFzpO6j1rDJMLDfg" fun league virkayu)
@@ -1090,9 +1090,10 @@ If WINDOW is t, redisplay pages in all windows."
 	   (add-hook 'emacs-startup-hook (function global-jinx-mode))
 	   (keymap-global-set "M-$" (function jinx-correct))
 	   (keymap-global-set "C-M-$" (function jinx-languages))
-	   (setq ispell-program-name (executable-find "hunspell")
-		 ispell-dictionary   "de_DE")
-	   (setq ispell-alternate-dictionary "/home/zjabbar/.guix-home/profile/share/hunspell/en_US.dic")
+	   
+	   ;; (setq ispell-program-name (executable-find "hunspell")
+	   ;; 	 ispell-dictionary   "en_US")
+	   ;(setq ispell-alternate-dictionary "/home/zjabbar/.guix-home/profile/share/hunspell/en_US.dic")
 
 	   (setq org-structure-template-alist
 		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
@@ -1717,8 +1718,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'rainbow-delimiters)
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
-	   (which-key-mode)
-	   ))))
+	   (which-key-mode)))))
 
 ;;; Combine all Emacs-Configurations within module
 
