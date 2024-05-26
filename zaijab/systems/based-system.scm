@@ -97,7 +97,9 @@
 	       (service unattended-upgrade-service-type)
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service connman-service-type)
-	       (service sddm-service-type)
+	       (service sddm-service-type
+			(sddm-configuration
+			 (auto-login-user "zjabbar")))
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
