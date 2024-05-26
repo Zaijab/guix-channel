@@ -7,8 +7,6 @@
   #:use-module (guix utils)
   #:use-module (guix git-download)
   #:use-module (guix build-system copy)
-  #:use-module (gnu services networking)
-  #:use-module (gnu services ssh)
   #:use-module (gnu system)
   #:use-module (gnu bootloader)
   #:use-module (gnu bootloader u-boot)
@@ -19,7 +17,12 @@
   #:use-module (gnu home)
   #:use-module (gnu services guix)  
   #:use-module (zaijab home zjabbar)
+  #:use-module (gnu packages)
   #:use-module (gnu services desktop)
+  #:use-module (gnu services xorg)
+  #:use-module (gnu services networking)
+  #:use-module (gnu services ssh)
+  #:use-module (gnu services sddm)
 
   )
 
@@ -161,9 +164,12 @@
                   (supplementary-groups '("wheel" "audio" "video"))
                   (home-directory "/home/zjabbar"))
                  %base-user-accounts))
-        (services (cons*
-	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
-	       %desktop-services))
+
+    (services (cons*
+	       (service network-manager-service-type)
+	       (service wpa-supplicant-service-type)
+	       %base-services
+	       ))
 	       
 
     ))
