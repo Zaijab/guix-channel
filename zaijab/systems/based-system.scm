@@ -46,8 +46,8 @@
 
 (define-public tao-operating-system
   (operating-system
-    ;(kernel linux)
-    ;(firmware (list linux-firmware))    
+    (kernel linux)
+    (firmware (list linux-firmware))    
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
     (keyboard-layout (keyboard-layout "us"))
@@ -96,26 +96,20 @@
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
-	       (service connman-service-type)
-	       (service sddm-service-type
-			(sddm-configuration
-			 (auto-login-user "zjabbar")))
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
-		 (delete network-manager-service-type)
-		 (delete gdm-service-type)
-		 ;; (gdm-service-type
-		 ;;  config => (gdm-configuration
-		 ;; 	     (inherit config)
-		 ;; 	     (auto-login? #t)
-		 ;; 	     (default-user "zjabbar")))
-		 ;; (network-manager-service-type
-		 ;;  config => (network-manager-configuration
-		 ;; 	     (inherit config)
-		 ;; 	     (vpn-plugins
-		 ;; 	      (list
-		 ;; 	       (specification->package "network-manager-openvpn")))))
+		 (gdm-service-type
+		  config => (gdm-configuration
+			     (inherit config)
+			     (auto-login? #t)
+			     (default-user "zjabbar")))
+		 (network-manager-service-type
+		  config => (network-manager-configuration
+			     (inherit config)
+			     (vpn-plugins
+			      (list
+			       (specification->package "network-manager-openvpn")))))
 		 (guix-service-type
 		  config => (guix-configuration
 			     (inherit config)
