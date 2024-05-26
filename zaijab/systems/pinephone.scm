@@ -126,13 +126,8 @@
 (define pinephone-pro-os
   (operating-system
     (kernel linux-pinephone-pro)
-    (kernel-arguments
-     (append
-      (list
-       "console=ttyS2,115200"
-       "earlycon=uart8250,mmio32,0xff1a0000"
-       "earlyprintk")
-      (drop-right %default-kernel-arguments 1)))
+    (kernel-arguments (append (list "console=ttyS2,115200" "earlycon=uart8250,mmio32,0xff1a0000" "earlyprintk")
+			      (drop-right %default-kernel-arguments 1)))
 
     (initrd-modules '())
 
@@ -167,12 +162,8 @@
 
     (services (cons*
 	       (service wpa-supplicant-service-type)
-	       (service network-manager-service-type)
-	       %base-services
-	       ))
-	       
-
-    ))
+	       (service connman-service-type)
+	       %base-services))))
 
 pinephone-pro-os
 
