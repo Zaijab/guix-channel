@@ -41,7 +41,8 @@
   #:use-module (gnu services vpn) 
   #:use-module (gnu services mcron) 
   #:use-module (gnu services virtualization)
-  #:use-module (zaijab home zjabbar))
+  #:use-module (zaijab home zjabbar)
+  )
 
 (define-public tao-operating-system
   (operating-system

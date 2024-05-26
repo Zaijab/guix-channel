@@ -14,7 +14,14 @@
   #:use-module (gnu bootloader u-boot)
   #:use-module (nonguix licenses)
   #:use-module (nongnu packages linux)
-  #:use-module (zaijab systems based-system))
+  #:use-module (gnu system images rock64)
+  #:use-module (zaijab systems based-system)
+  #:use-module (gnu home)
+  #:use-module (gnu services guix)  
+  #:use-module (zaijab home zjabbar)
+  #:use-module (gnu services desktop)
+
+  )
 
 (use-modules (gnu system)
              (gnu system keyboard)
@@ -89,7 +96,7 @@
           ;; TODO: Rewrite it to the simple patch for the source code
           (local-file "./pinephone_pro_defconfig")
           #:extra-version "arm64-pinephone-pro"
-          #;#:source #;(origin (method url-fetch)
+          #:source (origin (method url-fetch)
                            (uri "https://github.com/sailfish-on-dontbeevil/kernel-megi/archive/refs/tags/orange-pi-6.2-20230330-1609.tar.gz")
                            (sha256 (base32 "1iz92k42rpxrw8k0z01gvkm7dm96haap6qb1i8j1i1vim4alrk37"))))
 	 ))
@@ -115,7 +122,7 @@
 
 (define pinephone-pro-os
   (operating-system
-    (kernel linux-arm64-generic)
+    (kernel linux-pinephone-pro)
     (kernel-arguments
      (append
       (list
@@ -131,9 +138,8 @@
                %base-firmware))
     
     (host-name "pinephonepro")
-    (timezone "Europe/Istanbul")
+    (timezone "Pacific/Honolulu")
     (locale "en_US.utf8")
-    (keyboard-layout (keyboard-layout "us" "dvorak"))
 
     (bootloader
      (bootloader-configuration
@@ -149,13 +155,19 @@
       %base-file-systems))
 
     (users (cons (user-account
-                  (name "bob")
-                  (password (crypt "3412" "$6$abc"))
+                  (name "zjabbar")
+                  (password "fish")
                   (group "users")
                   (supplementary-groups '("wheel" "audio" "video"))
-                  (home-directory "/home/bob"))
+                  (home-directory "/home/zjabbar"))
                  %base-user-accounts))
+        (services (cons*
+	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
+	       %desktop-services))
+	       
 
     ))
 
 pinephone-pro-os
+
+;rock64-barebones-os

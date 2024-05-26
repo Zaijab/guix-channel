@@ -20,3 +20,10 @@ gsystem:
 
 init:
 	mkdir ~/.mail/zaijab2000
+
+pinephone-build:
+	guix system image /home/zjabbar/code/guix-channel/zaijab/systems/pinephone.scm --no-grafts --image-type=rock64-raw
+
+pinephone-write:
+	sudo dd if=`guix system image --image-type=rock64-raw /home/zjabbar/code/guix-channel/zaijab/systems/pinephone.scm --no-grafts` \
+	of=/dev/sda bs=1M oflag=direct,sync status=progress
