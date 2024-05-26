@@ -166,8 +166,8 @@
                  %base-user-accounts))
 
     (services (cons*
-	       (service network-manager-service-type)
 	       (service wpa-supplicant-service-type)
+	       (service network-manager-service-type)
 	       %base-services
 	       ))
 	       
