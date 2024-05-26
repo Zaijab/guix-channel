@@ -97,15 +97,17 @@
 	       (service unattended-upgrade-service-type)
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service connman-service-type)
+	       (service sddm-service-type)
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
 		 (delete network-manager-service-type)
-		 (gdm-service-type
-		  config => (gdm-configuration
-			     (inherit config)
-			     (auto-login? #t)
-			     (default-user "zjabbar")))
+		 (delete gdm-service-type)
+		 ;; (gdm-service-type
+		 ;;  config => (gdm-configuration
+		 ;; 	     (inherit config)
+		 ;; 	     (auto-login? #t)
+		 ;; 	     (default-user "zjabbar")))
 		 ;; (network-manager-service-type
 		 ;;  config => (network-manager-configuration
 		 ;; 	     (inherit config)
