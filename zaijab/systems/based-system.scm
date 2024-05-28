@@ -99,11 +99,16 @@
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
-		 (gdm-service-type
-		  config => (gdm-configuration
-			     (inherit config)
-			     (auto-login? #t)
-			     (default-user "zjabbar")))
+		 (delete gdm-service-type)
+		 (mingetty-service-type
+		  config => (mingetty-configuration
+			     (tty "tty1")
+			     (auto-login "zjabbar")))
+		 ;; (gdm-service-type
+		 ;;  config => (gdm-configuration
+		 ;; 	     (inherit config)
+		 ;; 	     (auto-login? #t)
+		 ;; 	     (default-user "zjabbar")))
 		 (network-manager-service-type
 		  config => (network-manager-configuration
 			     (inherit config)

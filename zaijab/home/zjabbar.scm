@@ -23,7 +23,11 @@
    (packages (list (specification->package "xmodmap")
 		   (specification->package "unzip") 
                    (specification->package "xset")
-                   (specification->package "font-iosevka")
+                   (specification->package "xinit")
+                   (specification->package "xorg-server")
+                   (specification->package "xf86-input-libinput")
+                   (specification->package "xf86-video-fbdev")
+                   (specification->package "xf86-video-nouveau")
 		   zoom
 		   google-chrome-unstable))
    (services
@@ -47,18 +51,20 @@
                (bash-profile
                 (list
                  (mixed-text-file "profile.sh"
-                                  "xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'\n"
+                                  ;; "xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'\n"
                                   ;; "unset SSH_AGENT_PID\nif [ \"${gnupg_SSH_AUTH_SOCK_by:-0}\" -ne $$ ];"
                                   ;; " then\nexport SSH_AUTH_SOCK=\"$(gpgconf --list-dirs agent-ssh-socket)\"\nfi\n"
                                   ;; "export GPG_TTY=$(tty)\ngpg-connect-agent updatestartuptty /bye >/dev/null\n"
                                   "export HOSTNAME\n"
                                   "eval \"$(direnv hook bash)\"\n"
-				  
 				  )))
 	       (bashrc
 		(list
 		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
+				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
+				  "exec $HOME/bin/startx.sh\n"
+				  "fi\n"
 				  )))))
      (service home-emacs-service-type home-emacs-total-configuration)
      ;(service home-searx-service-type)
@@ -69,7 +75,10 @@
                (pinentry-program
                 (file-append pinentry-emacs "/bin/pinentry-emacs"))
                (ssh-support? #t)))
-
+     (service home-xmodmap-service-type
+	      (home-xmodmap-configuration
+	       (key-map '(("clear Lock")
+			  ("keycode 0x42" "Escape")))))
      (simple-service 'dotfiles
                      home-files-service-type
                      `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))

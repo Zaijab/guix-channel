@@ -154,7 +154,7 @@
 
     (users (cons (user-account
                   (name "zjabbar")
-                  (password "fish")
+                  (password (crypt "fish" "$6$abc"))
                   (group "users")
                   (supplementary-groups '("wheel" "audio" "video"))
                   (home-directory "/home/zjabbar"))
@@ -163,6 +163,7 @@
     (services (cons*
 	       (service wpa-supplicant-service-type)
 	       (service connman-service-type)
+	       (service sddm-s)
 	       %base-services))))
 
 pinephone-pro-os
