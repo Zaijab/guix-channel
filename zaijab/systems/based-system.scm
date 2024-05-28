@@ -102,6 +102,7 @@
 		 (delete gdm-service-type)
 		 (mingetty-service-type
 		  config => (mingetty-configuration
+			     (inherit config)
 			     (tty "tty1")
 			     (auto-login "zjabbar")))
 		 ;; (gdm-service-type
