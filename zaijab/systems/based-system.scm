@@ -47,7 +47,8 @@
   (if (string=? tty (mingetty-configuration-tty config))
       (mingetty-configuration
        (inherit config)
-       (auto-login user))
+       (auto-login user)
+       (login-pause #t))
       config))
 
 (define-public tao-operating-system
@@ -106,6 +107,8 @@
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
+		 (mingetty-service-type
+		  config => (auto-login-to-tty config "tty1" "zjabbar"))
 		 (network-manager-service-type
 		  config => (network-manager-configuration
 			     (inherit config)

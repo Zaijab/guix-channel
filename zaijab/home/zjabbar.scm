@@ -16,8 +16,7 @@
   #:use-module (nongnu packages messaging)
   #:use-module (zaijab services emacs)
   #:use-module (zaijab services searx)
-  #:use-module (gnu home services sound)
-  )
+  #:use-module (gnu home services sound))
 
 (define-public zains-home
   (home-environment
