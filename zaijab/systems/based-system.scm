@@ -103,7 +103,6 @@
 		 (mingetty-service-type
 		  config => (mingetty-configuration
 			     (inherit config)
-			     (tty "tty1")
 			     (auto-login "zjabbar")))
 		 ;; (gdm-service-type
 		 ;;  config => (gdm-configuration
