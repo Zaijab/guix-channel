@@ -43,6 +43,12 @@
   #:use-module (gnu services virtualization)
   #:use-module (zaijab home zjabbar)
   )
+(define (auto-login-to-tty config tty user)
+  (if (string=? tty (mingetty-configuration-tty config))
+      (mingetty-configuration
+       (inherit config)
+       (auto-login user))
+      config))
 
 (define-public tao-operating-system
   (operating-system
@@ -101,9 +107,7 @@
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
 		 (mingetty-service-type
-		  config => (mingetty-configuration
-			     (inherit config)
-			     (auto-login "zjabbar")))
+		  config => (auto-login-to-tty config "tty1" "zjabbar"))
 		 ;; (gdm-service-type
 		 ;;  config => (gdm-configuration
 		 ;; 	     (inherit config)
