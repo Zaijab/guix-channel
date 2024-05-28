@@ -102,6 +102,7 @@
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
+	       (service agetty-service-type (agetty-configuration (tty "tty1")))
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
