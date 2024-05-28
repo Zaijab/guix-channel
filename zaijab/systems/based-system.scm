@@ -106,8 +106,8 @@
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
-		 ;; (mingetty-service-type
-		 ;;  config => (auto-login-to-tty config "tty1" "zjabbar"))
+		 (mingetty-service-type
+		  config => (auto-login-to-tty config "tty1" "zjabbar"))
 		 ;; (gdm-service-type
 		 ;;  config => (gdm-configuration
 		 ;; 	     (inherit config)
