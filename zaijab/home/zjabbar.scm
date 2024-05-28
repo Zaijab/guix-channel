@@ -63,7 +63,7 @@
 		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
 				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
-				  "exec $HOME/bin/startx.sh\n"
+				  "exec /home/zjabbar/code/guix-channel/zaijab/files/xinitrc.sh\n"
 				  "fi\n"
 				  )))))
      (service home-emacs-service-type home-emacs-total-configuration)
