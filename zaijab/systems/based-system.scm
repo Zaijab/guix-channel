@@ -41,8 +41,8 @@
   #:use-module (gnu services vpn) 
   #:use-module (gnu services mcron) 
   #:use-module (gnu services virtualization)
-  #:use-module (zaijab home zjabbar)
-  )
+  #:use-module (zaijab home zjabbar))
+
 (define (auto-login-to-tty config tty user)
   (if (string=? tty (mingetty-configuration-tty config))
       (mingetty-configuration
@@ -102,18 +102,10 @@
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
-	       (service agetty-service-type (agetty-configuration (tty "tty1")))
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
-		 ;; (mingetty-service-type
-		 ;;  config => (auto-login-to-tty config "tty1" "zjabbar"))
-		 ;; (gdm-service-type
-		 ;;  config => (gdm-configuration
-		 ;; 	     (inherit config)
-		 ;; 	     (auto-login? #t)
-		 ;; 	     (default-user "zjabbar")))
 		 (network-manager-service-type
 		  config => (network-manager-configuration
 			     (inherit config)
