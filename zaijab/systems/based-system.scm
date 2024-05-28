@@ -48,7 +48,7 @@
       (mingetty-configuration
        (inherit config)
        (auto-login user)
-       (login-pause #t))
+       (login-pause? #t))
       config))
 
 (define-public tao-operating-system
