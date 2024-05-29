@@ -51,7 +51,7 @@
                (bash-profile
                 (list
                  (mixed-text-file "profile.sh"
-				  "[[ -r ~/.bashrc ]] && . ~/.bashrc"
+				  "[[ -r ~/.bashrc ]] && . ~/.bashrc\n"
                                   "export HOSTNAME\n"
                                   "eval \"$(direnv hook bash)\"\n")))
 	       (bashrc
