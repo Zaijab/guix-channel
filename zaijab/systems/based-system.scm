@@ -62,7 +62,8 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       (specification->package "network-manager-applet")
+	       ;(specification->package "network-manager-applet")
+	       (specification->package "connman")
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
     
