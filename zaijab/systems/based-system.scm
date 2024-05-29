@@ -96,7 +96,7 @@
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
-
+	       (service connman-service-type)
 	       
           ;; (service oci-container-service-type
           ;;          (list
@@ -141,17 +141,18 @@
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
+		 (delete network-manager-service-type)
 		 (mingetty-service-type
 		  config => (mingetty-configuration
 			     (inherit config)
 			     (auto-login "zjabbar")
 			     (login-pause? #t)))
-		 (network-manager-service-type
-		  config => (network-manager-configuration
-			     (inherit config)
-			     (vpn-plugins
-			      (list
-			       (specification->package "network-manager-openvpn")))))
+		 ;; (network-manager-service-type
+		 ;;  config => (network-manager-configuration
+		 ;; 	     (inherit config)
+		 ;; 	     (vpn-plugins
+		 ;; 	      (list
+		 ;; 	       (specification->package "network-manager-openvpn")))))
 		 (guix-service-type
 		  config => (guix-configuration
 			     (inherit config)
