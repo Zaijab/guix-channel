@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source ~/.bash_profile
+
 DIR=$HOME/.guix-profile
 
 $DIR/bin/xinit -- $DIR/bin/Xorg :0 vt1 -keeptty \

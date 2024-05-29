@@ -57,7 +57,7 @@
 	       (bashrc
 		(list
 		 (mixed-text-file "login.sh"
-				  "[[ -r ~/.bash_profile ]] && . ~/.bash_profile\n"
+				  ;"[[ -r ~/.bash_profile ]] && . ~/.bash_profile\n"
                                   "eval \"$(direnv hook bash)\"\n"
 				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
 				  "exec /home/zjabbar/code/guix-channel/zaijab/files/xinitrc.sh\n"
