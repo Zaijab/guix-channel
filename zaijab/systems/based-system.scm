@@ -23,6 +23,7 @@
   #:use-module (gnu services audio)
   #:use-module (gnu services sound)
   #:use-module (gnu services sddm)
+  #:use-module (gnu services docker)
   #:use-module (gnu services dbus)
   #:use-module (gnu services databases) 
   #:use-module (gnu services virtualization)
