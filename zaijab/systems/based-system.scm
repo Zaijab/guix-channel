@@ -92,52 +92,17 @@
 		 %base-user-accounts))
     
     (services (cons*
-	       (service openssh-service-type)
-	       (service opendht-service-type (opendht-configuration (peer-discovery? #t)))
-	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
+	       (service openssh-service-type)
+	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
-	       (service connman-service-type)
-	       
-          ;; (service oci-container-service-type
-          ;;          (list
-          ;;           (oci-container-configuration
-          ;;            (image
-          ;;             (oci-image
-          ;;              (repository "guile")
-          ;;              (tag "3")
-          ;;              (value (specifications->manifest '("guile")))
-          ;;              (pack-options '(#:symlinks (("/bin/guile" -> "bin/guile"))
-          ;;                              #:max-layers 2))))
-          ;;            (entrypoint "/bin/guile")
-          ;;            (command
-          ;;             '("-c" "(display \"hello!\n\")")))
-          ;;           (oci-container-configuration
-          ;;            (image "prom/prometheus")
-          ;;            (network "host")
-          ;;            (ports
-          ;;              '(("9000" . "9000")
-          ;;                ("9090" . "9090"))))
-          ;;           (oci-container-configuration
-          ;;            (image "grafana/grafana:10.0.1")
-          ;;            (network "host")
-          ;;            (ports
-          ;;              '(("3000" . "3000")))
-          ;;            (volumes
-          ;;              '("/var/lib/grafana:/var/lib/grafana")))))
+	       (service connman-service-type)	       
 	       (service oci-container-service-type
-			(list #;(oci-container-configuration
+			(list (oci-container-configuration
 			       (image "searxng/searxng")
 			       (network "host")
 			       (ports '(("8888" . "8888")))
-			 (volumes '("/var/run/searxng:/etc/searxng")))
-			                     (oci-container-configuration
-                     (image "prom/prometheus")
-                     (network "host")
-                     (ports
-                       '(("9000" . "9000")
-                         ("9090" . "9090"))))
-			      ))
+			       (volumes '("/var/run/searxng:/etc/searxng")))))
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
@@ -148,12 +113,6 @@
 			     (inherit config)
 			     (auto-login "zjabbar")
 			     (login-pause? #t)))
-		 ;; (network-manager-service-type
-		 ;;  config => (network-manager-configuration
-		 ;; 	     (inherit config)
-		 ;; 	     (vpn-plugins
-		 ;; 	      (list
-		 ;; 	       (specification->package "network-manager-openvpn")))))
 		 (guix-service-type
 		  config => (guix-configuration
 			     (inherit config)
