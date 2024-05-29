@@ -328,7 +328,9 @@
 	      '("<escape>" . ignore)))
 	   (require 'meow)
 	   (meow-setup)
-	   (meow-global-mode 1)))))
+	   (meow-global-mode 1)
+	   #;(add-to-list 'meow-mode-state-list '(pdf-view-mode . normal))
+	   #;(add-to-list 'meow-mode-state-list '(compilation-mode . normal))))))
 
 (define undo-configuration
   (home-emacs-configuration
