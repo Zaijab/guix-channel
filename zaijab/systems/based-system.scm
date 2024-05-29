@@ -98,11 +98,18 @@
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service connman-service-type)	       
 	       (service oci-container-service-type
-			(list (oci-container-configuration
+			(list #;(oci-container-configuration
 			       (image "searxng/searxng")
 			       (network "host")
 			       (ports '(("8888" . "8888")))
-			       (volumes '("/var/run/searxng:/etc/searxng")))))
+			       (volumes '("/var/run/searxng:/etc/searxng")))
+			      (oci-container-configuration
+			       (image "grafana/grafana:10.0.1")
+			       (network "host")
+			       (ports
+				'(("3000" . "3000")))
+			       (volumes '("/var/lib/grafana:/var/lib/grafana")))
+			      ))
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
