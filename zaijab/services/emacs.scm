@@ -493,12 +493,12 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
 				;; ("https://twitchrss.appspot.com/vod/nicob" fun nicob twitch)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun league pekin)
-				("https://twitchrss.appspot.com/vodonly/pekinwoof" fun league pekin twitch)
+				;; ("https://twitchrss.appspot.com/vodonly/pekinwoof" fun league pekin twitch)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCIkcvRgwGlzEtfGf7k2oL3g" fun league virkayu)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCc3cbGWviHbC1OLJKFDfogA" fun league virkayu)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCwE00vEJFzpO6j1rDJMLDfg" fun league virkayu)
@@ -568,6 +568,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq-default elfeed-search-filter "")
 	   (setq-default elfeed-search-title-max-width 100)
 	   (setq-default elfeed-search-title-min-width 100)
+
 	   (defun browse-url-mpv (url &optional new-window)
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=\"bestvideo[height<?720]\"" url))
 
