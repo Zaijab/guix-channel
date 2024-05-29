@@ -109,7 +109,7 @@
 			       (image "searxng/searxng")
 			       (network "host")
 			       (ports '(("8888" . "8888")))
-			       (volume "/var/run/searxng:/etc/searxng"))))
+			       (volumes "/var/run/searxng:/etc/searxng"))))
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
