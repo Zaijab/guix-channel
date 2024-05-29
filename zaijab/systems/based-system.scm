@@ -105,11 +105,19 @@
 	       (service unattended-upgrade-service-type)
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service oci-container-service-type
-			(list (oci-container-configuration
+			(list #;(oci-container-configuration
 			       (image "searxng/searxng")
 			       (network "host")
 			       (ports '(("8888" . "8888")))
-			       (volumes '("/var/run/searxng:/etc/searxng")))))
+			 (volumes '("/var/run/searxng:/etc/searxng")))
+			                     (oci-container-configuration
+                     (image "prom/prometheus")
+                     (network "host")
+                     (ports
+                       '(("9000" . "9000")
+                         ("9090" . "9090"))))
+			      ))
+	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
