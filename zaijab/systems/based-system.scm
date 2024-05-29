@@ -103,7 +103,12 @@
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service unattended-upgrade-service-type)
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
-	       
+	       (service oci-container-service-type
+			(list (oci-container-configuration
+			       (image "searxng/searxng")
+			       (network "host")
+			       (ports '(("8888" . "8888")))
+			       (volume "/var/run/searxng:/etc/searxng"))))
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
