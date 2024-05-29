@@ -811,7 +811,8 @@ If WINDOW is t, redisplay pages in all windows."
 		    :unnarrowed t)
 		   ))
 	   (require 'org-fc)
-	   (add-hook 'org-fc-review-flip-mode-hook (function meow-insert-mode))
+
+					;(add-hook 'org-fc-review-flip-mode-hook (function meow-insert-mode))
 
 	   (setq org-fc-directories '("~/notes/")
 		 org-fc-flashcard-tag "FC"
