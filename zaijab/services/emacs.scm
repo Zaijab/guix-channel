@@ -821,14 +821,14 @@ If WINDOW is t, redisplay pages in all windows."
 		       (setq org-roam-buffer-prepare-hook nil)
 		       (setq my/org-roam-open-buffer-on-find-file nil)))
 
-	   (defun my/enable-org-roam-buf ()
-	     (setq org-roam-buffer-prepare-hook
-		   '(hide-mode-line-mode
-		     org-roam-buffer--insert-title
-		     org-roam-buffer--insert-backlinks
-		     org-roam-buffer--insert-ref-links))
-	     (setq my/org-roam-open-buffer-on-find-file t))
-	   (add-hook 'org-fc-after-review-hook (function my/enable-org-roam-buf))
+	   ;; (defun my/enable-org-roam-buf ()
+	   ;;   (setq org-roam-buffer-prepare-hook
+	   ;; 	   '(hide-mode-line-mode
+	   ;; 	     org-roam-buffer--insert-title
+	   ;; 	     org-roam-buffer--insert-backlinks
+	   ;; 	     org-roam-buffer--insert-ref-links))
+	   ;;   (setq my/org-roam-open-buffer-on-find-file t))
+	   ;; (add-hook 'org-fc-after-review-hook (function my/enable-org-roam-buf))
 
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
@@ -893,13 +893,13 @@ If WINDOW is t, redisplay pages in all windows."
 	     (org-roam-with-file "~/notes/20211210212624-japanese.org" t
 				 (end-of-buffer)
 				 (insert (concat "* " (word->drill (jisho-search->completing-read))))
-				 (org-fc-type-cloze-init 'single)))
+				 (org-fc-type-cloze-init 'context)))
 	   (defun simple-jisho->fc ()
 	     (interactive)
 	     (org-roam-with-file "~/notes/20211210212624-japanese.org" t
 				 (end-of-buffer)
 				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read))))
-				 (org-fc-type-cloze-init 'single)))
+				 (org-fc-type-cloze-init 'context)))
 
 	   ;; (global-set-key (kbd "s-i") (function simple-jisho->fc))
 	   ))))
