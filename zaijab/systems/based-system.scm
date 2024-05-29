@@ -98,32 +98,32 @@
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 
 	       
-          (service oci-container-service-type
-                   (list
-                    (oci-container-configuration
-                     (image
-                      (oci-image
-                       (repository "guile")
-                       (tag "3")
-                       (value (specifications->manifest '("guile")))
-                       (pack-options '(#:symlinks (("/bin/guile" -> "bin/guile"))
-                                       #:max-layers 2))))
-                     (entrypoint "/bin/guile")
-                     (command
-                      '("-c" "(display \"hello!\n\")")))
-                    (oci-container-configuration
-                     (image "prom/prometheus")
-                     (network "host")
-                     (ports
-                       '(("9000" . "9000")
-                         ("9090" . "9090"))))
-                    (oci-container-configuration
-                     (image "grafana/grafana:10.0.1")
-                     (network "host")
-                     (ports
-                       '(("3000" . "3000")))
-                     (volumes
-                       '("/var/lib/grafana:/var/lib/grafana")))))
+          ;; (service oci-container-service-type
+          ;;          (list
+          ;;           (oci-container-configuration
+          ;;            (image
+          ;;             (oci-image
+          ;;              (repository "guile")
+          ;;              (tag "3")
+          ;;              (value (specifications->manifest '("guile")))
+          ;;              (pack-options '(#:symlinks (("/bin/guile" -> "bin/guile"))
+          ;;                              #:max-layers 2))))
+          ;;            (entrypoint "/bin/guile")
+          ;;            (command
+          ;;             '("-c" "(display \"hello!\n\")")))
+          ;;           (oci-container-configuration
+          ;;            (image "prom/prometheus")
+          ;;            (network "host")
+          ;;            (ports
+          ;;              '(("9000" . "9000")
+          ;;                ("9090" . "9090"))))
+          ;;           (oci-container-configuration
+          ;;            (image "grafana/grafana:10.0.1")
+          ;;            (network "host")
+          ;;            (ports
+          ;;              '(("3000" . "3000")))
+          ;;            (volumes
+          ;;              '("/var/lib/grafana:/var/lib/grafana")))))
 	       ;; (service oci-container-service-type
 	       ;; 		(list #;(oci-container-configuration
 	       ;; 		       (image "searxng/searxng")
