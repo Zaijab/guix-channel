@@ -125,19 +125,19 @@
           ;;              '(("3000" . "3000")))
           ;;            (volumes
           ;;              '("/var/lib/grafana:/var/lib/grafana")))))
-	       ;; (service oci-container-service-type
-	       ;; 		(list #;(oci-container-configuration
-	       ;; 		       (image "searxng/searxng")
-	       ;; 		       (network "host")
-	       ;; 		       (ports '(("8888" . "8888")))
-	       ;; 		 (volumes '("/var/run/searxng:/etc/searxng")))
-	       ;; 		                     (oci-container-configuration
-               ;;       (image "prom/prometheus")
-               ;;       (network "host")
-               ;;       (ports
-               ;;         '(("9000" . "9000")
-               ;;           ("9090" . "9090"))))
-	       ;; 		      ))
+	       (service oci-container-service-type
+			(list #;(oci-container-configuration
+			       (image "searxng/searxng")
+			       (network "host")
+			       (ports '(("8888" . "8888")))
+			 (volumes '("/var/run/searxng:/etc/searxng")))
+			                     (oci-container-configuration
+                     (image "prom/prometheus")
+                     (network "host")
+                     (ports
+                       '(("9000" . "9000")
+                         ("9090" . "9090"))))
+			      ))
 	       
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
