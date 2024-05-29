@@ -97,8 +97,8 @@
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service connman-service-type)
-	      (service oci-container-service-type
-                   (list
+	       #;(service oci-container-service-type
+               (list
                     (oci-container-configuration
                      (image
                       (oci-image
