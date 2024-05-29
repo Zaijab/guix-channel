@@ -98,7 +98,7 @@
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 
 	       
-          (service oci-container-service-type
+          #;(service oci-container-service-type
                    (list
                     (oci-container-configuration
                      (image
