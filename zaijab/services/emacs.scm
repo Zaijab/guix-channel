@@ -344,14 +344,11 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-aggressive-indent")
 		   (specification->package "emacs-smart-hungry-delete")))
-   (init '(;(require 'aggressive-indent)
-	   (require 'smart-hungry-delete)
+   (init '((require 'smart-hungry-delete)
 	   (smart-hungry-delete-add-default-hooks)
 	   (global-set-key (kbd "<backspace>") 'smart-hungry-delete-backward-char)
 	   (global-set-key (kbd "<delete>") 'smart-hungry-delete-backward-char)
-	   (global-set-key (kbd "C-d") 'smart-hungry-delete-forward-char)           
-	   ;(global-aggressive-indent-mode 1)
-	   ))))
+	   (global-set-key (kbd "C-d") 'smart-hungry-delete-forward-char)))))
 
 (define project-configuration
   (home-emacs-configuration
@@ -1618,13 +1615,24 @@ If WINDOW is t, redisplay pages in all windows."
 		  (message "emacs receives all the keys now")))
 	     (force-mode-line-update))))))
 
+(define theme-configuration
+  (home-emacs-configuration
+   (init '((load-theme 'modus-operandi t)))))
+
+(define font-configuration
+  (home-emacs-configuration
+   (init '((set-face-attribute 'default nil :font "Iosevka-14")
+	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
+	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
+	   (set-fontset-font "fontset-default" 'han "IPAmjMincho-14")
+	   (set-fontset-font "fontset-default" 'kana "IPAmjMincho-14")
+	   (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho-14")))))
+
 (define ui-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-modus-themes")
-                   (specification->package "emacs-rainbow-delimiters")
+   (packages (list (specification->package "emacs-rainbow-delimiters")
                    (specification->package "emacs-which-key")))
-   (early-init '(
-		 	   (setq gc-cons-threshold 800000
+   (early-init '((setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
@@ -1648,7 +1656,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
-	   (defcustom password-colon-equivalents
+		 (defcustom password-colon-equivalents
 		   '(?\u003a ; ?\N{COLON}
 		     ?\uff1a ; ?\N{FULLWIDTH COLON}
 		     ?\ufe55 ; ?\N{SMALL COLON}
@@ -1684,22 +1692,13 @@ If WINDOW is t, redisplay pages in all windows."
 		 (setq make-backup-files nil)
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
-		 (pixel-scroll-precision-mode)
-
-    		 ))
-   (init '(
-	   (add-hook 'compilation-filter-hook 'comint-truncate-buffer)
+		 (pixel-scroll-precision-mode)))
+   (init '((add-hook 'compilation-filter-hook 'comint-truncate-buffer)
 	   (setq comint-buffer-maximum-size 2000)
-	   (set-face-attribute 'default nil :font "Iosevka-14")
-	   (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
-	   (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
-	   (set-fontset-font "fontset-default" 'han "IPAmjMincho-14")
-	   (set-fontset-font "fontset-default" 'kana "IPAmjMincho-14")
-	   (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho-14")
+
 	   (require 'phscroll)
 	   (setq org-startup-truncated nil)
-	   (with-eval-after-load "org"
-				 (require 'org-phscroll))
+	   (with-eval-after-load "org" (require 'org-phscroll))
 
 	   (tab-bar-mode)
 	   (set-face-attribute 'tab-bar nil :height 140)
@@ -1721,7 +1720,6 @@ If WINDOW is t, redisplay pages in all windows."
 	   (customize-set-variable 'display-time-load-average-threshold 100)
 	   (customize-set-variable 'display-time-day-and-date t)
 	   (set-default 'truncate-lines t)
-	   (load-theme 'modus-operandi t)
 	   (require 'rainbow-delimiters)
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
