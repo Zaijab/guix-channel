@@ -62,7 +62,6 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       ;(specification->package "network-manager-applet")
 	       (specification->package "connman")
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
@@ -97,19 +96,8 @@
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service connman-service-type)
-	       #;(service oci-container-service-type
+	       (service oci-container-service-type
                (list
-                    (oci-container-configuration
-                     (image
-                      (oci-image
-                       (repository "guile")
-                       (tag "3")
-                       (value (specifications->manifest '("guile")))
-                       (pack-options '(#:symlinks (("/bin/guile" -> "bin/guile"))
-                                       #:max-layers 2))))
-                     (entrypoint "/bin/guile")
-                     (command
-                      '("-c" "(display \"hello!\n\")")))
                     (oci-container-configuration
                      (image "prom/prometheus")
                      (network "host")
