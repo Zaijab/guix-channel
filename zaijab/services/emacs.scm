@@ -17,6 +17,7 @@
   #:use-module (guix transformations)
   #:use-module (guix gexp)
   #:use-module (zaijab packages emacs-xyz)
+  #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages fonts)
   ;#:use-module (guix-science packages python)
@@ -455,6 +456,7 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "emacs-pinentry")
 		   (specification->package "pinentry-emacs")
 		   (specification->package "password-store")
+		   pass-import
 		   (specification->package "pass-otp")
 		   (specification->package "emacs-pass")
 		   (specification->package "emacs-password-store")
@@ -1346,8 +1348,8 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "python-scipy")
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
-	      (specification->package "python-pytorch@2.0.1")
-	      ((options->transformation '((with-input . "python-pytorch@1.13.1=python-pytorch@2.0.1")))
+	      ;(specification->package "python-pytorch")
+	      #;((options->transformation '((with-input . "python-pytorch@1.13.1=python-pytorch@2.2.1")))
 	       (specification->package "python-torchvision"))
 	      ;; python-tensorflow
 	      ))
