@@ -28,8 +28,8 @@
                    (specification->package "xf86-input-libinput")
                    (specification->package "xf86-video-fbdev")
                    (specification->package "xf86-video-nouveau")
-		   zoom
-		   google-chrome-unstable))
+		   #;zoom
+		   #;google-chrome-unstable))
    (services
     (list
      (service home-bash-service-type
