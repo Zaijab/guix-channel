@@ -116,12 +116,11 @@
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
 		 (delete network-manager-service-type)
-		 (delete elogind-service-type)
 		 (mingetty-service-type
 		  config => (mingetty-configuration
 			     (inherit config)
 			     (auto-login "zjabbar")
-			     #;(login-pause? #t)))
+			     (login-pause? #t)))
 		 (guix-service-type
 		  config => (guix-configuration
 			     (inherit config)
