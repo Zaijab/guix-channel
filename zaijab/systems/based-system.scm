@@ -121,7 +121,7 @@
 		  config => (mingetty-configuration
 			     (inherit config)
 			     (auto-login "zjabbar")
-			     (login-pause? #t)))
+			     #;(login-pause? #t)))
 		 (guix-service-type
 		  config => (guix-configuration
 			     (inherit config)
