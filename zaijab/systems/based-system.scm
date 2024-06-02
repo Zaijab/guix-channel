@@ -96,7 +96,7 @@
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service connman-service-type)
-	       (service oci-container-service-type
+	       #;(service oci-container-service-type
                (list
                     (oci-container-configuration
                      (image "prom/prometheus")
@@ -116,6 +116,7 @@
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
 		 (delete network-manager-service-type)
+		 (delete elogind-service-type)
 		 (mingetty-service-type
 		  config => (mingetty-configuration
 			     (inherit config)
