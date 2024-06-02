@@ -679,8 +679,8 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'mu4e-alert)
 	   (defun mu4e--modeline-string () "")
 	   (add-to-list 'display-buffer-alist
-             `(,(regexp-quote mu4e-main-buffer-name)
-               display-buffer-same-window))
+			(list (regexp-quote mu4e-main-buffer-name)
+			      'display-buffer-same-window))
 	   (setq mu4e-get-mail-command (format "INSIDE_EMACS=%s mbsync -c ~/.config/mbsyncrc -a" emacs-version)
 		 epa-pinentry-mode 'ask
 		 mu4e-sent-messages-behavior 'delete)
