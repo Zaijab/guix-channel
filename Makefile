@@ -16,7 +16,7 @@ gpackage:
 	guix package -m /home/zjabbar/code/guix-channel/zaijab/minimal-manifest.tmpl --no-grafts
 
 gsystem:
-	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades --no-grafts
+	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades
 
 init:
 	mkdir ~/.mail/zaijab2000
