@@ -11,6 +11,7 @@
   #:use-module (gnu system)
   #:use-module (gnu home)
   #:use-module (gnu services guix)  
+  #:use-module (gnu services pm)  
   #:use-module (gnu packages)
   #:use-module (gnu packages linux)
   #:use-module (gnu services linux)
@@ -96,6 +97,7 @@
 	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service connman-service-type)
+	       (service tlp-service-type)
 	       (service oci-container-service-type
                (list
                     (oci-container-configuration
