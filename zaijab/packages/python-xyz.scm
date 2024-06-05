@@ -1,5 +1,6 @@
 (define-module (zaijab packages python-xyz)
   #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages python-science)
   #:use-module (gnu packages python-web)
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages xml)
@@ -15,7 +16,99 @@
   #:use-module ((guix licenses) #:prefix license:)
 
   )
-    
+
+(define-public python-liac-arff
+  (package
+    (name "python-liac-arff")
+    (version "2.5.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "liac-arff" version))
+       (sha256
+        (base32 "1nn4nnh4kb85pzrll8hyzx4khkyrs5xbwybmniqsmic7cjpx081j"))))
+    (build-system pyproject-build-system)
+    (home-page "https://github.com/renatopp/liac-arff")
+    (synopsis "A module for read and write ARFF files in Python.")
+    (description
+     "This package provides a module for read and write ARFF files in Python.")
+    (license license:expat)))
+
+
+(define-public python-configspace
+  (package
+    (name "python-configspace")
+    (version "0.7.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "ConfigSpace" version))
+       (sha256
+        (base32 "06nz9v7nmcl2sj0z0c8mpiiyz6567jjdqvr0yvn19vnnivibidap"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-more-itertools python-numpy
+                             python-pyparsing python-scipy
+                             python-typing-extensions))
+    (native-inputs (list python-automl-sphinx-theme
+                         python-black
+                         python-build
+                         python-mypy
+                         python-pre-commit
+                         python-pytest
+                         python-pytest-cov
+                         python-ruff))
+    (home-page "")
+    (synopsis
+     "Creation and manipulation of parameter configuration spaces for automated algorithm configuration and hyperparameter tuning.")
+    (description
+     "Creation and manipulation of parameter configuration spaces for automated
+algorithm configuration and hyperparameter tuning.")
+    (license #f)))
+
+(define-public python-auto-sklearn
+  (package
+    (name "python-auto-sklearn")
+    (version "0.15.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "auto-sklearn" version))
+       (sha256
+        (base32 "1l2198ga20yh4xybw64dylgkn25jspsqxq11wa1kmjfgdajl2a88"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-configspace
+                             python-dask
+                             python-distributed
+                             python-distro
+                             python-joblib
+                             python-liac-arff
+                             python-numpy
+                             python-pandas
+                             python-pynisher
+                             python-pyrfr
+                             python-pyyaml
+                             python-scikit-learn
+                             python-scipy
+                             python-setuptools
+                             python-smac
+                             python-threadpoolctl
+                             python-typing-extensions))
+    (native-inputs (list python-black
+                         python-isort
+                         python-mypy
+                         python-openml
+                         python-pre-commit
+                         python-pydocstyle
+                         python-pytest
+                         python-pytest-cases
+                         python-pytest-cov
+                         python-pytest-timeout
+                         python-pytest-xdist))
+    (home-page "https://automl.github.io/auto-sklearn")
+    (synopsis "Automated machine learning.")
+    (description "Automated machine learning.")
+    (license #f)))
+
 (define-public pass-import
   (package
     (name "pass-import")
@@ -82,4 +175,4 @@ natively supports import from 62 different password managers.  More manager
 support can easily be added.")
     (license license:gpl3)))
 
-pass-import
+python-auto-sklearn
