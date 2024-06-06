@@ -22,7 +22,9 @@
   #:use-module (gnu services xorg)
   #:use-module (gnu services networking)
   #:use-module (gnu services ssh)
-  #:use-module (gnu services sddm)
+  #:use-module (gnu services syncthing)
+  #:use-module (gnu services pm)
+
 
   )
 
@@ -162,10 +164,29 @@
 
     (services (cons*
 	       (service wpa-supplicant-service-type)
+	       (service openssh-service-type)
+	       (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
+	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service connman-service-type)
-	       (service sddm-s)
-	       %base-services))))
+	       (service tlp-service-type)
+
+	       (modify-services %base-services
+		 (mingetty-service-type
+		  config => (mingetty-configuration
+			     (inherit config)
+			     (auto-login "zjabbar")
+			     (login-pause? #t)))
+		 (guix-service-type
+		  config => (guix-configuration
+			     (inherit config)
+			     (substitute-urls
+			      (cons* "https://substitutes.nonguix.org"
+				     "https://guix.bordeaux.inria.fr"
+				     %default-substitute-urls))
+			     (authorized-keys
+			      (cons*
+			       (plain-file "nonguix.pub" "(public-key (ecc (curve Ed25519) (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))")
+			       (plain-file "bordeaux.pub" "(public-key (ecc (curve Ed25519) (q #89FBA276A976A8DE2A69774771A92C8C879E0F24614AAAAE23119608707B3F06#)))")
+			       %default-authorized-guix-keys)))))))))
 
 pinephone-pro-os
-
-;rock64-barebones-os

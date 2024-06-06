@@ -64,7 +64,7 @@
 				  "fi\n")))))
      (service home-emacs-service-type home-emacs-total-configuration)
      ;(service home-searx-service-type)
-     (service home-pipewire-service-type)
+     ;(service home-pipewire-service-type)
      (service home-dbus-service-type)
      (service home-gpg-agent-service-type
               (home-gpg-agent-configuration
