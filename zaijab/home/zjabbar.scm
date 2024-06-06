@@ -15,7 +15,6 @@
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages messaging)
   #:use-module (zaijab services emacs)
-  #:use-module (zaijab services searx)
   #:use-module (gnu home services sound))
 
 (define-public zains-home
