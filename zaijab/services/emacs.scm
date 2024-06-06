@@ -1,7 +1,7 @@
 ;;; The module zaijab / services / emacs
 ;; Creates the module "Emacs" in the "Services" for the "zaijab" Channel
 
-(define-module (zaijab services emacs)
+#;(define-module (zaijab services emacs)
   #:use-module (gnu home)
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
@@ -20,7 +20,6 @@
   #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages fonts)
-  ;#:use-module (guix-science packages python)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
