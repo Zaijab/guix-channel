@@ -17,7 +17,7 @@
 
   )
 
-(define-public python-liac-arff
+#;(define-public python-liac-arff
   (package
     (name "python-liac-arff")
     (version "2.5.0")
@@ -35,7 +35,7 @@
     (license license:expat)))
 
 
-(define-public python-configspace
+#;(define-public python-configspace
   (package
     (name "python-configspace")
     (version "0.7.1")
@@ -65,7 +65,7 @@
 algorithm configuration and hyperparameter tuning.")
     (license #f)))
 
-(define-public python-auto-sklearn
+#;(define-public python-auto-sklearn
   (package
     (name "python-auto-sklearn")
     (version "0.15.0")
@@ -175,4 +175,4 @@ natively supports import from 62 different password managers.  More manager
 support can easily be added.")
     (license license:gpl3)))
 
-python-auto-sklearn
+#;python-auto-sklearn
