@@ -117,7 +117,7 @@
 			  (volumes '("/var/run/valkey-data2:/data"))
 			  )
 			 
-			 #;(oci-container-configuration
+			 (oci-container-configuration
 			  (image "docker.io/searxng/searxng")
 			  (network "host")
 			  (ports '(("8080" . "8080")))
