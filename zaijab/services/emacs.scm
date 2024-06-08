@@ -394,7 +394,10 @@
    (packages (list (specification->package "icecat")
 		   (specification->package "ublock-origin-icecat")
 		   (specification->package "passff-icecat")
-		   (specification->package "emacs-exwm-firefox")))))
+		   (specification->package "emacs-exwm-firefox")
+		   (specification->package "emacs-exwm-firefox-core")))
+   (init '((use-package exwm-firefox
+			:config (exwm-firefox-mode))))))
 
 (define eww-configuration
   (home-emacs-configuration
@@ -1400,7 +1403,10 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq geiser-mode-auto-p nil)
 
 	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
-	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '((@ (nrepl server) run-nrepl-server) #:port 7888)'"))
+	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '((@ (ares server) run-nrepl-server) #:port 7888)'"))
+
+	   ;; (defun arei-server-start () "Start Arei with Default Port" (interactive)
+	   ;;   (async-shell-command "guix shell guile-next guile-ares-rs -- echo '((@ (ares server) run-nrepl-server) #:port 7888)' | guix repl"))
 
 	   (defun auto-start-arei ()
 	     (if (string= "" (shell-command-to-string "sudo ss -tulpn | grep LISTEN.*7888"))
@@ -1484,33 +1490,15 @@ If WINDOW is t, redisplay pages in all windows."
 	   (global-set-key (kbd "s-e") (function
 					(lambda () (interactive)
 						(start-process-shell-command
-						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""
-						 nil
-						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""))))
-	   (global-set-key (kbd "s-E") (function
-					(lambda () (interactive)
-						(start-process-shell-command
-						 "google-chrome-unstable --incognito --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""
-						 nil
-						 "google-chrome-unstable --incognito --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Default\""))))
-	   (global-set-key (kbd "s-e") (function
-					(lambda () (interactive)
-						(start-process-shell-command
 						 "icecat"
 						 nil
 						 "icecat"))))
 	   (global-set-key (kbd "s-E") (function
 					(lambda () (interactive)
 						(start-process-shell-command
-						 "icecat --private-window"
+						 "icecat --private-window www.google.com"
 						 nil
-						 "icecat --private-window"))))
-	   (global-set-key (kbd "s-v") (function
-					(lambda () (interactive)
-						(start-process-shell-command
-						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\" https://workbench.researchallofus.org"
-						 nil
-						 "google-chrome-unstable --simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT' --profile-directory=\"Profile 1\" https://workbench.researchallofus.org"))))
+						 "icecat --private-window www.google.com"))))
 	   
 	   (global-set-key (kbd "s-r") (function eshell))
 	   (global-set-key (kbd "s-t") (function eval-region))
