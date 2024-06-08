@@ -1,4 +1,4 @@
-all: gnew gpull gsystem
+all: gnew gpull gsystem gshepherd_log
 
 gc:
 	guix gc -d 1m
@@ -17,6 +17,9 @@ gpackage:
 
 gsystem:
 	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades --no-grafts -v 4
+
+gshepherd_log:
+	sudo cat /var/log/messages
 
 init:
 	mkdir ~/.mail/zaijab2000
