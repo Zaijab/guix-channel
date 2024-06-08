@@ -99,23 +99,29 @@
 	       (service connman-service-type)
 	       (service tlp-service-type)
 	       (service docker-service-type)
-	       #;(service oci-container-service-type
+	       (service oci-container-service-type
 			(list
+			 
 			 (oci-container-configuration
 			  (image "docker.io/library/caddy:2-alpine")
 			  (network "host")
-			  (volumes))
+			  (volumes '("./Caddyfile:/etc/caddy/Caddyfile:ro"
+				     "caddy-data:/data:rw"
+				     "caddy-config:/config:rw"))
+			  (environment '("SEARXNG_HOSTNAME=${SEARXNG_HOSTNAME:-http://localhost:80}"
+					 "SEARXNG_TLS=${LETSENCRYPT_EMAIL:-internal}")))
 			 (oci-container-configuration
-			  (image "searxng/searxng")
-			  (network "host")
-			  (ports
-			   '(("8888" . "8888"))))
+			  (image "docker.io/valkey/valkey:7-alpine")
+			  (network "searxng")
+			  (volumes '("valkey-data2:/data"))
+			  )
 			 
 			 (oci-container-configuration
-			  (image "searxng/searxng")
-			  (network "host")
-			  (ports
-			   '(("8888" . "8888"))))
+			  (image "docker.io/searxng/searxng:latest")
+			  (network "searxng")
+			  (ports '(("8888" . "8888")))
+			  (volumes '("./searxng:/etc/searxng:rw"))
+			  (environment '(("SEARXNG_BASE_URL" . "https://${SEARXNG_HOSTNAME:-localhost}/"))))
 			 ))
 
 	       (modify-services %desktop-services
