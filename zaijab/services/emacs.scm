@@ -1678,7 +1678,7 @@ If WINDOW is t, redisplay pages in all windows."
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)))
    (init '((add-hook 'compilation-filter-hook 'comint-truncate-buffer)
-	   (setq comint-buffer-maximum-size 2000)
+	   (setq comint-buffer-maximum-size nil)
 
 	   (require 'phscroll)
 	   (setq org-startup-truncated nil)
