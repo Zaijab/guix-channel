@@ -99,14 +99,24 @@
 	       (service connman-service-type)
 	       (service tlp-service-type)
 	       (service docker-service-type)
-	       (service oci-container-service-type
-               (list
-                    (oci-container-configuration
-                     (image "searxng/searxng")
-                     (network "host")
-                     (ports
-                       '(("8888" . "8888"))))
-		    ))
+	       #;(service oci-container-service-type
+			(list
+			 (oci-container-configuration
+			  (image "docker.io/library/caddy:2-alpine")
+			  (network "host")
+			  (volumes))
+			 (oci-container-configuration
+			  (image "searxng/searxng")
+			  (network "host")
+			  (ports
+			   '(("8888" . "8888"))))
+			 
+			 (oci-container-configuration
+			  (image "searxng/searxng")
+			  (network "host")
+			  (ports
+			   '(("8888" . "8888"))))
+			 ))
 
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
