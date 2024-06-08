@@ -104,7 +104,7 @@
 			 (oci-container-configuration
 			  (image "docker.io/library/caddy:2-alpine")
 			  (network "host")
-			  (volumes '("/var/run/Caddyfile:/etc/caddy/Caddyfile:ro"
+			  (volumes '("/home/zjabbar/code/guix-channel/zaijab/files/Caddyfile:/etc/caddy/Caddyfile:ro"
 				     "/var/run/caddy-data:/data:rw"
 				     "/var/run/caddy-config:/config:rw"))
 			  (environment '("LETSENCRYPT_EMAIL=zaijab2000@gmail.com"
@@ -117,11 +117,13 @@
 			  (volumes '("/var/run/valkey-data2:/data"))
 			  )
 			 
-			 (oci-container-configuration
+			 #;(oci-container-configuration
 			  (image "docker.io/searxng/searxng")
 			  (network "host")
 			  (ports '(("8080" . "8080")))
-			  (volumes '("/var/run/searxng:/etc/searxng:rw"))
+			  (volumes '("/var/run/searxng:/etc/searxng:rw"
+				     "/home/zjabbar/code/guix-channel/zaijab/files/limiter.toml:/etc/searxng/limiter.toml"
+				     "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"))
 			  (environment '(("SEARXNG_BASE_URL" . "http://localhost:8888"))))
 			 ))
 
