@@ -105,7 +105,7 @@
                      (image "searxng/searxng")
                      (network "host")
                      (ports
-                       '(("8384" . "8384"))))
+                       '(("8888" . "8888"))))
 		    ))
 
 	       (modify-services %desktop-services
