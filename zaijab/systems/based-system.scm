@@ -88,7 +88,7 @@
 		  (name "zjabbar")
 		  (comment "Zain Jabbar")
 		  (group "users")
-		  (supplementary-groups '("wheel" "netdev" "audio" "lp" "video")))
+		  (supplementary-groups '("wheel" "netdev" "audio" "lp" "video" "docker")))
 		 %base-user-accounts))
     
     (services (cons*
