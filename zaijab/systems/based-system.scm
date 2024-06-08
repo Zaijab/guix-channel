@@ -105,19 +105,19 @@
 			  (image "docker.io/library/caddy:2-alpine")
 			  (network "host")
 			  (volumes '("/tmp/Caddyfile:/etc/caddy/Caddyfile:ro"
-				     "caddy-data:/data:rw"
-				     "caddy-config:/config:rw"))
+				     "/tmp/caddy-data:/data:rw"
+				     "/tmp/caddy-config:/config:rw"))
 			  (environment '("SEARXNG_HOSTNAME=${SEARXNG_HOSTNAME:-http://localhost:80}"
 					 "SEARXNG_TLS=${LETSENCRYPT_EMAIL:-internal}")))
 			 (oci-container-configuration
 			  (image "docker.io/valkey/valkey:7-alpine")
-			  (network "searxng")
+			  (network "host")
 			  (volumes '("valkey-data2:/data"))
 			  )
 			 
 			 (oci-container-configuration
 			  (image "docker.io/searxng/searxng")
-			  (network "searxng")
+			  (network "host")
 			  (ports '(("8888" . "8888")))
 			  (volumes '("/tmp/searxng:/etc/searxng:rw"))
 			  (environment '(("SEARXNG_BASE_URL" . "https://${SEARXNG_HOSTNAME:-localhost}/"))))
