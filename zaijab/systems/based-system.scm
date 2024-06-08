@@ -101,7 +101,7 @@
 	       (service docker-service-type)
 	       (service oci-container-service-type
 			(list
-			 #;(oci-container-configuration
+			 (oci-container-configuration
 			  (image "docker.io/library/caddy:2-alpine")
 			  (network "host")
 			  (volumes '("/tmp/Caddyfile:/etc/caddy/Caddyfile:ro"
@@ -109,7 +109,7 @@
 				     "caddy-config:/config:rw"))
 			  (environment '("SEARXNG_HOSTNAME=${SEARXNG_HOSTNAME:-http://localhost:80}"
 					 "SEARXNG_TLS=${LETSENCRYPT_EMAIL:-internal}")))
-			 #;(oci-container-configuration
+			 (oci-container-configuration
 			  (image "docker.io/valkey/valkey:7-alpine")
 			  (network "searxng")
 			  (volumes '("valkey-data2:/data"))
