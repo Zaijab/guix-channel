@@ -105,15 +105,8 @@
                      (image "prom/prometheus")
                      (network "host")
                      (ports
-                       '(("9000" . "9000")
-                         ("9090" . "9090"))))
-                    (oci-container-configuration
-                     (image "grafana/grafana:10.0.1")
-                     (network "host")
-                     (ports
-                       '(("3000" . "3000")))
-                     (volumes
-                       '("/var/lib/grafana:/var/lib/grafana")))))
+                       '(("8384" . "8384"))))
+		    ))
 
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
