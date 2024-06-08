@@ -101,11 +101,10 @@
 	       (service docker-service-type)
 	       (service oci-container-service-type
 			(list
-			 
 			 (oci-container-configuration
 			  (image "docker.io/library/caddy:2-alpine")
 			  (network "host")
-			  (volumes '("./Caddyfile:/etc/caddy/Caddyfile:ro"
+			  (volumes '("/tmp/Caddyfile:/etc/caddy/Caddyfile:ro"
 				     "caddy-data:/data:rw"
 				     "caddy-config:/config:rw"))
 			  (environment '("SEARXNG_HOSTNAME=${SEARXNG_HOSTNAME:-http://localhost:80}"
@@ -120,7 +119,7 @@
 			  (image "docker.io/searxng/searxng:latest")
 			  (network "searxng")
 			  (ports '(("8888" . "8888")))
-			  (volumes '("./searxng:/etc/searxng:rw"))
+			  (volumes '("/tmp/searxng:/etc/searxng:rw"))
 			  (environment '(("SEARXNG_BASE_URL" . "https://${SEARXNG_HOSTNAME:-localhost}/"))))
 			 ))
 
