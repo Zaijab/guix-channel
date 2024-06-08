@@ -99,7 +99,7 @@
 	       (service connman-service-type)
 	       (service tlp-service-type)
 	       (service docker-service-type)
-	       #;(service oci-container-service-type
+	       (service oci-container-service-type
 			(list
 			 (oci-container-configuration
 			  (image "docker.io/library/caddy:2-alpine")
