@@ -104,7 +104,7 @@
 			 (oci-container-configuration
 			  (image "docker.io/library/caddy:2-alpine")
 			  (network "host")
-			  (volumes '("/var/run/Caddyfile:/home/zjabbar/.local/share/caddy/Caddyfile:ro"
+			  (volumes '("/var/run/Caddyfile:/etc/caddy/Caddyfile:ro"
 				     "/var/run/caddy-data:/data:rw"
 				     "/var/run/caddy-config:/config:rw"))
 			  (environment '("SEARXNG_HOSTNAME=${SEARXNG_HOSTNAME:-http://localhost:80}"
