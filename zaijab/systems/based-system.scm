@@ -102,7 +102,7 @@
 	       (service oci-container-service-type
                (list
                     (oci-container-configuration
-                     (image "prom/prometheus")
+                     (image "searxng/searxng")
                      (network "host")
                      (ports
                        '(("8384" . "8384"))))
