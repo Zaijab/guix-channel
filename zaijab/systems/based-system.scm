@@ -111,10 +111,10 @@
 					 "SEARXNG_HOSTNAME=http://localhost:8888"
 					 "SEARXNG_HOSTNAME=${SEARXNG_HOSTNAME:-http://localhost:80}"
 					 "SEARXNG_TLS=${LETSENCRYPT_EMAIL:-internal}")))
-			 #;(oci-container-configuration
+			 (oci-container-configuration
 			  (image "docker.io/valkey/valkey:7-alpine")
 			  (network "host")
-			  (volumes '("valkey-data2:/data"))
+			  (volumes '("/var/run/valkey-data2:/data"))
 			  )
 			 
 			 #;(oci-container-configuration
