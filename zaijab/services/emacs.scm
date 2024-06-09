@@ -1544,19 +1544,8 @@ If WINDOW is t, redisplay pages in all windows."
 			  (memq 'super (event-modifiers maybe-event)))
 		     (add-to-list 'super-keys maybe-event)))
 	       (setq km (cdr km))))
-	   (setq exwm-input-prefix-keys (append super-keys '(f1
-							     f2
-							     f3
-							     f4
-							     f5
-							     f6
-							     f7
-							     f8
-							     f9
-							     f10
-							     f11
-							     f12
-							     XF86AudioRaiseVolume
+	   
+	   (setq exwm-input-prefix-keys (append super-keys '(XF86AudioRaiseVolume
 							     XF86AudioLowerVolume
 							     XF86AudioNext
 							     XF86AudioPlay
