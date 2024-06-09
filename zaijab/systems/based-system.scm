@@ -99,7 +99,7 @@
 	       (service connman-service-type)
 	       (service tlp-service-type)
 	       (service docker-service-type)
-	       (service oci-container-service-type
+	       #;(service oci-container-service-type
 			(list
 			 (oci-container-configuration
 			  (image "docker.io/library/caddy:2-alpine")
@@ -113,9 +113,7 @@
 			 (oci-container-configuration
 			  (image "docker.io/valkey/valkey:7-alpine")
 			  (network "host")
-			  (volumes '("/var/run/valkey-data2:/data"))
-			  )
-			 
+			  (volumes '("/var/run/valkey-data2:/data")))
 			 (oci-container-configuration
 			  (image "docker.io/searxng/searxng")
 			  (network "host")
@@ -123,8 +121,7 @@
 			  (volumes '("/var/run/searxng:/etc/searxng:rw"
 				     "/home/zjabbar/code/guix-channel/zaijab/files/limiter.toml:/etc/searxng/limiter.toml"
 				     "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"))
-			  (environment '(("SEARXNG_BASE_URL" . "http://localhost:8888"))))
-			 ))
+			  (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080"))))))
 
 	       (modify-services %desktop-services
 		 (delete pulseaudio-service-type)
@@ -143,10 +140,9 @@
 				     "https://guix.bordeaux.inria.fr"
 				     %default-substitute-urls))
 			     (authorized-keys
-			      (cons*
-			       (plain-file "nonguix.pub" "(public-key (ecc (curve Ed25519) (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))")
-			       (plain-file "bordeaux.pub" "(public-key (ecc (curve Ed25519) (q #89FBA276A976A8DE2A69774771A92C8C879E0F24614AAAAE23119608707B3F06#)))")
-			       %default-authorized-guix-keys)))))
+			      (cons* (plain-file "nonguix.pub" "(public-key (ecc (curve Ed25519) (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))")
+				     (plain-file "bordeaux.pub" "(public-key (ecc (curve Ed25519) (q #89FBA276A976A8DE2A69774771A92C8C879E0F24614AAAAE23119608707B3F06#)))")
+				     %default-authorized-guix-keys)))))
 	       ))))
 
 
