@@ -1,4 +1,4 @@
-all: gnew gpull gsystem gshepherd_log
+all: gnew gpull gsystem
 
 gc:
 	guix gc -d 1m
