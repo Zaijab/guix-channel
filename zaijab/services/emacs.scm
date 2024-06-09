@@ -394,9 +394,9 @@
    (packages (list (specification->package "icecat")
 		   (specification->package "ublock-origin-icecat")
 		   (specification->package "passff-icecat")
-		   (specification->package "emacs-exwm-firefox")
-		   (specification->package "emacs-exwm-firefox-core")))
-   (init '((use-package exwm-firefox
+		   #;(specification->package "emacs-exwm-firefox")
+		   #;(specification->package "emacs-exwm-firefox-core")))
+   (init '(#;(use-package exwm-firefox
 			:config (exwm-firefox-mode))))))
 
 (define pdf-tools-configuration
