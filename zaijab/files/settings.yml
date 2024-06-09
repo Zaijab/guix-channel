@@ -9,3 +9,57 @@ ui:
   static_use_hash: true
 redis:
   url: redis://redis:6379/0
+enabled_plugins:
+  - 'Hostname replace'
+
+hostname_replace:
+# block bload domains
+  '(.*\.)?medium.com': false
+  '(*\.)?uxdesign\.cc': false
+  '(.*\.)?medium\.com$': false
+  '*\.medium\.com': false
+  'com\.de': false
+  '(.*\.)?codegrepper\.com': false
+  '(.*\.)?w3schools\.com': false
+  '(.*\.)?geeksforgeeks\.org': false
+  '(.*\.)?stackshare\.io': false
+  '(.*\.)?tutorialspoint\.com': false
+  '(.*\.)?answeright\.com': false
+  '(.*\.)?askdev\.info': false
+  '(.*\.)?askdev\.io': false
+  '(.*\.)?blogmepost\.com': false
+  '(.*\.)?c-sharpcorner\.com': false
+  '(.*\.)?code-examples\.net': false
+  '(.*\.)?codeflow\.site': false
+  '(.*\.)?gitmemory\.cn': false
+  '(.*\.)?gitmemory\.com': false
+  '(.*\.)?intellipaat\.com': false
+  '(.*\.)?javaer101\.com': false
+  '(.*\.)?programmerstart\.com': false
+  '(.*\.)?programmersought\.com': false
+  '(.*\.)?qastack\.com': false
+  '(.*\.)?roboflow\.ai': false
+  '(.*\.)?stackanswers\.net': false
+  '(.*\.)?stackoom\.com': false
+  '(.*\.)?stackovernet\.com': false
+  '(.*\.)?stackovernet\.xyz': false
+  '(.*\.)?stackoverrun\.com': false
+  '(.*\.)?thetopsites\.net': false
+  '(.*\.)?ubuntugeeks\.com': false
+  '(.*\.)?cyberciti\.biz': false
+  '(.*\.)?ispycode\.com': false
+  '(.*\.)?reposhub\.com': false
+  '(.*\.)?githubmemory\.com': false
+  '(.*\.)?issueexplorer\.com': false
+  '(.*\.)?tabnine\.com': false
+  '(.*\.)?gitcode\.net': false
+  '(.*\.)?command-not-found\.com': false
+  '(.*\.)?im-coder\.com': false
+  '(.*\.)?i-harness\.com': false
+  '*\.medium\.com': false
+
+  # ublock-origin-shitty-copies-filter/stackoverflow-copycats.txt
+
+  '(.*\.)?code-examples\.net': false
+  '(.*\.)?kotaeta\.com': false
+  '(.*\.)?answer-id\.com': false
