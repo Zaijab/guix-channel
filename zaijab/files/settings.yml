@@ -18,6 +18,7 @@ hostname_replace:
   '(*\.)?uxdesign\.cc': false
   '(.*\.)?medium\.com$': false
   '*\.medium\.com': false
+  '*medium\.com': false
   'com\.de': false
   '(.*\.)?codegrepper\.com': false
   '(.*\.)?w3schools\.com': false
