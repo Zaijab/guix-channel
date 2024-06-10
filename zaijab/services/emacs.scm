@@ -652,11 +652,7 @@ If WINDOW is t, redisplay pages in all windows."
 (define email-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation
-		'(
-		  ;(with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg/")
-		  (with-branch . "emacs-org-msg=jcompost/mu-1.12-support-with-backward-compatibility")
-		  ))
+	      ((options->transformation '((with-branch . "emacs-org-msg=jcompost/mu-1.12-support-with-backward-compatibility")))
 	       (specification->package "emacs-org-msg"))
 	      (specification->package "isync")
 	      (specification->package "mu")
