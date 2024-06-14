@@ -329,6 +329,8 @@
 	   (require 'meow)
 	   (meow-setup)
 	   (meow-global-mode 1)
+	   (add-to-list 'meow-mode-state-list '(org-fc-review-flip-mode . motion))
+	   (add-to-list 'meow-mode-state-list '(org-fc-review-rate-mode . motion))
 	   #;(add-to-list 'meow-mode-state-list '(pdf-view-mode . normal))
 	   #;(add-to-list 'meow-mode-state-list '(compilation-mode . normal))))))
 
@@ -797,15 +799,14 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq org-roam-capture-templates
 		 '(
 		   ("i" "Default" plain "%?"
-		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org")
+		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: ")
 		    :unnarrowed t)
 		   ("p" "Python" plain "%?"
-		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
+		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Programming:Python:\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
 		    :unnarrowed t)
 		   ))
 	   (require 'org-fc)
 
-					;(add-hook 'org-fc-review-flip-mode-hook (function meow-insert-mode))
 
 	   (setq org-fc-directories '("~/notes/")
 		 org-fc-flashcard-tag "FC"
