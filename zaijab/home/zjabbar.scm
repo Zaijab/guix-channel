@@ -56,9 +56,6 @@
 		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
 				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
-				  ""
-				  ""
-				  ""
 				  "exec /home/zjabbar/code/guix-channel/zaijab/files/xinitrc.sh\n"
 				  "fi\n")))))
      (service home-emacs-service-type home-emacs-total-configuration)
@@ -70,9 +67,7 @@
                (ssh-support? #t)))
      (simple-service 'dotfiles
                      home-files-service-type
-                     `(
-		       ("test.sh" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/test.sh"))
-		       (".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
+                     `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
                        (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
                        (".config/pycodestyle" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/pycodestyle"))
                        (".config/mpv/mpv.conf" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mpv.conf"))
