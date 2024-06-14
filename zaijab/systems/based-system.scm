@@ -64,6 +64,10 @@
     
     (packages (cons*
 	       (specification->package "connman")
+	       (specification->package "git")
+	       (specification->package "scrot")
+	       (specification->package "xauth")
+	       (specification->package "make")
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
     
