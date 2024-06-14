@@ -329,8 +329,6 @@
 	   (require 'meow)
 	   (meow-setup)
 	   (meow-global-mode 1)
-	   (add-to-list 'meow-mode-state-list '(org-fc-review-flip-mode . motion))
-	   (add-to-list 'meow-mode-state-list '(org-fc-review-rate-mode . motion))
 	   #;(add-to-list 'meow-mode-state-list '(pdf-view-mode . normal))
 	   #;(add-to-list 'meow-mode-state-list '(compilation-mode . normal))))))
 
@@ -807,6 +805,9 @@ If WINDOW is t, redisplay pages in all windows."
 		   ))
 	   (require 'org-fc)
 
+	   (add-hook 'org-fc-review-flip-mode-hook (function meow-motion-mode))
+	   (add-hook 'org-fc-after-review-hook (function meow-normal-mode))
+	   
 
 	   (setq org-fc-directories '("~/notes/")
 		 org-fc-flashcard-tag "FC"
