@@ -15,7 +15,10 @@
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages messaging)
   #:use-module (zaijab services emacs)
-  #:use-module (gnu home services sound))
+  #:use-module (gnu home services sound)
+  #:use-module (gnu services shepherd)
+
+  )
 
 (define-public zains-home
   (home-environment
@@ -26,10 +29,7 @@
                    (specification->package "xorg-server")
                    (specification->package "xf86-input-libinput")
                    (specification->package "xf86-video-fbdev")
-                   (specification->package "xf86-video-nouveau")
-		   #;zoom
-		   #;google-chrome-unstable
-		   ))
+                   (specification->package "xf86-video-nouveau")))
    (services
     (list
      (service home-bash-service-type
@@ -58,11 +58,12 @@
 		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
 				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
+				  ""
+				  ""
+				  ""
 				  "exec /home/zjabbar/code/guix-channel/zaijab/files/xinitrc.sh\n"
 				  "fi\n")))))
      (service home-emacs-service-type home-emacs-total-configuration)
-     ;(service home-searx-service-type)
-     ;(service home-pipewire-service-type)
      (service home-dbus-service-type)
      (service home-gpg-agent-service-type
               (home-gpg-agent-configuration

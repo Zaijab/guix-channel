@@ -1385,7 +1385,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq geiser-mode-auto-p nil)
 
 	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
-	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '((@ (ares server) run-nrepl-server) #:port 7888)'"))
+	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
 
 	   ;; (defun arei-server-start () "Start Arei with Default Port" (interactive)
 	   ;;   (async-shell-command "guix shell guile-next guile-ares-rs -- echo '((@ (ares server) run-nrepl-server) #:port 7888)' | guix repl"))
