@@ -1376,8 +1376,8 @@ If WINDOW is t, redisplay pages in all windows."
    (init '((with-eval-after-load 'guix-repl
 				 (setq guix-guile-program  '("guix" "repl")
 				       guix-config-scheme-compiled-directory  nil
-				       guix-repl-use-latest  nil
-				       guix-repl-use-server  nil))
+				       guix-repl-use-latest  t
+				       guix-repl-use-server  t))
 
 	   (require 'guix)
 	   (global-guix-prettify-mode)
