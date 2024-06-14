@@ -28,7 +28,8 @@
                    (specification->package "xf86-video-fbdev")
                    (specification->package "xf86-video-nouveau")
 		   #;zoom
-		   #;google-chrome-unstable))
+		   #;google-chrome-unstable
+		   ))
    (services
     (list
      (service home-bash-service-type
@@ -41,7 +42,7 @@
                   ("PASSWORD_STORE_SYSTEM_EXTENSION_DIR" . "/home/zjabbar/.guix-profile/lib/password-store/extensions/")
                   ("PASSWORD_STORE_ENABLE_EXTENSIONS" . "true")
                   ("GIO_MODULE_DIR" . "/home/zjabbar/.guix-home/profile/lib/gio/modules/")
-                  ("EDITOR" . "emacsclient")
+                  ("EDITOR" . "emacsclient -n")
                   ("PATH" . "$PATH:/home/zjabbar/.local/bin")
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
                   ("TF_CPP_MIN_LOG_LEVEL" . "3")
@@ -50,13 +51,11 @@
                (bash-profile
                 (list
                  (mixed-text-file "profile.sh"
-				  ;"[[ -r ~/.bashrc ]] && . ~/.bashrc\n"
                                   "export HOSTNAME\n"
                                   "eval \"$(direnv hook bash)\"\n")))
 	       (bashrc
 		(list
 		 (mixed-text-file "login.sh"
-				  ;"[[ -r ~/.bash_profile ]] && . ~/.bash_profile\n"
                                   "eval \"$(direnv hook bash)\"\n"
 				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
 				  "exec /home/zjabbar/code/guix-channel/zaijab/files/xinitrc.sh\n"
@@ -72,7 +71,9 @@
                (ssh-support? #t)))
      (simple-service 'dotfiles
                      home-files-service-type
-                     `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
+                     `(
+		       ("test.sh" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/test.sh"))
+		       (".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
                        (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
                        (".config/pycodestyle" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/pycodestyle"))
                        (".config/mpv/mpv.conf" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mpv.conf"))
