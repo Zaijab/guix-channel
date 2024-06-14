@@ -175,4 +175,99 @@ natively supports import from 62 different password managers.  More manager
 support can easily be added.")
     (license license:gpl3)))
 
+(define-public python-pandas-documentation
+  (package
+    (inherit python-pandas)
+    (name "python-pandas-documentation")
+    (arguments
+     (list
+      #:tests? #f                     ;we're only generating the documentation
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-before 'build 'add-gnu-freefont-to-texmf
+            (lambda _
+              ;; XXX: The Sphinx-generated tex output specifies the GNU
+              ;; FreeFont font to be searched via its extension, which uses
+              ;; kpathsea instead of fontconfig and fail (see:
+              ;; https://github.com/sphinx-doc/sphinx/issues/10347).  Create a
+              ;; symlink to GNU FreeFont and add it to the TEXMF tree via
+              ;; GUIX_TEXMF.
+              (mkdir-p "texmf-dist/fonts/opentype/public")
+              (symlink (string-append
+                        #$(this-package-native-input "font-gnu-freefont")
+                        "/share/fonts/opentype")
+                       (string-append
+                        (getcwd) "/"
+                        "texmf-dist/fonts/opentype/public/gnu-freefont"))
+              (setenv "GUIX_TEXMF" (string-append (getenv "GUIX_TEXMF") ":"
+                                                  (getcwd) "/texmf-dist"))))
+          (delete 'build)
+          (replace 'install
+            (lambda _
+              (let* ((data (string-append #$output "/share"))
+                     (doc (string-append data "/doc/pandas"))
+                     (html (string-append doc "/html"))
+                     (info (string-append data "/info"))
+                     (sphinxopts (string-append
+                                  "SPHINXOPTS=-j"
+                                  (number->string (parallel-job-count)))))
+                (with-directory-excursion "doc"
+                  ;; Do not treat warnings as errors.
+                  (substitute* "Makefile"
+                    ((" -WT ") " -T "))
+                  (setenv "HOME" "/tmp")
+                  ;; Build the PDF documentation.
+                  (invoke "make" "latex-build" sphinxopts)
+                  (invoke "make" "-C" "build/latex" "all-pdf" sphinxopts)
+                  ;; Build the HTML documentation
+                  (invoke "make" "html" sphinxopts)
+                  ;; Build the Info documentation.  The issues worked around
+                  ;; below can be tracked at
+                  ;; https://github.com/numpy/numpy/issues/12278.
+                  (substitute* "source/conf.py"
+                    ;; The root document should be "index", not "contents".
+                    (("\"contents\"") "'index'")
+                    ;; Disable Sphinx extensions that produce broken Texinfo.
+                    ((".*'numpydoc'.*") "")
+                    ((".*'sphinx.ext.autosummary'.*") ""))
+                  (invoke "make" "info" sphinxopts)
+                  ;; Install the HTML documentation.
+                  (mkdir-p html)
+                  (copy-recursively "build/html" html)
+                  ;; Install the PDF reference and user manuals.
+                  (install-file "build/latex/numpy-ref.pdf" doc)
+                  (install-file "build/latex/numpy-user.pdf" doc)
+                  ;; Install the info manual.
+                  (install-file "build/texinfo/numpy.info" info)
+                  (symlink (string-append html "/_images")
+                           (string-append info "/numpy-figures")))))))))
+    (native-inputs
+     (list font-gnu-freefont
+           perl
+           python-breathe
+           python-ipython
+           python-matplotlib
+           python-numpy
+           python-numpydoc
+           python-pandas
+           python-pydata-sphinx-theme
+           python-scipy                 ;used by matplotlib
+           python-sphinx-4
+           python-sphinx-panels
+           texinfo
+           (texlive-updmap.cfg
+            (list texlive-cbfonts
+                  texlive-cm-super
+                  texlive-expdlist
+                  texlive-greek-fontenc
+                  texlive-latexmk
+                  texlive-polyglossia
+                  texlive-xetex
+                  texlive-xindy))))
+    (inputs '())
+    (propagated-inputs '())
+    (synopsis "Documentation for the @code{python-numpy} package")
+    (description "This package provides the complete NumPy documentation in
+the Texinfo, HTML, and PDF formats.")))
+
 #;python-auto-sklearn

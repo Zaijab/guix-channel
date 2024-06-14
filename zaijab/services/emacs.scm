@@ -652,7 +652,11 @@ If WINDOW is t, redisplay pages in all windows."
 (define email-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation '((with-branch . "emacs-org-msg=jcompost/mu-1.12-support-with-backward-compatibility")))
+	      #;((options->transformation '((with-branch . "emacs-org-msg=jcompost/mu-1.12-support-with-backward-compatibility")))
+	       (specification->package "emacs-org-msg"))
+	      ((options->transformation
+		'((with-branch . "emacs-org-msg=1.12")
+		  (with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")))
 	       (specification->package "emacs-org-msg"))
 	      (specification->package "isync")
 	      (specification->package "mu")
@@ -1316,7 +1320,8 @@ If WINDOW is t, redisplay pages in all windows."
 
 	      ((options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
 	       (specification->package "emacs-jupyter"))
-
+	      
+	      (specification->package "emacs-pydoc")
 	      (specification->package "python-lsp-server")
 	      (specification->package "tree-sitter")
 	      (specification->package "tree-sitter-python")
@@ -1326,19 +1331,14 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "emacs-python-black")
 
 	      (specification->package "pandoc")
+	      
 	      (specification->package "python-numpy")
 	      
-	      (specification->package "python-sqlalchemy")
-	      (specification->package "python-cookiecutter")
 	      (specification->package "python-pandas")
 	      (specification->package "python-matplotlib")
 	      (specification->package "python-scipy")
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
-	      ;(specification->package "python-pytorch")
-	      #;((options->transformation '((with-input . "python-pytorch@1.13.1=python-pytorch@2.2.1")))
-	       (specification->package "python-torchvision"))
-	      ;; python-tensorflow
 	      ))
    (init '((require 'jupyter)
 	   (setq org-babel-python-command "python3"
