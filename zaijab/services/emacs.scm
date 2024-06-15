@@ -806,8 +806,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'org-fc)
 
 	   (add-hook 'org-fc-review-flip-mode-hook (function meow-motion-mode))
-	   (add-hook 'org-fc-after-review-hook (function meow-normal-mode))
-	   
+	   (add-hook 'org-fc-after-review-hook (function meow-normal-mode))	   
 
 	   (setq org-fc-directories '("~/notes/")
 		 org-fc-flashcard-tag "FC"
@@ -816,15 +815,6 @@ If WINDOW is t, redisplay pages in all windows."
 		     (lambda ()
 		       (setq org-roam-buffer-prepare-hook nil)
 		       (setq my/org-roam-open-buffer-on-find-file nil)))
-
-	   ;; (defun my/enable-org-roam-buf ()
-	   ;;   (setq org-roam-buffer-prepare-hook
-	   ;; 	   '(hide-mode-line-mode
-	   ;; 	     org-roam-buffer--insert-title
-	   ;; 	     org-roam-buffer--insert-backlinks
-	   ;; 	     org-roam-buffer--insert-ref-links))
-	   ;;   (setq my/org-roam-open-buffer-on-find-file t))
-	   ;; (add-hook 'org-fc-after-review-hook (function my/enable-org-roam-buf))
 
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
@@ -1378,8 +1368,8 @@ If WINDOW is t, redisplay pages in all windows."
    (init '((with-eval-after-load 'guix-repl
 				 (setq guix-guile-program  '("guix" "repl")
 				       guix-config-scheme-compiled-directory  nil
-				       guix-repl-use-latest  t
-				       guix-repl-use-server  t))
+				       guix-repl-use-latest  nil
+				       guix-repl-use-server  nil))
 
 	   (require 'guix)
 	   (global-guix-prettify-mode)

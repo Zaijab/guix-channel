@@ -139,6 +139,10 @@
 		 (guix-service-type
 		  config => (guix-configuration
 			     (inherit config)
+			     (channels (channel
+					(name 'zaijab)
+					(url "/home/zjabbar/code/guix-channel/")
+					(branch "main")))
 			     (substitute-urls
 			      (cons* "https://substitutes.nonguix.org"
 				     "https://guix.bordeaux.inria.fr"
