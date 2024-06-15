@@ -6,6 +6,7 @@
   #:use-module (guix)
   #:use-module (guix gexp)
   #:use-module (guix transformations)
+  #:use-module (guix channels)
   #:use-module (nongnu packages linux)
   #:use-module (gnu)
   #:use-module (gnu system)
