@@ -23,10 +23,7 @@
   #:use-module (gnu services networking)
   #:use-module (gnu services ssh)
   #:use-module (gnu services syncthing)
-  #:use-module (gnu services pm)
-
-
-  )
+  #:use-module (gnu services pm))
 
 (use-modules (gnu system)
              (gnu system keyboard)
@@ -43,12 +40,9 @@
              (gnu packages base)
              (gnu packages bash)
              (gnu packages fonts)
-             (gnu services configuration)
-
-	     )
+             (gnu services configuration))
 
 (use-modules (gnu services networking)
-
              (gnu packages gnome))
 
 (define-public pinephone-pro-firmware
@@ -125,7 +119,7 @@
      (synopsis "Linux kernel with nonfree binary blobs included")
      (description "The unmodified Linux kernel, including nonfree blobs, for running Guix System on hardware which requires nonfree software to function."))))
 
-(define pinephone-pro-os
+(define-public pinephone-pro-os
   (operating-system
     (kernel linux-pinephone-pro)
     (kernel-arguments (append (list "console=ttyS2,115200" "earlycon=uart8250,mmio32,0xff1a0000" "earlyprintk")
