@@ -147,6 +147,10 @@
    (packages (list (specification->package "emacs-marginalia")))
    (init '((marginalia-mode)))))
 
+(define web-configuration
+  (home-emacs-configuration
+   (init '((setq eww-search-prefix "http://localhost:8080/search?q=")))))
+
 ;; Live Preview Selection
 (define embark-configuration
   (home-emacs-configuration
