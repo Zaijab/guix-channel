@@ -37,7 +37,7 @@
                   ("mbsync" . "mbsync -c ~/.config/mbsyncrc")))
                (environment-variables
                 '(("GNUPGHOME" . "~/.config/gnupg")
-                  ("PASSWORD_STORE_SYSTEM_EXTENSION_DIR" . "/home/zjabbar/.guix-profile/lib/password-store/extensions/")
+                  ("PASSWORD_STORE_SYSTEM_EXTENSION_DIR" . "/home/zjabbar/.guix-home/profile/lib/password-store/extensions")
                   ("PASSWORD_STORE_ENABLE_EXTENSIONS" . "true")
                   ("GIO_MODULE_DIR" . "/home/zjabbar/.guix-home/profile/lib/gio/modules/")
                   ("EDITOR" . "emacsclient -n")

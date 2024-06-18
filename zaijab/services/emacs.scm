@@ -462,10 +462,10 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'password-store)
 	   (require 'password-store-otp)
 
-	   (defun password-store-otp-token (entry)
-	     "Return an OTP token from ENTRY."
-	     (password-store-otp--related-error
-	      (caddr (s-split "\n" (password-store--run "otp" entry)))))
+	   ;; (defun password-store-otp-token (entry)
+	   ;;   "Return an OTP token from ENTRY."
+	   ;;   (password-store-otp--related-error
+	   ;;    (caddr (s-split "\n" (password-store--run "otp" entry)))))
 	   (defun copy-zjabbar-hawaii-otp ()
 	     (interactive)
 	     (password-store-otp-token-copy "hawaii_edu_otp"))
