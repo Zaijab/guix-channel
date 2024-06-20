@@ -462,10 +462,10 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'password-store)
 	   (require 'password-store-otp)
 
-	   ;; (defun password-store-otp-token (entry)
-	   ;;   "Return an OTP token from ENTRY."
-	   ;;   (password-store-otp--related-error
-	   ;;    (caddr (s-split "\n" (password-store--run "otp" entry)))))
+	   (defun password-store-otp-token (entry)
+	     "Return an OTP token from ENTRY."
+	     (password-store-otp--related-error
+	      (caddr (s-split "\n" (password-store--run "otp" entry)))))
 	   (defun copy-zjabbar-hawaii-otp ()
 	     (interactive)
 	     (password-store-otp-token-copy "hawaii_edu_otp"))
@@ -801,7 +801,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (setq org-roam-capture-templates
 		 '(
 		   ("i" "Default" plain "%?"
-		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: ")
+		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS:")
 		    :unnarrowed t)
 		   ("p" "Python" plain "%?"
 		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Programming:Python:\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
@@ -1472,9 +1472,9 @@ If WINDOW is t, redisplay pages in all windows."
 	   (global-set-key (kbd "s-E") (function
 					(lambda () (interactive)
 						(start-process-shell-command
-						 "icecat --private-window www.google.com"
+						 "icecat --private-window http://localhost:8080"
 						 nil
-						 "icecat --private-window www.google.com"))))
+						 "icecat --private-window http://localhost:8080"))))
 	   
 	   (global-set-key (kbd "s-r") (function eshell))
 	   (global-set-key (kbd "s-t") (function eval-region))
