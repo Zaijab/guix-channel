@@ -787,7 +787,11 @@ If WINDOW is t, redisplay pages in all windows."
 		   emacs-org-roam-ui
 		   (specification->package "emacs-org-fc")
 		   (specification->package "emacs-org-drill")))
-   (init '((require 'org-roam-node)
+   (init '(
+	   
+	   
+	   (require 'org-roam-node)
+	   (define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add))
 	   
 	   (setq org-roam-db-node-include-function
 		 (lambda ()
