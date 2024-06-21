@@ -1162,7 +1162,7 @@ If WINDOW is t, redisplay pages in all windows."
 	     "Regexp of LaTeX math environments.")
 
 
-	   (custom-set-variables '(org-modern-table nil))
+	   (custom-set-variables '(org-modern-table t))
 	   ;(add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
 	   (add-hook 'org-mode-hook (function org-toggle-pretty-entities))
@@ -1424,9 +1424,6 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "jami")
 	      (specification->package "emacs-exwm")
 	      (specification->package "emacs-windsize")
-	      (specification->package "binutils")
-	      (specification->package "coreutils")
-	      (specification->package "gcc-toolchain")
 	      (specification->package "emacs-vterm")
 	      (specification->package "unclutter")
 	      (specification->package "xhost")
