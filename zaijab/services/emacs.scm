@@ -1584,7 +1584,7 @@ If WINDOW is t, redisplay pages in all windows."
   (home-emacs-configuration
    ;(package (list ()))
    (init '(
-	   (set-face-attribute 'default nil :font "Iosevka" :height 14)
+	   (set-face-attribute 'default nil :font "Iosevka-14")
 	   (set-fontset-font nil 'tibetan "Iosevka")
 	   (set-fontset-font nil 'symbol "Iosevka")
 	   (set-fontset-font nil 'han "IPAmjMincho")
