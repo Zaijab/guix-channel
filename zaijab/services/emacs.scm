@@ -401,7 +401,8 @@
 		   (specification->package "ublock-origin-icecat")
 		   (specification->package "passff-icecat")
 		   #;(specification->package "emacs-exwm-firefox")
-		   #;(specification->package "emacs-exwm-firefox-core")))
+		   #;(specification->package "emacs-exwm-firefox-core")
+		   ))
    (init '(#;(use-package exwm-firefox
 			:config (exwm-firefox-mode))))))
 
@@ -1583,12 +1584,12 @@ If WINDOW is t, redisplay pages in all windows."
   (home-emacs-configuration
    ;(package (list ()))
    (init '(
-	   (set-face-attribute 'default nil :font "Iosevka-14")
-	   (set-fontset-font nil 'tibetan "Iosevka-14")
-	   (set-fontset-font nil 'symbol "Iosevka-14")
-	   (set-fontset-font nil 'han "IPAmjMincho-14")
-	   (set-fontset-font nil 'kana "IPAmjMincho-14")
-	   (set-fontset-font nil 'cjk-misc "IPAmjMincho-14")
+	   (set-face-attribute 'default nil :font "Iosevka" :height 14)
+	   (set-fontset-font nil 'tibetan "Iosevka")
+	   (set-fontset-font nil 'symbol "Iosevka")
+	   (set-fontset-font nil 'han "IPAmjMincho")
+	   (set-fontset-font nil 'kana "IPAmjMincho")
+	   (set-fontset-font nil 'cjk-misc "IPAmjMincho")
 	   
 	   ;; (set-fontset-font t 'tibetan "Iosevka-14" nil 'prepend)
 	   ;; (set-fontset-font t 'symbol "Iosevka-14" nil 'prepend)
