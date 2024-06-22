@@ -1588,59 +1588,59 @@ If WINDOW is t, redisplay pages in all windows."
 	   ;; (set-fontset-font "fontset-default" 'han "IPAmjMincho-14")
 	   ;; (set-fontset-font "fontset-default" 'kana "IPAmjMincho-14")
 	   ;; (set-fontset-font "fontset-default" 'cjk-misc "IPAmjMincho-14")
-	   ;; (set-fontset-font t 'tibetan "Iosevka-14")
-	   ;; (set-fontset-font t 'symbol "Iosevka-14")
-	   ;; (set-fontset-font t 'han "IPAmjMincho-14")
-	   ;; (set-fontset-font t 'kana "IPAmjMincho-14")
-	   ;; (set-fontset-font t 'cjk-misc "IPAmjMincho-14")
+	   (set-fontset-font t 'tibetan "Iosevka-14" nil 'prepend)
+	   (set-fontset-font t 'symbol "Iosevka-14" nil 'prepend)
+	   (set-fontset-font t 'han "IPAmjMincho-14" nil 'prepend)
+	   (set-fontset-font t 'kana "IPAmjMincho-14" nil 'prepend)
+	   (set-fontset-font t 'cjk-misc "IPAmjMincho-14" nil 'prepend)
 	   (defvar user/cjk-font "Noto Sans CJK SC"
-  "Default font for CJK characters.")
+	     "Default font for CJK characters.")
 
-(defvar user/latin-font "Iosevka Term SS09"
-  "Default font for Latin characters.")
+	   (defvar user/latin-font "Iosevka Term SS09"
+	     "Default font for Latin characters.")
 
-(defvar user/unicode-font "Symbola"
-  "Default font for Unicode characters, including emojis.")
+	   (defvar user/unicode-font "Symbola"
+	     "Default font for Unicode characters, including emojis.")
 
-(defvar user/font-size 17
-  "Default font size in px.")
+	   (defvar user/font-size 17
+	     "Default font size in px.")
 
-(defvar user/standard-fontset
-  (create-fontset-from-fontset-spec standard-fontset-spec)
-  "Standard fontset for user.")
+	   (defvar user/standard-fontset
+	     (create-fontset-from-fontset-spec standard-fontset-spec)
+	     "Standard fontset for user.")
+	   
+	   ;; Ensure user/standard-fontset gets used for new frames.
+	   (add-to-list 'default-frame-alist (cons 'font user/standard-fontset))
+	   (add-to-list 'initial-frame-alist (cons 'font user/standard-fontset))
 
-;; Ensure user/standard-fontset gets used for new frames.
-(add-to-list 'default-frame-alist (cons 'font user/standard-fontset))
-(add-to-list 'initial-frame-alist (cons 'font user/standard-fontset))
+	   (setq use-default-font-for-symbols nil)
 
-(setq use-default-font-for-symbols nil)
-
-(defun user/set-font ()
-  "Set Unicode, Latin and CJK font for user/standard-fontset."
-  ;; Unicode font.
-  (set-fontset-font user/standard-fontset 'unicode
-                    (font-spec :family user/unicode-font)
-                    nil 'prepend)
-  ;; Latin font.
-  ;; Only specify size here to allow text-scale-adjust work on other fonts.
-  (set-fontset-font user/standard-fontset 'latin
-                    (font-spec :family user/latin-font :size user/font-size)
-                    nil 'prepend)
-  ;; CJK font.
-  (dolist (charset '(kana han cjk-misc hangul kanbun bopomofo))
-    (set-fontset-font user/standard-fontset charset
-                      (font-spec :family user/cjk-font)
-                      nil 'prepend))
-  ;; Special settings for certain CJK puncuation marks.
-  ;; These are full-width characters but by default uses half-width glyphs.
-  (dolist (charset '((#x2018 . #x2019)    ;; Curly single quotes "‘’"
-                     (#x201c . #x201d)))  ;; Curly double quotes "“”"
-    (set-fontset-font user/standard-fontset charset
-                      (font-spec :family user/cjk-font)
-                      nil 'prepend)))
-
-;; Apply changes.
-(user/set-font)
+	   (defun user/set-font ()
+	     "Set Unicode, Latin and CJK font for user/standard-fontset."
+	     ;; Unicode font.
+	     (set-fontset-font user/standard-fontset 'unicode
+			       (font-spec :family user/unicode-font)
+			       nil 'prepend)
+	     ;; Latin font.
+	     ;; Only specify size here to allow text-scale-adjust work on other fonts.
+	     (set-fontset-font user/standard-fontset 'latin
+			       (font-spec :family user/latin-font :size user/font-size)
+			       nil 'prepend)
+	     ;; CJK font.
+	     (dolist (charset '(kana han cjk-misc hangul kanbun bopomofo))
+		     (set-fontset-font user/standard-fontset charset
+				       (font-spec :family user/cjk-font)
+				       nil 'prepend))
+	     ;; Special settings for certain CJK puncuation marks.
+	     ;; These are full-width characters but by default uses half-width glyphs.
+	     (dolist (charset '((#x2018 . #x2019)    ;; Curly single quotes "‘’"
+				(#x201c . #x201d)))  ;; Curly double quotes "“”"
+		     (set-fontset-font user/standard-fontset charset
+				       (font-spec :family user/cjk-font)
+				       nil 'prepend)))
+	   
+	   ;; Apply changes.
+	   ;; (user/set-font)
 	   ))))
 
 (define ui-configuration
