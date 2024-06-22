@@ -204,7 +204,6 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-citar")
 		   (specification->package "emacs-citar-org-roam")
-		   (specification->package "emacs-citar-org-roam")
 		   ))
    (init '(
 	   (use-package citar
@@ -788,8 +787,11 @@ If WINDOW is t, redisplay pages in all windows."
   (home-emacs-configuration
    (packages (list (specification->package "emacs-org-roam")
 		   emacs-org-roam-ui
+		   (specification->package "emacs-org-roam-bibtex")
 		   (specification->package "emacs-org-fc")
-		   (specification->package "emacs-org-drill")))
+		   (specification->package "emacs-org-drill")
+		   (specification->package "emacs-kanji")
+		   ))
    (init '(
 	   (use-package websocket
 			:after org-roam)
