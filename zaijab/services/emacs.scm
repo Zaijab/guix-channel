@@ -791,9 +791,23 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "emacs-org-fc")
 		   (specification->package "emacs-org-drill")))
    (init '(
+	   (use-package websocket
+			:after org-roam)
 	   
+	   (use-package org-roam-ui
+			 :after org-roam ;; or :after org
+			 ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+			 ;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+			 ;;  :hook (after-init . org-roam-ui-mode)
+			 :config
+			 (setq org-roam-ui-sync-theme t
+			       org-roam-ui-follow t
+			       org-roam-ui-update-on-save t
+			       org-roam-ui-open-on-start t))
 	   
 	   (require 'org-roam-node)
+
 	   (define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add))
 	   
 	   (setq org-roam-db-node-include-function
@@ -1390,6 +1404,8 @@ If WINDOW is t, redisplay pages in all windows."
 	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
 	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
 
+	   (defun arei-server-start-guix-repl () "Start Arei with Default Port" (interactive)
+	     (async-shell-command "guix shell guile-next guile-ares-rs -- echo '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))' | guix repl"))
 
 	   (defun auto-start-arei ()
 	     (if (string= "" (shell-command-to-string "sudo ss -tulpn | grep LISTEN.*7888"))
