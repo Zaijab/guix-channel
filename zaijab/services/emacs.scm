@@ -1374,7 +1374,7 @@ If WINDOW is t, redisplay pages in all windows."
 								    (sql . t)
 								    (eshell . t)
 								    (shell . t)
-								    (jupyter . t)))
+								    #;(jupyter . t)))
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
 	   )
 	 )
