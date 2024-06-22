@@ -371,14 +371,14 @@
 (define language-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-ddskk")
-		   (specification->package "font-fira-code")
-		   (specification->package "font-google-noto")
-		   (specification->package "font-google-noto-sans-cjk")
-		   (specification->package "font-lohit")
-		   (specification->package "font-vazir")
+		   ;(specification->package "font-fira-code")
+		   ;(specification->package "font-google-noto")
+		   ;(specification->package "font-google-noto-sans-cjk")
+		   ;(specification->package "font-lohit")
+		   ;(specification->package "font-vazir")
 		   (specification->package "font-ipa-mj-mincho")
 		   (specification->package "font-iosevka")
-		   (specification->package "font-iosevka-ss09")
+		   ;(specification->package "font-iosevka-ss09")
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)
 	   (advice-add
