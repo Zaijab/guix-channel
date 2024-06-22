@@ -1582,7 +1582,8 @@ If WINDOW is t, redisplay pages in all windows."
 (define font-configuration
   (home-emacs-configuration
    ;(package (list ()))
-   (init '(;(set-face-attribute 'default nil :font "Iosevka-14")
+   (init '(
+					;(set-face-attribute 'default nil :font "Iosevka-14")
 	   ;; (set-fontset-font "fontset-default" 'tibetan "Iosevka-14")
 	   ;; (set-fontset-font "fontset-default" 'symbol "Iosevka-14")
 	   ;; (set-fontset-font "fontset-default" 'han "IPAmjMincho-14")
