@@ -209,6 +209,7 @@
 			:custom
 			(citar-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
 			(citar-notes-paths (list "/home/zjabbar/notes/")) ; List of directories for reference nodes
+			(citar-library-paths (list "/home/zjabbar/library/")) ; 
 			(citar-open-note-function 'orb-citar-edit-note) ; Open notes in `org-roam'
 			(citar-at-point-function 'embark-act)           ; Use `embark'
 			:hook
@@ -1502,6 +1503,8 @@ If WINDOW is t, redisplay pages in all windows."
 
 
 	   (global-set-key (kbd "<f8>") 'toggle-exwm-input-line-mode-passthrough)
+	   (define-key exwm-mode-map (kbd "M-<escape>") (function toggle-exwm-input-line-mode-passthrough))
+	   
 	   (global-set-key (kbd "s-0") 'delete-window)
 	   (global-set-key (kbd "s-1") 'delete-other-windows)
 	   (global-set-key (kbd "s-2") 'split-window-below)
