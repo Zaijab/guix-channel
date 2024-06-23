@@ -205,14 +205,27 @@
    (packages (list (specification->package "emacs-citar")
 		   (specification->package "emacs-citar-org-roam")
 		   ))
-   (init '(
-	   (use-package citar
+   (init '((use-package citar
 			:custom
 			(citar-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
+			(citar-notes-paths (list "/home/zjabbar/notes/")) ; List of directories for reference nodes
+			(citar-open-note-function 'orb-citar-edit-note) ; Open notes in `org-roam'
+			(citar-at-point-function 'embark-act)           ; Use `embark'
 			:hook
 			(LaTeX-mode . citar-capf-setup)
 			(org-mode . citar-capf-setup))
-	   ))))
+
+	   (use-package citar-org
+			:after oc
+			:custom
+			(org-cite-insert-processor 'citar)
+			(org-cite-follow-processor 'citar)
+			(org-cite-activate-processor 'citar))
+
+	   (use-package citar-org-roam
+			:custom
+			(citar-org-roam-capture-template-key "r")
+			:config (citar-org-roam-mode))))))
 
 
 (define buffer-configuration
@@ -792,7 +805,12 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "emacs-org-drill")
 		   (specification->package "emacs-kanji")
 		   ))
-   (init '(
+   (init '((use-package org-roam-bibtex
+			:config
+			(org-roam-bibtex-mode)
+			(setq bibtex-completion-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib")))
+
+	   
 	   (use-package websocket
 			:after org-roam)
 	   
@@ -829,7 +847,13 @@ If WINDOW is t, redisplay pages in all windows."
 		   ("p" "Python" plain "%?"
 		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Programming:Python:\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
 		    :unnarrowed t)
-		   ))
+		   ("r" "reference" plain "%?" :if-new
+                     (file+head
+                      "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
+                      "#+TITLE: ${note-title}\n")
+                     ;:immediate-finish t
+                     :unnarrowed t)))
+	   
 	   (require 'org-fc)
 
 	   (add-hook 'org-fc-review-flip-mode-hook (function meow-motion-mode))
