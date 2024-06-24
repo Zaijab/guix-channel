@@ -1067,6 +1067,10 @@ If WINDOW is t, redisplay pages in all windows."
     },
     tex: {
       packages: {'[+]': ['xypic']}
+      Macros: {
+      RR: \"{\\bf R}\",
+      bold: [\"{\\bf #1}\",1]
+      }
     }
   };
 </script>
