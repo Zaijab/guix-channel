@@ -203,8 +203,7 @@
 (define citation-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-citar")
-		   (specification->package "emacs-citar-org-roam")
-		   ))
+		   (specification->package "emacs-citar-org-roam")))
    (init '((use-package citar
 			:custom
 			(citar-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
