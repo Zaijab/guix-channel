@@ -1066,10 +1066,9 @@ If WINDOW is t, redisplay pages in all windows."
       paths: {custom: 'https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/'}
     },
     tex: {
-      packages: {'[+]': ['xypic']}
-      Macros: {
-      RR: \"{\\bf R}\",
-      bold: [\"{\\bf #1}\",1]
+      packages: {'[+]': ['xypic']},
+      macros: {
+        R: \"{\\\\bf R}\"
       }
     }
   };
@@ -1402,7 +1401,7 @@ If WINDOW is t, redisplay pages in all windows."
 								    (sql . t)
 								    (eshell . t)
 								    (shell . t)
-								    #;(jupyter . t)))
+								    (jupyter . t)))
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
 	   )
 	 )
