@@ -217,14 +217,14 @@
 			(org-mode . citar-capf-setup))
 
 	   (use-package citar-org
-			:after oc
+			:after (citar oc)
 			:custom
 			(org-cite-insert-processor 'citar)
 			(org-cite-follow-processor 'citar)
 			(org-cite-activate-processor 'citar))
 
 	   (use-package citar-org-roam
-			:after (citar org-roam)
+			:after (citar citar-org org-roam)
 			:custom (citar-org-roam-capture-template-key "r")
 			:config (citar-org-roam-mode))))))
 
