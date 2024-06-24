@@ -224,8 +224,8 @@
 			(org-cite-activate-processor 'citar))
 
 	   (use-package citar-org-roam
-			:custom
-			(citar-org-roam-capture-template-key "r")
+			:after (citar org-roam)
+			:custom (citar-org-roam-capture-template-key "r")
 			:config (citar-org-roam-mode))))))
 
 
