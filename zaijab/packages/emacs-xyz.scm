@@ -488,4 +488,23 @@ Usage To automatically apply when saving a python file, use the following code:
     (description "")
     (license license:gpl3+)))
 
-emacs-calfw-blocks
+(define-public emacs-org-preview
+  (package
+    (name "emacs-org-preview")
+    (version "46c1ba6784289af7879d36ff7242c28e1a1ec8fa")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/karthink/org-preview.git")
+		    (commit version)))
+	      (file-name (git-file-name name version))
+	      (sha256
+	       (base32
+		"06rzk9fk1d0pp118rjg7dl4fj1rp3h9ixbm7q2iprpvh1n7kd59k"))))
+    (build-system emacs-build-system)
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license license:gpl3+)))
+
+emacs-org-preview

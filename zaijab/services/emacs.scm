@@ -1105,7 +1105,8 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "emacs-org-present")
 		   (specification->package "emacs-org-tree-slide")
 		   (specification->package "emacs-consult-org-roam")
-		   (specification->package "emacs-calfw") 
+		   emacs-org-preview
+		   (specification->package "emacs-calfw")
 		   ((options->transformation
 		     '((with-branch . "emacs-calfw-blocks=master")))
 		    emacs-calfw-blocks)
@@ -1126,7 +1127,8 @@ If WINDOW is t, redisplay pages in all windows."
    (init '((require 'org)
 	   (require 'org-tree-slide)
 	   (setq org-tree-slide-cursor-init nil)
-	   
+	   (require 'org-preview)
+	   (org-preview-mode)
 	   (require 'ox)
 	   (require 'calfw)
 	   (require 'calfw-org)
