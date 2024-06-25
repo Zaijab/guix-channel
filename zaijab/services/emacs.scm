@@ -1128,7 +1128,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   (require 'org-tree-slide)
 	   (setq org-tree-slide-cursor-init nil)
 	   (require 'org-preview)
-	   (org-preview-mode)
+	   (org-preview-mode t)
 	   (require 'ox)
 	   (require 'calfw)
 	   (require 'calfw-org)
