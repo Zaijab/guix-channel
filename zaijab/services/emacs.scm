@@ -224,7 +224,7 @@
 			(org-cite-activate-processor 'citar))
 
 	   (use-package citar-org-roam
-			:after (citar citar-org org-roam)
+			:after (citar citar-org org-roam org-roam-bibtex)
 			:custom (citar-org-roam-capture-template-key "r")
 			:config (citar-org-roam-mode))))))
 
@@ -805,7 +805,8 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "emacs-org-drill")
 		   (specification->package "emacs-kanji")
 		   ))
-   (init '((use-package org-roam-bibtex
+   (init '(
+	   (use-package org-roam-bibtex
 			:config
 			(org-roam-bibtex-mode)
 			(setq bibtex-completion-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib")))
@@ -825,8 +826,10 @@ If WINDOW is t, redisplay pages in all windows."
 			       org-roam-ui-follow t
 			       org-roam-ui-update-on-save t
 			       org-roam-ui-open-on-start t))
-	   
-	   (require 'org-roam-node)
+
+	   (use-package org-roam)
+	   (use-package org-roam-node
+			:after org-roam)
 
 	   (define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add))
 	   
