@@ -491,16 +491,16 @@ Usage To automatically apply when saving a python file, use the following code:
 (define-public emacs-org-preview
   (package
     (name "emacs-org-preview")
-    (version "46c1ba6784289af7879d36ff7242c28e1a1ec8fa")
+    (version "4a4e455a62f96fa5d1ba90ceaa025579a9dd3be6")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
-		    (url "https://github.com/karthink/org-preview.git")
+		    (url "https://github.com/jsilve24/org-preview.git")
 		    (commit version)))
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"06rzk9fk1d0pp118rjg7dl4fj1rp3h9ixbm7q2iprpvh1n7kd59k"))))
+		"1bbpz4bzypk8wv68m5krnnb92c2xwvz87cv4jhxd8njpxngcjawh"))))
     (build-system emacs-build-system)
     (home-page "")
     (synopsis "")
