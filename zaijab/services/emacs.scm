@@ -1513,7 +1513,7 @@ Some of the options can be changed using the variable
                (options
 		(org-combine-plists
 		 org-format-latex-options
-		 `(:foreground ,fg :background ,bg)))
+		 (list :foreground fg :background bg)))
                (math-text)
                (math-locations)
                (math-hashes))
@@ -1551,9 +1551,9 @@ Some of the options can be changed using the variable
 
           (setq num-overlays (length math-locations))
           
-          (pcase-let ((`(,texfilebase ,tex-process ,image-process)
+          (pcase-let (((list texfilebase tex-process image-process)
                        (org-preview-create-formula-image
-                        (mapconcat #'identity (nreverse math-text) "\n\n")
+                        (mapconcat (function identity) (nreverse math-text) "\n\n")
                         options forbuffer processing-type start-time)))
             (set-process-sentinel
              image-process
@@ -1675,17 +1675,17 @@ Some of the options can be changed using the variable
            (image-process)
            (base-name (file-name-base texfile))
            (out-dir (or (file-name-directory texfile) "./"))
-           (spec `((?D . ,(shell-quote-argument (format "%s" dpi)))
-	           (?S . ,(shell-quote-argument (format "%s" (/ dpi 140.0))))
-                   (?b . ,(shell-quote-argument base-name))
-                   (?B . ,(shell-quote-argument texfilebase))
-		   (?f . ,(shell-quote-argument texfile))
-		   (?F . ,(shell-quote-argument (file-truename texfile)))
-		   (?o . ,(shell-quote-argument out-dir))
-		   (?O . ,(shell-quote-argument (expand-file-name
-                                                 (concat base-name "." image-input-type) out-dir)))
-                   (?c . ,(shell-quote-argument (concat "rgb " (replace-regexp-in-string "," " " fg))))
-                   (?g . ,(shell-quote-argument (concat "rgb " (replace-regexp-in-string "," " " bg)))))))
+           (spec (list (cons ?D (shell-quote-argument (format "%s" dpi)))
+	               (cons ?S (shell-quote-argument (format "%s" (/ dpi 140.0))))
+                       (cons ?b (shell-quote-argument base-name))
+                       (cons ?B (shell-quote-argument texfilebase))
+		       (cons ?f (shell-quote-argument texfile))
+		       (cons ?F (shell-quote-argument (file-truename texfile)))
+		       (cons ?o (shell-quote-argument out-dir))
+		       (cons ?O (shell-quote-argument (expand-file-name
+                                                       (concat base-name "." image-input-type) out-dir)))
+                       (cons ?c (shell-quote-argument (concat "rgb " (replace-regexp-in-string "," " " fg))))
+                       (cons ?g (shell-quote-argument (concat "rgb " (replace-regexp-in-string "," " " bg)))))))
       (when org-preview--debug-msg
         (org-preview-report "Preprocessing" start-time))
       (setq tex-process
@@ -1778,7 +1778,7 @@ Some of the options can be changed using the variable
                       '("dvisvgm --page=1- -n -b min -c %S -o %B-%%9p.svg %O"))))
           ;; (map-put! org-preview-latex-process-alist 'dvisvgm dvisvgm-proc)
           
-          (advice-add 'org-format-latex :override #'org-preview-format-latex))
+          (advice-add 'org-format-latex :override (function org-preview-format-latex)))
     ;; Turning the mode off
     
     (let ((dvipng-proc (alist-get 'dvipng org-preview-latex-process-alist)))
@@ -1804,7 +1804,7 @@ Some of the options can be changed using the variable
                   org-preview--dvisvgm-image-converter))
       ;; (map-put! org-preview-latex-process-alist 'dvisvgm dvisvgm-proc)
       )
-    (advice-remove 'org-format-latex #'org-preview-format-latex)))
+    (advice-remove 'org-format-latex (function org-preview-format-latex))))
 (org-preview-mode)
 	   ))))
 
