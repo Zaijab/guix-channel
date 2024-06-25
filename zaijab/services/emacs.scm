@@ -671,8 +671,6 @@ If WINDOW is t, redisplay pages in all windows."
 (define email-configuration
   (home-emacs-configuration
    (packages (list
-	      #;((options->transformation '((with-branch . "emacs-org-msg=jcompost/mu-1.12-support-with-backward-compatibility")))
-	       (specification->package "emacs-org-msg"))
 	      ((options->transformation
 		'((with-branch . "emacs-org-msg=1.12")
 		  (with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")))
@@ -798,13 +796,14 @@ If WINDOW is t, redisplay pages in all windows."
 
 (define notes-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-org-roam")
-		   emacs-org-roam-ui
-		   (specification->package "emacs-org-roam-bibtex")
-		   (specification->package "emacs-org-fc")
-		   (specification->package "emacs-org-drill")
-		   (specification->package "emacs-kanji")
-		   ))
+   (packages (list
+	      (specification->package "emacs-org-roam")
+	      ((options->transformation '((with-git-url . "https://code.tecosaur.net/tec/org-mode.git"))) (specification->package "emacs-org-roam"))
+	      emacs-org-roam-ui
+	      (specification->package "emacs-org-roam-bibtex")
+	      (specification->package "emacs-org-fc")
+	      (specification->package "emacs-org-drill")
+	      (specification->package "emacs-kanji")))
    (init '(
 	   (use-package org-roam-bibtex
 			:config
