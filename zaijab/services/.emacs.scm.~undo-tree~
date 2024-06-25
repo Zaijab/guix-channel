@@ -1,0 +1,464 @@
+(undo-tree-save-format-version . 1)
+"afce6b3d188860da2aa2e4b1a602b47964c0baa7"
+[nil nil nil nil (26234 32470 515678 389000) 0 nil]
+([nil nil ((#(";; Author: Karthik Chikmagalur <karthikchikmagalur@gmail.com>
+;; Keywords: tex, extensions, tools
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; To use this package, turn on `org-preview-mode'.
+
+;;; Code:
+
+(require 'org)
+
+(defvar org-preview--debug-msg t)
+(defvar org-preview--log-buf \"*Org Preview Log*\")
+
+(defsubst org-preview-report (msg start-time)
+  (when org-preview--debug-msg 
+    (with-current-buffer (get-buffer-create org-preview--log-buf)
+      (insert (format \"%.4f:    \" (time-to-seconds (time-since start-time)))
+              msg \"\\n\"))))
+
+(defun org-preview-format-latex
+    (prefix &optional beg end dir overlays msg forbuffer processing-type)
+  \"Replace LaTeX fragments with links to an image.
+
+The function takes care of creating the replacement image.
+
+Only consider fragments between BEG and END when those are
+provided.
+
+When optional argument OVERLAYS is non-nil, display the image on
+top of the fragment instead of replacing it.
+
+PROCESSING-TYPE is the conversion method to use, as a symbol.
+
+Some of the options can be changed using the variable
+`org-format-latex-options', which see.\"
+  (when (and overlays (fboundp 'clear-image-cache)) (clear-image-cache))
+  (unless (eq processing-type 'verbatim)
+    (let* ((math-regexp \"\\\\$\\\\|\\\\\\\\[([]\\\\|^[ \\t]*\\\\\\\\begin{[A-Za-z0-9*]+}\")
+	   (cnt 0)
+	   checkdir-flag)
+      (goto-char (or beg (point-min)))
+      ;; Optimize overlay creation: (info \"(elisp) Managing Overlays\").
+      (when (and overlays (memq processing-type '(dvipng imagemagick)))
+	(overlay-recenter (or end (point-max))))
+      (cond
+       ((eq processing-type 'mathjax)
+	;; Prepare for MathJax processing.
+        (while (re-search-forward math-regexp end t)
+	  (unless (and overlays
+		       (eq (get-char-property (point) 'org-overlay-type)
+			   'org-latex-overlay))
+	    (let* ((context (org-element-context))
+		   (type (org-element-type context)))
+	      (when (memq type '(latex-environment latex-fragment))
+	        (let ((block-type (eq type 'latex-environment))
+		      (value (org-element-property :value context))
+		      (beg (org-element-property :begin context))
+		      (end (save-excursion
+			     (goto-char (org-element-property :end context))
+			     (skip-chars-backward \" \\r\\t\\n\")
+			     (point))))
+                  (if (not (string-match \"\\\\`\\\\$\\\\$?\" value))
+	              (goto-char end)
+	            (delete-region beg end)
+	            (if (string= (match-string 0 value) \"$$\")
+	                (insert \"\\\\[\" (substring value 2 -2) \"\\\\]\")
+	              (insert \"\\\\(\" (substring value 1 -1) \"\\\\)\")))))))))
+       ((eq processing-type 'html)
+        (while (re-search-forward math-regexp end t)
+	  (unless (and overlays
+		       (eq (get-char-property (point) 'org-overlay-type)
+			   'org-latex-overlay))
+	    (let* ((context (org-element-context))
+		   (type (org-element-type context)))
+	      (when (memq type '(latex-environment latex-fragment))
+	        (let ((block-type (eq type 'latex-environment))
+		      (value (org-element-property :value context))
+		      (beg (org-element-property :begin context))
+		      (end (save-excursion
+			     (goto-char (org-element-property :end context))
+			     (skip-chars-backward \" \\r\\t\\n\")
+			     (point))))
+                  (goto-char beg)
+	          (delete-region beg end)
+	          (insert (org-format-latex-as-html value))))))))
+       ((eq processing-type 'mathml)
+	(while (re-search-forward math-regexp end t)
+	  (unless (and overlays
+		       (eq (get-char-property (point) 'org-overlay-type)
+			   'org-latex-overlay))
+	    (let* ((context (org-element-context))
+		   (type (org-element-type context)))
+	      (when (memq type '(latex-environment latex-fragment))
+	        (let ((block-type (eq type 'latex-environment))
+		      (value (org-element-property :value context))
+		      (beg (org-element-property :begin context))
+		      (end (save-excursion
+			     (goto-char (org-element-property :end context))
+			     (skip-chars-backward \" \\r\\t\\n\")
+			     (point))))
+                  ;; Process to MathML.
+		  (unless (org-format-latex-mathml-available-p)
+		    (user-error \"LaTeX to MathML converter not configured\"))
+		  (cl-incf cnt)
+		  (when msg (message msg cnt))
+		  (goto-char beg)
+		  (delete-region beg end)
+		  (insert (org-format-latex-as-mathml
+			   value block-type prefix dir))))))))
+       ((eq processing-type 'imagemagick)
+        (user-error \"Imagemagick based previews are currently not supported.\\nPlease customize `org-preview-latex-default-process'.\"))
+       ((assq processing-type org-preview-latex-process-alist)
+        (let* ((processing-info
+                (cdr (assq processing-type org-preview-latex-process-alist)))
+               (face (face-at-point))
+               (start-time (current-time))
+               (num-overlays)
+               (fg
+		(let ((color (plist-get org-format-latex-options
+					:foreground)))
+                  (if forbuffer
+                      (cond
+                       ((eq color 'auto)
+                        (face-attribute face :foreground nil 'default))
+                       ((eq color 'default)
+                        (face-attribute 'default :foreground nil))
+                       (t color))
+                    color)))
+               (bg
+		(let ((color (plist-get org-format-latex-options
+					:background)))
+                  (if forbuffer
+                      (cond
+                       ((eq color 'auto)
+                        (face-attribute face :background nil 'default))
+                       ((eq color 'default)
+                        (face-attribute 'default :background nil))
+                       (t color))
+                    color)))
+               (image-output-type (or (plist-get processing-info :image-output-type) \"png\"))
+               (image-input-type (or (plist-get processing-info :image-input-type) \"dvi\"))
+	       (absprefix (expand-file-name prefix dir))
+               (options
+		(org-combine-plists
+		 org-format-latex-options
+		 (list :foreground fg :background bg)))
+               (math-text)
+               (math-locations)
+               (math-hashes))
+          
+          (unless checkdir-flag ; Ensure the directory exists.
+	    (setq checkdir-flag t)
+	    (let ((todir (file-name-directory absprefix)))
+	      (unless (file-directory-p todir)
+		(make-directory todir t))))
+
+          (save-excursion
+            (while (re-search-forward math-regexp end t)
+              (unless (and overlays
+                           (eq (get-char-property (point) 'org-overlay-type)
+                               'org-latex-overlay))
+                (let* ((context (org-element-context))
+                       (type (org-element-type context)))
+                  (when (memq type '(latex-environment latex-fragment))
+                    (let* ((block-type (eq type 'latex-environment))
+                           (value (org-element-property :value context))
+                           (block-beg (org-element-property :begin context))
+                           (block-end (save-excursion
+                                        (goto-char (org-element-property :end context))
+                                        (skip-chars-backward \" \\r\\t\\n\")
+                                        (point)))
+                           (hash (sha1 (prin1-to-string
+				        (list org-format-latex-header
+					      org-latex-default-packages-alist
+					      org-latex-packages-alist
+					      org-format-latex-options
+					      forbuffer value fg bg)))))
+                      (push value math-text)
+                      (push (cons block-beg block-end) math-locations)
+                      (push hash math-hashes)))))))
+
+          (setq num-overlays (length math-locations))
+          
+          (pcase-let (((list texfilebase tex-process image-process)
+                       (org-preview-create-formula-image
+                        (mapconcat (function identity) (nreverse math-text) \"\\n\\n\")
+                        options forbuffer processing-type start-time)))
+            (set-process-sentinel
+             image-process
+             (lambda (proc signal)
+               (when org-preview--debug-msg
+                 (unless (process-live-p proc)
+                   (org-preview-report \"DVI processing\" start-time)))
+               (when (string= signal \"finished\\n\")
+                 (let ((images (file-expand-wildcards
+                                (concat texfilebase \"*.\" image-output-type)
+                                'full)))
+                   (cl-loop with loc = (point)
+                            for hash in (nreverse math-hashes)
+                            for (block-beg . block-end) in (nreverse math-locations)
+                            for image-file in images
+                            for movefile = (format \"%s_%s.%s\" absprefix hash image-output-type)
+                            do (copy-file image-file movefile 'replace)
+                            do (if overlays
+		                   (progn
+		                     (dolist (o (overlays-in block-beg block-end))
+		                       (when (eq (overlay-get o 'org-overlay-type)
+		        	                 'org-latex-overlay)
+		                         (delete-overlay o)))
+		                     (org--make-preview-overlay block-beg block-end movefile image-output-type)
+		                     (goto-char block-end))
+		                 (delete-region block-beg block-end)
+		                 (insert
+		                  (org-add-props link
+		                      (list 'org-latex-src
+		        	            (replace-regexp-in-string \"\\\"\" \"\" value)
+		        	            'org-latex-src-embed-type
+		        	            (if block-type 'paragraph 'character)))))
+                            finally do (goto-char loc))))
+               (unless (process-live-p proc)
+                 (mapc #'delete-file (file-expand-wildcards (concat texfilebase \"*.\" image-output-type) 'full))
+                 (delete-file (concat texfilebase \".\" image-input-type)))
+               (when org-preview--debug-msg
+                 (org-preview-report \"Overlay placement\" start-time)
+                 (with-current-buffer org-preview--log-buf
+                   (insert (format \"Previews: %d, Process: %S\\n\\n\"
+                                   num-overlays processing-type)))))))))
+       (t
+	(error \"Unknown conversion process %s for LaTeX fragments\"
+	       processing-type))))))
+
+(defun org-preview-create-formula-image
+    (string options buffer &optional processing-type start-time)
+  
+  (let* ((processing-type (or processing-type
+                              org-preview-latex-default-process))
+         (processing-info
+          (cdr (assq processing-type org-preview-latex-process-alist)))
+         (programs (plist-get processing-info :programs))
+         (error-message (or (plist-get processing-info :message) \"\"))
+         (image-input-type (plist-get processing-info :image-input-type))
+	 (image-output-type (plist-get processing-info :image-output-type))
+	 (post-clean (or (plist-get processing-info :post-clean)
+			 '(\".dvi\" \".xdv\" \".pdf\" \".tex\" \".aux\" \".log\"
+			   \".svg\" \".png\" \".jpg\" \".jpeg\" \".out\")))
+	 (latex-header
+	  (or (plist-get processing-info :latex-header)
+	      (org-latex-make-preamble
+	       (org-export-get-environment (org-export-get-backend 'latex))
+	       org-format-latex-header
+	       'snippet)))
+         (latex-compiler (plist-get processing-info :latex-compiler))
+	 (tmpdir temporary-file-directory)
+	 (texfilebase (make-temp-name
+		       (expand-file-name \"orgtex\" tmpdir)))
+	 (texfile (concat texfilebase \".tex\"))
+	 (image-size-adjust (or (plist-get processing-info :image-size-adjust)
+				'(1.0 . 1.0)))
+	 (scale (* (if buffer (car image-size-adjust) (cdr image-size-adjust))
+		   (or (plist-get options (if buffer :scale :html-scale)) 1.0)))
+	 (dpi (* scale (if buffer (org--get-display-dpi) 140.0)))
+	 (fg (or (plist-get options (if buffer :foreground :html-foreground))
+		 \"Black\"))
+	 (bg (or (plist-get options (if buffer :background :html-background))
+		 \"Transparent\"))
+	 (image-converter
+          (or (and (string= bg \"Transparent\")
+                   (plist-get processing-info :transparent-image-converter))
+              (plist-get processing-info :image-converter)))
+         (log-buf (get-buffer-create \"*Org Preview LaTeX Output*\"))
+	 (resize-mini-windows nil))
+    
+    (dolist (program programs)
+      (org-check-external-command program error-message))
+    (if (eq fg 'default)
+	(setq fg (org-latex-color :foreground))
+      (setq fg (org-latex-color-format fg)))
+    (setq bg (cond
+	      ((eq bg 'default) (org-latex-color :background))
+	      ((string= bg \"Transparent\") nil)
+	      (t (org-latex-color-format bg))))
+    ;; Remove TeX \\par at end of snippet to avoid trailing space.
+    (if (string-suffix-p string \"\\n\")
+        (aset string (1- (length string)) ?%)
+      (setq string (concat string \"%\")))
+
+    (with-temp-file texfile
+      (insert latex-header)
+      (insert \"\\n\\\\begin{document}\\n\"
+	      \"\\\\definecolor{fg}{rgb}{\" fg \"}%\\n\"
+	      (if bg
+		  (concat \"\\\\definecolor{bg}{rgb}{\" bg \"}%\\n\"
+			  \"\\n\\\\pagecolor{bg}%\\n\")
+		\"\")
+	      \"\\n{\\\\color{fg}\\n\"
+	      string
+	      \"\\n}\\n\"
+	      \"\\n\\\\end{document}\\n\"))
+
+    (let* (;; (latex-compiler
+           ;;  (car '(\"latex -interaction nonstopmode -output-directory %o\")))
+           ;; (image-converter (car '(\"dvipng --follow -bg %g -fg %c -D %D -T tight -o %B-%%09d.png %O\")))
+           ;; (image-converter (car '(\"dvisvgm --page=1- -n -b min -c %S -o %B-%%9p.svg %O\")))
+           (tex-process)
+           (image-process)
+           (base-name (file-name-base texfile))
+           (out-dir (or (file-name-directory texfile) \"./\"))
+           (spec (list (cons ?D (shell-quote-argument (format \"%s\" dpi)))
+	               (cons ?S (shell-quote-argument (format \"%s\" (/ dpi 140.0))))
+                       (cons ?b (shell-quote-argument base-name))
+                       (cons ?B (shell-quote-argument texfilebase))
+		       (cons ?f (shell-quote-argument texfile))
+		       (cons ?F (shell-quote-argument (file-truename texfile)))
+		       (cons ?o (shell-quote-argument out-dir))
+		       (cons ?O (shell-quote-argument (expand-file-name
+                                                       (concat base-name \".\" image-input-type) out-dir)))
+                       (cons ?c (shell-quote-argument (concat \"rgb \" (replace-regexp-in-string \",\" \" \" fg))))
+                       (cons ?g (shell-quote-argument (concat \"rgb \" (replace-regexp-in-string \",\" \" \" bg)))))))
+      (when org-preview--debug-msg
+        (org-preview-report \"Preprocessing\" start-time))
+      (setq tex-process
+            (make-process :name (format \"Org-Preview-%s\" (file-name-base texfile))
+                          :buffer log-buf
+                          :command (split-string-shell-command (format-spec (car latex-compiler) spec))
+                          :sentinel (lambda (proc signal)
+                                      (unless (process-live-p proc)
+                                        (org-preview-report \"Tex process\" start-time)
+                                        (dolist (e (delete (concat \".\" image-input-type) post-clean))
+                                          (when (file-exists-p (concat texfilebase e))
+                                            (delete-file (concat texfilebase e))))
+                                        (org-preview-report \"Tex cleanup\" start-time)))))
+      (process-send-string tex-process
+                           (format-spec
+                            \"\\\\PassOptionsToPackage{noconfig,active,tightpage,auctex}{preview}\\\\AtBeginDocument{\\\\ifx\\\\ifPreview\\\\undefined\\\\RequirePackage[displaymath,floats,graphics,textmath,sections,footnotes]{preview}[2004/11/05]\\\\fi}\\\\input\\\\detokenize{%f}\\n\"
+                            spec))
+      (when (equal processing-type 'dvisvgm)
+        (while (process-live-p tex-process)
+          (accept-process-output tex-process)))
+      (setq image-process
+            (make-process :name (format \"Org-Convert-%s-%s\"
+                                        (file-name-base texfile)
+                                        (symbol-name processing-type))
+                          :buffer (format \"*Org Convert %s %s*\"
+                                          (file-name-base texfile)
+                                          (symbol-name processing-type))
+                          :command (split-string-shell-command (format-spec (car image-converter) spec))))
+      (list texfilebase tex-process image-process))))
+
+
+
+;; Ignore the rest of this file. It's some glue to turn this feature into a
+;; minor-mode without messing up the User's state.
+
+(require 'map)
+(defvar org-preview--dvipng-latex-compiler nil)
+(defvar org-preview--dvipng-image-converter nil)
+(defvar org-preview--dvipng-transparent-image-compiler nil)
+(defvar org-preview--dvisvgm-latex-compiler nil)
+(defvar org-preview--dvisvgm-image-converter nil)
+
+(defsubst org-preview--get (&rest keys)
+  (map-nested-elt org-preview-latex-process-alist keys))
+
+(define-minor-mode org-preview-mode
+  \"Asynchronous and batched (much, much faster) LaTeX previews for Org-mode.\"
+  :global t
+  :version \"0.10\"
+  :lighter nil
+  :group 'org
+  (if org-preview-mode
+      ;; Turning the mode on
+      (progn
+        (setq org-preview--dvipng-latex-compiler
+              (org-preview--get 'dvipng :latex-compiler))
+        (setq org-preview--dvipng-image-converter
+              (org-preview--get 'dvipng :image-converter))
+        (setq org-preview--dvipng-transparent-image-compiler
+              (org-preview--get 'dvipng :transparent-image-compiler))
+        (setq org-preview--dvisvgm-latex-compiler
+              (org-preview--get 'dvisvgm :latex-compiler))
+        (setq org-preview--dvisvgm-image-converter
+              (org-preview--get 'dvisvgm :image-converter))
+        (let ((dvipng-proc (alist-get 'dvipng org-preview-latex-process-alist)))
+          (setq
+           dvipng-proc
+           (plist-put dvipng-proc
+                      :latex-compiler
+                      '(\"latex -interaction nonstopmode -output-directory %o\"))
+           dvipng-proc
+           (plist-put dvipng-proc
+                      :image-converter
+                      '(\"dvipng --follow -bg %g -fg %c -D %D -T tight -o %B-%%09d.png %O\"))
+           dvipng-proc
+           (plist-put dvipng-proc
+                      :transparent-image-converter
+                      '(\"dvipng --follow -D %D -T tight -bg Transparent -fg %c -o %B-%%09d.png %O\")))
+          ;; (map-put! org-preview-latex-process-alist 'dvipng dvipng-proc)
+          )
+        (let ((dvisvgm-proc (alist-get 'dvisvgm org-preview-latex-process-alist)))
+          (setq
+           dvisvgm-proc
+           (plist-put dvisvgm-proc
+                      :latex-compiler
+                      '(\"latex -interaction nonstopmode -output-directory %o\"))
+           dvisvgm-proc
+           (plist-put dvisvgm-proc
+                      :image-converter
+                      '(\"dvisvgm --page=1- -n -b min -c %S -o %B-%%9p.svg %O\"))))
+          ;; (map-put! org-preview-latex-process-alist 'dvisvgm dvisvgm-proc)
+          
+          (advice-add 'org-format-latex :override (function org-preview-format-latex)))
+    ;; Turning the mode off
+    
+    (let ((dvipng-proc (alist-get 'dvipng org-preview-latex-process-alist)))
+          (setq
+           dvipng-proc
+           (plist-put dvipng-proc :latex-compiler
+                      org-preview--dvipng-latex-compiler)
+           dvipng-proc
+           (plist-put dvipng-proc :image-converter
+                      org-preview--dvipng-image-converter)
+           dvipng-proc
+           (plist-put dvipng-proc :transparent-image-converter
+                      org-preview--dvipng-transparent-image-compiler))
+          ;; (map-put! org-preview-latex-process-alist 'dvipng dvipng-proc)
+          )
+    (let ((dvisvgm-proc (alist-get 'dvisvgm org-preview-latex-process-alist)))
+      (setq
+       dvisvgm-proc
+       (plist-put dvisvgm-proc :latex-compiler
+                  org-preview--dvisvgm-latex-compiler)
+       dvisvgm-proc
+       (plist-put dvisvgm-proc :image-converter
+                  org-preview--dvisvgm-image-converter))
+      ;; (map-put! org-preview-latex-process-alist 'dvisvgm dvisvgm-proc)
+      )
+    (advice-remove 'org-format-latex (function org-preview-format-latex))))
+(org-preview-mode)" 0 3 (face font-lock-comment-delimiter-face fontified t) 3 62 (face font-lock-comment-face fontified t) 62 65 (face font-lock-comment-delimiter-face fontified t) 65 98 (face font-lock-comment-face fontified t) 98 99 (fontified t) 99 102 (face font-lock-comment-delimiter-face fontified t) 102 171 (face font-lock-comment-face fontified t) 171 174 (face font-lock-comment-delimiter-face fontified t) 174 243 (face font-lock-comment-face fontified t) 243 246 (face font-lock-comment-delimiter-face fontified t) 246 312 (face font-lock-comment-face fontified t) 312 315 (face font-lock-comment-delimiter-face fontified t) 315 351 (face font-lock-comment-face fontified t) 351 352 (fontified t) 352 355 (face font-lock-comment-delimiter-face fontified t) 355 419 (face font-lock-comment-face fontified t) 419 422 (face font-lock-comment-delimiter-face fontified t) 422 485 (face font-lock-comment-face fontified t) 485 488 (face font-lock-comment-delimiter-face fontified t) 488 550 (face font-lock-comment-face fontified t) 550 553 (face font-lock-comment-delimiter-face fontified t) 553 598 (face font-lock-comment-face fontified t) 598 599 (fontified t) 599 602 (face font-lock-comment-delimiter-face fontified t) 602 668 (face font-lock-comment-face fontified t) 668 671 (face font-lock-comment-delimiter-face fontified t) 671 742 (face font-lock-comment-face fontified t) 742 743 (fontified t) 743 747 (face font-lock-comment-delimiter-face fontified t) 747 759 (face font-lock-comment-face fontified t) 759 760 (fontified t) 760 763 (face font-lock-comment-delimiter-face fontified t) 763 812 (face font-lock-comment-face fontified t) 812 813 (fontified t) 813 817 (face font-lock-comment-delimiter-face fontified t) 817 823 (face font-lock-comment-face fontified t) 823 824 (fontified t) 824 828 (fontified t) 828 903 (fontified t) 903 922 (face font-lock-string-face fontified t) 922 974 (fontified t) 974 978 (face font-lock-keyword-face fontified t) 978 1091 (fontified t) 1091 1102 (face font-lock-string-face fontified t) 1102 1164 (fontified t) 1164 1168 (face font-lock-string-face fontified t) 1168 1211 (fontified t) 1211 1217 (face font-lock-keyword-face fontified t) 1217 1282 (fontified t) 1282 1635 (face font-lock-string-face fontified t) 1635 1729 (face font-lock-string-face fontified t) 1729 1733 (fontified t) 1733 1737 (face font-lock-keyword-face fontified t) 1737 1739 (fontified t) 1739 1742 (face font-lock-keyword-face fontified t) 1742 1806 (fontified t) 1806 1812 (face font-lock-keyword-face fontified t) 1812 1849 (fontified t) 1849 1853 (face font-lock-keyword-face fontified t) 1853 1868 (fontified t) 1868 1918 (face font-lock-string-face fontified t) 1918 1969 (fontified t) 1969 1971 (face font-lock-keyword-face fontified t) 1971 1996 (fontified t) 1996 1999 (face font-lock-comment-delimiter-face fontified t) 1999 2007 (face font-lock-comment-face fontified t) 2007 2062 (face font-lock-comment-face fontified t) 2062 2069 (fontified t) 2069 2073 (face font-lock-keyword-face fontified t) 2073 2075 (fontified t) 2075 2078 (face font-lock-keyword-face fontified t) 2078 2154 (fontified t) 2154 2156 (face font-lock-keyword-face fontified t) 2156 2183 (fontified t) 2183 2187 (face font-lock-keyword-face fontified t) 2187 2227 (fontified t) 2227 2230 (face font-lock-comment-delimiter-face fontified t) 2230 2262 (face font-lock-comment-face fontified t) 2262 2315 (fontified t) 2315 2319 (fontified t) 2319 2325 (face font-lock-keyword-face fontified t) 2325 2327 (fontified t) 2327 2328 (face font-lock-keyword-face fontified t) 2328 2330 (face font-lock-keyword-face fontified t) 2330 2432 (fontified t) 2432 2436 (face font-lock-keyword-face fontified t) 2436 2518 (fontified t) 2518 2522 (face font-lock-keyword-face fontified t) 2522 2581 (fontified t) 2581 2584 (face font-lock-keyword-face fontified t) 2584 2642 (fontified t) 2642 2665 (jinx--pending t fontified t) 2665 2671 (jinx--pending t face font-lock-builtin-face fontified t) 2671 2717 (jinx--pending t fontified t) 2717 2723 (jinx--pending t face font-lock-builtin-face fontified t) 2723 2804 (jinx--pending t fontified t) 2804 2808 (jinx--pending t face font-lock-builtin-face fontified t) 2808 2848 (jinx--pending t fontified t) 2848 2857 (jinx--pending t face font-lock-string-face fontified t) 2857 2897 (jinx--pending t fontified t) 2897 2899 (jinx--pending t face font-lock-keyword-face fontified t) 2899 2919 (jinx--pending t fontified t) 2919 2931 (jinx--pending t face font-lock-string-face fontified t) 2931 3022 (jinx--pending t fontified t) 3022 3024 (jinx--pending t face font-lock-keyword-face fontified t) 3024 3057 (jinx--pending t fontified t) 3057 3061 (jinx--pending t face font-lock-string-face fontified t) 3061 3088 (jinx--pending t fontified t) 3088 3093 (jinx--pending t face font-lock-string-face fontified t) 3093 3117 (jinx--pending t fontified t) 3117 3122 (jinx--pending t face font-lock-string-face fontified t) 3122 3147 (jinx--pending t fontified t) 3147 3152 (jinx--pending t face font-lock-string-face fontified t) 3152 3176 (jinx--pending t fontified t) 3176 3181 (jinx--pending t face font-lock-string-face fontified t) 3181 3283 (jinx--pending t fontified t) 3283 3289 (jinx--pending t face font-lock-keyword-face fontified t) 3289 3291 (jinx--pending t fontified t) 3291 3294 (jinx--pending t face font-lock-keyword-face fontified t) 3294 3396 (jinx--pending t fontified t) 3396 3400 (jinx--pending t face font-lock-keyword-face fontified t) 3400 3482 (jinx--pending t fontified t) 3482 3486 (jinx--pending t face font-lock-keyword-face fontified t) 3486 3545 (jinx--pending t fontified t) 3545 3548 (jinx--pending t face font-lock-keyword-face fontified t) 3548 3629 (jinx--pending t fontified t) 3629 3635 (jinx--pending t face font-lock-builtin-face fontified t) 3635 3681 (jinx--pending t fontified t) 3681 3687 (jinx--pending t face font-lock-builtin-face fontified t) 3687 3768 (jinx--pending t fontified t) 3768 3772 (jinx--pending t face font-lock-builtin-face fontified t) 3772 3812 (jinx--pending t fontified t) 3812 3821 (jinx--pending t face font-lock-string-face fontified t) 3821 3828 (jinx--pending t fontified t) 3828 4164 (fontified nil) 4164 4170 (fontified t) 4170 4174 (face font-lock-keyword-face fontified t) 4174 4208 (fontified t) 4208 4256 (fontified t) 4256 4260 (face font-lock-keyword-face fontified t) 4260 4319 (fontified t) 4319 4322 (face font-lock-keyword-face fontified t) 4322 4403 (fontified t) 4403 4409 (face font-lock-builtin-face fontified t) 4409 4455 (fontified t) 4455 4461 (face font-lock-builtin-face fontified t) 4461 4542 (fontified t) 4542 4546 (face font-lock-builtin-face fontified t) 4546 4586 (fontified t) 4586 4595 (face font-lock-string-face fontified t) 4595 4634 (fontified t) 4634 4637 (face font-lock-comment-delimiter-face fontified t) 4637 4656 (face font-lock-comment-face fontified t) 4656 4661 (fontified t) 4661 4667 (face font-lock-keyword-face fontified t) 4667 4724 (fontified t) 4724 4766 (face font-lock-string-face fontified t) 4766 4792 (fontified t) 4792 4796 (face font-lock-keyword-face fontified t) 4796 5012 (fontified t) 5012 5124 (face font-lock-string-face fontified t) 5124 5127 (fontified t) 5127 5186 (fontified t) 5186 5199 (fontified t) 5199 5203 (face font-lock-keyword-face fontified t) 5203 5433 (fontified t) 5433 5436 (face font-lock-keyword-face fontified t) 5436 5486 (fontified t) 5486 5497 (face font-lock-builtin-face fontified t) 5497 5520 (fontified t) 5520 5522 (face font-lock-keyword-face fontified t) 5522 5556 (fontified t) 5556 5560 (face font-lock-keyword-face fontified t) 5560 5647 (fontified t) 5647 5658 (face font-lock-builtin-face fontified t) 5658 5767 (fontified t) 5767 5778 (face font-lock-builtin-face fontified t) 5778 5870 (fontified t) 5870 5873 (face font-lock-keyword-face fontified t) 5873 5923 (fontified t) 5923 5934 (face font-lock-builtin-face fontified t) 5934 5957 (fontified t) 5957 5959 (face font-lock-keyword-face fontified t) 5959 5993 (fontified t) 5993 5997 (face font-lock-keyword-face fontified t) 5997 6068 (fontified t) 6068 6084 (fontified t) 6084 6095 (face font-lock-builtin-face fontified t) 6095 6204 (fontified t) 6204 6215 (face font-lock-builtin-face fontified t) 6215 6320 (fontified t) 6320 6322 (face font-lock-keyword-face fontified t) 6322 6350 (fontified t) 6350 6368 (face font-lock-builtin-face fontified t) 6368 6370 (fontified t) 6370 6375 (face font-lock-string-face fontified t) 6375 6412 (fontified t) 6412 6414 (face font-lock-keyword-face fontified t) 6414 6442 (fontified t) 6442 6459 (face font-lock-builtin-face fontified t) 6459 6461 (fontified t) 6461 6466 (face font-lock-string-face fontified t) 6466 6602 (fontified t) 6602 6613 (face font-lock-builtin-face fontified t) 6613 6617 (fontified t) 6617 6628 (face font-lock-builtin-face fontified t) 6628 6662 (fontified t) 6662 6686 (fontified t) 6686 6746 (fontified t) 6746 6752 (face font-lock-keyword-face fontified t) 6752 6767 (fontified t) 6767 6769 (face font-lock-comment-delimiter-face fontified t) 6769 6798 (face font-lock-comment-face fontified t) 6798 6832 (fontified t) 6832 6835 (face font-lock-keyword-face fontified t) 6835 6886 (fontified t) 6886 6892 (face font-lock-keyword-face fontified t) 6892 7047 (fontified t) 7047 7053 (face font-lock-keyword-face fontified t) 7053 7055 (fontified t) 7055 7058 (face font-lock-keyword-face fontified t) 7058 7214 (fontified t) 7214 7218 (face font-lock-keyword-face fontified t) 7218 7329 (fontified t) 7329 7333 (face font-lock-keyword-face fontified t) 7333 7403 (fontified t) 7403 7407 (face font-lock-keyword-face fontified t) 7407 7507 (fontified t) 7507 7513 (face font-lock-builtin-face fontified t) 7513 7584 (fontified t) 7584 7590 (face font-lock-builtin-face fontified t) 7590 7700 (fontified t) 7700 7728 (fontified t) 7728 7732 (face font-lock-builtin-face fontified t) 7732 7804 (fontified t) 7804 7813 (face font-lock-string-face fontified t) 7813 8162 (fontified t) 8162 8186 (fontified t) 8186 8351 (fontified t) 8351 8381 (fontified t) 8381 8552 (fontified t) 8552 8558 (face font-lock-string-face fontified t) 8558 8707 (fontified t) 8707 8713 (face font-lock-keyword-face fontified t) 8713 8744 (fontified t) 8744 8748 (face font-lock-keyword-face fontified t) 8748 8790 (fontified t) 8790 8796 (face font-lock-keyword-face fontified t) 8796 8858 (fontified t) 8858 8874 (face font-lock-string-face fontified t) 8874 8905 (fontified t) 8905 8909 (face font-lock-keyword-face fontified t) 8909 8926 (fontified t) 8926 8938 (face font-lock-string-face fontified t) 8938 8958 (fontified t) 8958 8961 (face font-lock-keyword-face fontified t) 8961 9046 (fontified t) 9046 9050 (face font-lock-string-face fontified t) 9050 9410 (fontified t) 9410 9420 (face font-lock-string-face fontified t) 9420 9559 (fontified t) 9559 9561 (face font-lock-keyword-face fontified t) 9561 9694 (fontified t) 9694 9698 (face font-lock-keyword-face fontified t) 9698 9833 (fontified t) 9833 9881 (fontified t) 9881 10193 (fontified t) 10193 10197 (face font-lock-string-face fontified t) 10197 10198 (fontified t) 10198 10200 (face font-lock-string-face fontified t) 10200 10281 (fontified t) 10281 10283 (face font-lock-keyword-face fontified t) 10283 10396 (fontified t) 10396 10402 (face font-lock-keyword-face fontified t) 10402 10505 (fontified t) 10505 10509 (face font-lock-string-face fontified t) 10509 10587 (fontified t) 10587 10590 (face font-lock-string-face fontified t) 10590 10627 (fontified t) 10627 10631 (face font-lock-keyword-face fontified t) 10631 10692 (fontified t) 10692 10711 (face font-lock-string-face fontified t) 10711 10818 (fontified t) 10818 10849 (face font-lock-string-face fontified t) 10849 10941 (fontified t) 10941 10992 (face font-lock-string-face fontified t) 10992 11135 (fontified t) 11135 11139 (face font-lock-keyword-face fontified t) 11139 11159 (fontified t) 11159 11161 (face font-lock-keyword-face fontified t) 11161 11342 (fontified t) 11342 11381 (fontified t) 11381 11388 (fontified t) 11388 11397 (face font-lock-builtin-face fontified t) 11397 11425 (fontified t) 11425 11427 (face font-lock-keyword-face fontified t) 11427 11455 (fontified t) 11455 11463 (face font-lock-builtin-face fontified t) 11463 11465 (fontified t) 11465 11467 (face font-lock-string-face fontified t) 11467 11524 (fontified t) 11524 11541 (face font-lock-builtin-face fontified t) 11541 11592 (fontified t) 11592 11610 (face font-lock-builtin-face fontified t) 11610 11628 (fontified t) 11628 11630 (face font-lock-keyword-face fontified t) 11630 11658 (fontified t) 11658 11669 (face font-lock-builtin-face fontified t) 11669 11677 (fontified t) 11677 11683 (face font-lock-string-face fontified t) 11683 11684 (fontified t) 11684 11690 (face font-lock-string-face fontified t) 11690 11691 (fontified t) 11691 11697 (face font-lock-string-face fontified t) 11697 11698 (fontified t) 11698 11704 (face font-lock-string-face fontified t) 11704 11705 (fontified t) 11705 11711 (face font-lock-string-face fontified t) 11711 11712 (fontified t) 11712 11718 (face font-lock-string-face fontified t) 11718 11725 (fontified t) 11725 11731 (face font-lock-string-face fontified t) 11731 11732 (fontified t) 11732 11738 (face font-lock-string-face fontified t) 11738 11739 (fontified t) 11739 11745 (face font-lock-string-face fontified t) 11745 11746 (fontified t) 11746 11753 (face font-lock-string-face fontified t) 11753 11754 (fontified t) 11754 11760 (face font-lock-string-face fontified t) 11760 11784 (fontified t) 11784 11786 (face font-lock-keyword-face fontified t) 11786 11814 (jinx--pending t fontified t) 11814 11827 (jinx--pending t face font-lock-builtin-face fontified t) 11827 12034 (jinx--pending t fontified t) 12034 12049 (jinx--pending t face font-lock-builtin-face fontified t) 12049 12052 (jinx--pending t fontified t) 12052 12146 (fontified t) 12146 12154 (face font-lock-string-face fontified t) 12154 12196 (fontified t) 12196 12202 (face font-lock-string-face fontified t) 12202 12227 (fontified t) 12227 12229 (face font-lock-keyword-face fontified t) 12229 12257 (fontified t) 12257 12275 (face font-lock-builtin-face fontified t) 12275 12309 (fontified t) 12309 12311 (face font-lock-keyword-face fontified t) 12311 12374 (fontified t) 12374 12376 (face font-lock-keyword-face fontified t) 12376 12397 (fontified t) 12397 12399 (face font-lock-keyword-face fontified t) 12399 12407 (fontified t) 12407 12413 (face font-lock-builtin-face fontified t) 12413 12414 (fontified t) 12414 12425 (face font-lock-builtin-face fontified t) 12425 12452 (fontified t) 12452 12454 (face font-lock-keyword-face fontified t) 12454 12501 (fontified t) 12501 12503 (face font-lock-keyword-face fontified t) 12503 12524 (fontified t) 12524 12526 (face font-lock-keyword-face fontified t) 12526 12534 (fontified t) 12534 12545 (face font-lock-builtin-face fontified t) 12545 12546 (fontified t) 12546 12562 (face font-lock-builtin-face fontified t) 12562 12568 (fontified t) 12568 12575 (face font-lock-string-face fontified t) 12575 12585 (fontified t) 12585 12587 (face font-lock-keyword-face fontified t) 12587 12608 (fontified t) 12608 12610 (face font-lock-keyword-face fontified t) 12610 12618 (fontified t) 12618 12629 (face font-lock-builtin-face fontified t) 12629 12630 (fontified t) 12630 12646 (face font-lock-builtin-face fontified t) 12646 12652 (fontified t) 12652 12665 (face font-lock-string-face fontified t) 12665 12698 (fontified t) 12698 12700 (face font-lock-keyword-face fontified t) 12700 12702 (fontified t) 12702 12705 (face font-lock-keyword-face fontified t) 12705 12718 (fontified t) 12718 12731 (face font-lock-string-face fontified t) 12731 12779 (fontified t) 12779 12807 (face font-lock-builtin-face fontified t) 12807 12851 (fontified t) 12851 12867 (face font-lock-builtin-face fontified t) 12867 12871 (fontified t) 12871 12881 (fontified t) 12881 12908 (fontified t) 12908 12936 (face font-lock-string-face fontified t) 12936 13067 (fontified t) 13067 13069 (face font-lock-keyword-face fontified t) 13069 13114 (fontified t) 13114 13125 (face font-lock-builtin-face fontified t) 13125 13187 (fontified t) 13187 13191 (face font-lock-keyword-face fontified t) 13191 13234 (fontified t) 13234 13245 (face font-lock-builtin-face fontified t) 13245 13268 (fontified t) 13268 13281 (face font-lock-string-face fontified t) 13281 13333 (fontified t) 13333 13336 (face font-lock-comment-delimiter-face fontified t) 13336 13395 (face font-lock-comment-face fontified t) 13395 13400 (fontified t) 13400 13402 (face font-lock-keyword-face fontified t) 13402 13427 (fontified t) 13427 13431 (face font-lock-string-face fontified t) 13431 13513 (fontified t) 13513 13516 (face font-lock-string-face fontified t) 13516 13591 (fontified t) 13591 13614 (face font-lock-string-face fontified t) 13614 13622 (fontified t) 13622 13647 (face font-lock-string-face fontified t) 13647 13651 (fontified t) 13651 13657 (face font-lock-string-face fontified t) 13657 13666 (fontified t) 13666 13668 (face font-lock-keyword-face fontified t) 13668 13684 (fontified t) 13684 13709 (face font-lock-string-face fontified t) 13709 13713 (fontified t) 13713 13719 (face font-lock-string-face fontified t) 13719 13725 (fontified t) 13725 13747 (face font-lock-string-face fontified t) 13747 13751 (fontified t) 13751 13753 (face font-lock-string-face fontified t) 13753 13762 (fontified t) 13762 13780 (face font-lock-string-face fontified t) 13780 13794 (fontified t) 13794 13802 (fontified t) 13802 13809 (face font-lock-string-face fontified t) 13809 13817 (fontified t) 13817 13838 (face font-lock-string-face fontified t) 13838 13847 (fontified t) 13847 13851 (face font-lock-keyword-face fontified t) 13851 13853 (fontified t) 13853 13856 (face font-lock-comment-delimiter-face fontified t) 13856 13872 (face font-lock-comment-face fontified t) 13872 13883 (fontified t) 13883 13887 (face font-lock-comment-delimiter-face fontified t) 13887 13951 (face font-lock-comment-face fontified t) 13951 13962 (fontified t) 13962 13965 (face font-lock-comment-delimiter-face fontified t) 13965 14058 (face font-lock-comment-face fontified t) 14058 14069 (fontified t) 14069 14072 (face font-lock-comment-delimiter-face fontified t) 14072 14153 (face font-lock-comment-face fontified t) 14153 14205 (fontified t) 14205 14274 (fontified t) 14274 14276 (face font-lock-keyword-face fontified t) 14276 14307 (fontified t) 14307 14311 (face font-lock-string-face fontified t) 14311 14314 (fontified t) 14314 14376 (fontified t) 14376 14380 (face font-lock-string-face fontified t) 14380 14381 (fontified t) 14381 14443 (fontified t) 14443 14447 (face font-lock-string-face fontified t) 14447 14896 (fontified t) 14896 14899 (face font-lock-string-face fontified t) 14899 14991 (fontified t) 14991 14997 (face font-lock-string-face fontified t) 14997 15024 (fontified t) 15024 15027 (face font-lock-string-face fontified t) 15027 15028 (fontified t) 15028 15031 (face font-lock-string-face fontified t) 15031 15101 (fontified t) 15101 15107 (face font-lock-string-face fontified t) 15107 15134 (fontified t) 15134 15137 (face font-lock-string-face fontified t) 15137 15138 (fontified t) 15138 15141 (face font-lock-string-face fontified t) 15141 15159 (fontified t) 15159 15163 (face font-lock-keyword-face fontified t) 15163 15215 (fontified t) 15215 15230 (face font-lock-string-face fontified t) 15230 15294 (fontified t) 15294 15299 (face font-lock-builtin-face fontified t) 15299 15308 (fontified t) 15308 15324 (face font-lock-string-face fontified t) 15324 15377 (fontified t) 15377 15384 (face font-lock-builtin-face fontified t) 15384 15419 (fontified t) 15419 15427 (face font-lock-builtin-face fontified t) 15427 15523 (fontified t) 15523 15532 (face font-lock-builtin-face fontified t) 15532 15534 (fontified t) 15534 15540 (face font-lock-keyword-face fontified t) 15540 15594 (fontified t) 15594 15600 (face font-lock-keyword-face fontified t) 15600 15683 (fontified t) 15683 15696 (face font-lock-string-face fontified t) 15696 15776 (fontified t) 15776 15779 (face font-lock-string-face fontified t) 15779 15811 (fontified t) 15811 15854 (fontified t) 15854 15858 (face font-lock-keyword-face fontified t) 15858 15881 (fontified t) 15881 16041 (fontified t) 16041 16054 (face font-lock-string-face fontified t) 16054 16178 (fontified t) 16178 16414 (face font-lock-string-face fontified t) 16414 16457 (fontified t) 16457 16461 (face font-lock-keyword-face fontified t) 16461 16639 (fontified t) 16639 16644 (face font-lock-builtin-face fontified t) 16644 16653 (fontified t) 16653 16672 (face font-lock-string-face fontified t) 16672 16835 (fontified t) 16835 16842 (face font-lock-builtin-face fontified t) 16842 16851 (fontified t) 16851 16872 (face font-lock-string-face fontified t) 16872 17039 (fontified t) 17039 17047 (face font-lock-builtin-face fontified t) 17047 17175 (fontified t) 17175 17177 (fontified t) 17177 17180 (face font-lock-comment-delimiter-face fontified t) 17180 17253 (face font-lock-comment-face fontified t) 17253 17256 (face font-lock-comment-delimiter-face fontified t) 17256 17304 (face font-lock-comment-face fontified t) 17304 17368 (fontified t) 17368 17381 (fontified t) 17381 17713 (fontified t) 17713 17788 (face font-lock-string-face fontified t) 17788 17791 (fontified t) 17791 17798 (face font-lock-builtin-face fontified t) 17798 17803 (fontified t) 17803 17811 (face font-lock-builtin-face fontified t) 17811 17812 (fontified t) 17812 17818 (face font-lock-string-face fontified t) 17818 17821 (fontified t) 17821 17829 (face font-lock-builtin-face fontified t) 17829 17836 (fontified t) 17836 17842 (face font-lock-builtin-face fontified t) 17842 17851 (fontified t) 17851 17853 (face font-lock-keyword-face fontified t) 17853 17877 (fontified t) 17877 17880 (face font-lock-comment-delimiter-face fontified t) 17880 17900 (face font-lock-comment-face fontified t) 17900 18002 (fontified t) 18002 18017 (face font-lock-builtin-face fontified t) 18017 18110 (fontified t) 18110 18126 (face font-lock-builtin-face fontified t) 18126 18230 (fontified t) 18230 18257 (face font-lock-builtin-face fontified t) 18257 18351 (fontified t) 18351 18366 (face font-lock-builtin-face fontified t) 18366 18461 (fontified t) 18461 18477 (face font-lock-builtin-face fontified t) 18477 18489 (fontified t) 18489 18492 (face font-lock-keyword-face fontified t) 18492 18656 (fontified t) 18656 18671 (face font-lock-builtin-face fontified t) 18671 18696 (fontified t) 18696 18749 (face font-lock-string-face fontified t) 18749 18831 (fontified t) 18831 18847 (face font-lock-builtin-face fontified t) 18847 18848 (fontified t) 18848 18872 (fontified t) 18872 18881 (face font-lock-string-face fontified t) 18881 18937 (face font-lock-string-face fontified t) 18937 19019 (fontified t) 19019 19047 (face font-lock-builtin-face fontified t) 19047 19072 (fontified t) 19072 19146 (face font-lock-string-face fontified t) 19146 19160 (fontified t) 19160 19163 (face font-lock-comment-delimiter-face fontified t) 19163 19226 (face font-lock-comment-face fontified t) 19226 19247 (fontified t) 19247 19250 (face font-lock-keyword-face fontified t) 19250 19418 (jinx--pending t fontified t) 19418 19433 (jinx--pending t face font-lock-builtin-face fontified t) 19433 19458 (jinx--pending t fontified t) 19458 19511 (jinx--pending t face font-lock-string-face fontified t) 19511 19573 (jinx--pending t fontified t) 19573 19595 (fontified t) 19595 19611 (face font-lock-builtin-face fontified t) 19611 19636 (fontified t) 19636 19689 (face font-lock-string-face fontified t) 19689 19704 (fontified t) 19704 19707 (face font-lock-comment-delimiter-face fontified t) 19707 19772 (face font-lock-comment-face fontified t) 19772 19823 (fontified t) 19823 19832 (face font-lock-builtin-face fontified t) 19832 19875 (fontified t) 19875 19878 (face font-lock-comment-delimiter-face fontified t) 19878 19899 (face font-lock-comment-face fontified t) 19899 19909 (fontified t) 19909 19912 (face font-lock-keyword-face fontified t) 19912 20054 (fontified t) 20054 20069 (face font-lock-builtin-face fontified t) 20069 20185 (fontified t) 20185 20201 (face font-lock-builtin-face fontified t) 20201 20318 (fontified t) 20318 20346 (face font-lock-builtin-face fontified t) 20346 20347 (fontified t) 20347 20381 (fontified t) 20381 20428 (fontified t) 20428 20431 (face font-lock-comment-delimiter-face fontified t) 20431 20494 (face font-lock-comment-face fontified t) 20494 20511 (fontified t) 20511 20514 (face font-lock-keyword-face fontified t) 20514 20648 (fontified t) 20648 20663 (face font-lock-builtin-face fontified t) 20663 20770 (fontified t) 20770 20786 (face font-lock-builtin-face fontified t) 20786 20850 (fontified t) 20850 20853 (face font-lock-comment-delimiter-face fontified t) 20853 20918 (face font-lock-comment-face fontified t) 20918 21020 (fontified t)) . 56383) (undo-tree-id342 . -21020) (undo-tree-id343 . -2261) (undo-tree-id344 . -20945) (undo-tree-id345 . -21020) (undo-tree-id346 . -2261) (t 26234 32367 991323 20000)) nil (26234 32541 647541 720000) 0 nil])
+([nil nil ((#("K" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56362) (undo-tree-id195 . -1) (undo-tree-id196 . -1) (undo-tree-id197 . -1) (undo-tree-id198 . -1) (undo-tree-id199 . -1) (undo-tree-id200 . -1) (undo-tree-id201 . -1) (#("a" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56363) (undo-tree-id202 . -1) (undo-tree-id203 . -1) (undo-tree-id204 . -1) (undo-tree-id205 . -1) (undo-tree-id206 . -1) (undo-tree-id207 . -1) (undo-tree-id208 . -1) (#("r" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56364) (undo-tree-id209 . -1) (undo-tree-id210 . -1) (undo-tree-id211 . -1) (undo-tree-id212 . -1) (undo-tree-id213 . -1) (undo-tree-id214 . -1) (undo-tree-id215 . -1) (#("t" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56365) (undo-tree-id216 . -1) (undo-tree-id217 . -1) (undo-tree-id218 . -1) (undo-tree-id219 . -1) (undo-tree-id220 . -1) (undo-tree-id221 . -1) (undo-tree-id222 . -1) (#("h" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56366) (undo-tree-id223 . -1) (undo-tree-id224 . -1) (undo-tree-id225 . -1) (undo-tree-id226 . -1) (undo-tree-id227 . -1) (undo-tree-id228 . -1) (undo-tree-id229 . -1) (#("i" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56367) (undo-tree-id230 . -1) (undo-tree-id231 . -1) (undo-tree-id232 . -1) (undo-tree-id233 . -1) (undo-tree-id234 . -1) (undo-tree-id235 . -1) (undo-tree-id236 . -1) (#("k" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56368) (undo-tree-id237 . -1) (undo-tree-id238 . -1) (undo-tree-id239 . -1) (undo-tree-id240 . -1) (undo-tree-id241 . -1) (undo-tree-id242 . -1) (undo-tree-id243 . -1) (#(" " 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56369) (undo-tree-id244 . -1) (undo-tree-id245 . -1) (undo-tree-id246 . -1) (undo-tree-id247 . -1) (undo-tree-id248 . -1) (undo-tree-id249 . -1) (undo-tree-id250 . -1) (#("C" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56370) (undo-tree-id251 . -1) (undo-tree-id252 . -1) (undo-tree-id253 . -1) (undo-tree-id254 . -1) (undo-tree-id255 . -1) (undo-tree-id256 . -1) (undo-tree-id257 . -1) (#("h" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56371) (undo-tree-id258 . -1) (undo-tree-id259 . -1) (undo-tree-id260 . -1) (undo-tree-id261 . -1) (undo-tree-id262 . -1) (undo-tree-id263 . -1) (undo-tree-id264 . -1) (#("i" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56372) (undo-tree-id265 . -1) (undo-tree-id266 . -1) (undo-tree-id267 . -1) (undo-tree-id268 . -1) (undo-tree-id269 . -1) (undo-tree-id270 . -1) (undo-tree-id271 . -1) (#("k" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56373) (undo-tree-id272 . -1) (undo-tree-id273 . -1) (undo-tree-id274 . -1) (undo-tree-id275 . -1) (undo-tree-id276 . -1) (undo-tree-id277 . -1) (undo-tree-id278 . -1) (#("m" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56374) (undo-tree-id279 . -1) (undo-tree-id280 . -1) (undo-tree-id281 . -1) (undo-tree-id282 . -1) (undo-tree-id283 . -1) (undo-tree-id284 . -1) (undo-tree-id285 . -1) (#("a" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56375) (undo-tree-id286 . -1) (undo-tree-id287 . -1) (undo-tree-id288 . -1) (undo-tree-id289 . -1) (undo-tree-id290 . -1) (undo-tree-id291 . -1) (undo-tree-id292 . -1) (#("g" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56376) (undo-tree-id293 . -1) (undo-tree-id294 . -1) (undo-tree-id295 . -1) (undo-tree-id296 . -1) (undo-tree-id297 . -1) (undo-tree-id298 . -1) (undo-tree-id299 . -1) (#("a" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56377) (undo-tree-id300 . -1) (undo-tree-id301 . -1) (undo-tree-id302 . -1) (undo-tree-id303 . -1) (undo-tree-id304 . -1) (undo-tree-id305 . -1) (undo-tree-id306 . -1) (#("l" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56378) (undo-tree-id307 . -1) (undo-tree-id308 . -1) (undo-tree-id309 . -1) (undo-tree-id310 . -1) (undo-tree-id311 . -1) (undo-tree-id312 . -1) (undo-tree-id313 . -1) (#("u" 0 1 (jinx--pending t face font-lock-comment-face fontified t)) . -56379) (undo-tree-id314 . -1) (undo-tree-id315 . -1) (undo-tree-id316 . -1) (undo-tree-id317 . -1) (undo-tree-id318 . -1) (undo-tree-id319 . -1) (undo-tree-id320 . -1) (#("r" 0 1 (face font-lock-comment-face fontified t)) . -56380) (undo-tree-id321 . -1) (undo-tree-id322 . -1) (undo-tree-id323 . -1) (undo-tree-id324 . -1) (undo-tree-id325 . -1) (undo-tree-id326 . -1) (undo-tree-id327 . -1) (#("
+" 0 1 (face font-lock-comment-face fontified t)) . -56381) (undo-tree-id328 . -1) (undo-tree-id329 . -1) (undo-tree-id330 . -1) (undo-tree-id331 . -1) (undo-tree-id332 . -1) (undo-tree-id333 . -1) (undo-tree-id334 . -1) (#("
+" 0 1 (fontified t)) . -56382) (undo-tree-id335 . -1) (undo-tree-id336 . -1) (undo-tree-id337 . -1) (undo-tree-id338 . -1) (undo-tree-id339 . -1) (undo-tree-id340 . -1) (undo-tree-id341 . -1) 56383) nil (26234 32541 647535 504000) 0 nil])
+([nil nil ((#("  " 0 2 (face font-lock-comment-face jinx--pending t fontified t)) . 56360) (undo-tree-id187 . -2) (undo-tree-id188 . -2) (undo-tree-id189 . -2) (undo-tree-id190 . -2) (undo-tree-id191 . -2) (undo-tree-id192 . -2) (undo-tree-id193 . -2) (undo-tree-id194 . -2) 56362) nil (26234 32541 647481 654000) 0 nil])
+([nil nil ((#(";" 0 1 (face font-lock-comment-delimiter-face jinx--pending t fontified t)) . -56339) (undo-tree-id19 . -1) (undo-tree-id20 . -1) (undo-tree-id21 . -1) (undo-tree-id22 . -1) (undo-tree-id23 . -1) (undo-tree-id24 . -1) (undo-tree-id25 . -1) (undo-tree-id26 . -1) (#(";" 0 1 (face font-lock-comment-delimiter-face jinx--pending t fontified t)) . -56340) (undo-tree-id27 . -1) (undo-tree-id28 . -1) (undo-tree-id29 . -1) (undo-tree-id30 . -1) (undo-tree-id31 . -1) (undo-tree-id32 . -1) (undo-tree-id33 . -1) (undo-tree-id34 . -1) (#(" " 0 1 (face font-lock-comment-delimiter-face jinx--pending t fontified t)) . -56341) (undo-tree-id35 . -1) (undo-tree-id36 . -1) (undo-tree-id37 . -1) (undo-tree-id38 . -1) (undo-tree-id39 . -1) (undo-tree-id40 . -1) (undo-tree-id41 . -1) (undo-tree-id42 . -1) (#("C" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56342) (undo-tree-id43 . -1) (undo-tree-id44 . -1) (undo-tree-id45 . -1) (undo-tree-id46 . -1) (undo-tree-id47 . -1) (undo-tree-id48 . -1) (undo-tree-id49 . -1) (undo-tree-id50 . -1) (#("o" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56343) (undo-tree-id51 . -1) (undo-tree-id52 . -1) (undo-tree-id53 . -1) (undo-tree-id54 . -1) (undo-tree-id55 . -1) (undo-tree-id56 . -1) (undo-tree-id57 . -1) (undo-tree-id58 . -1) (#("p" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56344) (undo-tree-id59 . -1) (undo-tree-id60 . -1) (undo-tree-id61 . -1) (undo-tree-id62 . -1) (undo-tree-id63 . -1) (undo-tree-id64 . -1) (undo-tree-id65 . -1) (undo-tree-id66 . -1) (#("y" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56345) (undo-tree-id67 . -1) (undo-tree-id68 . -1) (undo-tree-id69 . -1) (undo-tree-id70 . -1) (undo-tree-id71 . -1) (undo-tree-id72 . -1) (undo-tree-id73 . -1) (undo-tree-id74 . -1) (#("r" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56346) (undo-tree-id75 . -1) (undo-tree-id76 . -1) (undo-tree-id77 . -1) (undo-tree-id78 . -1) (undo-tree-id79 . -1) (undo-tree-id80 . -1) (undo-tree-id81 . -1) (undo-tree-id82 . -1) (#("i" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56347) (undo-tree-id83 . -1) (undo-tree-id84 . -1) (undo-tree-id85 . -1) (undo-tree-id86 . -1) (undo-tree-id87 . -1) (undo-tree-id88 . -1) (undo-tree-id89 . -1) (undo-tree-id90 . -1) (#("g" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56348) (undo-tree-id91 . -1) (undo-tree-id92 . -1) (undo-tree-id93 . -1) (undo-tree-id94 . -1) (undo-tree-id95 . -1) (undo-tree-id96 . -1) (undo-tree-id97 . -1) (undo-tree-id98 . -1) (#("h" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56349) (undo-tree-id99 . -1) (undo-tree-id100 . -1) (undo-tree-id101 . -1) (undo-tree-id102 . -1) (undo-tree-id103 . -1) (undo-tree-id104 . -1) (undo-tree-id105 . -1) (undo-tree-id106 . -1) (#("t" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56350) (undo-tree-id107 . -1) (undo-tree-id108 . -1) (undo-tree-id109 . -1) (undo-tree-id110 . -1) (undo-tree-id111 . -1) (undo-tree-id112 . -1) (undo-tree-id113 . -1) (undo-tree-id114 . -1) (#(" " 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56351) (undo-tree-id115 . -1) (undo-tree-id116 . -1) (undo-tree-id117 . -1) (undo-tree-id118 . -1) (undo-tree-id119 . -1) (undo-tree-id120 . -1) (undo-tree-id121 . -1) (undo-tree-id122 . -1) (#("(" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56352) (undo-tree-id123 . -1) (undo-tree-id124 . -1) (undo-tree-id125 . -1) (undo-tree-id126 . -1) (undo-tree-id127 . -1) (undo-tree-id128 . -1) (undo-tree-id129 . -1) (undo-tree-id130 . -1) (#("C" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56353) (undo-tree-id131 . -1) (undo-tree-id132 . -1) (undo-tree-id133 . -1) (undo-tree-id134 . -1) (undo-tree-id135 . -1) (undo-tree-id136 . -1) (undo-tree-id137 . -1) (undo-tree-id138 . -1) (#(")" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56354) (undo-tree-id139 . -1) (undo-tree-id140 . -1) (undo-tree-id141 . -1) (undo-tree-id142 . -1) (undo-tree-id143 . -1) (undo-tree-id144 . -1) (undo-tree-id145 . -1) (undo-tree-id146 . -1) (#(" " 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56355) (undo-tree-id147 . -1) (undo-tree-id148 . -1) (undo-tree-id149 . -1) (undo-tree-id150 . -1) (undo-tree-id151 . -1) (undo-tree-id152 . -1) (undo-tree-id153 . -1) (undo-tree-id154 . -1) (#("2" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56356) (undo-tree-id155 . -1) (undo-tree-id156 . -1) (undo-tree-id157 . -1) (undo-tree-id158 . -1) (undo-tree-id159 . -1) (undo-tree-id160 . -1) (undo-tree-id161 . -1) (undo-tree-id162 . -1) (#("0" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56357) (undo-tree-id163 . -1) (undo-tree-id164 . -1) (undo-tree-id165 . -1) (undo-tree-id166 . -1) (undo-tree-id167 . -1) (undo-tree-id168 . -1) (undo-tree-id169 . -1) (undo-tree-id170 . -1) (#("2" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56358) (undo-tree-id171 . -1) (undo-tree-id172 . -1) (undo-tree-id173 . -1) (undo-tree-id174 . -1) (undo-tree-id175 . -1) (undo-tree-id176 . -1) (undo-tree-id177 . -1) (undo-tree-id178 . -1) (#("2" 0 1 (face font-lock-comment-face jinx--pending t fontified t)) . -56359) (undo-tree-id179 . -1) (undo-tree-id180 . -1) (undo-tree-id181 . -1) (undo-tree-id182 . -1) (undo-tree-id183 . -1) (undo-tree-id184 . -1) (undo-tree-id185 . -1) (undo-tree-id186 . -1) 56360) nil (26234 32541 647470 200000) 0 nil])
+([nil nil ((#("	   " 0 4 (fontified t)) . 56335) (undo-tree-id10 . -4) (undo-tree-id11 . -4) (undo-tree-id12 . -4) (undo-tree-id13 . -4) (undo-tree-id14 . -4) (undo-tree-id15 . -4) (undo-tree-id16 . -4) (undo-tree-id17 . -4) (undo-tree-id18 . -4) 56339) nil (26234 32541 647337 498000) 0 nil])
+([nil current ((#("
+" 0 1 (fontified t)) . -56334) (undo-tree-id0 . -1) (undo-tree-id1 . -1) (undo-tree-id2 . -1) (undo-tree-id3 . -1) (undo-tree-id4 . -1) (undo-tree-id5 . -1) (undo-tree-id6 . -1) (undo-tree-id7 . -1) (undo-tree-id8 . -1) (undo-tree-id9 . -1) 56335) nil (26234 32541 647329 47000) 0 nil])
+nil
