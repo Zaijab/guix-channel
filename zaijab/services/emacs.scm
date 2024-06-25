@@ -798,7 +798,6 @@ If WINDOW is t, redisplay pages in all windows."
   (home-emacs-configuration
    (packages (list
 	      (specification->package "emacs-org-roam")
-	      ((options->transformation '((with-git-url . "https://code.tecosaur.net/tec/org-mode.git"))) (specification->package "emacs-org-roam"))
 	      emacs-org-roam-ui
 	      (specification->package "emacs-org-roam-bibtex")
 	      (specification->package "emacs-org-fc")
