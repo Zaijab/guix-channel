@@ -70,7 +70,7 @@
 	       (specification->package "xauth")
 	       (specification->package "make")
 	       (specification->package "gsettings-desktop-schemas")
-	       (specification->package "qemu")
+	       ;(specification->package "qemu")
 	       %base-packages))
     
     (host-name "tao")
