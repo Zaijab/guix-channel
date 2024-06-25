@@ -205,6 +205,7 @@
    (packages (list (specification->package "emacs-citar")
 		   (specification->package "emacs-citar-org-roam")))
    (init '((use-package citar
+			:bind-keymap ("C-c c" . citar-map)
 			:custom
 			(citar-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
 			(citar-notes-paths (list "/home/zjabbar/notes/")) ; List of directories for reference nodes
