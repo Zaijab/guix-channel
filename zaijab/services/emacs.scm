@@ -1105,7 +1105,6 @@ If WINDOW is t, redisplay pages in all windows."
 		   (specification->package "emacs-org-present")
 		   (specification->package "emacs-org-tree-slide")
 		   (specification->package "emacs-consult-org-roam")
-		   emacs-org-preview
 		   (specification->package "emacs-calfw")
 		   ((options->transformation
 		     '((with-branch . "emacs-calfw-blocks=master")))
@@ -1127,8 +1126,6 @@ If WINDOW is t, redisplay pages in all windows."
    (init '((require 'org)
 	   (require 'org-tree-slide)
 	   (setq org-tree-slide-cursor-init nil)
-	   (require 'org-preview)
-	   (org-preview-mode t)
 	   (require 'ox)
 	   (require 'calfw)
 	   (require 'calfw-org)
@@ -1229,7 +1226,7 @@ If WINDOW is t, redisplay pages in all windows."
 						:todo
 						:timestamp))
 	   
-	   (setq org-agenda-files '("/home/zjabbar/notes"))
+	   (setq org-agenda-files '("/home/zjabbar/notes/20211224040925-todo.org"))
 	   (setq cdlatex-math-modify-alist
 		 '((?a "\\mathbf" nil t nil nil)
 		   (?b "\\mathbb" nil t nil nil)
