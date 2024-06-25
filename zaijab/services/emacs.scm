@@ -1227,13 +1227,7 @@ If WINDOW is t, redisplay pages in all windows."
 						:todo
 						:timestamp))
 	   
-	   (setq org-agenda-files '(
-				    "/home/zjabbar/notes/20211224040925-todo.org"
-				    "/home/zjabbar/notes/20240111152239-krs_152_weight_training.org"
-				    "/home/zjabbar/notes/20240110135311-math_633_hangelbroek.org"
-				    "/home/zjabbar/notes/20240111151852-math_649d_younsi_holomorphic_dynamics.org"
-				    "/home/zjabbar/notes/20240105195957-math_699_gawlik.org"
-				    ))
+	   (setq org-agenda-files '("/home/zjabbar/notes"))
 	   (setq cdlatex-math-modify-alist
 		 '((?a "\\mathbf" nil t nil nil)
 		   (?b "\\mathbb" nil t nil nil)
