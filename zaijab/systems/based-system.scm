@@ -173,7 +173,9 @@
 		     (type "btrfs"))
 		   %base-file-systems))))
 
+(define-public my-operating-system
+  (let ((hostname (read-delimited "\n" (open-input-pipe "echo $HOSTNAME"))))
+    (cond ((string= hostname "tao") tao-operating-system)
+	  ((string= hostname "euler") euler-operating-system))))
 
-(let ((hostname (read-delimited "\n" (open-input-pipe "echo $HOSTNAME"))))
-  (cond ((string= hostname "tao") tao-operating-system)
-	((string= hostname "euler") euler-operating-system)))
+my-operating-system
