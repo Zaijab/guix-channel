@@ -12,6 +12,10 @@ gpull:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channels.tmpl --allow-downgrades
 	guix upgrade
 
+gpull_from_file:
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channels.tmpl --allow-downgrades
+	guix upgrade
+
 gsystem:
 	sudo guix system reconfigure -e '(@ (zaijab systems based-system) euler-operating-system)' --allow-downgrades --no-grafts
 
