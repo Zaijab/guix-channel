@@ -9,8 +9,7 @@ gnew:
 	git push -u github main
 
 gpull:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channels.tmpl --allow-downgrades
-	guix upgrade
+	guix pull --allow-downgrades
 
 gpull_from_file:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channels.tmpl --allow-downgrades
