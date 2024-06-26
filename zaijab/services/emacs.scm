@@ -205,6 +205,8 @@
    (packages (list (specification->package "emacs-citar")
 		   (specification->package "emacs-citar-org-roam")))
    (init '((use-package citar
+			:bind (:map citar-map
+			       ("a" . citar-add-file-to-library))
 			:bind-keymap ("C-c c" . citar-map)
 			:custom
 			(citar-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
@@ -825,24 +827,14 @@ If WINDOW is t, redisplay pages in all windows."
 			       org-roam-ui-update-on-save t
 			       org-roam-ui-open-on-start t))
 
-	   (use-package org-roam)
-	   (use-package org-roam-node
-			:after org-roam)
-
-	   (define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add))
-	   
-	   (setq org-roam-db-node-include-function
-		 (lambda ()
-		   (not (member "FC" (org-get-tags)))))
-	   (setq org-roam-node-display-template
-		 (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
+	   (use-package org-roam
+			:config
 
 	   (setq org-roam-directory "~/notes")
 	   (setq org-roam-v2-ack t)
 	   (org-roam-db-autosync-mode)
 	   (setq org-roam-capture-templates
-		 '(
-		   ("i" "Default" plain "%?"
+		 '(("i" "Default" plain "%?"
 		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS:")
 		    :unnarrowed t)
 		   ("p" "Python" plain "%?"
@@ -852,11 +844,26 @@ If WINDOW is t, redisplay pages in all windows."
                      (file+head
                       "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
                       "#+TITLE: ${note-title}\n")
-                     ;:immediate-finish t
                      :unnarrowed t)))
-	   
-	   (require 'org-fc)
 
+	   	   (setq org-roam-db-node-include-function
+		 (lambda ()
+		   (not (member "FC" (org-get-tags)))))
+	   (setq org-roam-node-display-template
+		 (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
+
+
+			)
+	   (use-package org-roam-node
+			:after org-roam)
+
+	   (define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add))
+	   
+
+	   
+	   
+	   (use-package org-fc
+			:config
 	   (add-hook 'org-fc-review-flip-mode-hook (function meow-motion-mode))
 	   (add-hook 'org-fc-after-review-hook (function meow-normal-mode))	   
 
@@ -867,6 +874,9 @@ If WINDOW is t, redisplay pages in all windows."
 		     (lambda ()
 		       (setq org-roam-buffer-prepare-hook nil)
 		       (setq my/org-roam-open-buffer-on-find-file nil)))
+
+
+			)
 
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
@@ -939,7 +949,6 @@ If WINDOW is t, redisplay pages in all windows."
 				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read))))
 				 (org-fc-type-cloze-init 'context)))
 
-	   ;; (global-set-key (kbd "s-i") (function simple-jisho->fc))
 	   ))))
 
 (define website-configuration
