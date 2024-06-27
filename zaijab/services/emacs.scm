@@ -1058,9 +1058,7 @@ If WINDOW is t, redisplay pages in all windows."
 			      "20220925155207-about.org"
 			      "20230225143306-posts.org"
 			      "20230225142818-notation.org"
-			      "20230225142533-category_theory.org"
-			      "20230523124504-applied_qualifying_exam.org"
-			      "20221213173629-statistics.org") 
+			      "20230225142533-category_theory.org") 
 		    :with-toc nil
 		    :exclude-tags ("draft")
 		    :html-head
