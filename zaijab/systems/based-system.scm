@@ -130,7 +130,6 @@
 			  (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080"))))))
 
 	       (modify-services %desktop-services
-		 (delete elogind-service-type)
 		 (delete pulseaudio-service-type)
 		 (delete gdm-service-type)
 		 (delete network-manager-service-type)

@@ -16,7 +16,7 @@ gpull_from_file:
 	guix upgrade
 
 gsystem:
-	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts -c 2
+	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts
 
 gshepherd_log:
 	sudo cat /var/log/messages
