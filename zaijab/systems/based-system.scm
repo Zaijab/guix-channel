@@ -70,7 +70,6 @@
 	       (specification->package "xauth")
 	       (specification->package "make")
 	       (specification->package "gsettings-desktop-schemas")
-	       ;(specification->package "qemu")
 	       %base-packages))
     
     (host-name "tao")
@@ -80,14 +79,9 @@
 		     (mount-point "/")
 		     (type "btrfs"))
 		   (file-system
-		     (device (uuid "1C35-540A" 'fat))
+		     (device (file-system-label "boot"))
 		     (mount-point "/boot/efi")
 		     (type "vfat"))
-		   (file-system
-		     (mount-point "/tmp")
-		     (device "none")
-		     (type "tmpfs")
-		     (check? #f))
 		   %base-file-systems))
     
     (users (cons (user-account
@@ -141,10 +135,6 @@
 		 (guix-service-type
 		  config => (guix-configuration
 			     (inherit config)
-			     ;; (channels (channel
-			     ;; 		(name 'zaijab)
-			     ;; 		(url "/home/zjabbar/code/guix-channel/")
-			     ;; 		(branch "main")))
 			     (substitute-urls
 			      (cons* "https://substitutes.nonguix.org"
 				     "https://guix.bordeaux.inria.fr"
@@ -152,24 +142,13 @@
 			     (authorized-keys
 			      (cons* (plain-file "nonguix.pub" "(public-key (ecc (curve Ed25519) (q #C1FD53E5D4CE971933EC50C9F307AE2171A2D3B52C804642A7A35F84F3A4EA98#)))")
 				     (plain-file "bordeaux.pub" "(public-key (ecc (curve Ed25519) (q #89FBA276A976A8DE2A69774771A92C8C879E0F24614AAAAE23119608707B3F06#)))")
-				     %default-authorized-guix-keys)))))
-	       ))))
+				     %default-authorized-guix-keys)))))))))
 
 
 (define-public euler-operating-system
   (operating-system
     (inherit tao-operating-system)    
-    (host-name "euler")
-    (file-systems (cons*
-		   (file-system
-		     (mount-point "/boot/efi")
-		     (device (file-system-label "boot"))
-		     (type "vfat"))
-		   (file-system
-		     (mount-point "/")
-		     (device (file-system-label "root"))
-		     (type "btrfs"))
-		   %base-file-systems))))
+    (host-name "euler")))
 
 (define-public my-operating-system
   (let ((hostname (read-delimited "\n" (open-input-pipe "echo $HOSTNAME"))))
