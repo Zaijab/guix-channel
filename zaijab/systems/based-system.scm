@@ -164,13 +164,11 @@
     (file-systems (cons*
 		   (file-system
 		     (mount-point "/boot/efi")
-		     (device (uuid "00E0-82FE" 'fat32))
+		     (device (file-system-label "boot"))
 		     (type "vfat"))
 		   (file-system
 		     (mount-point "/")
-		     (device
-		      (uuid "c9e4a837-e67e-4a5e-8e53-54421e676f4b"
-			    'btrfs))
+		     (device (file-system-label "root"))
 		     (type "btrfs"))
 		   %base-file-systems))))
 

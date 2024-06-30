@@ -806,6 +806,7 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "emacs-kanji")))
    (init '(
 	   (use-package org-roam-bibtex
+			:after org-roam
 			:config
 			(org-roam-bibtex-mode)
 			(setq bibtex-completion-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib")))
@@ -815,10 +816,7 @@ If WINDOW is t, redisplay pages in all windows."
 			:after org-roam)
 	   
 	   (use-package org-roam-ui
-			 :after org-roam ;; or :after org
-			 ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-			 ;;         a hookable mode anymore, you're advised to pick something yourself
-			 ;;         if you don't care about startup time, use
+			 :after org-roam
 			 :hook (after-init . org-roam-ui-mode)
 			 :config
 			 (setq org-roam-ui-sync-theme t
@@ -828,11 +826,11 @@ If WINDOW is t, redisplay pages in all windows."
 
 	   (use-package org-roam
 			:config
-
-	   (setq org-roam-directory "~/notes")
-	   (setq org-roam-v2-ack t)
-	   (org-roam-db-autosync-mode)
-	   (setq org-roam-capture-templates
+			
+			(setq org-roam-directory "~/notes")
+			(setq org-roam-v2-ack t)
+			(org-roam-db-autosync-mode)
+			(setq org-roam-capture-templates
 		 '(("i" "Default" plain "%?"
 		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS:")
 		    :unnarrowed t)
@@ -842,10 +840,10 @@ If WINDOW is t, redisplay pages in all windows."
 		   ("r" "reference" plain "%?" :if-new
                      (file+head
                       "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
-                      "#+TITLE: ${note-title}\n")
+                      "#+TITLE: ${note-title}\n#+FILETAGS: :Reference:\n")
                      :unnarrowed t)))
 
-	   	   (setq org-roam-db-node-include-function
+	   (setq org-roam-db-node-include-function
 		 (lambda ()
 		   (not (member "FC" (org-get-tags)))))
 	   (setq org-roam-node-display-template
@@ -1467,6 +1465,8 @@ If WINDOW is t, redisplay pages in all windows."
 		   (require 'blight)
 		   (setq my/blight (blight-sysfs))
 		   (blight-sysfs :min 0)
+		   (global-set-key (kbd "<XF86MonBrightnessDown>") (blight-step my/blight -10))
+		   (global-set-key (kbd "<XF86MonBrightnessUp>") (blight-step my/blight 10))
 		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
 		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
 
@@ -1591,7 +1591,9 @@ If WINDOW is t, redisplay pages in all windows."
 							     XF86AudioNext
 							     XF86AudioPlay
 							     XF86AudioPrev
-							     XF86AudioMute)))
+							     XF86AudioMute
+							     XF86MonBrightnessDown
+							     XF86MonBrightnessUp)))
 	   (define-key exwm-mode-map (kbd "C-c") nil)
 	   
 	   (defun exwm-input-line-mode ()
