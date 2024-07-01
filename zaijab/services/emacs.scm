@@ -415,9 +415,12 @@
    (packages (list (specification->package "icecat")
 		   (specification->package "ublock-origin-icecat")
 		   (specification->package "passff-icecat")
+		   (specification->package "emacs-atomic-chrome")
 		   ))
    (init '(#;(use-package exwm-firefox
-			:config (exwm-firefox-mode))))))
+	   :config (exwm-firefox-mode))
+	   (use-package atomic-chrome
+			:config (atomic-chrome-start-server))))))
 
 (define pdf-tools-configuration
   (home-emacs-configuration
