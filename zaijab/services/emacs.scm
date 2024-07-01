@@ -1594,7 +1594,7 @@ If WINDOW is t, redisplay pages in all windows."
 							     XF86AudioMute
 							     XF86MonBrightnessDown
 							     XF86MonBrightnessUp)))
-	   (define-key exwm-mode-map (kbd "C-c") nil)
+	   ;(define-key exwm-mode-map (kbd "C-c") nil)
 	   
 	   (defun exwm-input-line-mode ()
 	     "Set exwm window to line-mode and show mode line"
