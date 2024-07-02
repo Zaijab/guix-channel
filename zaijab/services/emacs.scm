@@ -843,7 +843,7 @@ If WINDOW is t, redisplay pages in all windows."
 		   ("r" "reference" plain "%?" :if-new
                      (file+head
                       "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
-                      "#+TITLE: ${note-title}\n#+FILETAGS: :Reference:\n")
+                      "#+TITLE: ${note-title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Reference:\n")
                      :unnarrowed t)))
 
 	   (setq org-roam-db-node-include-function
@@ -863,14 +863,15 @@ If WINDOW is t, redisplay pages in all windows."
 	   
 	   
 	   (use-package org-fc
-			:config
-	   (add-hook 'org-fc-review-flip-mode-hook (function meow-motion-mode))
-	   (add-hook 'org-fc-after-review-hook (function meow-normal-mode))	   
-
-	   (setq org-fc-directories '("~/notes/")
-		 org-fc-flashcard-tag "FC"
-		 org-fc-suspended-tag "Suspended")
-	   (add-hook 'org-fc-before-review-hook
+			
+			:hook
+			(org-fc-review-flip-mode meow-motion-mode)
+			(org-fc-after-review meow-normal-mode)	   
+			:custom
+			(org-fc-directories '("~/notes/"))
+			(org-fc-flashcard-tag "FC")
+			(org-fc-suspended-tag "Suspended")
+	   #;(add-hook 'org-fc-before-review-hook
 		     (lambda ()
 		       (setq org-roam-buffer-prepare-hook nil)
 		       (setq my/org-roam-open-buffer-on-find-file nil)))
@@ -893,12 +894,6 @@ If WINDOW is t, redisplay pages in all windows."
 	     (if (car word)
 		 (simple-kanji-word->drill word)
 		 (kana-word->drill (cdr word))))
-
-	   (defun my-presorted-completion-table (completions)
-	     (lambda (string pred action)
-	       (if (eq action 'metadata)
-		   `(metadata (display-sort-function . ,(function identity)))
-		   (complete-with-action action completions string pred))))
 
 	   (defvar *jisho-results* ())
 
