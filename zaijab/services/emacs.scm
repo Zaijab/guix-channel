@@ -807,7 +807,34 @@ If WINDOW is t, redisplay pages in all windows."
 	      (specification->package "emacs-org-fc")
 	      (specification->package "emacs-org-drill")
 	      (specification->package "emacs-kanji")))
-   (init '(
+   (init '((use-package org)
+
+	   (use-package org-roam
+			:after org
+			:custom
+			(org-roam-directory "~/notes")
+			(org-roam-v2-ack t)
+			(org-roam-capture-templates
+			      '(("i" "Default" plain "%?"
+				 :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS:")
+				 :unnarrowed t)
+				("p" "Python" plain "%?"
+				 :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Programming:Python:\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
+				 :unnarrowed t)
+				("r" "reference" plain "%?" :if-new
+				 (file+head
+				  "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
+				  "#+TITLE: ${note-title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Reference:\n")
+				 :unnarrowed t)))
+			(org-roam-db-node-include-function (lambda () (not (member "FC" (org-get-tags)))))
+			(org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
+			:config
+			(org-roam-db-autosync-mode)
+			(define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add)))
+	   
+	   (use-package org-roam-node
+			:after org-roam)
+
 	   (use-package org-roam-bibtex
 			:after org-roam
 			:config
@@ -821,43 +848,12 @@ If WINDOW is t, redisplay pages in all windows."
 	   (use-package org-roam-ui
 			 :after org-roam
 			 :hook (after-init . org-roam-ui-mode)
-			 :config
-			 (setq org-roam-ui-sync-theme t
-			       org-roam-ui-follow t
-			       org-roam-ui-update-on-save t
-			       org-roam-ui-open-on-start t))
-
-	   (use-package org-roam
-			:config
-			
-			(setq org-roam-directory "~/notes")
-			(setq org-roam-v2-ack t)
-			(org-roam-db-autosync-mode)
-			(setq org-roam-capture-templates
-		 '(("i" "Default" plain "%?"
-		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS:")
-		    :unnarrowed t)
-		   ("p" "Python" plain "%?"
-		    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Programming:Python:\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
-		    :unnarrowed t)
-		   ("r" "reference" plain "%?" :if-new
-                     (file+head
-                      "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
-                      "#+TITLE: ${note-title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Reference:\n")
-                     :unnarrowed t)))
-
-	   (setq org-roam-db-node-include-function
-		 (lambda ()
-		   (not (member "FC" (org-get-tags)))))
-	   (setq org-roam-node-display-template
-		 (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
-
-
-			)
-	   (use-package org-roam-node
-			:after org-roam)
-
-	   (define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add))
+			 :custom
+			 (org-roam-ui-sync-theme t)
+			 (org-roam-ui-follow t)
+			 (org-roam-ui-update-on-save t)
+			 (org-roam-ui-open-on-start t))
+	   
 	   
 
 	   
@@ -925,16 +921,17 @@ If WINDOW is t, redisplay pages in all windows."
 
 	   (defun jisho->fc ()
 	     (interactive)
-	     (org-roam-with-file "~/notes/20211210212624-japanese.org" t
+	     (org-roam-with-file "/home/zjabbar/notes/20240702021713-japanese_vocabulary.org" t
 				 (end-of-buffer)
-				 (insert (concat "* " (word->drill (jisho-search->completing-read))))
-				 (org-fc-type-cloze-init 'context)))
+				 (insert (concat "* " (word->drill (jisho-search->completing-read)) "\n"))
+				 (org-fc-type-cloze-init 'deletion)))
+	   
 	   (defun simple-jisho->fc ()
 	     (interactive)
-	     (org-roam-with-file "~/notes/20211210212624-japanese.org" t
+	     (org-roam-with-file "/home/zjabbar/notes/20240702021713-japanese_vocabulary.org" t
 				 (end-of-buffer)
-				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read))))
-				 (org-fc-type-cloze-init 'context)))
+				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read)) "\n"))
+				 (org-fc-type-cloze-init 'deletion)))
 
 	   ))))
 
