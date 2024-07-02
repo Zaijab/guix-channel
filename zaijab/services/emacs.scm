@@ -232,29 +232,29 @@
 
 
 (define buffer-configuration
-(home-emacs-configuration
- (packages (list emacs-tabspaces))
- (init '((use-package tabspaces
-		      :hook (after-init . tabspaces-mode) 
-		      :commands (tabspaces-switch-or-create-workspace
-				 tabspaces-open-or-create-project-and-workspace)
-		      :custom
-		      (tabspaces-use-filtered-buffers-as-default t)
-		      (tabspaces-default-tab "Default")
-		      (tabspaces-remove-to-default t)
-		      (tabspaces-include-buffers '("*scratch*"))
-		      (tab-bar-new-tab-choice "*scratch*")
-		      ;; sessions
-		      (tabspaces-session t)
-		      (tabspaces-session-auto-restore t))))
- (early-init '((setq desktop-restore-frames nil
-		     desktop-restore-in-current-display nil)
-	       (setq switch-to-buffer-obey-display-actions t)
-	       (defun mp-toggle-window-dedication ()
-		 "Toggles window dedication in the selected window."
-		 (interactive)
-		 (set-window-dedicated-p (selected-window)
-					 (not (window-dedicated-p (selected-window)))))))))
+  (home-emacs-configuration
+   (packages (list emacs-tabspaces))
+   (init '((use-package tabspaces
+			:hook (after-init . tabspaces-mode) 
+			:commands (tabspaces-switch-or-create-workspace
+				   tabspaces-open-or-create-project-and-workspace)
+			:custom
+			(tabspaces-use-filtered-buffers-as-default t)
+			(tabspaces-default-tab "Default")
+			(tabspaces-remove-to-default t)
+			(tabspaces-include-buffers '("*scratch*"))
+			(tab-bar-new-tab-choice "*scratch*")
+			;; sessions
+			(tabspaces-session t)
+			(tabspaces-session-auto-restore t))))
+   (early-init '((setq desktop-restore-frames nil
+		       desktop-restore-in-current-display nil)
+		 (setq switch-to-buffer-obey-display-actions t)
+		 (defun mp-toggle-window-dedication ()
+		   "Toggles window dedication in the selected window."
+		   (interactive)
+		   (set-window-dedicated-p (selected-window)
+					   (not (window-dedicated-p (selected-window)))))))))
 
 (define meow-configuration
   (home-emacs-configuration
@@ -386,14 +386,14 @@
 (define language-configuration
   (home-emacs-configuration
    (packages (list (specification->package "emacs-ddskk")
-		   ;(specification->package "font-fira-code")
-		   ;(specification->package "font-google-noto")
-		   ;(specification->package "font-google-noto-sans-cjk")
-		   ;(specification->package "font-lohit")
-		   ;(specification->package "font-vazir")
+					;(specification->package "font-fira-code")
+					;(specification->package "font-google-noto")
+					;(specification->package "font-google-noto-sans-cjk")
+					;(specification->package "font-lohit")
+					;(specification->package "font-vazir")
 		   (specification->package "font-ipa-mj-mincho")
 		   (specification->package "font-iosevka")
-		   ;(specification->package "font-iosevka-ss09")
+					;(specification->package "font-iosevka-ss09")
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)
 	   (advice-add
@@ -428,27 +428,27 @@
 		   (specification->package "emacs-nov-el")))
    (init '((pdf-tools-install)
 	   (defvar *current-mode* 'light)
-(defun pdf-view-redisplay (&optional window)
-  "Redisplay page in WINDOW.
+	   (defun pdf-view-redisplay (&optional window)
+	     "Redisplay page in WINDOW.
 
 If WINDOW is t, redisplay pages in all windows."
-  (setq window nil)
-  (unless pdf-view-inhibit-redisplay
-    (if (not (eq t window))
-        (pdf-view-display-page
-         (pdf-view-current-page window)
-         window)
-      (dolist (win (get-buffer-window-list nil nil t))
-        (pdf-view-display-page
-         (pdf-view-current-page win)
-         win))
-      (when (consp image-mode-winprops-alist)
-        (dolist (window (mapcar (function car image-mode-winprops-alist)))
-          (unless (or (not (window-live-p window))
-                      (eq (current-buffer)
-                          (window-buffer window)))
-            (setf (pdf-view-window-needs-redisplay window) t)))))
-    (force-mode-line-update)))
+	     (setq window nil)
+	     (unless pdf-view-inhibit-redisplay
+	       (if (not (eq t window))
+		   (pdf-view-display-page
+		    (pdf-view-current-page window)
+		    window)
+		   (dolist (win (get-buffer-window-list nil nil t))
+			   (pdf-view-display-page
+			    (pdf-view-current-page win)
+			    win))
+		   (when (consp image-mode-winprops-alist)
+		     (dolist (window (mapcar (function car image-mode-winprops-alist)))
+			     (unless (or (not (window-live-p window))
+					 (eq (current-buffer)
+					     (window-buffer window)))
+			       (setf (pdf-view-window-needs-redisplay window) t)))))
+	       (force-mode-line-update)))
 	   (defun my/dark-mode ()
 	     (interactive)
 	     (cond ((eq *current-mode* 'light)
@@ -815,17 +815,17 @@ If WINDOW is t, redisplay pages in all windows."
 			(org-roam-directory "~/notes")
 			(org-roam-v2-ack t)
 			(org-roam-capture-templates
-			      '(("i" "Default" plain "%?"
-				 :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS:")
-				 :unnarrowed t)
-				("p" "Python" plain "%?"
-				 :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Programming:Python:\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
-				 :unnarrowed t)
-				("r" "reference" plain "%?" :if-new
-				 (file+head
-				  "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
-				  "#+TITLE: ${note-title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Reference:\n")
-				 :unnarrowed t)))
+			 '(("i" "Default" plain "%?"
+			    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS:")
+			    :unnarrowed t)
+			   ("p" "Python" plain "%?"
+			    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Programming:Python:\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
+			    :unnarrowed t)
+			   ("r" "reference" plain "%?" :if-new
+			    (file+head
+			     "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
+			     "#+TITLE: ${note-title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Reference:\n")
+			    :unnarrowed t)))
 			(org-roam-db-node-include-function (lambda () (not (member "FC" (org-get-tags)))))
 			(org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 			:config
@@ -846,13 +846,13 @@ If WINDOW is t, redisplay pages in all windows."
 			:after org-roam)
 	   
 	   (use-package org-roam-ui
-			 :after org-roam
-			 :hook (after-init . org-roam-ui-mode)
-			 :custom
-			 (org-roam-ui-sync-theme t)
-			 (org-roam-ui-follow t)
-			 (org-roam-ui-update-on-save t)
-			 (org-roam-ui-open-on-start t))
+			:after org-roam
+			:hook (after-init . org-roam-ui-mode)
+			:custom
+			(org-roam-ui-sync-theme t)
+			(org-roam-ui-follow t)
+			(org-roam-ui-update-on-save t)
+			(org-roam-ui-open-on-start t))
 	   
 	   
 
@@ -865,7 +865,37 @@ If WINDOW is t, redisplay pages in all windows."
 			(org-fc-suspended-tag "Suspended")
 			:config
 			(add-hook 'org-fc-review-flip-mode-hook (function meow-motion-mode))
-			(add-hook 'org-fc-after-review-hook (function meow-normal-mode)))
+			(add-hook 'org-fc-after-review-hook (function meow-normal-mode))
+			(defun org-fc-review-cram (context)
+			  "Start a review session for all cards in CONTEXT.
+Called interactively, prompt for the context.
+Valid contexts:
+- 'all, all cards in `org-fc-directories'
+- 'buffer, all cards in the current buffer
+- a list of paths"
+			  (interactive (list (org-fc-select-context)))
+			  (if org-fc-review--session
+			      (when (yes-or-no-p "Flashcards are already being reviewed. Resume? ")
+				(org-fc-review-resume))
+			      (let* ((index (org-fc-index context))
+				     (cards (identity index))
+				     (order
+				      (or
+				       (plist-get context :order)
+				       (if org-fc-shuffle-positions 'shuffled 'ordered)))
+				     (scheduler
+				      (cl-case order
+					       (ordered (org-fc-scheduler))
+					       (shuffled (org-fc-scheduler-shuffled))
+					       (t (error "Unknown review order %s" order)))))
+				(if (null cards)
+				    (message "No cards due right now")
+				    (progn
+				     (org-fc-scheduler-init scheduler cards)
+				     (setq org-fc-review--session
+					   (org-fc-make-review-session scheduler))
+				     (run-hooks 'org-fc-before-review-hook)
+				     (org-fc-review-next-card)))))))
 	   
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
@@ -1127,7 +1157,7 @@ If WINDOW is t, redisplay pages in all windows."
 	   
 	   ;; (setq ispell-program-name (executable-find "hunspell")
 	   ;; 	 ispell-dictionary   "en_US")
-	   ;(setq ispell-alternate-dictionary "/home/zjabbar/.guix-home/profile/share/hunspell/en_US.dic")
+					;(setq ispell-alternate-dictionary "/home/zjabbar/.guix-home/profile/share/hunspell/en_US.dic")
 
 	   (setq org-structure-template-alist
 		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
@@ -1204,7 +1234,7 @@ If WINDOW is t, redisplay pages in all windows."
 
 
 	   (custom-set-variables '(org-modern-table t))
-	   ;(add-hook 'org-mode-hook (function valign-mode))
+					;(add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
 	   (add-hook 'org-mode-hook (function org-toggle-pretty-entities))
 	   (add-hook 'org-mode-hook (function org-cdlatex-mode))
@@ -1426,7 +1456,7 @@ If WINDOW is t, redisplay pages in all windows."
 		 (progn
 		  (arei-server-start)
 		  )
-	       ))
+		 ))
 
 	   (add-hook 'scheme-mode-hook (function auto-start-arei))
 	   (add-hook 'scheme-mode-hook (function arei-mode))
@@ -1581,7 +1611,7 @@ If WINDOW is t, redisplay pages in all windows."
 							     XF86AudioMute
 							     XF86MonBrightnessDown
 							     XF86MonBrightnessUp)))
-	   ;(define-key exwm-mode-map (kbd "C-c") nil)
+					;(define-key exwm-mode-map (kbd "C-c") nil)
 	   
 	   (defun exwm-input-line-mode ()
 	     "Set exwm window to line-mode and show mode line"
@@ -1650,7 +1680,7 @@ If WINDOW is t, redisplay pages in all windows."
 		       max-mini-window-height 10
 	    	       initial-scratch-message nil
 	    	       large-file-warning-threshold 100000000)
-	   
+		 
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
 		 (defcustom password-colon-equivalents
