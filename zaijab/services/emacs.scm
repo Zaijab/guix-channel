@@ -863,22 +863,14 @@ If WINDOW is t, redisplay pages in all windows."
 	   
 	   
 	   (use-package org-fc
-			
-			:hook
-			(org-fc-review-flip-mode meow-motion-mode)
-			(org-fc-after-review meow-normal-mode)	   
 			:custom
 			(org-fc-directories '("~/notes/"))
 			(org-fc-flashcard-tag "FC")
 			(org-fc-suspended-tag "Suspended")
-	   #;(add-hook 'org-fc-before-review-hook
-		     (lambda ()
-		       (setq org-roam-buffer-prepare-hook nil)
-		       (setq my/org-roam-open-buffer-on-find-file nil)))
-
-
-			)
-
+			:config
+			(add-hook 'org-fc-review-flip-mode-hook (function meow-motion-mode))
+			(add-hook 'org-fc-after-review-hook (function meow-normal-mode)))
+	   
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
 		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))
