@@ -1,4 +1,4 @@
-all: gnew gpull gsystem
+all: gnew gpull_from_file gsystem
 
 gc:
 	guix gc -d 1m

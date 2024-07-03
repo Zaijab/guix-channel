@@ -830,7 +830,7 @@ If WINDOW is t, redisplay pages in all windows."
 			    (file+head
 			     "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
 			     "#+TITLE: ${note-title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Reference:\n")
-			    :unnarrowed t)))
+			    :unnarrowed t :immediate-finish t)))
 			(org-roam-db-node-include-function (lambda () (not (member "FC" (org-get-tags)))))
 			(org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 			:config
