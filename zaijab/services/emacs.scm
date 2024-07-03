@@ -1523,6 +1523,7 @@ Valid contexts:
 
 	   (global-set-key (kbd "<f8>") 'toggle-exwm-input-line-mode-passthrough)
 	   (define-key exwm-mode-map (kbd "M-<escape>") (function toggle-exwm-input-line-mode-passthrough))
+	   (define-key exwm-mode-map (kbd "C-c C-c") (function exwm-input-send-next-key))
 	   
 	   (global-set-key (kbd "s-0") 'delete-window)
 	   (global-set-key (kbd "s-1") 'delete-other-windows)
