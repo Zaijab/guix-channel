@@ -225,6 +225,11 @@
 			(org-cite-follow-processor 'citar)
 			(org-cite-activate-processor 'citar))
 
+	   (use-package citar-embark
+			:after citar embark
+			:no-require
+			:config (citar-embark-mode))
+
 	   (use-package citar-org-roam
 			:after (citar citar-org org-roam org-roam-bibtex)
 			:custom (citar-org-roam-capture-template-key "r")
