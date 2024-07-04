@@ -1431,6 +1431,7 @@ Valid contexts:
 	      (specification->package "python-scipy")
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")
+	      python-tensorflow
 	      ))
    (init '((require 'jupyter)
 	   (setq org-babel-python-command "python3"
