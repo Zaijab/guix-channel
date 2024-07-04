@@ -157,12 +157,12 @@
                  %base-user-accounts))
 
     (services (cons*
+	       (service connman-service-type)
 	       (service wpa-supplicant-service-type)
 	       (service openssh-service-type)
 	       ;; (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       ;(service guix-home-service-type `(("zjabbar" ,zains-home)))
-	       (service connman-service-type)
-	       (service tlp-service-type)
+	       ;; (service tlp-service-type)
 
 	       (modify-services %base-services
 		 (mingetty-service-type

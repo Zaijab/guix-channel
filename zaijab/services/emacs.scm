@@ -889,10 +889,6 @@ If WINDOW is t, redisplay pages in all windows."
 			(org-roam-ui-update-on-save t)
 			(org-roam-ui-open-on-start nil))
 	   
-	   
-
-	   
-	   
 	   (use-package org-fc
 			:custom
 			(org-fc-directories '("~/notes/"))
