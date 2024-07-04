@@ -20,6 +20,7 @@
   #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages fonts)
+  #:use-module (guix-science packages python)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
