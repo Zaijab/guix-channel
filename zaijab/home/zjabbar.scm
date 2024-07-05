@@ -25,7 +25,6 @@
                    (specification->package "xset")
                    (specification->package "xinit")
                    (specification->package "xorg-server")
-                   (specification->package "xauth")
                    (specification->package "xf86-input-libinput")
                    (specification->package "xf86-video-fbdev")
                    (specification->package "xf86-video-nouveau")))
