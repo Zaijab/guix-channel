@@ -425,11 +425,12 @@
 					;(specification->package "font-fira-code")
 					;(specification->package "font-google-noto")
 					;(specification->package "font-google-noto-sans-cjk")
-					;(specification->package "font-lohit")
-					;(specification->package "font-vazir")
+		   (specification->package "font-lohit")
+		   (specification->package "font-vazir")
 		   (specification->package "font-ipa-mj-mincho")
 		   (specification->package "font-iosevka")
-					;(specification->package "font-iosevka-ss09")
+		   (specification->package "jbr")
+		   
 		   font-microsoft-couirer-new))
    (init '((require 'facemenu)
 	   (advice-add
@@ -1401,9 +1402,7 @@ Valid contexts:
 	    '("dvisvgm %f --no-fonts --exact-bbox -n -b min -c %S -o %O"))
 
 	   (setf (alist-get :title org-export-options-alist) '("TITLE" nil "Maybe, में भि میں بھی, 明媚." t))
-	   (setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex)))
-	   ))))
-
+	   (setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex)))))))
 
 (define python-configuration
   (home-emacs-configuration
@@ -1425,15 +1424,12 @@ Valid contexts:
 
 	      (specification->package "pandoc")
 	      
-	      (specification->package "python-numpy")
-	      
+	      (specification->package "python-numpy")	      
 	      (specification->package "python-pandas")
 	      (specification->package "python-matplotlib")
 	      (specification->package "python-scipy")
 	      (specification->package "python-sympy")
-	      (specification->package "python-scikit-learn")
-	      python-tensorflow
-	      ))
+	      (specification->package "python-scikit-learn")))
    (init '((require 'jupyter)
 	   (setq org-babel-python-command "python3"
 		 python-interpreter "python3"
@@ -1450,10 +1446,7 @@ Valid contexts:
 								    (eshell . t)
 								    (shell . t)
 								    (jupyter . t)))
-	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
-	   )
-	 )
-   (early-init '())))
+	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))))))
 
 (define lisp-configuration
   (home-emacs-configuration
@@ -1465,8 +1458,7 @@ Valid contexts:
 	      (specification->package "emacs-srfi")
 	      (specification->package "emacs-arei")
 	      (specification->package "guile-ares-rs")
-	      (specification->package "guile-next")
-	      ))
+	      (specification->package "guile-next")))
    (init '((with-eval-after-load 'guix-repl
 				 (setq guix-guile-program  '("guix" "repl")
 				       guix-config-scheme-compiled-directory  nil
@@ -1486,10 +1478,7 @@ Valid contexts:
 
 	   (defun auto-start-arei ()
 	     (if (string= "" (shell-command-to-string "sudo ss -tulpn | grep LISTEN.*7888"))
-		 (progn
-		  (arei-server-start)
-		  )
-		 ))
+		 (progn (arei-server-start))))
 
 	   (add-hook 'scheme-mode-hook (function auto-start-arei))
 	   (add-hook 'scheme-mode-hook (function arei-mode))
