@@ -45,6 +45,7 @@
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
                   ("TF_CPP_MIN_LOG_LEVEL" . "3")
                   ("DISABLE_RTKIT" . "1")
+                  ("LD_LIBRARY_PATH" . "/run/current-system/profile/lib/")
                   ("GUILE_LOAD_PATH" . "$GUILE_LOAD_PATH:/home/zjabbar/.config/guix/current/share/guile/site/3.0/:/home/zjabbar/.guix-profile/share/guile/site/3.0/:/home/zjabbar/.guix-home/profile/share/guile/site/3.0/:/home/zjabbar/code/guix-channel/")))
                (bash-profile
                 (list
