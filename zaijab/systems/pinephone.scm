@@ -127,9 +127,7 @@
 
     (initrd-modules '())
 
-    (firmware (append
-               (list pinephone-pro-firmware)
-               %base-firmware))
+    (firmware (append (list pinephone-pro-firmware) %base-firmware))
     
     (host-name "pinephonepro")
     (timezone "Pacific/Honolulu")
