@@ -1562,7 +1562,11 @@ Valid contexts:
 						 "icecat --private-window http://localhost:8080"
 						 nil
 						 "icecat --private-window http://localhost:8080"))))
-	   
+	   (global-set-key (kbd "s-v") (function
+					(lambda () (interactive)
+					(start-process-shell-command "Kanji Dojo"
+								     nil
+								     "guix shell jbr@17 coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/dwn/kanji-linux-x64-2.0.7.jar"))))
 	   (global-set-key (kbd "s-r") (function eshell))
 	   (global-set-key (kbd "s-t") (function eval-region))
 	   (global-set-key (kbd "s-K") 'windsize-up)
