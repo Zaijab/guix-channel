@@ -121,13 +121,11 @@
 
 (define-public pinephone-pro-os
   (operating-system
-    (kernel linux-pinephone-pro)
-    (kernel-arguments (append (list "console=ttyS2,115200" "earlycon=uart8250,mmio32,0xff1a0000" "earlyprintk")
-			      (drop-right %default-kernel-arguments 1)))
-
-    (initrd-modules '())
-
-    (firmware (append (list pinephone-pro-firmware) %base-firmware))
+    ;; (kernel linux-pinephone-pro)
+    ;; (kernel-arguments (append (list "console=ttyS2,115200" "earlycon=uart8250,mmio32,0xff1a0000" "earlyprintk")
+    ;; 			      (drop-right %default-kernel-arguments 1)))
+    ;; (initrd-modules '())
+    ;; (firmware (append (list pinephone-pro-firmware) %base-firmware))
     
     (host-name "pinephonepro")
     (timezone "Pacific/Honolulu")
@@ -148,18 +146,21 @@
 
     (users (cons (user-account
                   (name "zjabbar")
-                  (password (crypt "fish" "$6$abc"))
                   (group "users")
                   (supplementary-groups '("wheel" "audio" "video"))
                   (home-directory "/home/zjabbar"))
                  %base-user-accounts))
 
+    (packages (cons* plasma
+		     plasma-mobile
+		     %base-packages))
+
     (services (cons*
 	       (service connman-service-type)
 	       (service wpa-supplicant-service-type)
 	       (service openssh-service-type)
+	       ;; (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       ;; (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
-	       ;(service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       ;; (service tlp-service-type)
 
 	       (modify-services %base-services
