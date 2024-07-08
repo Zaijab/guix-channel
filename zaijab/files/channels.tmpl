@@ -3,16 +3,11 @@
   #:use-module (guix ci)
   #:use-module (guix channels))
 
-(define filename "channel_lock.tmpl")
-(define in (open-input-file filename))
-(define raw-data (read in))
-(close-input-port in)
-raw-data
-
-(+ 1 2)
-
-(read (open-input-file "channel_lock.tmpl"))
-
+;; (define filename "channel_lock.tmpl")
+;; (define in (open-input-file filename))
+;; (define raw-data (read in))
+;; (close-input-port in)
+;; raw-data
 
 (define-public my-channels
   (list (channel
