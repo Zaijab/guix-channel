@@ -151,9 +151,9 @@
                   (home-directory "/home/zjabbar"))
                  %base-user-accounts))
 
-    (packages (cons* plasma
-		     plasma-mobile
-		     %base-packages))
+    ;; (packages (cons* plasma
+    ;; 		     plasma-mobile
+    ;; 		     %base-packages))
 
     (services (cons*
 	       (service connman-service-type)
