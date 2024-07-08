@@ -1262,7 +1262,7 @@ Valid contexts:
 	     "Regexp of LaTeX math environments.")
 
 
-	   (custom-set-variables '(org-modern-table t))
+	   (custom-set-variables '(org-modern-table nil))
 					;(add-hook 'org-mode-hook (function valign-mode))
 	   (add-hook 'org-mode-hook (function visual-line-mode))
 	   (add-hook 'org-mode-hook (function org-toggle-pretty-entities))
@@ -1455,7 +1455,7 @@ Valid contexts:
 	      (specification->package "emacs-arei")
 	      (specification->package "guile-ares-rs")
 	      (specification->package "guile-next")))
-   (init '((with-eval-after-load 'guix-repl
+   (init '(#;(with-eval-after-load 'guix-repl
 				 (setq guix-guile-program  '("guix" "repl")
 				       guix-config-scheme-compiled-directory  nil
 				       guix-repl-use-latest  nil
