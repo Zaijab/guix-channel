@@ -11,12 +11,6 @@ git:
 pull:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades
 
-pull_from_lock:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channels.tmpl --allow-downgrades
-
-set_channel_lock:
-	guix describe -f channels > /home/zjabbar/code/guix-channel/files/channel_lock.tmpl
-
 system:
 	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts
 
