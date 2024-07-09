@@ -1,6 +1,7 @@
 (define-module (zaijab channel-from-lock)
   #:use-module (guix ci)
   #:use-module (rnrs io ports)
+  #:use-module (rnrs io base)
   #:use-module (guix channels))
 
 (define raw-data
