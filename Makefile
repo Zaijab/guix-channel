@@ -9,7 +9,10 @@ git:
 	git push -u github main
 
 pull:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channels.scm --allow-downgrades
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades
+
+pull_from_lock:
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel-from-lock.scm --allow-downgrades
 
 set_channel_lock:
 	guix describe -f channels > /home/zjabbar/code/guix-channel/files/channel_lock.tmpl

@@ -1,5 +1,4 @@
-;; -*- mode: scheme -*-
-(define-module (zaijab channels)
+(define-module (zaijab channel-from-lock)
   #:use-module (guix ci)
   #:use-module (rnrs io ports)
   #:use-module (guix channels))
@@ -17,11 +16,4 @@
 	     (url "/home/zjabbar/code/guix-channel/"))
    (cddr raw-data)))
 
-(define-public master-zaijab
-  (list
-   (channel
-    (name 'zaijab)
-    (url "/home/zjabbar/code/guix-channel/")
-    (branch "main"))))
-
-master-zaijab
+master-zaijab-channel-lock
