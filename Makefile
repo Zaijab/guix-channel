@@ -1,24 +1,30 @@
-all: gnew gpull_from_file gsystem
+all: git pull system
 
 gc:
 	guix gc -d 1m
 
-gnew:
+git:
 	git add -A
 	git diff-index --quiet HEAD || git commit -am "Updating Config"
 	git push -u github main
 
-gpull:
+pull:
 	guix pull --allow-downgrades
 
-gpull_from_file:
+pull_master:
+	guix pull -e '(@ (zaijab channels) master-zaijab)' --allow-downgrades
+
+pull_lock:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channels.tmpl --allow-downgrades
 	guix upgrade
 
-gsystem:
+set_channel_lock:
+	guix describe -f channels > /home/zjabbar/code/guix-channel/files/channel_lock.tmpl
+
+system:
 	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts
 
-gshepherd_log:
+print_shepherd_log:
 	sudo cat /var/log/messages
 
 init:
