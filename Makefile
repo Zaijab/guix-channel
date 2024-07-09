@@ -9,10 +9,10 @@ git:
 	git push -u github main
 
 pull:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
 
 system:
-	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts
+	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)'
 
 print_shepherd_log:
 	sudo cat /var/log/messages
