@@ -9,7 +9,11 @@ git:
 	git push -u github main
 
 pull:
+	guix pull
+
+update_lock:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
+	guix describe --format=channels > ~/.config/guix/channels.scm
 
 system:
 	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)'
