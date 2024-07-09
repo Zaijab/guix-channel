@@ -619,11 +619,14 @@ If WINDOW is t, redisplay pages in all windows."
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=\"bestvideo[height<?720]\"" url))
 
 	   (defun browse-url-mpv (url &optional new-window)
-	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?720]+bestaudio/best" url))
-	   (defun browse-url-mpv (url &optional new-window)
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
+
+	   (defun browse-url-mpv (url &optional new-window)
+	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?720]+bestaudio/best" url))
+
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.youtube." 'browse-url-mpv))
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.twitch." 'browse-url-mpv))
+
 	   (add-hook 'elfeed-new-entry-hook
 		     (elfeed-make-tagger :feed-url "youtube\\.com"
 					 :add '(video youtube)))
