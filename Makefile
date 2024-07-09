@@ -9,7 +9,7 @@ git:
 	git push -u github main
 
 pull:
-	guix pull
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
 
 update_lock:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
