@@ -10,10 +10,15 @@
 ;;     (close-port (cdr input+output))
 ;;     (read (open-string-input-port (get-string-all (car input+output))))))
 
-;; (define master-zaijab-channel-lock
-;;   (cons*
-;;    '(channel (name 'zaijab)
-;; 	     (url "/home/zjabbar/code/guix-channel/"))
-;;    (cddr raw-data)))
+(define filename "/home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl")
+(define in (open-input-file filename))
+(define raw-data (read in))
+(close-input-port in)
 
-;; master-zaijab-channel-lock
+(define master-zaijab-channel-lock
+  (cons*
+   '(channel (name 'zaijab)
+	     (url "/home/zjabbar/code/guix-channel/"))
+   (cddr raw-data)))
+
+master-zaijab-channel-lock

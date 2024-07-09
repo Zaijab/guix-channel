@@ -4,7 +4,7 @@
   #:use-module (ice-9 popen)
   #:use-module (guix channels))
 
-(define filename "./zaijab/files/channel_lock.tmpl")
+(define filename "/home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl")
 (define in (open-input-file filename))
 (define raw-data (read in))
 (close-input-port in)
