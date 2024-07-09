@@ -1,4 +1,4 @@
-all: git pull_master system
+all: git pull system
 
 gc:
 	guix gc -d 1m
@@ -9,13 +9,7 @@ git:
 	git push -u github main
 
 pull:
-	guix pull --allow-downgrades
-
-pull_master:
-	guix pull -e '(@ (zaijab channels) master-zaijab)' --allow-downgrades
-
-pull_lock:
-	guix pull -e '(@ (zaijab channels) master-zaijab-channel-lock)' --allow-downgrades
+	guix pull /home/zjabbar/code/guix-channel/channels.scm --allow-downgrades
 
 set_channel_lock:
 	guix describe -f channels > /home/zjabbar/code/guix-channel/files/channel_lock.tmpl

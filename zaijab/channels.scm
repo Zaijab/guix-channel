@@ -22,3 +22,5 @@
     (name 'zaijab)
     (url "/home/zjabbar/code/guix-channel/")
     (branch "main"))))
+
+master-zaijab
