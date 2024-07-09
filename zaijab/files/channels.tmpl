@@ -1,8 +1,7 @@
 ;; -*- mode: scheme -*-
-(define-module (zaijab channels)
-  #:use-module (guix ci)
-  #:use-module (ice-9 popen)
-  #:use-module (guix channels))
+(use-modules (guix ci)
+	     (ice-9 popen)
+	     (guix channels))
 
 (define filename "/home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl")
 (define in (open-input-file filename))
@@ -11,7 +10,7 @@
 
 (define master-zaijab-channel-lock
   (cons*
-   'list
+   list
    '(channel (name 'zaijab)
 	     (url "/home/zjabbar/code/guix-channel/"))
    (cddr raw-data)))
