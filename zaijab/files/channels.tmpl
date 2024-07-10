@@ -5,14 +5,12 @@
 
 (define filename "/home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl")
 (define in (open-input-file filename))
-(define raw-data (read in))
+(define raw-data (eval (read in) (interaction-environment)))
 (close-input-port in)
 
 (define master-zaijab-channel-lock
-  (cons*
-   list
-   (channel (name 'zaijab)
-	     (url "/home/zjabbar/code/guix-channel/"))
-   (cddr raw-data)))
+  `(,(channel (name 'zaijab)
+	      (url "/home/zjabbar/code/guix-channel/"))
+   ,@(cddr raw-data)))
 
 master-zaijab-channel-lock

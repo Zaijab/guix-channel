@@ -11,9 +11,12 @@ git:
 pull:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
 
+pull_from_lock:
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channels.tmpl
+
 update_lock:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
-	guix describe --format=channels > ~/.config/guix/channels.scm
+	guix describe --format=channels > /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl
 
 system:
 	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)'
