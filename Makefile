@@ -1,4 +1,4 @@
-all: git pull system
+all: git pull_from_lock system
 
 gc:
 	guix gc -d 1m
