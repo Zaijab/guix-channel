@@ -12,7 +12,7 @@ pull:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
 
 pull_from_lock:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl --allow-downgrades
 
 update_lock:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
