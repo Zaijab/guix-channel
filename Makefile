@@ -9,17 +9,17 @@ git:
 	git push -u github main
 
 pull:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades
 
 pull_from_lock:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl --allow-downgrades
 
 update_lock:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades
 	guix describe --format=channels > /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl
 
 system:
-	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)'
+	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades
 
 print_shepherd_log:
 	sudo cat /var/log/messages
