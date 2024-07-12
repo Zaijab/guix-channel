@@ -1430,6 +1430,12 @@ Valid contexts:
 	      (specification->package "python-sympy")
 	      (specification->package "python-scikit-learn")))
    (init '((require 'jupyter)
+	   (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
+	     (condition-case nil
+			     (apply func args)
+			     (jupyter-api-http-error nil)))
+	   (advice-add 'jupyter-api-request-xsrf-cookie :around #'gm/jupyter-api-request-xsrf-cookie-error-advice)
+	   (setq jupyter-use-zmq nil)
 	   (setq org-babel-python-command "python3"
 		 python-interpreter "python3"
 		 python-shell-interpreter "python3"
