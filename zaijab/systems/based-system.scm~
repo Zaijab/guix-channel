@@ -48,8 +48,8 @@
 
 (define-public tao-operating-system
   (operating-system
-    ;; (kernel linux)
-    ;; (firmware (list linux-firmware))
+    (kernel linux)
+    (firmware (list linux-firmware))
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
     (keyboard-layout (keyboard-layout "us"))
@@ -144,15 +144,5 @@
 				     (plain-file "bordeaux.pub" "(public-key (ecc (curve Ed25519) (q #89FBA276A976A8DE2A69774771A92C8C879E0F24614AAAAE23119608707B3F06#)))")
 				     %default-authorized-guix-keys)))))))))
 
+tao-operating-system
 
-(define-public euler-operating-system
-  (operating-system
-    (inherit tao-operating-system)    
-    (host-name "euler")))
-
-(define-public my-operating-system
-  (let ((hostname (read-delimited "\n" (open-input-pipe "echo $HOSTNAME"))))
-    (cond ((string= hostname "tao") tao-operating-system)
-	  ((string= hostname "euler") euler-operating-system))))
-
-my-operating-system

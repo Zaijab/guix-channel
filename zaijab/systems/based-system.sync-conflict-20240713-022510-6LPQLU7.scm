@@ -48,8 +48,8 @@
 
 (define-public tao-operating-system
   (operating-system
-    ;; (kernel linux)
-    ;; (firmware (list linux-firmware))
+    (kernel linux)
+    (firmware (list linux-firmware))
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
     (keyboard-layout (keyboard-layout "us"))
@@ -156,3 +156,4 @@
 	  ((string= hostname "euler") euler-operating-system))))
 
 my-operating-system
+
