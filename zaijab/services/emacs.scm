@@ -1434,7 +1434,7 @@ Valid contexts:
 	     (condition-case nil
 			     (apply func args)
 			     (jupyter-api-http-error nil)))
-	   (advice-add 'jupyter-api-request-xsrf-cookie :around #'gm/jupyter-api-request-xsrf-cookie-error-advice)
+	   (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
 	   (setq jupyter-use-zmq nil)
 	   (setq org-babel-python-command "python3"
 		 python-interpreter "python3"

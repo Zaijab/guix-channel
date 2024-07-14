@@ -42,6 +42,8 @@ pinephone-write:
 
 pinephone-qemu:
 	guix shell qemu -- \
-	qemu-system-aarch64 -enable-kvm -hda /tmp/my-image.qcow2 -m 1000 \
-		-bios $(guix build ovmf-x86-64)/share/firmware/ovmf_x64.bin
+	qemu-system-aarch64 \
+		-m 1024 \
+		-machine orangepi-pc \
+		-drive if=none,file=/tmp/my-image.qcow2,id=myhd,format=raw
 
