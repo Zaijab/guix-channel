@@ -18,32 +18,32 @@
   #:use-module (gnu services guix)  
   #:use-module (zaijab home zjabbar)
   #:use-module (gnu packages)
+  #:use-module (gnu packages kde-plasma)
   #:use-module (gnu services desktop)
   #:use-module (gnu services xorg)
   #:use-module (gnu services networking)
   #:use-module (gnu services ssh)
   #:use-module (gnu services syncthing)
-  #:use-module (gnu services pm))
+  #:use-module (gnu services pm)
+  #:use-module (gnu system)
+  #:use-module (gnu system keyboard)
+  #:use-module (gnu system file-systems)
+  #:use-module (gnu system shadow)
+  #:use-module (gnu bootloader)
+  #:use-module (gnu bootloader u-boot)
+  #:use-module (gnu services)
+  #:use-module (gnu services base)
+  #:use-module (gnu services dbus)
+  #:use-module (gnu services ssh)
+  #:use-module (ice-9 match)
+  #:use-module (srfi srfi-1)
+  #:use-module (gnu packages base)
+  #:use-module (gnu packages bash)
+  #:use-module (gnu packages fonts)
+  #:use-module (gnu services configuration)
+  #:use-module (gnu services networking)
+  #:use-module (gnu packages gnome))
 
-(use-modules (gnu system)
-             (gnu system keyboard)
-             (gnu system file-systems)
-             (gnu system shadow)
-             (gnu bootloader)
-             (gnu bootloader u-boot)
-             (gnu services)
-             (gnu services base)
-             (gnu services dbus)
-             (gnu services ssh)
-             (ice-9 match)
-             (srfi srfi-1)
-             (gnu packages base)
-             (gnu packages bash)
-             (gnu packages fonts)
-             (gnu services configuration))
-
-(use-modules (gnu services networking)
-             (gnu packages gnome))
 
 (define-public pinephone-pro-firmware
   (let ((commit "5c4c2b89f30a42f5ffabb5b5bcbc799d8ac9f66f")
@@ -91,33 +91,30 @@
           #:name "linux-pinephone-pro"
           #:linux linux-arm64-generic
           #:defconfig
-          ;; It could be "pinephone_pro_defconfig", but with a small patch
-          ;; TODO: Rewrite it to the simple patch for the source code
           (local-file "./pinephone_pro_defconfig")
           #:extra-version "arm64-pinephone-pro"
           #:source (origin (method url-fetch)
                            (uri "https://github.com/sailfish-on-dontbeevil/kernel-megi/archive/refs/tags/orange-pi-6.2-20230330-1609.tar.gz")
-                           (sha256 (base32 "1iz92k42rpxrw8k0z01gvkm7dm96haap6qb1i8j1i1vim4alrk37"))))
-	 ))
+                           (sha256 (base32 "1iz92k42rpxrw8k0z01gvkm7dm96haap6qb1i8j1i1vim4alrk37"))))))
     (package
-     (inherit linux-package)
-     (version "opi5")
-     (inputs (list pinephone-pro-firmware))
-     (arguments
-      (substitute-keyword-arguments (package-arguments linux-package)
-        ((#:phases phases '%standard-phases)
-         #~(modify-phases
-            #$phases
-            (add-after 'configure 'set-firmware-path
-               (lambda _
-                 (copy-recursively
-                  (assoc-ref %build-inputs "pinephone-pro-firmware") "ppp")
-                 (format #t "====>")
-                 (system "cat .config")
-                 (format #t "====>")))))))
-     (home-page "https://www.kernel.org/")
-     (synopsis "Linux kernel with nonfree binary blobs included")
-     (description "The unmodified Linux kernel, including nonfree blobs, for running Guix System on hardware which requires nonfree software to function."))))
+      (inherit linux-package)
+      (version "opi5")
+      (inputs (list pinephone-pro-firmware))
+      (arguments
+       (substitute-keyword-arguments (package-arguments linux-package)
+         ((#:phases phases '%standard-phases)
+          #~(modify-phases
+		#$phases
+              (add-after 'configure 'set-firmware-path
+		(lambda _
+                  (copy-recursively
+                   (assoc-ref %build-inputs "pinephone-pro-firmware") "ppp")
+                  (format #t "====>")
+                  (system "cat .config")
+                  (format #t "====>")))))))
+      (home-page "https://www.kernel.org/")
+      (synopsis "Linux kernel with nonfree binary blobs included")
+      (description "The unmodified Linux kernel, including nonfree blobs, for running Guix System on hardware which requires nonfree software to function."))))
 
 (define-public pinephone-pro-os
   (operating-system
@@ -151,15 +148,15 @@
                   (home-directory "/home/zjabbar"))
                  %base-user-accounts))
 
-    ;; (packages (cons* plasma
-    ;; 		     plasma-mobile
-    ;; 		     %base-packages))
+    (packages (cons* plasma
+		     plasma-mobile
+		     %base-packages))
 
     (services (cons*
 	       (service connman-service-type)
 	       (service wpa-supplicant-service-type)
 	       (service openssh-service-type)
-	       ;; (service guix-home-service-type `(("zjabbar" ,zains-home)))
+	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       ;; (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       ;; (service tlp-service-type)
 

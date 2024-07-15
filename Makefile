@@ -47,3 +47,5 @@ pinephone-qemu:
 		-machine orangepi-pc \
 		-drive if=none,file=/tmp/my-image.qcow2,id=myhd,format=raw
 
+pinephone-vm:
+	sudo $(shell guix system vm zaijab/systems/pinephone.scm --network --share=/home/zjabbar --share=/run/user/1000)
