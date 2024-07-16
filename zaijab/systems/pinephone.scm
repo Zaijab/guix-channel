@@ -18,6 +18,7 @@
   #:use-module (gnu services guix)  
   #:use-module (zaijab home zjabbar)
   #:use-module (gnu packages)
+  #:use-module (gnu packages wm)
   #:use-module (gnu packages kde-plasma)
   #:use-module (gnu services desktop)
   #:use-module (gnu services xorg)
@@ -150,6 +151,7 @@
 
     (packages (cons* plasma
 		     plasma-mobile
+		     sway
 		     %base-packages))
 
     (services (cons*
@@ -157,6 +159,7 @@
 	       (service wpa-supplicant-service-type)
 	       (service openssh-service-type)
 	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
+	       (service elogind-service-type)
 	       ;; (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       ;; (service tlp-service-type)
 
