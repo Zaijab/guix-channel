@@ -154,7 +154,7 @@
                   (home-directory "/home/zjabbar"))
                  %base-user-accounts))
 
-    (packages (cons* sxkbd
+    (packages (cons* ;sxkbd
 		     %base-packages))
 					; guix shell svkbd -- svkbd-mobile-intl -d
 					;(set-frame-height (selected-frame) (- 1080 410) nil t)
