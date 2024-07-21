@@ -1,6 +1,9 @@
 (define-module (zaijab systems pinephone)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages qt)
+  #:use-module (gnu packages kde-frameworks)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix gexp)
@@ -16,10 +19,12 @@
   #:use-module (zaijab systems based-system)
   #:use-module (gnu home)
   #:use-module (gnu services guix)  
+  #:use-module (gnu services sound)  
   #:use-module (zaijab home zjabbar)
   #:use-module (gnu packages)
   #:use-module (gnu packages wm)
   #:use-module (gnu packages kde-plasma)
+  #:use-module (gnu packages kde)
   #:use-module (gnu services desktop)
   #:use-module (gnu services xorg)
   #:use-module (gnu services networking)
@@ -119,11 +124,11 @@
 
 (define-public pinephone-pro-os
   (operating-system
-    ;; (kernel linux-pinephone-pro)
-    ;; (kernel-arguments (append (list "console=ttyS2,115200" "earlycon=uart8250,mmio32,0xff1a0000" "earlyprintk")
-    ;; 			      (drop-right %default-kernel-arguments 1)))
-    ;; (initrd-modules '())
-    ;; (firmware (append (list pinephone-pro-firmware) %base-firmware))
+    (kernel linux-pinephone-pro)
+    (kernel-arguments (append (list "console=ttyS2,115200" "earlycon=uart8250,mmio32,0xff1a0000" "earlyprintk")
+			      (drop-right %default-kernel-arguments 1)))
+    (initrd-modules '())
+    (firmware (append (list pinephone-pro-firmware) %base-firmware))
     
     (host-name "pinephonepro")
     (timezone "Pacific/Honolulu")
@@ -149,17 +154,18 @@
                   (home-directory "/home/zjabbar"))
                  %base-user-accounts))
 
-    (packages (cons* plasma
-		     plasma-mobile
-		     sway
+    (packages (cons* sxkbd
 		     %base-packages))
+					; guix shell svkbd -- svkbd-mobile-intl -d
+					;(set-frame-height (selected-frame) (- 1080 410) nil t)
 
     (services (cons*
 	       (service connman-service-type)
 	       (service wpa-supplicant-service-type)
 	       (service openssh-service-type)
-	       (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       (service elogind-service-type)
+	       (service dbus-root-service-type)
+	       ;; (service guix-home-service-type `(("zjabbar" ,zains-home)))
 	       ;; (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
 	       ;; (service tlp-service-type)
 

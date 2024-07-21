@@ -2,6 +2,8 @@ image=$(shell guix system image /home/zjabbar/code/guix-channel/zaijab/systems/p
 
 all: git pull_from_lock system
 
+all_update_lock: git update_lock system
+
 gc:
 	guix gc -d 1m
 
