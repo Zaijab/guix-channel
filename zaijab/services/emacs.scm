@@ -1167,7 +1167,7 @@ Valid contexts:
 		   (specification->package "imagemagick")
 		   ((options->transformation '((with-source . "enchant=https://github.com/AbiWord/enchant/releases/download/v2.3.1/enchant-2.3.1.tar.gz")))
 		    (specification->package "emacs-jinx"))
-
+		   
 		   
 		   (specification->package "nuspell")
 		   (specification->package "aspell")
@@ -1477,10 +1477,10 @@ Valid contexts:
 	   (setq geiser-mode-auto-p nil)
 
 	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
-	     (async-shell-command "guix shell --pure guix guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
+	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
 
 	   (defun arei-server-start-guix-repl () "Start Arei with Default Port" (interactive)
-	     (async-shell-command "guix shell --pure guix guile-next guile-ares-rs -- echo '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))' | guix repl"))
+	     (async-shell-command "guix shell guile-next guile-ares-rs -- echo '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))' | guix repl"))
 
 	   (defun auto-start-arei ()
 	     (if (string= "" (shell-command-to-string "sudo ss -tulpn | grep LISTEN.*7888"))
