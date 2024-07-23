@@ -1527,6 +1527,7 @@ Valid contexts:
 	      (specification->package "xrandr")
 	      (specification->package "arandr")))
    (init '((require 'exwm)
+	   (exwm-randr-mode)
 	   (require 'xelb)
 	   (require 'windsize)
 	   
