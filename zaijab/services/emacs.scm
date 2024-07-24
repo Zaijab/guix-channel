@@ -1477,7 +1477,7 @@ Valid contexts:
 	   (setq geiser-mode-auto-p nil)
 
 	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
-	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
+	     (async-shell-command "guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
 
 	   (defun arei-server-start-guix-repl () "Start Arei with Default Port" (interactive)
 	     (async-shell-command "guix shell guile-next guile-ares-rs -- echo '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))' | guix repl"))
@@ -1486,8 +1486,8 @@ Valid contexts:
 	     (if (string= "" (shell-command-to-string "sudo ss -tulpn | grep LISTEN.*7888"))
 		 (progn (arei-server-start))))
 
-	   (add-hook 'scheme-mode-hook (function auto-start-arei))
-	   (add-hook 'scheme-mode-hook (function arei-mode))
+	   ;; (add-hook 'scheme-mode-hook (function auto-start-arei))
+	   ;; (add-hook 'scheme-mode-hook (function arei-mode))
 	   (remove-hook 'scheme-mode-hook (function geiser-mode--maybe-activate))
 
 	   
