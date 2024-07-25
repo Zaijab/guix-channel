@@ -55,7 +55,7 @@
    (service connman-service-type)
    (service tlp-service-type)
    (service docker-service-type)
-   (service seatd-service-type)
+   ;(service seatd-service-type)
    (service oci-container-service-type
 	    (list
 	     (oci-container-configuration
@@ -84,7 +84,7 @@
      (delete pulseaudio-service-type)
      (delete gdm-service-type)
      (delete network-manager-service-type)
-     (delete elogind-service-type)
+    ; (delete elogind-service-type)
      (mingetty-service-type
       config => (mingetty-configuration
 		 (inherit config)
