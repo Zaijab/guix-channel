@@ -75,7 +75,7 @@
 ;; Completion Style
 (define orderless-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-orderless")))
+   (packages (list emacs-orderless))
    (init '((setq completion-styles '(orderless basic)
 		 completion-category-overrides '((file (styles basic partial-completion)))
 		 orderless-smart-case nil
