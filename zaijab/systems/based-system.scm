@@ -147,7 +147,7 @@
 
 (define-public euler-operating-system
   (operating-system
-    (inherit tao-operating-system)    
+    (inherit tao-operating-system)
     (host-name "euler")))
 
 (define-public my-operating-system
