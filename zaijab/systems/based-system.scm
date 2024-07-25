@@ -55,6 +55,7 @@
    (service connman-service-type)
    (service tlp-service-type)
    (service docker-service-type)
+   (service seatd-service-type)
    (service oci-container-service-type
 	    (list
 	     (oci-container-configuration
