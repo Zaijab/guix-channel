@@ -145,15 +145,7 @@
 		  (supplementary-groups '("wheel" "netdev" "audio" "lp" "video" "docker")))
 		 %base-user-accounts))
     
-    (services (cons* (simple-service 'vfio-override
-				      boot-service-type
-				      '(and (call-with-output-file "/sys/bus/pci/devices/0000:04:00.0/driver_override"
-									       (lambda (p)
-										 (display "vfio-pci" p)))
-									     (call-with-output-file "/sys/bus/pci/drivers/vfio-pci/new_id"
-									       (lambda (p)
-										 (display "1002 164c" p)))))
-				      main-services))))
+    (services main-services)))
 
 
 (define-public euler-operating-system
