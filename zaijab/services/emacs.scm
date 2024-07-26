@@ -77,12 +77,14 @@
 (define orderless-configuration
   (home-emacs-configuration
    (packages (list emacs-orderless))
-   (init '((setq completion-styles '(orderless basic)
-		 completion-category-overrides '((file (styles basic partial-completion)))
-		 orderless-smart-case nil
-		 completion-ignore-case t
-		 read-file-name-completion-ignore-case t
-		 read-buffer-completion-ignore-case t)))))
+   (init '((use-package orderless
+			:custom
+			(completion-styles '(orderless basic))
+			(completion-category-overrides '((file (styles basic partial-completion))))
+			(orderless-smart-case nil)
+			(completion-ignore-case t)
+			(read-file-name-completion-ignore-case t)
+			(read-buffer-completion-ignore-case t))))))
 
 ;; Completion UI
 (define vertico-configuration
