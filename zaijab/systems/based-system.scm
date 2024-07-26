@@ -160,4 +160,4 @@
     (cond ((string= hostname "tao") tao-operating-system)
 	  ((string= hostname "euler") euler-operating-system))))
 
-tao-operating-system
+euler-operating-system
