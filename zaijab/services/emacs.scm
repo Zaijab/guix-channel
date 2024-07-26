@@ -612,6 +612,10 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLp0hSY2uBeP_HDgkCSrG5pccHYfudTJYI" lecture topology pavel)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLBEeOnR8lrBHNZWwk8-pHOQLQnP3u8bO8" lecture topology clark)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL6763F57A61FE6FE8" lecture topology wildberger)))
+	   (define-advice elfeed-search--header (:around (oldfun &rest args))
+	     (if elfeed-db
+		 (apply oldfun args)
+		 "No database loaded yet"))
 	   (require 'elfeed-tube)
 	   (require 'elfeed-tube-fill)
 	   (elfeed-tube-setup)
