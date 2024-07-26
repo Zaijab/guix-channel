@@ -25,6 +25,9 @@ update_lock:
 system:
 	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades
 
+system_from_file:
+	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades -v 4
+
 print_shepherd_log:
 	sudo cat /var/log/messages
 
