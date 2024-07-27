@@ -1431,12 +1431,13 @@ Valid contexts:
 
 	      (specification->package "pandoc")
 	      
-	      (specification->package "python-numpy")	      
-	      (specification->package "python-pandas")
-	      (specification->package "python-matplotlib")
-	      (specification->package "python-scipy")
-	      (specification->package "python-sympy")
-	      (specification->package "python-scikit-learn")))
+	      ;; (specification->package "python-numpy")	      
+	      ;; (specification->package "python-pandas")
+	      ;; (specification->package "python-matplotlib")
+	      ;; (specification->package "python-scipy")
+	      ;; (specification->package "python-sympy")
+	      ;; (specification->package "python-scikit-learn")
+	      ))
    (init '((require 'jupyter)
 	   (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
 	     (condition-case nil
