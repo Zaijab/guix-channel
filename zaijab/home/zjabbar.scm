@@ -58,7 +58,9 @@
                                   "eval \"$(direnv hook bash)\"\n"
 				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
 				  "exec /home/zjabbar/code/guix-channel/zaijab/files/xinitrc.sh\n"
-				  "fi\n")))))
+				  "fi\n"
+				  "[ -n \"$EAT_SHELL_INTEGRATION_DIR\" ] && \\\n"
+				  "source \"$EAT_SHELL_INTEGRATION_DIR/bash\"")))))
      (service home-emacs-service-type home-emacs-total-configuration)
      (service home-dbus-service-type)
      (service home-pipewire-service-type)

@@ -1524,6 +1524,14 @@ Valid contexts:
 		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
 		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
 
+(define shell-configuration
+  (home-emacs-configuration
+   (packages emacs-eat)
+   (init '((use-package eat
+			:hook
+			(eshell-load-hook (function eat-eshell-mode))
+			(eshell-load-hook (function eat-eshell-visual-command-mode)))))))
+
 (define exwm-configuration
   (home-emacs-configuration
    (packages (list
