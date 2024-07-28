@@ -462,7 +462,8 @@
   (home-emacs-configuration
    (packages (list (specification->package "emacs-pdf-tools")
 		   (specification->package "emacs-nov-el")))
-   (init '((pdf-tools-install)
+   (init '((add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+	   (pdf-tools-install)
 	   (defvar *current-mode* 'light)
 	   (defun pdf-view-redisplay (&optional window)
 	     "Redisplay page in WINDOW.
