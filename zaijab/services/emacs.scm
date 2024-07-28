@@ -1526,7 +1526,7 @@ Valid contexts:
 
 (define shell-configuration
   (home-emacs-configuration
-   (packages emacs-eat)
+   (packages (list emacs-eat))
    (init '((use-package eat
 			:hook
 			(eshell-load-hook (function eat-eshell-mode))
