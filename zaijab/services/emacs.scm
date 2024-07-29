@@ -1529,8 +1529,8 @@ Valid contexts:
    (packages (list emacs-eat))
    (init '((use-package eat
 			:hook
-			(eshell-load-hook (function eat-eshell-mode))
-			(eshell-load-hook (function eat-eshell-visual-command-mode)))))))
+			(eshell-load . (function eat-eshell-mode))
+			(eshell-load . (function eat-eshell-visual-command-mode)))))))
 
 (define exwm-configuration
   (home-emacs-configuration
