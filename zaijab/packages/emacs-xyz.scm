@@ -384,7 +384,7 @@ layer that explicitly uses the abstract syntax tree, for greater precision.")
 		    (commit "0c3fbc21259e1fa794f3179a53b410ba610231f2")))
 	      (sha256
 	       (base32
-		"0h32bpq8w1j3rbwfqlfj10vvlw21j9rcpqjpp45pw8z6xxb2q0lp"))))
+		"0hg2s5yzpd1fsl0fyrfv2cc2m61a67drfg86msfqpqdmkv30pbca"))))
     (build-system emacs-build-system)
     (propagated-inputs (list emacs-elfeed emacs-aio)) 
     (arguments
