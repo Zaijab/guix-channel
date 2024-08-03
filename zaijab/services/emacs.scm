@@ -5,6 +5,7 @@
   #:use-module (gnu home)
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
+  #:use-module (gnu packages video)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu services)
   #:use-module (gnu home services)
@@ -532,9 +533,9 @@ If WINDOW is t, redisplay pages in all windows."
 (define elfeed-configuration
   (home-emacs-configuration
    (packages (list
-	      (specification->package "mpv")
-	      (specification->package "yt-dlp")
-	      (specification->package "emacs-elfeed")
+	      mpv
+	      yt-dlp
+	      emacs-elfeed
 	      ((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
 	       emacs-elfeed-tube)
 	      (specification->package "curl")))
@@ -1693,8 +1694,7 @@ Valid contexts:
 
 (define ui-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-rainbow-delimiters")
-                   (specification->package "emacs-which-key")))
+   (packages (list emacs-rainbow-delimiters))
    (early-init '((setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
 		       indicate-empty-lines nil

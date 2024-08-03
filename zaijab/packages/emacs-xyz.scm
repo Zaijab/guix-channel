@@ -381,7 +381,7 @@ layer that explicitly uses the abstract syntax tree, for greater precision.")
 	      (method git-fetch)
 	      (uri (git-reference
 		    (url "https://github.com/karthink/elfeed-tube.git")
-		    (commit "18d89f19203423b9e2df59a556c1240746903d8f")))
+		    (commit "0c3fbc21259e1fa794f3179a53b410ba610231f2")))
 	      (sha256
 	       (base32
 		"0h32bpq8w1j3rbwfqlfj10vvlw21j9rcpqjpp45pw8z6xxb2q0lp"))))
