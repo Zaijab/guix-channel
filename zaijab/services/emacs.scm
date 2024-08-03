@@ -7,7 +7,16 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages video)
   #:use-module (gnu packages curl)
+  #:use-module (gnu packages fonts)
+  #:use-module (gnu packages version-control)
+  #:use-module (gnu packages java)
+  #:use-module (gnu packages shellutils)
+  #:use-module (gnu packages browser-extensions)
+  #:use-module (gnu packages gnuzilla)
+  #:use-module (gnu packages gnupg)
   #:use-module (gnu packages emacs-xyz)
+  #:use-module (gnu packages jami)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (gnu services)
@@ -32,7 +41,7 @@
 
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like (specification->package "emacs-next"))
+   (file-like emacs-next)
    "The Emacs package to use.")
   (packages
    (file-likes '())
@@ -91,7 +100,7 @@
 ;; Completion UI
 (define vertico-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-vertico")))
+   (packages (list emacs-vertico))
    (init '((setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
 	   (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
 	   (defun crm-indicator (args)
@@ -107,7 +116,7 @@
 ;; In Buffer Completion
 (define corfu-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-corfu")))
+   (packages (list emacs-corfu))
    (init '((global-corfu-mode)
 	   (corfu-history-mode)
 	   (setq corfu-cycle t
@@ -125,7 +134,7 @@
 ;; Templates
 (define tempel-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-tempel")))
+   (packages (list emacs-tempel))
    (init '((require 'tempel)
 	   (defun tempel-setup-capf ()
 	     (setq-local completion-at-point-functions
@@ -143,14 +152,14 @@
 ;; Completion at Point Functions
 (define cape-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-cape")))
+   (packages (list emacs-cape))
    (init '((setq tab-always-indent 'complete)
 	   (add-to-list 'completion-at-point-functions (function cape-file))))))
 
 ;; Annotations
 (define marginalia-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-marginalia")))
+   (packages (list emacs-marginalia))
    (init '((marginalia-mode)))))
 
 (define web-configuration
@@ -160,7 +169,7 @@
 ;; Live Preview Selection
 (define embark-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-embark")
+   (packages (list emacs-embark
 		   emacs-embark-consult))
    (init '((use-package embark
 			:ensure t
@@ -200,7 +209,7 @@
 ;; "Right Click"
 (define consult-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-consult")))
+   (packages (list emacs-consult))
    (init '((require 'consult)
 	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
 	   (setq register-preview-delay 0.5
@@ -238,8 +247,8 @@
 
 (define citation-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-citar")
-		   (specification->package "emacs-citar-org-roam")))
+   (packages (list emacs-citar
+		   emacs-citar-org-roam))
    (init '((use-package citar
 			:bind (:map citar-map
 			       ("a" . citar-add-file-to-library))
@@ -299,7 +308,7 @@
 
 (define meow-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-meow")))
+   (packages (list emacs-meow))
    (init '((setq meow-use-clipboard t)
 	   (defun meow-setup ()
 	     (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
@@ -394,7 +403,7 @@
 
 (define undo-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-undo-tree")))
+   (packages (list emacs-undo-tree))
    (init '((require 'undo-tree)
 	   (setq undo-tree-history-directory-alist  '(("." . "~/.config/emacs/undo-tree/")))
 	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)	   
@@ -402,8 +411,8 @@
 
 (define indentation-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-aggressive-indent")
-		   (specification->package "emacs-smart-hungry-delete")))
+   (packages (list emacs-aggressive-indent
+		   emacs-smart-hungry-delete))
    (init '((require 'smart-hungry-delete)
 	   (smart-hungry-delete-add-default-hooks)
 	   (global-set-key (kbd "<backspace>") 'smart-hungry-delete-backward-char)
@@ -412,9 +421,9 @@
 
 (define project-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "git")
-		   (specification->package "direnv")
-		   (specification->package "emacs-envrc")))
+   (packages (list git
+		   direnv
+		   emacs-envrc))
    (init '((require 'ansi-color)
 	   (defun colorize-compilation-buffer ()
 	     (interactive)
@@ -426,13 +435,12 @@
 
 (define language-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-ddskk")
-		   (specification->package "font-lohit")
-		   (specification->package "font-vazir")
-		   (specification->package "font-ipa-mj-mincho")
-		   (specification->package "font-iosevka")
-		   (specification->package "jbr")
-		   #;font-microsoft-couirer-new))
+   (packages (list emacs-ddskk
+		   font-lohit
+		   font-vazir
+		   font-ipa-mj-mincho
+		   font-iosevka
+		   jbr))
    (init '((require 'facemenu)
 	   (advice-add
 	    'skk-previous-candidate :around
@@ -450,20 +458,14 @@
 
 (define graphical-browser-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "icecat")
-		   (specification->package "ublock-origin-icecat")
-		   (specification->package "passff-icecat")
-		   (specification->package "emacs-atomic-chrome")
-		   ))
-   (init '(#;(use-package exwm-firefox
-	   :config (exwm-firefox-mode))
-	   (use-package atomic-chrome
-			:config (atomic-chrome-start-server))))))
+   (packages (list icecat
+		   ublock-origin-icecat
+		   passff-icecat))))
 
 (define pdf-tools-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-pdf-tools")
-		   (specification->package "emacs-nov-el")))
+   (packages (list emacs-pdf-tools
+		   emacs-nov-el))
    (init '((add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 	   (pdf-tools-install)
 	   (defvar *current-mode* 'light)
@@ -502,18 +504,18 @@ If WINDOW is t, redisplay pages in all windows."
 
 (define cryptography-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "pinentry")
-		   (specification->package "emacs-pinentry")
-		   (specification->package "pinentry-emacs")
-		   (specification->package "password-store")
+   (packages (list pinentry
+		   emacs-pinentry
+		   pinentry-emacs
+		   password-store
 		   pass-import
-		   (specification->package "pass-otp")
-		   (specification->package "emacs-pass")
-		   (specification->package "emacs-password-store")
-		   (specification->package "emacs-password-store-otp")
-		   (specification->package "gnupg")
-		   (specification->package "openssh")
-		   (specification->package "openconnect")))
+		   pass-otp
+		   emacs-pass
+		   emacs-password-store
+		   emacs-password-store-otp
+		   gnupg
+		   openssh
+		   openconnect))
    (init '((defun pinentry-reload () (interactive)
 	     (shell-command "gpg-connect-agent reloadagent /bye"))
 	   (pinentry-start)
@@ -668,12 +670,10 @@ If WINDOW is t, redisplay pages in all windows."
 (define music-configuration
   (home-emacs-configuration
    (packages (list
-	      (specification->package "alsa-utils")
-	      (specification->package "pavucontrol")
-	      (specification->package "ffmpeg")
-	      (specification->package "emacs-alsamixer-el")
-	      (specification->package "emacs-bluetooth")
-	      (specification->package "emacs-emms")))
+	      ffmpeg
+	      emacs-alsamixer-el
+	      emacs-bluetooth
+	      emacs-emms))
    (init '((require 'emms-setup)
 	   (emms-all)
 	   (setq emms-player-list '(emms-player-mpv)
@@ -1523,14 +1523,12 @@ Valid contexts:
 (define exwm-configuration
   (home-emacs-configuration
    (packages (list
-	      (specification->package "jami")
-	      (specification->package "emacs-exwm")
-	      (specification->package "emacs-windsize")
-	      (specification->package "emacs-vterm")
-	      (specification->package "unclutter")
-	      (specification->package "xhost")
-	      (specification->package "xrandr")
-	      (specification->package "arandr")))
+	      jami
+	      emacs-exwm
+	      emacs-windsize
+	      emacs-vterm
+	      xrandr
+	      arandr))
    (init '((require 'exwm)
 	   (exwm-randr-mode)
 	   (require 'xelb)
