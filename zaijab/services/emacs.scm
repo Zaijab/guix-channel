@@ -17,6 +17,8 @@
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages jami)
   #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages scheme)
+  #:use-module (gnu packages scheme)
   #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (gnu services)
@@ -440,7 +442,7 @@
 		   font-vazir
 		   font-ipa-mj-mincho
 		   font-iosevka
-		   jbr))
+		   jbr21))
    (init '((require 'facemenu)
 	   (advice-add
 	    'skk-previous-candidate :around
@@ -1454,14 +1456,14 @@ Valid contexts:
 (define lisp-configuration
   (home-emacs-configuration
    (packages (list 
-	      (specification->package "sicp")
-	      (specification->package "xdot")
-	      (specification->package "emacs-guix")
-	      (specification->package "tree-sitter-scheme")
-	      (specification->package "emacs-srfi")
-	      (specification->package "emacs-arei")
-	      (specification->package "guile-ares-rs")
-	      (specification->package "guile-next")))
+	      sicp
+	      xdot
+	      emacs-guix
+	      tree-sitter-scheme
+	      emacs-srfi
+	      emacs-arei
+	      guile-ares-rs
+	      guile-next))
    (init '(#;(with-eval-after-load 'guix-repl
 				 (setq guix-guile-program  '("guix" "repl")
 				       guix-config-scheme-compiled-directory  nil
@@ -1474,7 +1476,7 @@ Valid contexts:
 	   (setq geiser-mode-auto-p nil)
 
 	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
-	     (async-shell-command "guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
+	     (async-shell-command "guix shell --pure guix guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
 
 	   (defun arei-server-start-guix-repl () "Start Arei with Default Port" (interactive)
 	     (async-shell-command "guix shell guile-next guile-ares-rs -- echo '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))' | guix repl"))
