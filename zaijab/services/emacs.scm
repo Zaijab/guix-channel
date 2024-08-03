@@ -6,6 +6,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages video)
+  #:use-module (gnu packages curl)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu services)
   #:use-module (gnu home services)
@@ -536,9 +537,8 @@ If WINDOW is t, redisplay pages in all windows."
 	      mpv
 	      yt-dlp
 	      emacs-elfeed
-	      ((options->transformation '((with-branch . "emacs-elfeed-tube=master")))
-	       emacs-elfeed-tube)
-	      (specification->package "curl")))
+	      emacs-elfeed-tube
+	      curl))
    (init '((setq elfeed-feeds '(("https://almostsuremath.com/feed/" math almost-sure)
 				("https://karthinks.com/index.xml" crafter karthinks)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
