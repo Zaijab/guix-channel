@@ -461,7 +461,7 @@ Usage To automatically apply when saving a python file, use the following code:
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"1p2yqp9s2p1rk3z2d09lzy8dimn2rwdf5qxajhq6jms0315dyggs"))))
+		"1v8m1i7jci56c8k2zcd0gghn7qk9k2nn0rr311y0pzwsgwbqcif3"))))
     (build-system emacs-build-system)
     (propagated-inputs (list (specification->package "emacs-calfw")))
     (home-page "https://github.com/ml729/calfw-blocks")
