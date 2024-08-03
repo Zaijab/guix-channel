@@ -1166,23 +1166,10 @@ Valid contexts:
 		   (specification->package "emacs-org-tree-slide")
 		   (specification->package "emacs-consult-org-roam")
 		   (specification->package "emacs-calfw")
-		   ((options->transformation
-		     '((with-branch . "emacs-calfw-blocks=master")))
-		    emacs-calfw-blocks)
-		   emacs-phscroll
+		   emacs-calfw-blocks
 		   (specification->package "texlive")
 		   (specification->package "texlive-bin")
-		   (specification->package "imagemagick")
-		   ((options->transformation '((with-source . "enchant=https://github.com/AbiWord/enchant/releases/download/v2.3.1/enchant-2.3.1.tar.gz")))
-		    (specification->package "emacs-jinx"))
-		   
-		   
-		   (specification->package "nuspell")
-		   (specification->package "aspell")
-		   (specification->package "hunspell")
-		   (specification->package "hunspell-dict-en")
-		   
-		   ))
+		   (specification->package "imagemagick")))
    (init '((require 'org)
 	   (require 'org-tree-slide)
 	   (setq org-tree-slide-cursor-init nil)
@@ -1769,11 +1756,7 @@ Valid contexts:
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)))
-   (init '(
-	   (require 'phscroll)
-	   (setq org-startup-truncated nil)
-	   (with-eval-after-load "org" (require 'org-phscroll))
-
+   (init '((setq org-startup-truncated nil)
 	   (tab-bar-mode)
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)

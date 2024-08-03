@@ -452,7 +452,7 @@ Usage To automatically apply when saving a python file, use the following code:
 (define-public emacs-calfw-blocks
   (package
     (name "emacs-calfw-blocks")
-    (version "d72e95bf47999df98684c0d602adee6abc4bcb17")
+    (version "0fe829035ffa491c3f2610f05a7f1ec936a4497e")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
