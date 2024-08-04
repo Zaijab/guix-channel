@@ -18,7 +18,7 @@
   #:use-module (gnu packages jami)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages scheme)
-  #:use-module (gnu packages scheme)
+  #:use-module (gnu packages password-utils)
   #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (gnu services)
