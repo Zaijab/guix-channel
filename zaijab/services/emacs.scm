@@ -20,6 +20,7 @@
   #:use-module (gnu packages scheme)
   #:use-module (gnu packages password-utils)
   #:use-module (gnu packages ssh)
+  #:use-module (gnu packages graphviz)
   #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (gnu services)
