@@ -517,8 +517,7 @@ If WINDOW is t, redisplay pages in all windows."
 		   emacs-password-store
 		   emacs-password-store-otp
 		   gnupg
-		   openssh
-		   openconnect))
+		   openssh))
    (init '((defun pinentry-reload () (interactive)
 	     (shell-command "gpg-connect-agent reloadagent /bye"))
 	   (pinentry-start)
