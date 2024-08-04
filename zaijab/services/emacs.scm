@@ -462,7 +462,7 @@
   (home-emacs-configuration
    (packages (list icecat
 		   ublock-origin/icecat
-		   passff-icecat))))
+		   passff/icecat))))
 
 (define pdf-tools-configuration
   (home-emacs-configuration
