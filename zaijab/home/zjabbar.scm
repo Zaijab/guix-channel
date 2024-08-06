@@ -69,6 +69,7 @@
                (pinentry-program
                 (file-append pinentry-emacs "/bin/pinentry-emacs"))
                (ssh-support? #t)))
+
      (simple-service 'dotfiles
                      home-files-service-type
                      `((".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))

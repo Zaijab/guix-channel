@@ -1422,7 +1422,7 @@ Valid contexts:
 	      python
 	      jupyter
 
-	      ((options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
+	      (identity #;(options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
 	       emacs-jupyter)
 	      
 	      emacs-pydoc
@@ -1433,15 +1433,7 @@ Valid contexts:
 	      emacs-csv-mode
 	      emacs-py-isort
 	      emacs-python-black
-	      pandoc
-	      
-	      ;; (specification->package "python-numpy")	      
-	      ;; (specification->package "python-pandas")
-	      ;; (specification->package "python-matplotlib")
-	      ;; (specification->package "python-scipy")
-	      ;; (specification->package "python-sympy")
-	      ;; (specification->package "python-scikit-learn")
-	      ))
+	      pandoc))
    (init '((require 'jupyter)
 	   (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
 	     (condition-case nil
