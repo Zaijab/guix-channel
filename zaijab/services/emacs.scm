@@ -1196,13 +1196,6 @@ Valid contexts:
 	   (require 'calfw-blocks)
 	   (setq org-startup-folded t)
 	   
-	   (add-hook 'emacs-startup-hook (function global-jinx-mode))
-	   (keymap-global-set "M-$" (function jinx-correct))
-	   (keymap-global-set "C-M-$" (function jinx-languages))
-	   
-	   ;; (setq ispell-program-name (executable-find "hunspell")
-	   ;; 	 ispell-dictionary   "en_US")
-					;(setq ispell-alternate-dictionary "/home/zjabbar/.guix-home/profile/share/hunspell/en_US.dic")
 
 	   (setq org-structure-template-alist
 		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
