@@ -23,7 +23,13 @@
   #:use-module (gnu packages guile)
   #:use-module (gnu packages guile-xyz)
   #:use-module (gnu packages password-utils)
+  #:use-module (gnu packages mail)
   #:use-module (gnu packages ssh)
+  #:use-module (gnu packages python)
+  #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages haskell-xyz)
+  #:use-module (gnu packages texlive)
+  #:use-module (gnu packages imagemagick)
   #:use-module (gnu packages graphviz)
   #:use-module (gnu packages tree-sitter)
   #:use-module (gnu services)
@@ -733,11 +739,11 @@ If WINDOW is t, redisplay pages in all windows."
 	      ((options->transformation
 		'((with-branch . "emacs-org-msg=1.12")
 		  (with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")))
-	       (specification->package "emacs-org-msg"))
-	      (specification->package "isync")
-	      (specification->package "mu")
-	      (specification->package "emacs-mu4e-alert")
-	      (specification->package "msmtp")))
+	       emacs-org-msg)
+	      isync
+	      mu
+	      emacs-mu4e-alert
+	      msmtp))
    (init '((setq movemail-program-name "movemail")
 	   (require 'mu4e)
 	   (require 'mu4e-alert)
@@ -856,12 +862,12 @@ If WINDOW is t, redisplay pages in all windows."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list
-	      (specification->package "emacs-org-roam")
+	      emacs-org-roam
 	      emacs-org-roam-ui
-	      (specification->package "emacs-org-roam-bibtex")
-	      (specification->package "emacs-org-fc")
-	      (specification->package "emacs-org-drill")
-	      (specification->package "emacs-kanji")))
+	      emacs-org-roam-bibtex
+	      emacs-org-fc
+	      emacs-org-drill
+	      emacs-kanji))
    (init '((use-package org)
 
 	   (use-package org-roam
@@ -1019,8 +1025,8 @@ Valid contexts:
 (define website-configuration
   (home-emacs-configuration
    (packages (list 
-	      (specification->package "python-pygments")
-	      (specification->package "emacs-engrave-faces")))
+	      python-pygments
+	      emacs-engrave-faces))
    (init '((require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
 	     "For a given file, get its TITLE keyword."
@@ -1166,20 +1172,20 @@ Valid contexts:
 
 (define org-mode-configuration
   (home-emacs-configuration
-   (packages (list (specification->package "emacs-org-fragtog")
-		   (specification->package "emacs-org-modern")
-		   (specification->package "emacs-cdlatex")
-		   (specification->package "font-latin-modern")
-		   (specification->package "emacs-tempel")
-		   (specification->package "emacs-valign")
-		   (specification->package "emacs-org-present")
-		   (specification->package "emacs-org-tree-slide")
-		   (specification->package "emacs-consult-org-roam")
-		   (specification->package "emacs-calfw")
+   (packages (list emacs-org-fragtog
+		   emacs-org-modern
+		   emacs-cdlatex
+		   font-latin-modern
+		   emacs-tempel
+		   emacs-valign
+		   emacs-org-present
+		   emacs-org-tree-slide
+		   emacs-consult-org-roam
+		   emacs-calfw
 		   emacs-calfw-blocks
-		   (specification->package "texlive")
-		   (specification->package "texlive-bin")
-		   (specification->package "imagemagick")))
+		   texlive
+		   texlive-bin
+		   imagemagick))
    (init '((require 'org)
 	   (require 'org-tree-slide)
 	   (setq org-tree-slide-cursor-init nil)
@@ -1412,22 +1418,21 @@ Valid contexts:
 (define python-configuration
   (home-emacs-configuration
    (packages (list
-	      (specification->package "python")
-	      (specification->package "jupyter")
+	      python
+	      jupyter
 
 	      ((options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
-	       (specification->package "emacs-jupyter"))
+	       emacs-jupyter)
 	      
-	      (specification->package "emacs-pydoc")
-	      (specification->package "python-lsp-server")
-	      (specification->package "tree-sitter")
-	      (specification->package "tree-sitter-python")
+	      emacs-pydoc
+	      python-lsp-server
+	      tree-sitter
+	      tree-sitter-python
 
-	      (specification->package "emacs-csv-mode")
-	      (specification->package "emacs-py-isort")
-	      (specification->package "emacs-python-black")
-
-	      (specification->package "pandoc")
+	      emacs-csv-mode
+	      emacs-py-isort
+	      emacs-python-black
+	      pandoc
 	      
 	      ;; (specification->package "python-numpy")	      
 	      ;; (specification->package "python-pandas")
@@ -1511,7 +1516,7 @@ Valid contexts:
 (if (string= (read-delimited "\n" (open-input-pipe "echo $HOSTNAME")) "euler")
     (set! blight-configuration
 	  (home-emacs-configuration
-	   (packages (list (specification->package "emacs-blight")))
+	   (packages (list emacs-blight))
 	   (init '((shell-command "sudo chmod 777 /sys/class/backlight/amdgpu_bl0/brightness")
 		   (require 'blight)
 		   (setq my/blight (blight-sysfs))
