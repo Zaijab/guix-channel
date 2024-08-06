@@ -17,6 +17,7 @@
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages jami)
   #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages xorg)
   #:use-module (gnu packages scheme)
   #:use-module (gnu packages guile)
   #:use-module (gnu packages guile-xyz)
