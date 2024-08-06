@@ -29,6 +29,7 @@
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages haskell-xyz)
   #:use-module (gnu packages texlive)
+  #:use-module (gnu packages tex)
   #:use-module (gnu packages imagemagick)
   #:use-module (gnu packages graphviz)
   #:use-module (gnu packages tree-sitter)
