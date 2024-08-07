@@ -1025,9 +1025,7 @@ Valid contexts:
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list 
-	      python-pygments
-	      emacs-engrave-faces))
+   (packages (list python-pygments emacs-engrave-faces))
    (init '((require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
 	     "For a given file, get its TITLE keyword."
@@ -1714,7 +1712,12 @@ Valid contexts:
 		       max-mini-window-height 10
 	    	       initial-scratch-message nil
 	    	       large-file-warning-threshold 100000000)
-		 
+		 (setq
+		  left-fringe-width 1
+		  left-margin-width 1
+		  right-fringe-width 1
+		  right-margin-width 1)
+
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
 		 (defcustom password-colon-equivalents
