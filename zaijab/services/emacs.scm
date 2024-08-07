@@ -1713,10 +1713,10 @@ Valid contexts:
 	    	       initial-scratch-message nil
 	    	       large-file-warning-threshold 100000000)
 		 (setq
-		  left-fringe-width 1
-		  left-margin-width 1
-		  right-fringe-width 1
-		  right-margin-width 1)
+		  left-fringe-width 0
+		  left-margin-width 0
+		  right-fringe-width 0
+		  right-margin-width 0)
 
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
