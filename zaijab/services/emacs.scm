@@ -1531,7 +1531,7 @@ Valid contexts:
 	   (exwm-randr-mode)
 	   (require 'xelb)
 	   (require 'windsize)
-	   (advice-add #'exwm-layout--hide
+	   (advice-add (function exwm-layout--hide)
                        :after (lambda (id)
 				(with-current-buffer (exwm--id->buffer id)
 						     (setq exwm--ewmh-state
