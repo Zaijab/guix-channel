@@ -386,7 +386,7 @@ layer that explicitly uses the abstract syntax tree, for greater precision.")
 	       (base32
 		"0hg2s5yzpd1fsl0fyrfv2cc2m61a67drfg86msfqpqdmkv30pbca"))))
     (build-system emacs-build-system)
-    (propagated-inputs (list emacs-elfeed emacs-aio)) 
+    (propagated-inputs (list emacs-elfeed emacs-aio emacs-mpv mpv)) 
     (arguments
      '(#:include '("^elfeed-tube.el$" "^elfeed-tube-utils.el$"
 		   "^elfeed-tube-fill.el$")
@@ -423,6 +423,25 @@ disk for all entries. `elfeed-tube-auto-fetch-p': Unset this boolean to turn off
 fetching metadata.  You can then call `elfeed-tube-fetch to manually fetch data
 for specific feed entries.  See the customization group `elfeed-tube for more
 options.  See the README for more information.")
+    (license #f)))
+
+(define-public emacs-nano-emacs
+  (package
+    (name "emacs-nano-emacs")
+    (version "b8631088220dbbcd885ad1353bdc52b569655f85")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/rougier/nano-emacs.git")
+		    (commit "b8631088220dbbcd885ad1353bdc52b569655f85")))
+	      (sha256
+	       (base32
+		"0hg2s5yzpd1fsl0fyrfv2cc2m61a67drfg86msfqpqdmkv30pbca"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-aio emacs-mpv)) 
+    (home-page "")
+    (synopsis "")
+    (description "")
     (license #f)))
 
 (define-public emacs-py-autopep8
@@ -1347,4 +1366,6 @@ Mendler] <https://github.com/minad> [Clemens Radermacher]
 Kaleem] <https://github.com/mohkale>.")
     (license license:gpl3+)))
 
-emacs-embark-consult
+;emacs-elfeed-tube
+;emacs-embark-consult
+emacs-nano-emacs
