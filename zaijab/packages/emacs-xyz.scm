@@ -436,7 +436,7 @@ options.  See the README for more information.")
 		    (commit "b8631088220dbbcd885ad1353bdc52b569655f85")))
 	      (sha256
 	       (base32
-		"0hg2s5yzpd1fsl0fyrfv2cc2m61a67drfg86msfqpqdmkv30pbca"))))
+		"10v0f4va6xjyir729q0mx2zk0i4pjj8hjl8d2vam4571lv8f90wn"))))
     (build-system emacs-build-system)
     (propagated-inputs (list emacs-aio emacs-mpv)) 
     (home-page "")
