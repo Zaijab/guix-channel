@@ -697,7 +697,7 @@ If WINDOW is t, redisplay pages in all windows."
 
 	   (emms-all)
 	   (setq emms-player-list '(emms-player-mpv)
-		 emms-info-functions '(emms-info-tinytag emms-info-native))
+		 emms-info-functions '(emms-info-tinytag))
 
 	   (defvar emms-player-mpv-volume 100)
 	   (defun emms-player-mpv-get-volume ()
