@@ -692,9 +692,10 @@ If WINDOW is t, redisplay pages in all windows."
 	      emacs-emms
 	      python-tinytag))
    (init '((require 'emms-setup)
+	   (require 'emms-info-tinytag)
 	   (emms-all)
 	   (setq emms-player-list '(emms-player-mpv)
-		 emms-info-functions '(emms-info-native))
+		 emms-info-functions '(emms-info-tinytag emms-info-native))
 
 	   (defvar emms-player-mpv-volume 100)
 	   (defun emms-player-mpv-get-volume ()
