@@ -689,7 +689,8 @@ If WINDOW is t, redisplay pages in all windows."
 	      alsa-utils
 	      emacs-alsamixer-el
 	      emacs-bluetooth
-	      emacs-emms))
+	      emacs-emms
+	      python-tinytag))
    (init '((require 'emms-setup)
 	   (emms-all)
 	   (setq emms-player-list '(emms-player-mpv)

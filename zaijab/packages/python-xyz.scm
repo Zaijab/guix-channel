@@ -6,6 +6,7 @@
   #:use-module (gnu packages xml)
   #:use-module (gnu packages password-utils)
   #:use-module (gnu packages haskell-xyz)  
+  #:use-module (gnu packages check)  
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix gexp)
@@ -79,3 +80,26 @@ import your password database to a password store repository conveniently.  It
 natively supports import from 62 different password managers.  More manager
 support can easily be added.")
     (license license:gpl3)))
+
+(define-public python-tinytag
+  (package
+    (name "python-tinytag")
+    (version "1.10.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "tinytag" version))
+       (sha256
+        (base32 "13r6mq4va22abx7i6zg17nz90cpfm83whgx4rjm98l7q6sw66ahj"))))
+    (build-system pyproject-build-system)
+    (arguments (list #:tests? #f))
+    (native-inputs (list python-flake8 python-pytest python-pytest-cov))
+    (home-page "https://github.com/devsnd/tinytag")
+    (synopsis
+     "Read music meta data and length of MP3, OGG, OPUS, MP4, M4A, FLAC, WMA and Wave files")
+    (description
+     "Read music meta data and length of MP3, OGG, OPUS, MP4, M4A, FLAC, WMA and Wave
+files.")
+    (license license:expat)))
+
+python-tinytag
