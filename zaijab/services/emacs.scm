@@ -721,7 +721,7 @@ If WINDOW is t, redisplay pages in all windows."
 	     (interactive)
 	     (emms-player-mpv-cmd (list 'add 'volume (- (or amount '10))))
 	     (emms-player-mpv-get-volume))
-	   (emms-add-directory-tree "~/music/persona_3_reload/")
+	   (emms-add-directory-tree "~/music/random/")
 	   (emms-shuffle)
 	   (emms-player-mpv-lower-volume 30)
 
