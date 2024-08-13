@@ -693,6 +693,8 @@ If WINDOW is t, redisplay pages in all windows."
 	      python-tinytag))
    (init '((require 'emms-setup)
 	   (require 'emms-info-tinytag)
+	   (setq emms-info-tinytag-python-name "python3")
+
 	   (emms-all)
 	   (setq emms-player-list '(emms-player-mpv)
 		 emms-info-functions '(emms-info-tinytag emms-info-native))
