@@ -311,8 +311,30 @@
 			(tabspaces-include-buffers '("*scratch*"))
 			(tab-bar-new-tab-choice "*scratch*")
 			;; sessions
-			(tabspaces-session t)
-			(tabspaces-session-auto-restore t))))
+			(my-tabspaces-session '((nil . "Machine Learning Code") (nil . "Machine Learning Theory") (nil . "Fair Active Learning Paper") (nil . "Japanese") (nil . "System")))
+			:init
+			
+			(defun tabspaces-restore-session-from-list (tabspaces--session-list)
+			  "Restore tabspaces session."
+			  (interactive)
+			  ;; Start looping through the session list, but ensure to start from a
+			  ;; temporary buffer "*tabspaces--placeholder*" in order not to pollute the
+			  ;; buffer list with the final buffer from the previous tab.
+			  (cl-loop for elm in tabspaces--session-list do
+				   (switch-to-buffer "*tabspaces--placeholder*")
+				   (tabspaces-switch-or-create-workspace (cdr elm))
+				   (mapc #'find-file (car elm)))
+			  ;; Once the session list is restored, remove the temporary buffer from the
+			  ;; buffer list.
+			  (cl-loop for elm in tabspaces--session-list do
+				   (tabspaces-switch-or-create-workspace (cdr elm))
+				   (tabspaces-remove-selected-buffer "*tabspaces--placeholder*"))
+			  ;; Finally, kill the temporary buffer to clean up.
+			  (kill-buffer "*tabspaces--placeholder*"))
+
+			(tabspaces-restore-session-from-list my-tabspaces-session)
+
+			)))
    (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
 		 (setq switch-to-buffer-obey-display-actions t)
@@ -1465,10 +1487,10 @@ Valid contexts:
 	      guile-ares-rs
 	      guile-next))
    (init '(#;(with-eval-after-load 'guix-repl
-				 (setq guix-guile-program  '("guix" "repl")
-				       guix-config-scheme-compiled-directory  nil
-				       guix-repl-use-latest  nil
-				       guix-repl-use-server  nil))
+	   (setq guix-guile-program  '("guix" "repl")
+	   guix-config-scheme-compiled-directory  nil
+	   guix-repl-use-latest  nil
+	   guix-repl-use-server  nil))
 
 	   (require 'guix)
 	   (global-guix-prettify-mode)
@@ -1476,7 +1498,7 @@ Valid contexts:
 	   (setq geiser-mode-auto-p nil)
 
 	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
-	     (async-shell-command "guix shell --pure guix guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
+	     (async-shell-command "guix shell --pure guix guile-next guile-ares-rs -- guile -L /home/zjabbar/code/guix-channel/ -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
 
 	   (defun arei-server-start-guix-repl () "Start Arei with Default Port" (interactive)
 	     (async-shell-command "guix shell guile-next guile-ares-rs -- echo '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))' | guix repl"))
@@ -1586,7 +1608,7 @@ Valid contexts:
 						 "icecat --private-window http://localhost:8080"))))
 	   (global-set-key (kbd "s-v") (function
 					(lambda () (interactive)
-					(start-process-shell-command "Kanji Dojo" nil "guix shell jbr@17 coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/notes/data/kanji-linux-x64-2.0.7.jar"))))
+						(start-process-shell-command "Kanji Dojo" nil "guix shell jbr@17 coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/notes/data/kanji-linux-x64-2.0.7.jar"))))
 	   (global-set-key (kbd "s-r") (function eshell))
 	   (global-set-key (kbd "s-t") (function eval-region))
 	   (global-set-key (kbd "s-K") 'windsize-up)
