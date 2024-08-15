@@ -145,7 +145,7 @@
 		  (name "zjabbar")
 		  (comment "Zain Jabbar")
 		  (group "users")
-		  (supplementary-groups '("wheel" "netdev" "audio" "lp" "video" "docker")))
+		  (supplementary-groups '("wheel" "seat" "netdev" "audio" "lp" "video" "docker")))
 		 %base-user-accounts))
     
     (services main-services)))
