@@ -51,10 +51,6 @@
                 (list
                  (mixed-text-file "profile.sh"
                                   "export HOSTNAME\n"
-                                  "eval \"$(direnv hook bash)\"\n")))
-	       (bashrc
-		(list
-		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
 				  ;"if test -z \"${XDG_RUNTIME_DIR}\"; then\n"
 				  "  export XDG_RUNTIME_DIR=/tmp/\"${UID}\"-runtime-dir\n"
@@ -63,6 +59,12 @@
 				  "        chmod 0700 \"${XDG_RUNTIME_DIR}\"\n"
 				  "    fi\n"
 				  ;"fi\n"
+
+				  )))
+	       (bashrc
+		(list
+		 (mixed-text-file "login.sh"
+                                  "eval \"$(direnv hook bash)\"\n"
 				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
 				  "exec /home/zjabbar/code/guix-channel/zaijab/files/xinitrc.sh\n"
 				  "fi\n"
