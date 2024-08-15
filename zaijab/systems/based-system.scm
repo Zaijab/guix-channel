@@ -55,7 +55,7 @@
    (service guix-home-service-type `(("zjabbar" ,zains-home)))
    (service connman-service-type)
    (service tlp-service-type)
-   (service seatd-service-type)
+   ;(service seatd-service-type)
    (service docker-service-type)
    (service containerd-service-type)
    (service oci-container-service-type
@@ -86,7 +86,7 @@
      (delete pulseaudio-service-type)
      (delete gdm-service-type)
      (delete network-manager-service-type)
-    (delete elogind-service-type)
+     ;(delete elogind-service-type)
      (mingetty-service-type
       config => (mingetty-configuration
 		 (inherit config)

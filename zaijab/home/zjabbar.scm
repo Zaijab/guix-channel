@@ -52,13 +52,6 @@
                  (mixed-text-file "profile.sh"
                                   "export HOSTNAME\n"
                                   "eval \"$(direnv hook bash)\"\n"
-				  ;"if test -z \"${XDG_RUNTIME_DIR}\"; then\n"
-				  "  export XDG_RUNTIME_DIR=/tmp/\"${UID}\"-runtime-dir\n"
-				  "    if ! test -d \"${XDG_RUNTIME_DIR}\"; then\n"
-				  "        mkdir \"${XDG_RUNTIME_DIR}\"\n"
-				  "        chmod 0700 \"${XDG_RUNTIME_DIR}\"\n"
-				  "    fi\n"
-				  ;"fi\n"
 
 				  )))
 	       (bashrc
