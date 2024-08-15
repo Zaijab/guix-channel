@@ -17,7 +17,6 @@
   #:use-module (gnu packages linux)
   #:use-module (gnu services linux)
   #:use-module (gnu packages search)
-  #:use-module (gnu packages admin)
   #:use-module (gnu services base)
   #:use-module (gnu services file-sharing)
   #:use-module (gnu services admin)
@@ -55,7 +54,6 @@
    (service guix-home-service-type `(("zjabbar" ,zains-home)))
    (service connman-service-type)
    (service tlp-service-type)
-   ;(service seatd-service-type)
    (service docker-service-type)
    (service containerd-service-type)
    (service oci-container-service-type
@@ -86,7 +84,7 @@
      (delete pulseaudio-service-type)
      (delete gdm-service-type)
      (delete network-manager-service-type)
-     ;(delete elogind-service-type)
+    ; (delete elogind-service-type)
      (mingetty-service-type
       config => (mingetty-configuration
 		 (inherit config)
@@ -128,7 +126,6 @@
 	       (specification->package "xauth")
 	       (specification->package "make")
 	       (specification->package "gsettings-desktop-schemas")
-	       ;seatd
 	       %base-packages))
     
     (host-name "tao")
@@ -147,7 +144,7 @@
 		  (name "zjabbar")
 		  (comment "Zain Jabbar")
 		  (group "users")
-		  (supplementary-groups '("wheel" #;"seat" "netdev" "audio" "lp" "video" "docker")))
+		  (supplementary-groups '("wheel" "netdev" "audio" "lp" "video" "docker")))
 		 %base-user-accounts))
     
     (services main-services)))
