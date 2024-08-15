@@ -309,32 +309,7 @@
 			(tabspaces-default-tab "Default")
 			(tabspaces-remove-to-default t)
 			(tabspaces-include-buffers '("*scratch*"))
-			(tab-bar-new-tab-choice "*scratch*")
-			;; sessions
-			(my-tabspaces-session '((nil . "Machine Learning Code") (nil . "Machine Learning Theory") (nil . "Fair Active Learning Paper") (nil . "Japanese") (nil . "System")))
-			:init
-			
-			(defun tabspaces-restore-session-from-list (tabspaces--session-list)
-			  "Restore tabspaces session."
-			  (interactive)
-			  ;; Start looping through the session list, but ensure to start from a
-			  ;; temporary buffer "*tabspaces--placeholder*" in order not to pollute the
-			  ;; buffer list with the final buffer from the previous tab.
-			  (cl-loop for elm in tabspaces--session-list do
-				   (switch-to-buffer "*tabspaces--placeholder*")
-				   (tabspaces-switch-or-create-workspace (cdr elm))
-				   (mapc #'find-file (car elm)))
-			  ;; Once the session list is restored, remove the temporary buffer from the
-			  ;; buffer list.
-			  (cl-loop for elm in tabspaces--session-list do
-				   (tabspaces-switch-or-create-workspace (cdr elm))
-				   (tabspaces-remove-selected-buffer "*tabspaces--placeholder*"))
-			  ;; Finally, kill the temporary buffer to clean up.
-			  (kill-buffer "*tabspaces--placeholder*"))
-
-			(tabspaces-restore-session-from-list my-tabspaces-session)
-
-			)))
+			(tab-bar-new-tab-choice "*scratch*"))))
    (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
 		 (setq switch-to-buffer-obey-display-actions t)
@@ -671,7 +646,7 @@ If WINDOW is t, redisplay pages in all windows."
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
 
 	   (defun browse-url-mpv (url &optional new-window)
-	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?720]+bestaudio/best" url))
+	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?480]+bestaudio/best" url))
 
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.youtube." 'browse-url-mpv))
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.twitch." 'browse-url-mpv))
