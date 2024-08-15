@@ -57,6 +57,13 @@
 		(list
 		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
+				  "if test -z \"${XDG_RUNTIME_DIR}\"; then\n"
+				  "  export XDG_RUNTIME_DIR=/tmp/\"${UID}\"-runtime-dir\n"
+				  "    if ! test -d \"${XDG_RUNTIME_DIR}\"; then\n"
+				  "        mkdir \"${XDG_RUNTIME_DIR}\"\n"
+				  "        chmod 0700 \"${XDG_RUNTIME_DIR}\"\n"
+				  "    fi\n"
+				  "fi\n"
 				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
 				  "exec /home/zjabbar/code/guix-channel/zaijab/files/xinitrc.sh\n"
 				  "fi\n"
