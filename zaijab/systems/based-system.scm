@@ -17,6 +17,7 @@
   #:use-module (gnu packages linux)
   #:use-module (gnu services linux)
   #:use-module (gnu packages search)
+  #:use-module (gnu packages admin)
   #:use-module (gnu services base)
   #:use-module (gnu services file-sharing)
   #:use-module (gnu services admin)
@@ -127,6 +128,7 @@
 	       (specification->package "xauth")
 	       (specification->package "make")
 	       (specification->package "gsettings-desktop-schemas")
+	       seatd
 	       %base-packages))
     
     (host-name "tao")
