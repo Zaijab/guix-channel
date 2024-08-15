@@ -128,7 +128,7 @@
 	       (specification->package "xauth")
 	       (specification->package "make")
 	       (specification->package "gsettings-desktop-schemas")
-	       seatd
+	       ;seatd
 	       %base-packages))
     
     (host-name "tao")
@@ -147,7 +147,7 @@
 		  (name "zjabbar")
 		  (comment "Zain Jabbar")
 		  (group "users")
-		  (supplementary-groups '("wheel" "seat" "netdev" "audio" "lp" "video" "docker")))
+		  (supplementary-groups '("wheel" #;"seat" "netdev" "audio" "lp" "video" "docker")))
 		 %base-user-accounts))
     
     (services main-services)))
