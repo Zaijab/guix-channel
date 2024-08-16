@@ -309,7 +309,9 @@
 			(tabspaces-default-tab "Default")
 			(tabspaces-remove-to-default t)
 			(tabspaces-include-buffers '("*scratch*"))
-			(tab-bar-new-tab-choice "*scratch*"))))
+			(tab-bar-new-tab-choice "*scratch*")
+			(tabspaces-session t)
+			(tabspaces-session-auto-restore t))))
    (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
 		 (setq switch-to-buffer-obey-display-actions t)
