@@ -1515,7 +1515,7 @@ Valid contexts:
 		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
 		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
 
-(define shell-configuration
+#;(define shell-configuration
   (home-emacs-configuration
    (packages (list emacs-eat))
    (init '((use-package eat
@@ -1699,7 +1699,7 @@ Valid contexts:
 	   (set-fontset-font nil 'kana "IPAmjMincho")
 	   (set-fontset-font nil 'cjk-misc "IPAmjMincho")))))
 
-#;(define ui-configuration
+(define ui-configuration
   (home-emacs-configuration
    (packages (list emacs-rainbow-delimiters))
    (early-init '((setq gc-cons-threshold 800000
