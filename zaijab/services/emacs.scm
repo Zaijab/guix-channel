@@ -1305,7 +1305,8 @@ Valid contexts:
 						:timestamp))
 	   
 	   (setq org-agenda-files '("/home/zjabbar/notes/20211224040925-todo.org"
-				    "/home/zjabbar/notes/20240815234918-calendar.org"))
+				    "/home/zjabbar/notes/20240815234918-calendar.org"
+				    "/home/zjabbar/notes/20240731154916-uh_jpn_102.org"))
 	   (setq cdlatex-math-modify-alist
 		 '((?a "\\mathbf" nil t nil nil)
 		   (?b "\\mathbb" nil t nil nil)
@@ -1436,6 +1437,8 @@ Valid contexts:
    (packages (list
 	      python
 	      jupyter
+	      expect
+	      sshpass
 
 	      (identity #;(options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
 	       emacs-jupyter)
