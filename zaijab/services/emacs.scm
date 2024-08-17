@@ -16,6 +16,7 @@
   #:use-module (gnu packages gnuzilla)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages emacs-xyz)
+  #:use-module (gnu packages tcl)
   #:use-module (gnu packages jami)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
