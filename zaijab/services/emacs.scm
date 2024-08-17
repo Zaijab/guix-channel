@@ -100,7 +100,7 @@
 
 ;;; EMACS CONFIG
 
-;; Completion Style
+;; Completion Style - DONE
 (define orderless-configuration
   (home-emacs-configuration
    (packages (list emacs-orderless))
@@ -117,7 +117,12 @@
 (define vertico-configuration
   (home-emacs-configuration
    (packages (list emacs-vertico))
-   (init '((setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
+   (init '((use-package vertico
+			:custom
+			(vertico-cycle t)
+			:init
+			(vertico-mode))
+	   (setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
 	   (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
 	   (defun crm-indicator (args)
 	     (cons (format "[CRM%s] %s"
@@ -127,7 +132,9 @@
 			   (car args))
 		   (cdr args)))
 	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
-	   (vertico-mode 1)))))
+	   (setq enable-recursive-minibuffers t)
+	   (setq read-extended-command-predicate (function command-completion-default-include-p))
+	   ))))
 
 ;; In Buffer Completion
 (define corfu-configuration
@@ -456,20 +463,28 @@
 		   font-ipa-mj-mincho
 		   font-iosevka
 		   jbr21))
-   (init '((require 'facemenu)
-	   (advice-add
-	    'skk-previous-candidate :around
-	    (lambda (func &optional arg)
-	      (interactive "p")
-	      (if (and (not (eq skk-henkan-mode 'active))
-		       (not (eq last-command 'skk-kakutei-henkan))
-		       last-command-event
-		       (eq last-command-event
-			   (seq-first (car (where-is-internal
-					    'meow-prev
-					    meow-normal-state-keymap)))))
-		  (previous-line)
-		  (funcall func arg))))))))
+   (init '((use-package skk
+			:if (display-graphic-p)
+			:init
+			(advice-add
+			 'skk-previous-candidate :around
+			 (lambda (func &optional arg)
+			   (interactive "p")
+			   (if (and (not (eq skk-henkan-mode 'active))
+				    (not (eq last-command 'skk-kakutei-henkan))
+				    last-command-event
+				    (eq last-command-event
+					(seq-first (car (where-is-internal
+							 'meow-prev
+							 meow-normal-state-keymap)))))
+			       (previous-line)
+			       (funcall func arg))))
+			)
+	   
+	   (use-package facemenu
+			:after skk)
+
+	   ))))
 
 (define graphical-browser-configuration
   (home-emacs-configuration
@@ -651,6 +666,9 @@ If WINDOW is t, redisplay pages in all windows."
 
 	   (defun browse-url-mpv (url &optional new-window)
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?480]+bestaudio/best" url))
+
+	   (defun browse-url-mpv (url &optional new-window)
+	     (start-process "mpv" "*mpv*" "mpv" url))
 
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.youtube." 'browse-url-mpv))
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.twitch." 'browse-url-mpv))
@@ -1286,7 +1304,8 @@ Valid contexts:
 						:todo
 						:timestamp))
 	   
-	   (setq org-agenda-files '("/home/zjabbar/notes/20211224040925-todo.org"))
+	   (setq org-agenda-files '("/home/zjabbar/notes/20211224040925-todo.org"
+				    "/home/zjabbar/notes/20240815234918-calendar.org"))
 	   (setq cdlatex-math-modify-alist
 		 '((?a "\\mathbf" nil t nil nil)
 		   (?b "\\mathbb" nil t nil nil)
@@ -1532,159 +1551,162 @@ Valid contexts:
 	      emacs-vterm
 	      xrandr
 	      arandr))
-   (init '((require 'exwm)
-	   (exwm-randr-mode)
-	   (require 'xelb)
-	   (require 'windsize)
-	   (advice-add (function exwm-layout--hide)
-                       :after (lambda (id)
-				(with-current-buffer (exwm--id->buffer id)
-						     (setq exwm--ewmh-state
-							   (delq xcb:Atom:_NET_WM_STATE_HIDDEN exwm--ewmh-state))
-						     (exwm-layout--set-ewmh-state id)
-						     (xcb:flush exwm--connection))))
-	   (unbind-key (kbd "C-x C-z") 'global-map)
-	   (global-set-key (kbd "<f7>") (function
-					 (lambda () (interactive)
-						 (call-process-shell-command "loginctl suspend"))))
-	   (global-set-key (kbd "<f4>") (function
-					 (lambda () (interactive)
-						 (call-process-shell-command "xset dpms force off"))))
+   (init '((use-package exwm
+			:if (display-graphic-p)
+			:init
+			(exwm-randr-mode)
+			(require 'xelb)
+			(require 'windsize)
+			(advice-add (function exwm-layout--hide)
+				    :after (lambda (id)
+					     (with-current-buffer (exwm--id->buffer id)
+								  (setq exwm--ewmh-state
+									(delq xcb:Atom:_NET_WM_STATE_HIDDEN exwm--ewmh-state))
+								  (exwm-layout--set-ewmh-state id)
+								  (xcb:flush exwm--connection))))
+			(unbind-key (kbd "C-x C-z") 'global-map)
+			(global-set-key (kbd "<f7>") (function
+						      (lambda () (interactive)
+							      (call-process-shell-command "loginctl suspend"))))
+			(global-set-key (kbd "<f4>") (function
+						      (lambda () (interactive)
+							      (call-process-shell-command "xset dpms force off"))))
 
-	   (defun my/tabspace-kill-current-buffer () (interactive)
-	     (let ((buffer-list (cl-remove-if (lambda (buf) (string-match-p (regexp-quote "*Minibuf-") (buffer-name buf))) (tabspaces--buffer-list))))
-	       (cond
-		((and (string-match-p (regexp-quote "scratch") (buffer-name)) (< 1 (length buffer-list))) (tabspaces-switch-to-buffer (cadr buffer-list)))
-		((and (not (string-match-p (regexp-quote "scratch") (buffer-name))) (< 1 (length buffer-list))) (kill-current-buffer))
-		((and (string-match-p (regexp-quote "scratch") (buffer-name)) (= 1 (length buffer-list))) (set-buffer-modified-p nil) (erase-buffer))
-		((and (not (string-match-p (regexp-quote "scratch") (buffer-name))) (= 1 (length buffer-list))) (let ((buf (current-buffer))) (scratch-buffer) (kill-buffer buf))))))
+			(defun my/tabspace-kill-current-buffer () (interactive)
+			  (let ((buffer-list (cl-remove-if (lambda (buf) (string-match-p (regexp-quote "*Minibuf-") (buffer-name buf))) (tabspaces--buffer-list))))
+			    (cond
+			     ((and (string-match-p (regexp-quote "scratch") (buffer-name)) (< 1 (length buffer-list))) (tabspaces-switch-to-buffer (cadr buffer-list)))
+			     ((and (not (string-match-p (regexp-quote "scratch") (buffer-name))) (< 1 (length buffer-list))) (kill-current-buffer))
+			     ((and (string-match-p (regexp-quote "scratch") (buffer-name)) (= 1 (length buffer-list))) (set-buffer-modified-p nil) (erase-buffer))
+			     ((and (not (string-match-p (regexp-quote "scratch") (buffer-name))) (= 1 (length buffer-list))) (let ((buf (current-buffer))) (scratch-buffer) (kill-buffer buf))))))
 
-	   (global-set-key (kbd "s-q") (function my/tabspace-kill-current-buffer))
+			(global-set-key (kbd "s-q") (function my/tabspace-kill-current-buffer))
 
 
-	   (global-set-key (kbd "<f8>") 'toggle-exwm-input-line-mode-passthrough)
-	   (define-key exwm-mode-map (kbd "M-<escape>") (function toggle-exwm-input-line-mode-passthrough))
-	   (define-key exwm-mode-map (kbd "C-c C-c") (function exwm-input-send-next-key))
-	   
-	   (global-set-key (kbd "s-0") 'delete-window)
-	   (global-set-key (kbd "s-1") 'delete-other-windows)
-	   (global-set-key (kbd "s-2") 'split-window-below)
-	   (global-set-key (kbd "s-3") 'split-window-right)
-	   (global-set-key (kbd "s-5") 'exwm-workspace-switch)
-	   (global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
+			(global-set-key (kbd "<f8>") 'toggle-exwm-input-line-mode-passthrough)
+			(define-key exwm-mode-map (kbd "M-<escape>") (function toggle-exwm-input-line-mode-passthrough))
+			(define-key exwm-mode-map (kbd "C-c C-c") (function exwm-input-send-next-key))
+			
+			(global-set-key (kbd "s-0") 'delete-window)
+			(global-set-key (kbd "s-1") 'delete-other-windows)
+			(global-set-key (kbd "s-2") 'split-window-below)
+			(global-set-key (kbd "s-3") 'split-window-right)
+			(global-set-key (kbd "s-5") 'exwm-workspace-switch)
+			(global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
 
-	   (global-set-key (kbd "s-e") (function
-					(lambda () (interactive)
-						(start-process-shell-command
-						 "icecat"
-						 nil
-						 "icecat"))))
-	   (global-set-key (kbd "s-E") (function
-					(lambda () (interactive)
-						(start-process-shell-command
-						 "icecat --private-window http://localhost:8080"
-						 nil
-						 "icecat --private-window http://localhost:8080"))))
-	   (global-set-key (kbd "s-v") (function
-					(lambda () (interactive)
-						(start-process-shell-command "Kanji Dojo" nil "guix shell jbr@17 coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/notes/data/kanji-linux-x64-2.0.7.jar"))))
-	   (global-set-key (kbd "s-r") (function eshell))
-	   (global-set-key (kbd "s-t") (function eval-region))
-	   (global-set-key (kbd "s-K") 'windsize-up)
-	   (global-set-key (kbd "s-J") 'windsize-down)
-	   (global-set-key (kbd "s-f") 'exwm-floating-toggle-floating)
-	   (global-set-key (kbd "s-<tab>") 'consult-buffer)
-	   (global-set-key (kbd "s-<escape>") 'execute-extended-command)
-	   (global-set-key (kbd "s-`") 'eshell-command)
-	   (global-set-key (kbd "s-c") (function
-					(lambda () (interactive)
-						(find-file "~/code/guix-channel/zaijab/services/emacs.scm"))))
-	   (global-set-key (kbd "s-b") (function
-					(lambda () (interactive)
-						(find-file (read-file-name "" "~/books/")))))
-	   (global-set-key (kbd "s-n") 'org-roam-node-find)
-	   (global-set-key (kbd "s-i") 'org-roam-node-insert)
-	   (global-set-key (kbd "s-N") 'org-roam-dailies-capture-today)
-	   (global-set-key (kbd "C-x C-t") 'vterm)
-	   (global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
-	   (global-set-key (kbd "s-a") 'cfw:open-org-calendar)
-	   (global-set-key (kbd "s-s") (function jisho->fc))
+			(global-set-key (kbd "s-e") (function
+						     (lambda () (interactive)
+							     (start-process-shell-command
+							      "icecat"
+							      nil
+							      "icecat"))))
+			(global-set-key (kbd "s-E") (function
+						     (lambda () (interactive)
+							     (start-process-shell-command
+							      "icecat --private-window http://localhost:8080"
+							      nil
+							      "icecat --private-window http://localhost:8080"))))
+			(global-set-key (kbd "s-v") (function
+						     (lambda () (interactive)
+							     (start-process-shell-command "Kanji Dojo" nil "guix shell jbr@17 coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/notes/data/kanji-linux-x64-2.0.7.jar"))))
+			(global-set-key (kbd "s-r") (function eshell))
+			(global-set-key (kbd "s-t") (function eval-region))
+			(global-set-key (kbd "s-K") 'windsize-up)
+			(global-set-key (kbd "s-J") 'windsize-down)
+			(global-set-key (kbd "s-f") 'exwm-floating-toggle-floating)
+			(global-set-key (kbd "s-<tab>") 'consult-buffer)
+			(global-set-key (kbd "s-<escape>") 'execute-extended-command)
+			(global-set-key (kbd "s-`") 'eshell-command)
+			(global-set-key (kbd "s-c") (function
+						     (lambda () (interactive)
+							     (find-file "~/code/guix-channel/zaijab/services/emacs.scm"))))
+			(global-set-key (kbd "s-b") (function
+						     (lambda () (interactive)
+							     (find-file (read-file-name "" "~/books/")))))
+			(global-set-key (kbd "s-n") 'org-roam-node-find)
+			(global-set-key (kbd "s-i") 'org-roam-node-insert)
+			(global-set-key (kbd "s-N") 'org-roam-dailies-capture-today)
+			(global-set-key (kbd "C-x C-t") 'vterm)
+			(global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
+			(global-set-key (kbd "s-a") 'cfw:open-org-calendar)
+			(global-set-key (kbd "s-s") (function jisho->fc))
 
-	   (global-set-key (kbd "s-m") 'mu4e)
-	   (global-set-key (kbd "s-z") (function elfeed))
-	   (global-set-key (kbd "s-g") (function guix))
-	   (global-set-key (kbd "s-x") (function eww))
-	   (global-set-key (kbd "s-H") 'windsize-left)
-	   (global-set-key (kbd "s-L") 'windsize-right)
-	   (global-set-key (kbd "s-h") 'windmove-left)
-	   
-	   (global-set-key (kbd "s-j") 'windmove-down)
-	   (global-set-key (kbd "s-k") 'windmove-up)
-	   (global-set-key (kbd "s-l") 'windmove-right)
-	   (global-set-key (kbd "s-<SPC>") (function
-					    (lambda (command)
-					      (interactive (list (read-shell-command "$ ")))
-					      (start-process-shell-command command nil command))))
+			(global-set-key (kbd "s-m") 'mu4e)
+			(global-set-key (kbd "s-z") (function elfeed))
+			(global-set-key (kbd "s-g") (function guix))
+			(global-set-key (kbd "s-x") (function eww))
+			(global-set-key (kbd "s-H") 'windsize-left)
+			(global-set-key (kbd "s-L") 'windsize-right)
+			(global-set-key (kbd "s-h") 'windmove-left)
+			
+			(global-set-key (kbd "s-j") 'windmove-down)
+			(global-set-key (kbd "s-k") 'windmove-up)
+			(global-set-key (kbd "s-l") 'windmove-right)
+			(global-set-key (kbd "s-<SPC>") (function
+							 (lambda (command)
+							   (interactive (list (read-shell-command "$ ")))
+							   (start-process-shell-command command nil command))))
 					;(global-set-key (kbd "s-a") 'toggle-exwm-input-line-mode-passthrough)
-	   (defun exwm-rename-buffer-to-title () (exwm-workspace-rename-buffer exwm-class-name))
-	   (defun exwm-rename-buffer ()
-	     (interactive)
-	     (exwm-workspace-rename-buffer
-	      (concat exwm-class-name ":"
-		      (if (<= (length exwm-title) 25) exwm-title
-			  (concat (substring exwm-title 0 24) "...")))))
-	   
-	   ;; Add these hooks in a suitable place (e.g., as done in exwm-config-default)
-	   (add-hook 'exwm-update-class-hook 'exwm-rename-buffer)
-	   (add-hook 'exwm-update-title-hook 'exwm-rename-buffer)
-	   (defvar super-keys ())
-	   (let ((km (current-global-map)))
-	     (while km
-	       (let ((maybe-event (and (listp (car km))
-				       (caar km))))
-		 (if (and (eventp maybe-event)
-			  (memq 'super (event-modifiers maybe-event)))
-		     (add-to-list 'super-keys maybe-event)))
-	       (setq km (cdr km))))
-	   
-	   (setq exwm-input-prefix-keys (append super-keys '(XF86AudioRaiseVolume
-							     XF86AudioLowerVolume
-							     XF86AudioNext
-							     XF86AudioPlay
-							     XF86AudioPrev
-							     XF86AudioMute
-							     XF86MonBrightnessDown
-							     XF86MonBrightnessUp)))
+			(defun exwm-rename-buffer-to-title () (exwm-workspace-rename-buffer exwm-class-name))
+			(defun exwm-rename-buffer ()
+			  (interactive)
+			  (exwm-workspace-rename-buffer
+			   (concat exwm-class-name ":"
+				   (if (<= (length exwm-title) 25) exwm-title
+				       (concat (substring exwm-title 0 24) "...")))))
+			
+			;; Add these hooks in a suitable place (e.g., as done in exwm-config-default)
+			(add-hook 'exwm-update-class-hook 'exwm-rename-buffer)
+			(add-hook 'exwm-update-title-hook 'exwm-rename-buffer)
+			(defvar super-keys ())
+			(let ((km (current-global-map)))
+			  (while km
+			    (let ((maybe-event (and (listp (car km))
+						    (caar km))))
+			      (if (and (eventp maybe-event)
+				       (memq 'super (event-modifiers maybe-event)))
+				  (add-to-list 'super-keys maybe-event)))
+			    (setq km (cdr km))))
+			
+			(setq exwm-input-prefix-keys (append super-keys '(XF86AudioRaiseVolume
+									  XF86AudioLowerVolume
+									  XF86AudioNext
+									  XF86AudioPlay
+									  XF86AudioPrev
+									  XF86AudioMute
+									  XF86MonBrightnessDown
+									  XF86MonBrightnessUp)))
 					;(define-key exwm-mode-map (kbd "C-c") nil)
-	   
-	   (defun exwm-input-line-mode ()
-	     "Set exwm window to line-mode and show mode line"
-	     (call-interactively 'exwm-input-grab-keyboard)
-	     (exwm-layout-show-mode-line))
+			
+			(defun exwm-input-line-mode ()
+			  "Set exwm window to line-mode and show mode line"
+			  (call-interactively 'exwm-input-grab-keyboard)
+			  (exwm-layout-show-mode-line))
 
-	   (defun exwm-input-char-mode ()
-	     "Set exwm window to char-mode and hide mode line"
-	     (call-interactively 'exwm-input-release-keyboard)
-	     (exwm-layout-hide-mode-line))
+			(defun exwm-input-char-mode ()
+			  "Set exwm window to char-mode and hide mode line"
+			  (call-interactively 'exwm-input-release-keyboard)
+			  (exwm-layout-hide-mode-line))
 
-	   (defun exwm-input-toggle-mode ()
-	     "Toggle between line- and char-mode"
-	     (interactive)
-	     (with-current-buffer (window-buffer)
-				  (when (eq major-mode 'exwm-mode)
-				    (if (equal (nth 1 (nth 1 mode-line-process)) "line")
-					(exwm-input-char-mode)
-					(exwm-input-line-mode)))))
-	   (defun toggle-exwm-input-line-mode-passthrough ()
-	     (interactive)
-	     (if exwm-input-line-mode-passthrough
-		 (progn
-		  (setq exwm-input-line-mode-passthrough nil)
-		  (message "App receives all the keys now (with some simulation)"))
-		 (progn
-		  (setq exwm-input-line-mode-passthrough t)
-		  (message "emacs receives all the keys now")))
-	     (force-mode-line-update))))))
+			(defun exwm-input-toggle-mode ()
+			  "Toggle between line- and char-mode"
+			  (interactive)
+			  (with-current-buffer (window-buffer)
+					       (when (eq major-mode 'exwm-mode)
+						 (if (equal (nth 1 (nth 1 mode-line-process)) "line")
+						     (exwm-input-char-mode)
+						     (exwm-input-line-mode)))))
+			(defun toggle-exwm-input-line-mode-passthrough ()
+			  (interactive)
+			  (if exwm-input-line-mode-passthrough
+			      (progn
+			       (setq exwm-input-line-mode-passthrough nil)
+			       (message "App receives all the keys now (with some simulation)"))
+			      (progn
+			       (setq exwm-input-line-mode-passthrough t)
+			       (message "emacs receives all the keys now")))
+			  (force-mode-line-update)))
+	   ))))
 
 (define theme-configuration
   (home-emacs-configuration
@@ -1692,17 +1714,19 @@ Valid contexts:
 
 (define font-configuration
   (home-emacs-configuration
-   (init '((set-face-attribute 'default nil :font "Iosevka-14")
-	   (set-fontset-font nil 'tibetan "Iosevka")
-	   (set-fontset-font nil 'symbol "Iosevka")
-	   (set-fontset-font nil 'han "IPAmjMincho")
-	   (set-fontset-font nil 'kana "IPAmjMincho")
-	   (set-fontset-font nil 'cjk-misc "IPAmjMincho")))))
+   (init '((if (display-graphic-p)
+	       (set-face-attribute 'default nil :font "Iosevka-14")
+	       (set-fontset-font nil 'tibetan "Iosevka")
+	       (set-fontset-font nil 'symbol "Iosevka")
+	       (set-fontset-font nil 'han "IPAmjMincho")
+	       (set-fontset-font nil 'kana "IPAmjMincho")
+	       (set-fontset-font nil 'cjk-misc "IPAmjMincho")
+	       )
+	   ))))
 
 (define ui-configuration
   (home-emacs-configuration
-   (packages (list emacs-rainbow-delimiters
-		   emacs-explain-pause-mode))
+   (packages (list emacs-rainbow-delimiters))
    (early-init '((setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
 		       indicate-empty-lines nil
