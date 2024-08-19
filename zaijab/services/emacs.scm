@@ -1440,6 +1440,7 @@ Valid contexts:
 	      jupyter
 	      expect
 	      sshpass
+	      emacs-ob-async
 
 	      (identity #;(options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
 	       emacs-jupyter)
