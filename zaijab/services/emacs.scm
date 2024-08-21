@@ -500,7 +500,7 @@
    (init '((add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 	   (pdf-tools-install)
 	   (defvar *current-mode* 'light)
-	   (defun pdf-view-redisplay (&optional window)
+	   #;(defun pdf-view-redisplay (&optional window)
 	     "Redisplay page in WINDOW.
 
 If WINDOW is t, redisplay pages in all windows."
@@ -521,6 +521,7 @@ If WINDOW is t, redisplay pages in all windows."
 					     (window-buffer window)))
 			       (setf (pdf-view-window-needs-redisplay window) t)))))
 	       (force-mode-line-update)))
+	   
 	   (defun my/dark-mode ()
 	     (interactive)
 	     (cond ((eq *current-mode* 'light)
