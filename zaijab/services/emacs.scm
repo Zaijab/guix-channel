@@ -114,7 +114,7 @@
 			(read-file-name-completion-ignore-case t)
 			(read-buffer-completion-ignore-case t))))))
 
-;; Completion UI
+;; Completion UI - DONE
 (define vertico-configuration
   (home-emacs-configuration
    (packages (list emacs-vertico))
@@ -122,20 +122,7 @@
 			:custom
 			(vertico-cycle t)
 			:init
-			(vertico-mode))
-	   (setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
-	   (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
-	   (defun crm-indicator (args)
-	     (cons (format "[CRM%s] %s"
-			   (replace-regexp-in-string
-			    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-			    crm-separator)
-			   (car args))
-		   (cdr args)))
-	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
-	   (setq enable-recursive-minibuffers t)
-	   (setq read-extended-command-predicate (function command-completion-default-include-p))
-	   ))))
+			(vertico-mode))))))
 
 ;; In Buffer Completion
 (define corfu-configuration
@@ -462,8 +449,7 @@
 		   font-lohit
 		   font-vazir
 		   font-ipa-mj-mincho
-		   font-iosevka
-		   jbr21))
+		   font-iosevka))
    (init '((use-package skk
 			:if (display-graphic-p)
 			:init
@@ -1614,7 +1600,7 @@ Valid contexts:
 							      "icecat --private-window http://localhost:8080"))))
 			(global-set-key (kbd "s-v") (function
 						     (lambda () (interactive)
-							     (start-process-shell-command "Kanji Dojo" nil "guix shell jbr@17 coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/notes/data/kanji-linux-x64-2.0.7.jar"))))
+							     (start-process-shell-command "Kanji Dojo" nil "guix shell jbr@21 coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/notes/data/kanji-linux-x64-2.0.7.jar"))))
 			(global-set-key (kbd "s-r") (function eshell))
 			(global-set-key (kbd "s-t") (function eval-region))
 			(global-set-key (kbd "s-K") 'windsize-up)
@@ -1823,6 +1809,18 @@ Valid contexts:
 	   (require 'rainbow-delimiters)
 	   (define-globalized-minor-mode global-rainbow-delimiters-mode rainbow-delimiters-mode rainbow-delimiters-mode-enable)
 	   (global-rainbow-delimiters-mode)
+	   (setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
+	   (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
+	   (defun crm-indicator (args)
+	     (cons (format "[CRM%s] %s"
+			   (replace-regexp-in-string
+			    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+			    crm-separator)
+			   (car args))
+		   (cdr args)))
+	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
+	   (setq enable-recursive-minibuffers t)
+	   (setq read-extended-command-predicate (function command-completion-default-include-p))
 	   (which-key-mode)))))
 
 ;;; Combine all Emacs-Configurations within module
