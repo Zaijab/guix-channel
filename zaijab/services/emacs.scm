@@ -1440,6 +1440,7 @@ Valid contexts:
 	      emacs-csv-mode
 	      emacs-py-isort
 	      emacs-python-black
+	      python-pip
 	      pandoc))
    (init '((require 'jupyter)
 	   (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
