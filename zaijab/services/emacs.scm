@@ -28,6 +28,7 @@
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages python-build)
   #:use-module (gnu packages haskell-xyz)
   #:use-module (gnu packages texlive)
   #:use-module (gnu packages tex)
