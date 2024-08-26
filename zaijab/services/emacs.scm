@@ -1572,7 +1572,8 @@ Valid contexts:
 				  (add-to-list 'super-keys maybe-event)))
 			    (setq km (cdr km))))
 			
-			(setq exwm-input-prefix-keys (append super-keys '(XF86AudioRaiseVolume
+			(setq exwm-input-prefix-keys (append super-keys '(f7
+									  XF86AudioRaiseVolume
 									  XF86AudioLowerVolume
 									  XF86AudioNext
 									  XF86AudioPlay
