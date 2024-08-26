@@ -306,14 +306,11 @@
 			(tabspaces-remove-to-default t)
 			(tabspaces-include-buffers '("*scratch*"))
 			(tab-bar-new-tab-choice "*scratch*")
-					;(tabspaces-session t)
-					;(tabspaces-session-auto-restore t)
 			:config
-			(tab-switch "Code")
-			(tab-switch "Theory")
-			(tab-switch "Paper")
-			(tab-switch "Japanese")
-			(tab-switch "System")
+			(dolist (name '("Code" "Theory" "Paper" "Japanese" "System") ())
+				(sleep-for 0.01)
+				(tab-switch name))
+			(tab-bar-close-tab-by-name "*scratch*")
 			)))
    (early-init '(
 		 (setq desktop-restore-frames nil
