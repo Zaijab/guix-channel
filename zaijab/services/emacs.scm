@@ -131,6 +131,7 @@
    (init '((require 'nano-theme-light)
 	   (require 'nano-theme-dark)
 	   (require 'nano-theme)
+	   (require 'nano-theme-support)
 	   (require 'nano-help)
 	   (require 'nano-splash)
 	   (require 'nano-modeline)
