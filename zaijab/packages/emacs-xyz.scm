@@ -487,6 +487,26 @@ options.  See the README for more information.")
     (description "")
     (license #f)))
 
+
+(define-public emacs-nano-theme
+  (package
+    (name "emacs-nano-theme")
+    (version "ffe414c8af9c673caf8b8b05ba89a229cb9ad48b")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/rougier/nano-theme.git")
+		    (commit "ffe414c8af9c673caf8b8b05ba89a229cb9ad48b")))
+	      (sha256
+	       (base32
+		"0wi5snsakpag7lcdndz10x5fxb0yrnignqdx3v4fm5drbk0d7hkr"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
 (define-public emacs-py-autopep8
   (package
     (name "emacs-py-autopep8")
@@ -1411,5 +1431,6 @@ Kaleem] <https://github.com/mohkale>.")
 
 ;emacs-elfeed-tube
 ;emacs-embark-consult
-emacs-nano-emacs
+;emacs-nano-emacs
 ;emacs-mu4e-thread-folding
+emacs-nano-theme

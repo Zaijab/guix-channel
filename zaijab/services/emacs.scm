@@ -127,7 +127,7 @@
 
 (define nano-configuration
   (home-emacs-configuration
-   (packages (list emacs-nano-emacs))
+   (packages (list emacs-nano-emacs emacs-nano-theme))
    (init '((require 'nano-theme-light)
 	   (require 'nano-theme-dark)
 	   (require 'nano-theme)
