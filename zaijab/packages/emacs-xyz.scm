@@ -34,6 +34,7 @@
   #:use-module (guix build-system trivial)
   #:use-module (gnu packages)
   #:use-module (gnu packages algebra)
+  #:use-module (gnu packages mail)
   #:use-module (gnu packages assembly)
   #:use-module (gnu packages audio)
   #:use-module (gnu packages autotools)
@@ -438,7 +439,49 @@ options.  See the README for more information.")
 	       (base32
 		"10sphksfy574kgplxq1lpz8dm5r8wnf8kg4kdcd8x9ldr7iy6qrf"))))
     (build-system emacs-build-system)
-    (propagated-inputs (list emacs-aio emacs-mpv)) 
+    (propagated-inputs (list emacs-aio emacs-mpv emacs-ts emacs-smex emacs-mini-frame emacs-svg-tag-mode
+			     emacs-mu4e-dashboard emacs-mu4e-thread-folding))
+    (inputs (list zsh))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
+
+(define-public emacs-mu4e-folding
+  (package
+    (name "emacs-mu4e-folding")
+    (version "67f0a3b7a45153f3aa2953dd83c77b93908aef08")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/rougier/mu4e-folding.git")
+		    (commit "67f0a3b7a45153f3aa2953dd83c77b93908aef08")))
+	      (sha256
+	       (base32
+		"10sphksfy574kgplxq1lpz8dm5r8wnf8kg4kdcd8x9ldr7iy6qrf"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-ts emacs-smex emacs-mini-frame emacs-svg-tag-mode emacs-mu4e-dashboard mu))
+    (inputs (list zsh))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
+(define-public emacs-mu4e-thread-folding
+  (package
+    (name "emacs-mu4e-thread-folding")
+    (version "0575994abb4827e93b7f31b7871f89b888f3e51c")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://github.com/rougier/mu4e-thread-folding.git")
+		    (commit "0575994abb4827e93b7f31b7871f89b888f3e51c")))
+	      (sha256
+	       (base32
+		"1kqlxr56lljxj1xm3n42r1mxw190zj6ja3kvp0a8dczlz5546gd0"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list mu))
     (home-page "")
     (synopsis "")
     (description "")
@@ -1369,3 +1412,4 @@ Kaleem] <https://github.com/mohkale>.")
 ;emacs-elfeed-tube
 ;emacs-embark-consult
 emacs-nano-emacs
+;emacs-mu4e-thread-folding

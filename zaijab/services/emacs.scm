@@ -125,6 +125,12 @@
 			:init
 			(vertico-mode))))))
 
+(define nano-configuration
+  (home-emacs-configuration
+   (packages (list emacs-nano-emacs))
+   (init '())))
+
+
 ;; In Buffer Completion
 (define corfu-configuration
   (home-emacs-configuration
