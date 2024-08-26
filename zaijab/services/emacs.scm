@@ -308,12 +308,14 @@
 			(tab-bar-new-tab-choice "*scratch*")
 					;(tabspaces-session t)
 					;(tabspaces-session-auto-restore t)
+			:config
+			(tab-switch "Code")
+			(tab-switch "Theory")
+			(tab-switch "Paper")
+			(tab-switch "Japanese")
+			(tab-switch "System")
 			)))
-   (early-init '((tab-switch "Code")
-		 (tab-switch "Theory")
-		 (tab-switch "Paper")
-		 (tab-switch "Japanese")
-		 (tab-switch "System")
+   (early-init '(
 		 (setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
 		 (setq switch-to-buffer-obey-display-actions t)
