@@ -125,7 +125,7 @@
 			:init
 			(vertico-mode))))))
 
-(define nano-configuration
+#;(define nano-configuration
   (home-emacs-configuration
    (packages (list emacs-nano-emacs emacs-nano-theme font-google-roboto))
    (init '((require 'nano-theme-light)
@@ -141,9 +141,7 @@
 	   (require 'nano-bindings)
 	   ;(require 'nano-counsel)
 	   (require 'nano-colors)
-	   (require 'nano-command)
-
-	   ))))
+	   (require 'nano-command)))))
 
 
 ;; In Buffer Completion
@@ -1636,7 +1634,7 @@ Valid contexts:
 
 (define theme-configuration
   (home-emacs-configuration
-   (init '(#;(load-theme 'modus-operandi t)))))
+   (init '((load-theme 'modus-operandi t)))))
 
 (define font-configuration
   (home-emacs-configuration
