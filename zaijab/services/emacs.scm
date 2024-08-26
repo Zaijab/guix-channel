@@ -128,7 +128,19 @@
 (define nano-configuration
   (home-emacs-configuration
    (packages (list emacs-nano-emacs))
-   (init '())))
+   (init '((require 'nano-theme-light)
+	   (require 'nano-theme-dark)
+	   (require 'nano-theme)
+	   (require 'nano-help)
+	   (require 'nano-splash)
+	   (require 'nano-modeline)
+	   (require 'nano-layout)
+	   (require 'nano-defaults)
+	   (require 'nano-session)
+	   (require 'nano-bindings)
+	   (require 'nano-counsel)
+	   (require 'nano-colors)
+	   (require 'nano-command)))))
 
 
 ;; In Buffer Completion
