@@ -139,7 +139,7 @@
 	   (require 'nano-defaults)
 	   (require 'nano-session)
 	   (require 'nano-bindings)
-	   (require 'nano-counsel)
+	   ;(require 'nano-counsel)
 	   (require 'nano-colors)
 	   (require 'nano-command)))))
 
