@@ -383,7 +383,7 @@
    (init '((use-package skk
 			:if (display-graphic-p)
 			:init
-			(advice-add
+			#;(advice-add
 			 'skk-previous-candidate :around
 			 (lambda (func &optional arg)
 			   (interactive "p")
