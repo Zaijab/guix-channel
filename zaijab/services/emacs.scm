@@ -349,7 +349,7 @@
 	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)	   
 	   (global-undo-tree-mode)))))
 
-(define indentation-configuration
+#;(define indentation-configuration
   (home-emacs-configuration
    (packages (list emacs-aggressive-indent
 		   emacs-smart-hungry-delete))
