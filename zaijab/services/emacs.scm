@@ -349,16 +349,6 @@
 	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)	   
 	   (global-undo-tree-mode)))))
 
-#;(define indentation-configuration
-  (home-emacs-configuration
-   (packages (list emacs-aggressive-indent
-		   emacs-smart-hungry-delete))
-   (init '((require 'smart-hungry-delete)
-	   (smart-hungry-delete-add-default-hooks)
-	   (global-set-key (kbd "<backspace>") 'smart-hungry-delete-backward-char)
-	   (global-set-key (kbd "<delete>") 'smart-hungry-delete-backward-char)
-	   (global-set-key (kbd "C-d") 'smart-hungry-delete-forward-char)))))
-
 (define project-configuration
   (home-emacs-configuration
    (packages (list git
@@ -1190,7 +1180,7 @@ Valid contexts:
 	   
 	   (setq org-tags-column 0
 		 org-image-actual-width nil)
-	   (global-org-modern-mode)
+	   ;(global-org-modern-mode)
 	   (add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
 
 	   (setq org-todo-keywords
