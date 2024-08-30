@@ -11,7 +11,8 @@
   #:use-module (gnu)
   #:use-module (gnu system)
   #:use-module (gnu home)
-  #:use-module (gnu services guix)  
+  #:use-module (gnu services guix)
+  #:use-module (gnu services cups)
   #:use-module (gnu services pm)  
   #:use-module (gnu packages)
   #:use-module (gnu packages linux)
@@ -79,7 +80,7 @@
 			 "/home/zjabbar/code/guix-channel/zaijab/files/limiter.toml:/etc/searxng/limiter.toml"
 			 "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"))
 	      (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080"))))))
-
+   (service cups-service-type)
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
      (delete gdm-service-type)
