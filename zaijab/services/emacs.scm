@@ -126,7 +126,7 @@
 			(vertico-mode))))))
 
 ;; In Buffer Completion
-#;(define corfu-configuration
+(define corfu-configuration
   (home-emacs-configuration
    (packages (list emacs-corfu))
    (init '((global-corfu-mode)
@@ -157,6 +157,10 @@
 	     (setq tempel--path-templates nil))
 	   (add-hook 'prog-mode-hook 'tempel-setup-capf)
 	   (add-hook 'text-mode-hook 'tempel-setup-capf)
+	   (add-hook 'text-mode-hook
+		     (lambda ()
+		       (remove-hook 'completion-at-point-functions
+				    'ispell-completion-at-point t)))
 	   (define-key tempel-map (kbd "C-a") (function tempel-prev))
 	   (define-key tempel-map (kbd "C-d") (function tempel-next))
 	   (global-set-key (kbd "M-+") (function tempel-complete))))))
