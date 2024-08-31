@@ -125,27 +125,8 @@
 			:init
 			(vertico-mode))))))
 
-#;(define nano-configuration
-  (home-emacs-configuration
-   (packages (list emacs-nano-emacs emacs-nano-theme font-google-roboto))
-   (init '((require 'nano-theme-light)
-	   (require 'nano-theme-dark)
-	   (require 'nano-theme-support)
-	   (require 'nano-theme)
-	   (require 'nano-help)
-	   (require 'nano-splash)
-	   (require 'nano-modeline)
-	   (require 'nano-layout)
-	   (require 'nano-defaults)
-	   (require 'nano-session)
-	   (require 'nano-bindings)
-	   ;(require 'nano-counsel)
-	   (require 'nano-colors)
-	   (require 'nano-command)))))
-
-
 ;; In Buffer Completion
-(define corfu-configuration
+#;(define corfu-configuration
   (home-emacs-configuration
    (packages (list emacs-corfu))
    (init '((global-corfu-mode)
