@@ -854,8 +854,6 @@ If WINDOW is t, redisplay pages in all windows."
 			(org-fc-flashcard-tag "FC")
 			(org-fc-suspended-tag "Suspended")
 			:config
-			(add-hook 'org-fc-review-flip-mode-hook (function meow-motion-mode))
-			(add-hook 'org-fc-after-review-hook (function meow-normal-mode))
 			(defun org-fc-review-cram (context)
 			  "Start a review session for all cards in CONTEXT.
 Called interactively, prompt for the context.
