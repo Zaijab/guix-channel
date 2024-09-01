@@ -130,7 +130,6 @@
   (home-emacs-configuration
    (packages (list emacs-jinx
 		   hunspell-dict-en-us
-		   hunspell-dict-
 		   emacs-cape-jinx-completion))
    (init '((use-package jinx
 			:hook (emacs-startup . global-jinx-mode)
