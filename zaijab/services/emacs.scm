@@ -184,7 +184,6 @@
 			:bind ("C-c p" . cape-prefix-map)
 			:init 
 			(setq tab-always-indent 'complete)
-			(add-to-list 'completion-at-point-functions (function cape-dict))
 			(add-to-list 'completion-at-point-functions (function cape-file)))
 	   ))))
 
