@@ -25,7 +25,8 @@
   #:use-module (gnu packages guile-xyz)
   #:use-module (gnu packages password-utils)
   #:use-module (gnu packages mail)
-  #:use-module (gnu packages ssh)
+  #:use-module (gnu packages ssh)c
+  #:use-module (gnu packages hunspell)
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages python-build)
@@ -127,7 +128,8 @@
 
 (define spellcheck-configuration
   (home-emacs-configuration
-   (packages (list emacs-jinx))
+   (packages (list emacs-jinx
+		   hunspell-dict-en-us))
    (init '((use-package jinx
 			:hook (emacs-startup . global-jinx-mode)
 			:bind (("M-$" . jinx-correct)
