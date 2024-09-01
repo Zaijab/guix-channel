@@ -1590,7 +1590,7 @@ Valid contexts:
 									  XF86MonBrightnessDown
 									  XF86MonBrightnessUp)))
 					;(define-key exwm-mode-map (kbd "C-c") nil)
-			(setq exwm-input-global-keys '(([?\M-x] . execute-extended-command)))
+			(setq exwm-input-global-keys (backquote ((,(kbd "M-x") . execute-extended-command)))
 			(defun exwm-input-line-mode ()
 			  "Set exwm window to line-mode and show mode line"
 			  (call-interactively 'exwm-input-grab-keyboard)
