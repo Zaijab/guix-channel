@@ -125,6 +125,14 @@
 			:init
 			(vertico-mode))))))
 
+(define spellcheck-configuration
+  (home-emacs-configuration
+   (packages (list emacs-jinx))
+   (init '((use-package jinx
+			:hook (emacs-startup . global-jinx-mode)
+			:bind (("M-$" . jinx-correct)
+			       ("C-M-$" . jinx-languages)))))))
+
 ;; In Buffer Completion
 (define corfu-configuration
   (home-emacs-configuration
