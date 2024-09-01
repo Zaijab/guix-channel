@@ -126,26 +126,15 @@
 			:init
 			(vertico-mode))))))
 
+;; Spell checking - DONE 
 (define spellcheck-configuration
   (home-emacs-configuration
    (packages (list emacs-jinx
-		   hunspell-dict-en-us
-		   emacs-cape-jinx-completion))
+		   hunspell-dict-en-us))
    (init '((use-package jinx
 			:hook (emacs-startup . global-jinx-mode)
 			:bind (("M-$" . jinx-correct)
-			       ("C-M-$" . jinx-languages))
-			    :config
-			    ;; Add unicode stuff I need to exclude from spell-checking (emojis, symbols, etc)
-			    (push "[\U00002600-\U0001ffff]"
-				  (alist-get t jinx-exclude-regexps))
-			    ;; set langauge dictionaries to use - the list is space seprated in a single string.
-			   )
-	   #;(use-package cape-jinx-completion
-			  :after jinx
-			  :config
-			  ;; add cape-jinx to completion-at-point functions list.
-			  (add-to-list 'completion-at-point-functions (function cape-jinx-completion)))))))
+			       ("C-M-$" . jinx-languages)))))))
 
 ;; In Buffer Completion
 (define corfu-configuration
@@ -1603,7 +1592,7 @@ Valid contexts:
 									  XF86MonBrightnessDown
 									  XF86MonBrightnessUp)))
 					;(define-key exwm-mode-map (kbd "C-c") nil)
-			
+			(setq exwm-input-global-keys '(([?\M-x] . execute-extended-command)))
 			(defun exwm-input-line-mode ()
 			  "Set exwm window to line-mode and show mode line"
 			  (call-interactively 'exwm-input-grab-keyboard)
