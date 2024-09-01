@@ -511,6 +511,8 @@ If WINDOW is t, redisplay pages in all windows."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCSju5G2aFaWMqn-_0YBtq5A" math parker)
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" crafter david)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UC0uTPqBCFIpZxlz_Lv1tk_g" crafter prot)
+				("https://protesilaos.com/codelog.xml" crafter prot)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCuj_loxODrOPxSsXDfJmpng" crafter andrew)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UChW6oX-CYk5jWYZKZaMpVKg" crafter guix_social)
 				
