@@ -145,7 +145,7 @@
 			  :after jinx
 			  :config
 			  ;; add cape-jinx to completion-at-point functions list.
-			  (add-to-list 'completion-at-point-functions #'cape-jinx-completion))))))
+			  (add-to-list 'completion-at-point-functions (function cape-jinx-completion)))))))
 
 ;; In Buffer Completion
 (define corfu-configuration
