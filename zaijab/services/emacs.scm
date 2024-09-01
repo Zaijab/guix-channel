@@ -141,7 +141,7 @@
 				  (alist-get t jinx-exclude-regexps))
 			    ;; set langauge dictionaries to use - the list is space seprated in a single string.
 			   )
-	   (use-package cape-jinx-completion
+	   #;(use-package cape-jinx-completion
 			  :after jinx
 			  :config
 			  ;; add cape-jinx to completion-at-point functions list.
