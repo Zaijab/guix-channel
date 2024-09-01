@@ -1429,8 +1429,28 @@ Mendler] <https://github.com/minad> [Clemens Radermacher]
 Kaleem] <https://github.com/mohkale>.")
     (license license:gpl3+)))
 
+(define-public emacs-cape-jinx-completion
+  (package
+    (name "emacs-cape-jinx-completion")
+    (version "1a47c51064c1334b452f310c53d5a2cf2d1629f6")
+    (source (origin
+	      (method git-fetch)
+	      (uri (git-reference
+		    (url "https://code.bsdgeek.org/adam/cape-jinx-completion.git")
+		    (commit "1a47c51064c1334b452f310c53d5a2cf2d1629f6")))
+	      (sha256
+	       (base32
+		"1qgrg6dazbkg58n1ggh7nnl7ay2xcap7ipv6l96xw18n90dral9b"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-cape emacs-jinx))
+    (inputs (list))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
 ;emacs-elfeed-tube
 ;emacs-embark-consult
 ;emacs-nano-emacs
 ;emacs-mu4e-thread-folding
-emacs-nano-theme
+emacs-cape-jinx-completion

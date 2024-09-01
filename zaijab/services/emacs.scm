@@ -129,11 +129,24 @@
 (define spellcheck-configuration
   (home-emacs-configuration
    (packages (list emacs-jinx
-		   hunspell-dict-en-us))
+		   hunspell-dict-en-us
+		   hunspell-dict-
+		   emacs-cape-jinx-completion))
    (init '((use-package jinx
 			:hook (emacs-startup . global-jinx-mode)
 			:bind (("M-$" . jinx-correct)
-			       ("C-M-$" . jinx-languages)))))))
+			       ("C-M-$" . jinx-languages))
+			    :config
+			    ;; Add unicode stuff I need to exclude from spell-checking (emojis, symbols, etc)
+			    (push "[\U00002600-\U0001ffff]"
+				  (alist-get t jinx-exclude-regexps))
+			    ;; set langauge dictionaries to use - the list is space seprated in a single string.
+			   )
+	   (use-package cape-jinx-completion
+			  :after jinx
+			  :config
+			  ;; add cape-jinx to completion-at-point functions list.
+			  (add-to-list 'completion-at-point-functions #'cape-jinx-completion))))))
 
 ;; In Buffer Completion
 (define corfu-configuration
@@ -179,8 +192,13 @@
 (define cape-configuration
   (home-emacs-configuration
    (packages (list emacs-cape))
-   (init '((setq tab-always-indent 'complete)
-	   (add-to-list 'completion-at-point-functions (function cape-file))))))
+   (init '((use-package cape
+			:bind ("C-c p" . cape-prefix-map)
+			:init 
+			(setq tab-always-indent 'complete)
+			(add-to-list 'completion-at-point-functions (function cape-dict))
+			(add-to-list 'completion-at-point-functions (function cape-file)))
+	   ))))
 
 ;; Annotations
 (define marginalia-configuration
