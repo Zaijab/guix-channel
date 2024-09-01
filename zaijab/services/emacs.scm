@@ -25,7 +25,7 @@
   #:use-module (gnu packages guile-xyz)
   #:use-module (gnu packages password-utils)
   #:use-module (gnu packages mail)
-  #:use-module (gnu packages ssh)c
+  #:use-module (gnu packages ssh)
   #:use-module (gnu packages hunspell)
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
