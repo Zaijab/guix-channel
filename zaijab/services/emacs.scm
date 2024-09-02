@@ -128,6 +128,94 @@
 			:init
 			(vertico-mode))))))
 
+;; Annotations
+(define marginalia-configuration
+  (home-emacs-configuration
+   (packages (list emacs-marginalia))
+   (init '((use-package marginalia
+			:config (marginalia-mode))))))
+
+;; Interactive Completing Read
+(define consult-configuration
+  (home-emacs-configuration
+   (packages (list emacs-consult
+		   ripgrep-all
+		   poppler
+		   poppler-data))
+   (init '((require 'consult)
+	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
+	   (setq register-preview-delay 0.5
+		 register-preview-function (function consult-register-format))
+	   (advice-add (function register-preview) :override (function consult-register-window))
+	   (setq xref-show-xrefs-function (function consult-xref)
+		 xref-show-definitions-function (function consult-xref))
+	   (consult-customize
+	    consult-theme :preview-key '(:debounce 0.2 any)
+	    consult-ripgrep consult-git-grep consult-grep
+	    consult-bookmark consult-recent-file consult-xref
+	    consult--source-bookmark consult--source-file-register
+	    consult--source-recent-file consult--source-project-recent-file
+	    :preview-key '(:debounce 0.4 any))
+
+	   (setq consult-narrow-key "<")
+	   (consult-customize consult--source-buffer :hidden t :default nil)
+	   ;; set consult-workspace buffer list
+	   (defvar consult--source-workspace
+	     (list :name     "Workspace Buffers"
+		   :narrow   ?w
+		   :history  'buffer-name-history
+		   :category 'buffer
+		   :state    (function consult--buffer-state)
+		   :default  t
+		   :items    (lambda () (consult--buffer-query
+					 :predicate (function tabspaces--local-buffer-p)
+					 :sort 'visibility
+					 :as (function buffer-name))))
+
+	     "Set workspace buffer list for consult-buffer.")
+	   (add-to-list 'consult-buffer-sources 'consult--source-workspace)
+	   (defcustom consult-ripgrep-all-args
+	     "rga --null --line-buffered --color=never --max-columns=1000 --path-separator /\
+   --smart-case --no-heading --with-filename --line-number"
+	     "Command line arguments for ripgrep, see `consult-ripgrep'.
+The dynamically computed arguments are appended.
+Can be either a string, or a list of strings or expressions."
+	     :type '(choice string (repeat (choice string sexp))))
+
+
+	   (defun consult--ripgrep-all-make-builder (paths)
+	     "Create ripgrep command line builder given PATHS."
+	     (let* ((cmd (consult--build-args consult-ripgrep-all-args))
+		    (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
+	       (lambda (input)
+		 (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+			      (flags (append cmd opts))
+			      (ignore-case
+			       (and (not (or (member "-s" flags) (member "--case-sensitive" flags)))
+				    (or (member "-i" flags) (member "--ignore-case" flags)
+					(and (or (member "-S" flags) (member "--smart-case" flags))
+					     (let (case-fold-search)
+					       ;; Case insensitive if there are no uppercase letters
+					       (not (string-match-p "[[:upper:]]" arg))))))))
+			     (if (or (member "-F" flags) (member "--fixed-strings" flags))
+				 (cons (append cmd (list "-e" arg) opts paths)
+				       (apply-partially #'consult--highlight-regexps
+							(list (regexp-quote arg)) ignore-case))
+				 (pcase-let ((`(,re . ,hl) (funcall consult--regexp-compiler arg type ignore-case)))
+					    (when re
+					      (cons (append cmd (and (eq type 'pcre) '("-P"))
+							    (list "-e" (consult--join-regexps re type))
+							    opts paths)
+						    hl))))))))
+
+	   (defun consult-ripgrep-all (&optional dir initial)
+	     "Search with `rg' for files in DIR with INITIAL input.
+See `consult-grep' for details."
+	     (interactive "P")
+	     (consult--grep "Ripgrep All" #'consult--ripgrep-all-make-builder dir initial))
+
+	   ))))
+
 ;; Spell checking - DONE 
 (define spellcheck-configuration
   (home-emacs-configuration
@@ -189,11 +277,6 @@
 			(add-to-list 'completion-at-point-functions (function cape-file)))
 	   ))))
 
-;; Annotations
-(define marginalia-configuration
-  (home-emacs-configuration
-   (packages (list emacs-marginalia))
-   (init '((marginalia-mode)))))
 
 (define web-configuration
   (home-emacs-configuration
@@ -238,87 +321,6 @@
 	   (use-package embark-consult
 			:hook
 			(embark-collect-mode . consult-preview-at-point-mode))))))
-
-;; "Right Click"
-(define consult-configuration
-  (home-emacs-configuration
-   (packages (list emacs-consult
-		   ripgrep-all
-		   poppler
-		   poppler-data))
-   (init '((require 'consult)
-	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
-	   (setq register-preview-delay 0.5
-		 register-preview-function (function consult-register-format))
-	   (advice-add (function register-preview) :override (function consult-register-window))
-	   (setq xref-show-xrefs-function (function consult-xref)
-		 xref-show-definitions-function (function consult-xref))
-	   (consult-customize
-	    consult-theme :preview-key '(:debounce 0.2 any)
-	    consult-ripgrep consult-git-grep consult-grep
-	    consult-bookmark consult-recent-file consult-xref
-	    consult--source-bookmark consult--source-file-register
-	    consult--source-recent-file consult--source-project-recent-file
-	    :preview-key '(:debounce 0.4 any))
-
-	   (setq consult-narrow-key "<")
-	   (consult-customize consult--source-buffer :hidden t :default nil)
-	   ;; set consult-workspace buffer list
-	   (defvar consult--source-workspace
-	     (list :name     "Workspace Buffers"
-		   :narrow   ?w
-		   :history  'buffer-name-history
-		   :category 'buffer
-		   :state    (function consult--buffer-state)
-		   :default  t
-		   :items    (lambda () (consult--buffer-query
-					 :predicate (function tabspaces--local-buffer-p)
-					 :sort 'visibility
-					 :as (function buffer-name))))
-
-	     "Set workspace buffer list for consult-buffer.")
-	   (add-to-list 'consult-buffer-sources 'consult--source-workspace)
-(defcustom consult-ripgrep-all-args
-  "rga --null --line-buffered --color=never --max-columns=1000 --path-separator /\
-   --smart-case --no-heading --with-filename --line-number"
-  "Command line arguments for ripgrep, see `consult-ripgrep'.
-The dynamically computed arguments are appended.
-Can be either a string, or a list of strings or expressions."
-  :type '(choice string (repeat (choice string sexp))))
-
-
-(defun consult--ripgrep-all-make-builder (paths)
-  "Create ripgrep command line builder given PATHS."
-  (let* ((cmd (consult--build-args consult-ripgrep-all-args))
-         (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
-    (lambda (input)
-      (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
-                   (flags (append cmd opts))
-                   (ignore-case
-                    (and (not (or (member "-s" flags) (member "--case-sensitive" flags)))
-                         (or (member "-i" flags) (member "--ignore-case" flags)
-                             (and (or (member "-S" flags) (member "--smart-case" flags))
-                                  (let (case-fold-search)
-                                    ;; Case insensitive if there are no uppercase letters
-                                    (not (string-match-p "[[:upper:]]" arg))))))))
-        (if (or (member "-F" flags) (member "--fixed-strings" flags))
-            (cons (append cmd (list "-e" arg) opts paths)
-                  (apply-partially #'consult--highlight-regexps
-                                   (list (regexp-quote arg)) ignore-case))
-          (pcase-let ((`(,re . ,hl) (funcall consult--regexp-compiler arg type ignore-case)))
-            (when re
-              (cons (append cmd (and (eq type 'pcre) '("-P"))
-                            (list "-e" (consult--join-regexps re type))
-                            opts paths)
-                    hl))))))))
-
-(defun consult-ripgrep-all (&optional dir initial)
-  "Search with `rg' for files in DIR with INITIAL input.
-See `consult-grep' for details."
-  (interactive "P")
-  (consult--grep "Ripgrep All" #'consult--ripgrep-all-make-builder dir initial))
-
-	   ))))
 
 (define citation-configuration
   (home-emacs-configuration
