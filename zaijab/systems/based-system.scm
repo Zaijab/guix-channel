@@ -126,7 +126,7 @@
 	       (specification->package "git")
 	       (specification->package "scrot")
 	       (specification->package "xauth")
-	       make
+	       gnu-make
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
     

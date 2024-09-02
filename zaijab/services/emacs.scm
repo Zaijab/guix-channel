@@ -1404,7 +1404,7 @@ Valid contexts:
 	   guix-config-scheme-compiled-directory  nil
 	   guix-repl-use-latest  nil
 	   guix-repl-use-server  nil))
-
+	   (setq geiser-guile-binary '("guix" "repl"))
 	   (require 'guix)
 	   (global-guix-prettify-mode)
 
