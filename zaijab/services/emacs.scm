@@ -157,6 +157,7 @@
 		   poppler-data))
    (init '(;; Example configuration for Consult
 	   (use-package consult
+			:after (tabspaces)
 			;; Replace bindings. Lazily loaded by `use-package'.
 			:bind (;; C-c bindings in `mode-specific-map'
 			       ("C-c M-x" . consult-mode-command)
@@ -302,6 +303,23 @@ Can be either a string, or a list of strings or expressions."
 See `consult-grep' for details."
 			  (interactive "P")
 			  (consult--grep "Ripgrep All" (function consult--ripgrep-all-make-builder) dir initial))
+			
+			(consult-customize consult--source-buffer :hidden t :default nil)
+			;; set consult-workspace buffer list
+			(defvar consult--source-workspace
+			  (list :name     "Workspace Buffers"
+				:narrow   ?w
+				:history  'buffer-name-history
+				:category 'buffer
+				:state    (function consult--buffer-state)
+				:default  t
+				:items    (lambda () (consult--buffer-query
+						      :predicate (function tabspaces--local-buffer-p)
+						      :sort 'visibility
+						      :as (function buffer-name))))
+			  
+			  "Set workspace buffer list for consult-buffer.")
+			(add-to-list 'consult-buffer-sources 'consult--source-workspace)
 			)
 
 	   
@@ -459,7 +477,7 @@ See `consult-grep' for details."
    (packages (list emacs-tabspaces))
    (init '(
 	   (use-package tabspaces
-			:after (consult)
+			;:after (consult)
 			:hook (after-init . tabspaces-mode) 
 			:commands (tabspaces-switch-or-create-workspace
 				   tabspaces-open-or-create-project-and-workspace)
@@ -470,23 +488,10 @@ See `consult-grep' for details."
 			(tabspaces-include-buffers '("*scratch*"))
 			(tab-bar-new-tab-choice "*scratch*")
 			:config
-			
-			(consult-customize consult--source-buffer :hidden t :default nil)
-			;; set consult-workspace buffer list
-			(defvar consult--source-workspace
-			  (list :name     "Workspace Buffers"
-				:narrow   ?w
-				:history  'buffer-name-history
-				:category 'buffer
-				:state    (function consult--buffer-state)
-				:default  t
-				:items    (lambda () (consult--buffer-query
-						      :predicate (function tabspaces--local-buffer-p)
-						      :sort 'visibility
-						      :as (function buffer-name))))
-			  
-			  "Set workspace buffer list for consult-buffer.")
-			(add-to-list 'consult-buffer-sources 'consult--source-workspace)
+			(dolist (name '("Code" "Theory" "Paper" "Japanese" "System") ())
+				(sleep-for 0.01)
+				(tab-switch name))
+			(tab-bar-close-tab-by-name "*scratch*")
 
 			)
 	   ))
@@ -1877,10 +1882,7 @@ Valid contexts:
 		 (pixel-scroll-precision-mode)))
    (init '((setq org-startup-truncated nil)
 	   (tab-bar-mode)
-	   (dolist (name '("Code" "Theory" "Paper" "Japanese" "System") ())
-				(sleep-for 0.01)
-				(tab-switch name))
-			(tab-bar-close-tab-by-name "*scratch*")
+	   
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
 	   (setq battery-mode-line-limit 97)
