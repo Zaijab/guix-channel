@@ -222,15 +222,15 @@
 			;; preview for `consult-register', `consult-register-load',
 			;; `consult-register-store' and the Emacs built-ins.
 			(setq register-preview-delay 0.5
-			      register-preview-function #'consult-register-format)
+			      register-preview-function (function consult-register-format))
 
 			;; Optionally tweak the register preview window.
 			;; This adds thin lines, sorting and hides the mode line of the window.
-			(advice-add #'register-preview :override #'consult-register-window)
+			(advice-add (function register-preview) :override (function consult-register-window))
 
 			;; Use Consult to select xref locations with preview
-			(setq xref-show-xrefs-function #'consult-xref
-			      xref-show-definitions-function #'consult-xref)
+			(setq xref-show-xrefs-function (function consult-xref)
+			      xref-show-definitions-function (function consult-xref))
 
 			;; Configure other variables and modes in the :config section,
 			;; after lazily loading the package.
@@ -303,7 +303,7 @@ Can be either a string, or a list of strings or expressions."
 					       (not (string-match-p "[[:upper:]]" arg))))))))
 			     (if (or (member "-F" flags) (member "--fixed-strings" flags))
 				 (cons (append cmd (list "-e" arg) opts paths)
-				       (apply-partially #'consult--highlight-regexps
+				       (apply-partially (function consult--highlight-regexps)
 							(list (regexp-quote arg)) ignore-case))
 				 (pcase-let ((`(,re . ,hl) (funcall consult--regexp-compiler arg type ignore-case)))
 					    (when re
@@ -316,7 +316,7 @@ Can be either a string, or a list of strings or expressions."
 	     "Search with `rg' for files in DIR with INITIAL input.
 See `consult-grep' for details."
 	     (interactive "P")
-	     (consult--grep "Ripgrep All" #'consult--ripgrep-all-make-builder dir initial))
+	     (consult--grep "Ripgrep All" (function consult--ripgrep-all-make-builder) dir initial))
 
 	   ))))
 
