@@ -533,6 +533,7 @@ See `consult-grep' for details."
 		   font-ipa-mj-mincho
 		   font-iosevka))
    (init '((use-package skk
+			:after (consult)
 			:if (display-graphic-p)
 			:init
 			#;(advice-add
