@@ -50,6 +50,7 @@
   #:use-module (zaijab packages emacs-xyz)
   #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages emacs)
+  #:use-module (ruther packages ripgrep-all)
   #:use-module (nongnu packages fonts)
   #:use-module (guix-science packages python)
   #:export (home-emacs-service-type
