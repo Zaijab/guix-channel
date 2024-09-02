@@ -967,7 +967,7 @@ See `consult-grep' for details."
 	      emacs-org-fc
 	      emacs-org-drill
 	      emacs-kanji))
-   (init '((use-package org)
+   (init '(
 
 	   (use-package org-roam
 			:after org
@@ -1281,229 +1281,233 @@ Valid contexts:
 		   texlive
 		   texlive-bin
 		   imagemagick))
-   (init '((require 'org)
-	   (require 'org-tree-slide)
-	   (setq org-tree-slide-cursor-init nil)
-	   (require 'ox)
-	   (require 'calfw)
-	   (require 'calfw-org)
-	   (require 'calfw-blocks)
-	   (setq org-startup-folded t)
-	   
+   (init '(
+	   (use-package org
+			:config
+			
+			(require 'org-tree-slide)
+			(setq org-tree-slide-cursor-init nil)
+			(require 'ox)
+			(require 'calfw)
+			(require 'calfw-org)
+			(require 'calfw-blocks)
+			(setq org-startup-folded t)
+			
 
-	   (setq org-structure-template-alist
-		 '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
-		   ("e" . "example") ("E" . "export") ("h" . "export html")
-		   ("l" . "export latex") ("q" . "quote") ("s" . "src") ("v" . "verse")
-		   ("p" . "PROOF") ("t" . "THEOREM")))
-	   
-	   (defun cfw:date-before (date num)
-	     "Return the date before NUM days from DATE."
-	     (calendar-gregorian-from-absolute
-	      (- (calendar-absolute-from-gregorian date) num)))
-	   
-	   (setq calfw-blocks-lines-per-hour 3
-		 calfw-blocks-min-block-width 1
-		 calfw-blocks-earliest-visible-time '(6 0))
-	   (define-key cfw:calendar-mode-map (kbd "W") (function calfw-blocks-change-view-block-week))
-	   (define-key cfw:calendar-mode-map (kbd "D") (lambda () (interactive) (calfw-blocks-change-view-block-nday 3)))
-	   (setq org-cycle-separator-lines 1)
-	   (setq org-agenda-show-log-scoped t)
-	   (setq org-agenda-prefix-format '((agenda  . "  • %?-12t% s")
-					    (timeline  . "  % s")
-					    (todo  . " %i %-12:c")
-					    (tags  . " %i %-12:c")
-					    (search . " %i %-12:c")))
+			(setq org-structure-template-alist
+			      '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
+				("e" . "example") ("E" . "export") ("h" . "export html")
+				("l" . "export latex") ("q" . "quote") ("s" . "src") ("v" . "verse")
+				("p" . "PROOF") ("t" . "THEOREM")))
+			
+			(defun cfw:date-before (date num)
+			  "Return the date before NUM days from DATE."
+			  (calendar-gregorian-from-absolute
+			   (- (calendar-absolute-from-gregorian date) num)))
+			
+			(setq calfw-blocks-lines-per-hour 3
+			      calfw-blocks-min-block-width 1
+			      calfw-blocks-earliest-visible-time '(6 0))
+			(define-key cfw:calendar-mode-map (kbd "W") (function calfw-blocks-change-view-block-week))
+			(define-key cfw:calendar-mode-map (kbd "D") (lambda () (interactive) (calfw-blocks-change-view-block-nday 3)))
+			(setq org-cycle-separator-lines 1)
+			(setq org-agenda-show-log-scoped t)
+			(setq org-agenda-prefix-format '((agenda  . "  • %?-12t% s")
+							 (timeline  . "  % s")
+							 (todo  . " %i %-12:c")
+							 (tags  . " %i %-12:c")
+							 (search . " %i %-12:c")))
 
-	   (defun cfw:render-truncate (org limit-width &optional ellipsis)
-	     "[internal] Truncate a string ORG with LIMIT-WIDTH, like `truncate-string-to-width'."
-	     (setq org (replace-regexp-in-string "\n" " " org))
-	     (if (< limit-width (string-width org))
-		 (let ((str (truncate-string-to-width
-			     (substring org 0) limit-width 0 nil nil)))
-		   (cfw:tp str 'mouse-face 'highlight)
-		   (unless (get-text-property 0 'help-echo str)
-		     (cfw:tp str 'help-echo org))
-		   str)
-		 org))
-	   
-	   (defun cfw:org-get-timerange (text)
-	     "Return a range object (begin end text). If TEXT does not have a range, return nil."
-	     (let* ((dotime (cfw:org-tp text 'dotime)))
-	       (and (stringp dotime) (string-match org-ts-regexp dotime)
-		    (let* ((matches  (s-match-strings-all org-ts-regexp dotime))
-			   (start-date (nth 1 (car matches)))
-			   (end-date (nth 1 (nth 1 matches)))
-			   (extra (cfw:org-tp text 'extra)))
-		      (if (string-match "(\\([0-9]+\\)/\\([0-9]+\\)): " extra)
-			  (list( calendar-gregorian-from-absolute
-				 (time-to-days
-				  (org-read-date nil t start-date)))
-			       (calendar-gregorian-from-absolute
-				(time-to-days
-				 (org-read-date nil t end-date))) text))))))
-	   
-	   (setq org-tags-column 0
-		 org-image-actual-width nil)
+			(defun cfw:render-truncate (org limit-width &optional ellipsis)
+			  "[internal] Truncate a string ORG with LIMIT-WIDTH, like `truncate-string-to-width'."
+			  (setq org (replace-regexp-in-string "\n" " " org))
+			  (if (< limit-width (string-width org))
+			      (let ((str (truncate-string-to-width
+					  (substring org 0) limit-width 0 nil nil)))
+				(cfw:tp str 'mouse-face 'highlight)
+				(unless (get-text-property 0 'help-echo str)
+				  (cfw:tp str 'help-echo org))
+				str)
+			      org))
+			
+			(defun cfw:org-get-timerange (text)
+			  "Return a range object (begin end text). If TEXT does not have a range, return nil."
+			  (let* ((dotime (cfw:org-tp text 'dotime)))
+			    (and (stringp dotime) (string-match org-ts-regexp dotime)
+				 (let* ((matches  (s-match-strings-all org-ts-regexp dotime))
+					(start-date (nth 1 (car matches)))
+					(end-date (nth 1 (nth 1 matches)))
+					(extra (cfw:org-tp text 'extra)))
+				   (if (string-match "(\\([0-9]+\\)/\\([0-9]+\\)): " extra)
+				       (list( calendar-gregorian-from-absolute
+					      (time-to-days
+					       (org-read-date nil t start-date)))
+					    (calendar-gregorian-from-absolute
+					     (time-to-days
+					      (org-read-date nil t end-date))) text))))))
+			
+			(setq org-tags-column 0
+			      org-image-actual-width nil)
 					;(global-org-modern-mode)
-	   (add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
+			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
 
-	   (setq org-todo-keywords
-		 '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
-	   (defconst org-latex-math-environments-re
-	     (format
-	      "\\`[ \t]*\\\\begin{%s\\*?}"
-	      (regexp-opt
-	       '("equation" "eqnarray" "math" "displaymath"
-		 "align"  "gather" "multline" "flalign"  "alignat"
-		 "xalignat" "xxalignat"
-		 "subequations" "lflalign"
-		 ;; breqn
-		 "dmath" "dseries" "dgroup" "darray"
-		 ;; empheq
-		 "empheq")))
-	     "Regexp of LaTeX math environments.")
+			(setq org-todo-keywords
+			      '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
+			(defconst org-latex-math-environments-re
+			  (format
+			   "\\`[ \t]*\\\\begin{%s\\*?}"
+			   (regexp-opt
+			    '("equation" "eqnarray" "math" "displaymath"
+			      "align"  "gather" "multline" "flalign"  "alignat"
+			      "xalignat" "xxalignat"
+			      "subequations" "lflalign"
+			      ;; breqn
+			      "dmath" "dseries" "dgroup" "darray"
+			      ;; empheq
+			      "empheq")))
+			  "Regexp of LaTeX math environments.")
 
 
-	   (custom-set-variables '(org-modern-table nil))
+			(custom-set-variables '(org-modern-table nil))
 					;(add-hook 'org-mode-hook (function valign-mode))
-	   (add-hook 'org-mode-hook (function visual-line-mode))
-	   (add-hook 'org-mode-hook (function org-toggle-pretty-entities))
-	   (add-hook 'org-mode-hook (function org-cdlatex-mode))
-	   (setq cfw:org-agenda-schedule-args '(:scheduled
-						:sexp
-						:closed
-						:deadline
-						:todo
-						:timestamp))
-	   
-	   (setq org-agenda-files '("/home/zjabbar/notes/20211224040925-todo.org"
-				    "/home/zjabbar/notes/20240815234918-calendar.org"
-				    "/home/zjabbar/notes/20240731154916-uh_jpn_102.org"))
-	   (setq cdlatex-math-modify-alist
-		 '((?a "\\mathbf" nil t nil nil)
-		   (?b "\\mathbb" nil t nil nil)
-		   (?f "\\mathfrak" nil t nil nil)
-		   ))
+			(add-hook 'org-mode-hook (function visual-line-mode))
+			(add-hook 'org-mode-hook (function org-toggle-pretty-entities))
+			(add-hook 'org-mode-hook (function org-cdlatex-mode))
+			(setq cfw:org-agenda-schedule-args '(:scheduled
+							     :sexp
+							     :closed
+							     :deadline
+							     :todo
+							     :timestamp))
+			
+			(setq org-agenda-files '("/home/zjabbar/notes/20211224040925-todo.org"
+						 "/home/zjabbar/notes/20240815234918-calendar.org"
+						 "/home/zjabbar/notes/20240731154916-uh_jpn_102.org"))
+			(setq cdlatex-math-modify-alist
+			      '((?a "\\mathbf" nil t nil nil)
+				(?b "\\mathbb" nil t nil nil)
+				(?f "\\mathfrak" nil t nil nil)
+				))
 
-	   (setq org-startup-with-inline-images t
-		 cdlatex-simplify-sub-super-scripts nil
-		 org-pretty-entities-include-sub-superscripts nil)
+			(setq org-startup-with-inline-images t
+			      cdlatex-simplify-sub-super-scripts nil
+			      org-pretty-entities-include-sub-superscripts nil)
 
-	   (setq org-agenda-time-grid
-		 (list '(daily weekly remove-match)
-		       (mapcar (lambda (x) (* 100 x)) (number-sequence 6 21))
-		       " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
-	   
-	   (defun org-time-to-minutes (time)
-	     "Convert an HHMM time to minutes"
-	     (+ (* (/ time 100) 60) (% time 100)))
+			(setq org-agenda-time-grid
+			      (list '(daily weekly remove-match)
+				    (mapcar (lambda (x) (* 100 x)) (number-sequence 6 21))
+				    " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
+			
+			(defun org-time-to-minutes (time)
+			  "Convert an HHMM time to minutes"
+			  (+ (* (/ time 100) 60) (% time 100)))
 
-	   (defun org-time-from-minutes (minutes)
-	     "Convert a number of minutes to an HHMM time"
-	     (+ (* (/ minutes 60) 100) (% minutes 60)))
+			(defun org-time-from-minutes (minutes)
+			  "Convert a number of minutes to an HHMM time"
+			  (+ (* (/ minutes 60) 100) (% minutes 60)))
 
-	   (defadvice org-agenda-add-time-grid-maybe (around mde-org-agenda-grid-tweakify
-							     (list ndays todayp))
-	     (if (member 'remove-match (car org-agenda-time-grid))
-		 (flet ((extract-window
-			 (line)
-			 (let ((start (get-text-property 1 'time-of-day line))
-			       (dur (get-text-property 1 'duration line)))
-			   (cond
-			    ((and start dur)
-			     (cons start
-				   (org-time-from-minutes
-				    (truncate
-				     (+ dur (org-time-to-minutes start))))))
-			    (start start)
-			    (t nil)))))
-		       (let* ((windows (delq nil (mapcar 'extract-window list)))
-			      (org-agenda-time-grid
-			       (list
-				(car org-agenda-time-grid)
-				(remove-if
-				 (lambda (time)
-				   (find-if (lambda (w)
-					      (if (numberp w)
-						  (equal w time)
-						  (and (>= time (car w))
-						       (< time (cdr w)))))
-					    windows))
-				 (cadr org-agenda-time-grid) )
-				(caddr org-agenda-time-grid)
-				(cadddr org-agenda-time-grid)
-				)))
-			 ad-do-it))
-		 ad-do-it))
-	   (ad-activate 'org-agenda-add-time-grid-maybe)
-	   (setq org-confirm-babel-evaluate nil)
-	   (setq org-startup-with-latex-preview t)
-	   (setq org-preview-latex-default-process 'dvisvgm)
-	   (add-hook 'org-mode-hook 'org-fragtog-mode)
-	   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-	   (add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
-	   (setq python-indent-guess-indent-offset-verbose nil)
-	   (setq org-preview-latex-image-directory "/home/zjabbar/.cache/dvisvgm/")
+			(defadvice org-agenda-add-time-grid-maybe (around mde-org-agenda-grid-tweakify
+									  (list ndays todayp))
+			  (if (member 'remove-match (car org-agenda-time-grid))
+			      (flet ((extract-window
+				      (line)
+				      (let ((start (get-text-property 1 'time-of-day line))
+					    (dur (get-text-property 1 'duration line)))
+					(cond
+					 ((and start dur)
+					  (cons start
+						(org-time-from-minutes
+						 (truncate
+						  (+ dur (org-time-to-minutes start))))))
+					 (start start)
+					 (t nil)))))
+				    (let* ((windows (delq nil (mapcar 'extract-window list)))
+					   (org-agenda-time-grid
+					    (list
+					     (car org-agenda-time-grid)
+					     (remove-if
+					      (lambda (time)
+						(find-if (lambda (w)
+							   (if (numberp w)
+							       (equal w time)
+							       (and (>= time (car w))
+								    (< time (cdr w)))))
+							 windows))
+					      (cadr org-agenda-time-grid) )
+					     (caddr org-agenda-time-grid)
+					     (cadddr org-agenda-time-grid)
+					     )))
+				      ad-do-it))
+			      ad-do-it))
+			(ad-activate 'org-agenda-add-time-grid-maybe)
+			(setq org-confirm-babel-evaluate nil)
+			(setq org-startup-with-latex-preview t)
+			(setq org-preview-latex-default-process 'dvisvgm)
+			(add-hook 'org-mode-hook 'org-fragtog-mode)
+			(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+			(add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
+			(setq python-indent-guess-indent-offset-verbose nil)
+			(setq org-preview-latex-image-directory "/home/zjabbar/.cache/dvisvgm/")
 
-	   (defun clear-latex-cache () (interactive)
-	     (mapc (function delete-file) (file-expand-wildcards (s-concat org-preview-latex-image-directory "*"))))
+			(defun clear-latex-cache () (interactive)
+			  (mapc (function delete-file) (file-expand-wildcards (s-concat org-preview-latex-image-directory "*"))))
 
-	   (add-hook 'org-mode-hook (function (lambda () (set-syntax-table
-							  (let ((table (make-syntax-table)))
-							    (modify-syntax-entry ?< "w" table) 
-							    (modify-syntax-entry ?> "w" table)
-							    table)))))
-	   (setq org-startup-with-inline-images t)
-	   (defun my/text-scale-adjust-latex-previews ()
-	     "Adjust the size of latex preview fragments when changing the buffer's text scale."
-	     (pcase major-mode
-		    ('latex-mode
-		     (dolist (ov (overlays-in (point-min) (point-max)))
-			     (if (eq (overlay-get ov 'category)
-				     'preview-overlay)
-				 (my/text-scale--resize-fragment ov))))
-		    ('org-mode
-		     (dolist (ov (overlays-in (point-min) (point-max)))
-			     (if (eq (overlay-get ov 'org-overlay-type)
-				     'org-latex-overlay)
-				 (my/text-scale--resize-fragment ov))))))
+			(add-hook 'org-mode-hook (function (lambda () (set-syntax-table
+								       (let ((table (make-syntax-table)))
+									 (modify-syntax-entry ?< "w" table) 
+									 (modify-syntax-entry ?> "w" table)
+									 table)))))
+			(setq org-startup-with-inline-images t)
+			(defun my/text-scale-adjust-latex-previews ()
+			  "Adjust the size of latex preview fragments when changing the buffer's text scale."
+			  (pcase major-mode
+				 ('latex-mode
+				  (dolist (ov (overlays-in (point-min) (point-max)))
+					  (if (eq (overlay-get ov 'category)
+						  'preview-overlay)
+					      (my/text-scale--resize-fragment ov))))
+				 ('org-mode
+				  (dolist (ov (overlays-in (point-min) (point-max)))
+					  (if (eq (overlay-get ov 'org-overlay-type)
+						  'org-latex-overlay)
+					      (my/text-scale--resize-fragment ov))))))
 
-	   (defun my/text-scale--resize-fragment (ov)
-	     (overlay-put
-	      ov 'display
-	      (cons 'image
-		    (plist-put
-		     (cdr (overlay-get ov 'display))
-		     :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))
+			(defun my/text-scale--resize-fragment (ov)
+			  (overlay-put
+			   ov 'display
+			   (cons 'image
+				 (plist-put
+				  (cdr (overlay-get ov 'display))
+				  :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))
 
-	   (add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
-	   
-	   (setq org-format-latex-options '(:foreground default
-					    :background default
-					    :scale 2
-					    :html-foreground "Black"
-					    :html-background "Transparent"
-					    :html-scale 1.0
-					    :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+			(add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
+			
+			(setq org-format-latex-options '(:foreground default
+							 :background default
+							 :scale 2
+							 :html-foreground "Black"
+							 :html-background "Transparent"
+							 :html-scale 1.0
+							 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 
-	   (setq org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"))
-	   (setf
-	    (plist-get
-	     (alist-get 'dvisvgm org-preview-latex-process-alist)
-	     :latex-compiler)
-	    '("xelatex -no-pdf -interaction -nonstopmode -shell-escape -output-directory %o %f")
-	    (plist-get
-	     (alist-get 'dvisvgm org-preview-latex-process-alist)
-	     :image-input-type)
-	    "xdv"
-	    (plist-get
-	     (alist-get 'dvisvgm org-preview-latex-process-alist)
-	     :image-converter)
-	    '("dvisvgm %f --no-fonts --exact-bbox -n -b min -c %S -o %O"))
+			(setq org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"))
+			(setf
+			 (plist-get
+			  (alist-get 'dvisvgm org-preview-latex-process-alist)
+			  :latex-compiler)
+			 '("xelatex -no-pdf -interaction -nonstopmode -shell-escape -output-directory %o %f")
+			 (plist-get
+			  (alist-get 'dvisvgm org-preview-latex-process-alist)
+			  :image-input-type)
+			 "xdv"
+			 (plist-get
+			  (alist-get 'dvisvgm org-preview-latex-process-alist)
+			  :image-converter)
+			 '("dvisvgm %f --no-fonts --exact-bbox -n -b min -c %S -o %O"))
 
-	   (setf (alist-get :title org-export-options-alist) '("TITLE" nil "Maybe, में भि میں بھی, 明媚." t))
-	   (setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex)))))))
+			(setf (alist-get :title org-export-options-alist) '("TITLE" nil "Maybe, में भि میں بھی, 明媚." t))
+			(setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex))))
+	   ))))
 
 (define python-configuration
   (home-emacs-configuration
