@@ -132,8 +132,21 @@
 (define marginalia-configuration
   (home-emacs-configuration
    (packages (list emacs-marginalia))
-   (init '((use-package marginalia
-			:config (marginalia-mode))))))
+   (init '(;; Enable rich annotations using the Marginalia package
+	   (use-package marginalia
+			;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
+			;; available in the *Completions* buffer, add it to the
+			;; `completion-list-mode-map'.
+			:bind (:map minibuffer-local-map
+			       ("M-A" . marginalia-cycle))
+
+			;; The :init section is always executed.
+			:init
+
+			;; Marginalia must be activated in the :init section of use-package such that
+			;; the mode gets enabled right away. Note that this forces loading the
+			;; package.
+			(marginalia-mode))))))
 
 ;; Interactive Completing Read
 (define consult-configuration
@@ -142,22 +155,113 @@
 		   ripgrep-all
 		   poppler
 		   poppler-data))
-   (init '((require 'consult)
-	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
-	   (setq register-preview-delay 0.5
-		 register-preview-function (function consult-register-format))
-	   (advice-add (function register-preview) :override (function consult-register-window))
-	   (setq xref-show-xrefs-function (function consult-xref)
-		 xref-show-definitions-function (function consult-xref))
-	   (consult-customize
-	    consult-theme :preview-key '(:debounce 0.2 any)
-	    consult-ripgrep consult-git-grep consult-grep
-	    consult-bookmark consult-recent-file consult-xref
-	    consult--source-bookmark consult--source-file-register
-	    consult--source-recent-file consult--source-project-recent-file
-	    :preview-key '(:debounce 0.4 any))
+   (init '(;; Example configuration for Consult
+	   (use-package consult
+			;; Replace bindings. Lazily loaded by `use-package'.
+			:bind (;; C-c bindings in `mode-specific-map'
+			       ("C-c M-x" . consult-mode-command)
+			       ("C-c h" . consult-history)
+			       ("C-c k" . consult-kmacro)
+			       ("C-c m" . consult-man)
+			       ("C-c i" . consult-info)
+			       ([remap Info-search] . consult-info)
+			       ;; C-x bindings in `ctl-x-map'
+			       ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
+			       ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
+			       ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
+			       ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
+			       ("C-x t b" . consult-buffer-other-tab)    ;; orig. switch-to-buffer-other-tab
+			       ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
+			       ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+			       ;; Custom M-# bindings for fast register access
+			       ("M-#" . consult-register-load)
+			       ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+			       ("C-M-#" . consult-register)
+			       ;; Other custom bindings
+			       ("M-y" . consult-yank-pop)                ;; orig. yank-pop
+			       ;; M-g bindings in `goto-map'
+			       ("M-g e" . consult-compile-error)
+			       ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
+			       ("M-g g" . consult-goto-line)             ;; orig. goto-line
+			       ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
+			       ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
+			       ("M-g m" . consult-mark)
+			       ("M-g k" . consult-global-mark)
+			       ("M-g i" . consult-imenu)
+			       ("M-g I" . consult-imenu-multi)
+			       ;; M-s bindings in `search-map'
+			       ("M-s d" . consult-find)                  ;; Alternative: consult-fd
+			       ("M-s c" . consult-locate)
+			       ("M-s g" . consult-grep)
+			       ("M-s G" . consult-git-grep)
+			       ("M-s r" . consult-ripgrep)
+			       ("M-s l" . consult-line)
+			       ("M-s L" . consult-line-multi)
+			       ("M-s k" . consult-keep-lines)
+			       ("M-s u" . consult-focus-lines)
+			       ;; Isearch integration
+			       ("M-s e" . consult-isearch-history)
+			       :map isearch-mode-map
+			       ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
+			       ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
+			       ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
+			       ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
+			       ;; Minibuffer history
+			       :map minibuffer-local-map
+			       ("M-s" . consult-history)                 ;; orig. next-matching-history-element
+			       ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
-	   (setq consult-narrow-key "<")
+			;; Enable automatic preview at point in the *Completions* buffer. This is
+			;; relevant when you use the default completion UI.
+			:hook (completion-list-mode . consult-preview-at-point-mode)
+
+			;; The :init configuration is always executed (Not lazy)
+			:init
+
+			;; Optionally configure the register formatting. This improves the register
+			;; preview for `consult-register', `consult-register-load',
+			;; `consult-register-store' and the Emacs built-ins.
+			(setq register-preview-delay 0.5
+			      register-preview-function #'consult-register-format)
+
+			;; Optionally tweak the register preview window.
+			;; This adds thin lines, sorting and hides the mode line of the window.
+			(advice-add #'register-preview :override #'consult-register-window)
+
+			;; Use Consult to select xref locations with preview
+			(setq xref-show-xrefs-function #'consult-xref
+			      xref-show-definitions-function #'consult-xref)
+
+			;; Configure other variables and modes in the :config section,
+			;; after lazily loading the package.
+			:config
+
+			;; Optionally configure preview. The default value
+			;; is 'any, such that any key triggers the preview.
+			;; (setq consult-preview-key 'any)
+			;; (setq consult-preview-key "M-.")
+			;; (setq consult-preview-key '("S-<down>" "S-<up>"))
+			;; For some commands and buffer sources it is useful to configure the
+			;; :preview-key on a per-command basis using the `consult-customize' macro.
+			(consult-customize
+			 consult-theme :preview-key '(:debounce 0.2 any)
+			 consult-ripgrep consult-git-grep consult-grep
+			 consult-bookmark consult-recent-file consult-xref
+			 consult--source-bookmark consult--source-file-register
+			 consult--source-recent-file consult--source-project-recent-file
+			 ;; :preview-key "M-."
+			 :preview-key '(:debounce 0.4 any))
+
+			;; Optionally configure the narrowing key.
+			;; Both < and C-+ work reasonably well.
+			(setq consult-narrow-key "<") ;; "C-+"
+
+			;; Optionally make narrowing help available in the minibuffer.
+			;; You may want to use `embark-prefix-help-command' or which-key instead.
+			;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
+			)
+	   
+	   
 	   (consult-customize consult--source-buffer :hidden t :default nil)
 	   ;; set consult-workspace buffer list
 	   (defvar consult--source-workspace
@@ -215,6 +319,47 @@ See `consult-grep' for details."
 	     (consult--grep "Ripgrep All" #'consult--ripgrep-all-make-builder dir initial))
 
 	   ))))
+
+;; Live Preview Selection
+(define embark-configuration
+  (home-emacs-configuration
+   (packages (list emacs-embark
+		   emacs-embark-consult))
+   (init '((use-package embark
+			:ensure t
+
+			:bind
+			(("C-." . embark-act)         ;; pick some comfortable binding
+			 ("C-;" . embark-dwim)        ;; good alternative: M-.
+			 ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
+
+			:init
+
+			;; Optionally replace the key help with a completing-read interface
+			(setq prefix-help-command (function embark-prefix-help-command))
+
+			;; Show the Embark target at point via Eldoc. You may adjust the
+			;; Eldoc strategy, if you want to see the documentation from
+			;; multiple providers. Beware that using this can be a little
+			;; jarring since the message shown in the minibuffer can be more
+			;; than one line, causing the modeline to move up and down:
+
+			;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
+			;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
+
+			:config
+
+			;; Hide the mode line of the Embark live/completions buffers
+			(add-to-list 'display-buffer-alist
+				     '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+				       nil
+				       (window-parameters (mode-line-format . none)))))
+
+	   ;; Consult users will also want the embark-consult package.
+	   (use-package embark-consult
+			:hook
+			(embark-collect-mode . consult-preview-at-point-mode))))))
+
 
 ;; Spell checking - DONE 
 (define spellcheck-configuration
@@ -282,45 +427,6 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (init '((setq eww-search-prefix "http://localhost:8080/search?q=")))))
 
-;; Live Preview Selection
-(define embark-configuration
-  (home-emacs-configuration
-   (packages (list emacs-embark
-		   emacs-embark-consult))
-   (init '((use-package embark
-			:ensure t
-
-			:bind
-			(("C-." . embark-act)         ;; pick some comfortable binding
-			 ("C-;" . embark-dwim)        ;; good alternative: M-.
-			 ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-
-			:init
-
-			;; Optionally replace the key help with a completing-read interface
-			(setq prefix-help-command (function embark-prefix-help-command))
-
-			;; Show the Embark target at point via Eldoc. You may adjust the
-			;; Eldoc strategy, if you want to see the documentation from
-			;; multiple providers. Beware that using this can be a little
-			;; jarring since the message shown in the minibuffer can be more
-			;; than one line, causing the modeline to move up and down:
-
-			;; (add-hook 'eldoc-documentation-functions #'embark-eldoc-first-target)
-			;; (setq eldoc-documentation-strategy #'eldoc-documentation-compose-eagerly)
-
-			:config
-
-			;; Hide the mode line of the Embark live/completions buffers
-			(add-to-list 'display-buffer-alist
-				     '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-				       nil
-				       (window-parameters (mode-line-format . none)))))
-
-	   ;; Consult users will also want the embark-consult package.
-	   (use-package embark-consult
-			:hook
-			(embark-collect-mode . consult-preview-at-point-mode))))))
 
 (define citation-configuration
   (home-emacs-configuration
@@ -420,18 +526,20 @@ See `consult-grep' for details."
 			:if (display-graphic-p)
 			:init
 			#;(advice-add
-			 'skk-previous-candidate :around
-			 (lambda (func &optional arg)
-			   (interactive "p")
-			   (if (and (not (eq skk-henkan-mode 'active))
-				    (not (eq last-command 'skk-kakutei-henkan))
-				    last-command-event
-				    (eq last-command-event
-					(seq-first (car (where-is-internal
-							 'meow-prev
-							 meow-normal-state-keymap)))))
-			       (previous-line)
-			       (funcall func arg))))
+			'skk-previous-candidate :around
+			(lambda (func &optional arg)
+			(interactive "p")
+			(if (and (not (eq skk-henkan-mode 'active))
+			(not (eq last-command 'skk-kakutei-henkan))
+			last-command-event
+			(eq last-command-event
+			(seq-first (car (where-is-internal
+			'meow-prev
+			meow-normal-state-keymap)))))
+			(previous-line)
+			(funcall func arg))))
+			:config
+			(global-unset-key (kbd "C-x t"))
 			)
 	   
 	   (use-package facemenu
@@ -453,26 +561,26 @@ See `consult-grep' for details."
 	   (pdf-tools-install)
 	   (defvar *current-mode* 'light)
 	   #;(defun pdf-view-redisplay (&optional window)
-	     "Redisplay page in WINDOW.
+	   "Redisplay page in WINDOW.
 
-If WINDOW is t, redisplay pages in all windows."
-	     (setq window nil)
-	     (unless pdf-view-inhibit-redisplay
-	       (if (not (eq t window))
-		   (pdf-view-display-page
-		    (pdf-view-current-page window)
-		    window)
-		   (dolist (win (get-buffer-window-list nil nil t))
-			   (pdf-view-display-page
-			    (pdf-view-current-page win)
-			    win))
-		   (when (consp image-mode-winprops-alist)
-		     (dolist (window (mapcar (function car image-mode-winprops-alist)))
-			     (unless (or (not (window-live-p window))
-					 (eq (current-buffer)
-					     (window-buffer window)))
-			       (setf (pdf-view-window-needs-redisplay window) t)))))
-	       (force-mode-line-update)))
+	   If WINDOW is t, redisplay pages in all windows."
+	   (setq window nil)
+	   (unless pdf-view-inhibit-redisplay
+	   (if (not (eq t window))
+	   (pdf-view-display-page
+	   (pdf-view-current-page window)
+	   window)
+	   (dolist (win (get-buffer-window-list nil nil t))
+	   (pdf-view-display-page
+	   (pdf-view-current-page win)
+	   win))
+	   (when (consp image-mode-winprops-alist)
+	   (dolist (window (mapcar (function car image-mode-winprops-alist)))
+	   (unless (or (not (window-live-p window))
+	   (eq (current-buffer)
+	   (window-buffer window)))
+	   (setf (pdf-view-window-needs-redisplay window) t)))))
+	   (force-mode-line-update)))
 	   
 	   (defun my/dark-mode ()
 	     (interactive)
@@ -1226,7 +1334,7 @@ Valid contexts:
 	   
 	   (setq org-tags-column 0
 		 org-image-actual-width nil)
-	   ;(global-org-modern-mode)
+					;(global-org-modern-mode)
 	   (add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
 
 	   (setq org-todo-keywords
@@ -1467,23 +1575,23 @@ Valid contexts:
 	   ;; (add-hook 'scheme-mode-hook (function auto-start-arei))
 	   ;; (add-hook 'scheme-mode-hook (function arei-mode))
 	   (remove-hook 'scheme-mode-hook (function geiser-mode--maybe-activate))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(org-modern-table nil)
- '(safe-local-variable-values
-   '((geiser-insert-actual-lambda) (eval modify-syntax-entry 43 "'")
-     (eval modify-syntax-entry 36 "'")
-     (eval modify-syntax-entry 126 "'"))))
-(add-hook (quote org-mode-hook) (function visual-line-mode))(add-hook (quote org-mode-hook) (function org-toggle-pretty-entities))(add-hook (quote org-mode-hook) (function org-cdlatex-mode))(setq cfw:org-agenda-schedule-args (quote (:scheduled :sexp :closed :deadline :todo :timestamp)))(setq org-agenda-files (quote ("/home/zjabbar/notes/20211224040925-todo.org" "/home/zjabbar/notes/20240815234918-calendar.org" "/home/zjabbar/notes/20240731154916-uh_jpn_102.org")))(setq cdlatex-math-modify-alist (quote ((?a "\\mathbf" nil t nil nil) (?b "\\mathbb" nil t nil nil) (?f "\\mathfrak" nil t nil nil))))(setq org-startup-with-inline-images t cdlatex-simplify-sub-super-scripts nil org-pretty-entities-include-sub-superscripts nil)(setq org-agenda-time-grid (list (quote (daily weekly remove-match)) (mapcar (lambda (x) (* 100 x)) (number-sequence 6 21)) " \u2504\u2504\u2504\u2504\u2504 " "\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504"))(defun org-time-to-minutes (time) "Convert an HHMM time to minutes" (+ (* (/ time 100) 60) (% time 100)))(defun org-time-from-minutes (minutes) "Convert a number of minutes to an HHMM time" (+ (* (/ minutes 60) 100) (% minutes 60)))(defadvice org-agenda-add-time-grid-maybe (around mde-org-agenda-grid-tweakify (list ndays todayp)) (if (member (quote remove-match) (car org-agenda-time-grid)) (flet ((extract-window (line) (let ((start (get-text-property 1 (quote time-of-day) line)) (dur (get-text-property 1 (quote duration) line))) (cond ((and start dur) (cons start (org-time-from-minutes (truncate (+ dur (org-time-to-minutes start)))))) (start start) (t nil))))) (let* ((windows (delq nil (mapcar (quote extract-window) list))) (org-agenda-time-grid (list (car org-agenda-time-grid) (remove-if (lambda (time) (find-if (lambda (w) (if (numberp w) (equal w time) (and (>= time (car w)) (< time (cdr w))))) windows)) (cadr org-agenda-time-grid)) (caddr org-agenda-time-grid) (cadddr org-agenda-time-grid)))) ad-do-it)) ad-do-it))(ad-activate (quote org-agenda-add-time-grid-maybe))(setq org-confirm-babel-evaluate nil)(setq org-startup-with-latex-preview t)(setq org-preview-latex-default-process (quote dvisvgm))(add-hook (quote org-mode-hook) (quote org-fragtog-mode))(add-hook (quote org-babel-after-execute-hook) (quote org-display-inline-images))(add-hook (quote org-babel-after-execute-hook) (quote colorize-compilation-buffer))(setq python-indent-guess-indent-offset-verbose nil)(setq org-preview-latex-image-directory "/home/zjabbar/.cache/dvisvgm/")(defun clear-latex-cache () (interactive) (mapc (function delete-file) (file-expand-wildcards (s-concat org-preview-latex-image-directory "*"))))(add-hook (quote org-mode-hook) (function (lambda () (set-syntax-table (let ((table (make-syntax-table))) (modify-syntax-entry ?< "w" table) (modify-syntax-entry ?> "w" table) table)))))(setq org-startup-with-inline-images t)(defun my/text-scale-adjust-latex-previews () "Adjust the size of latex preview fragments when changing the buffer's text scale." (pcase major-mode ((quote latex-mode) (dolist (ov (overlays-in (point-min) (point-max))) (if (eq (overlay-get ov (quote category)) (quote preview-overlay)) (my/text-scale--resize-fragment ov)))) ((quote org-mode) (dolist (ov (overlays-in (point-min) (point-max))) (if (eq (overlay-get ov (quote org-overlay-type)) (quote org-latex-overlay)) (my/text-scale--resize-fragment ov))))))(defun my/text-scale--resize-fragment (ov) (overlay-put ov (quote display) (cons (quote image) (plist-put (cdr (overlay-get ov (quote display))) :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))(add-hook (quote text-scale-mode-hook) (function my/text-scale-adjust-latex-previews))(setq org-format-latex-options (quote (:foreground default :background default :scale 2 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers ("begin" "$1" "$" "$$" "\\(" "\\["))))(setq org-latex-pdf-process (quote ("xelatex -interaction nonstopmode -output-directory %o %f")))(setf (plist-get (alist-get (quote dvisvgm) org-preview-latex-process-alist) :latex-compiler) (quote ("xelatex -no-pdf -interaction -nonstopmode -shell-escape -output-directory %o %f")) (plist-get (alist-get (quote dvisvgm) org-preview-latex-process-alist) :image-input-type) "xdv" (plist-get (alist-get (quote dvisvgm) org-preview-latex-process-alist) :image-converter) (quote ("dvisvgm %f --no-fonts --exact-bbox -n -b min -c %S -o %O")))(setf (alist-get :title org-export-options-alist) (quote ("TITLE" nil "Maybe, \u092e\u0947\u0902 \u092d\u093f \u0645\u06cc\u06ba \u0628\u06be\u06cc, \u660e\u5a9a." t)))(setf (alist-get :with-latex org-export-options-alist) (quote ("t" "tex" (function org-export-with-latex))))(use-package jinx :hook (emacs-startup . global-jinx-mode) :bind (("M-$" . jinx-correct) ("C-M-$" . jinx-languages)))(setq movemail-program-name "movemail")(require (quote mu4e))(require (quote mu4e-alert))(defun mu4e--modeline-string () "")(add-to-list (quote display-buffer-alist) (list (regexp-quote mu4e-main-buffer-name) (quote display-buffer-same-window)))(setq mu4e-get-mail-command (format "INSIDE_EMACS=%s mbsync -c ~/.config/mbsyncrc -a" emacs-version) epa-pinentry-mode (quote ask) mu4e-sent-messages-behavior (quote delete))(setq org-msg-enforce-css "~/notes/static/css/site.css")(setq mu4e-hide-index-messages t)(setq mu4e-mu-home "/home/zjabbar/.cache/mu")(setq mail-user-agent (quote mu4e-user-agent))(add-hook (quote after-init-hook) (function mu4e-alert-enable-mode-line-display))(require (quote org-msg))(setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil title:nil email:nil tex:imagemagick" org-msg-startup "hidestars indent inlineimages" org-msg-greeting-fmt "\nAloha%s,\n\n" org-msg-recipient-names (quote (("zaijab2000@gmail.com" . "Zain") ("pyw@hawaii.edu" . "Dr. Washington") ("sue@math.hawaii.edu" . "Sue"))) org-msg-greeting-name-limit 3 org-msg-default-alternatives (quote ((new text html) (reply-to-html text html) (reply-to-text text))) org-msg-convert-citation t)(org-msg-mode)(add-hook (quote org-msg-edit-mode-hook) (quote mml-secure-message-sign))(setq mml-secure-openpgp-sign-with-sender t)(setq mu4e-change-filenames-when-moving t)(setq mu4e-update-interval 300)(setq mu4e-get-mail-command "mbsync -a -c ~/.config/mbsyncrc")(setq org-export-with-toc nil)(setq org-export-with-tile t)(setq org-mu4e-convert-to-html t)(setq message-send-mail-function (quote message-send-mail-with-sendmail))(setq sendmail-program "msmtp")(setq message-sendmail-extra-arguments (quote ("--read-envelope-from")))(setq message-sendmail-f-is-evil t)(setq mu4e-contexts (list (make-mu4e-context :name "Personal" :enter-func (lambda () (mu4e-message "Entering zaijab2000_gmail context") (when (string-match-p (buffer-name (current-buffer)) "mu4e-main") (revert-buffer))) :leave-func (lambda () (mu4e-message "Leaving gmail context") (when (string-match-p (buffer-name (current-buffer)) "mu4e-main") (revert-buffer))) :match-func (lambda (msg) (when msg (or (mu4e-message-contact-field-matches msg :to "zaijab2000@gmail.com") (mu4e-message-contact-field-matches msg :from "zaijab2000@gmail.com") (mu4e-message-contact-field-matches msg :cc "zaijab2000@gmail.com") (mu4e-message-contact-field-matches msg :bcc "zaijab2000@gmail.com") (string-match-p "^/zaijab2000/Inbox" (mu4e-message-field msg :maildir))))) :vars (quote ((user-mail-address . "zaijab2000@gmail.com") (smtpmail-smtp-user . "zaijab2000@gmail.com") (mu4e-compose-signature . "Mahalo") (smtpmail-smtp-server . "smtp.gmail.com") (smtpmail-smtp-service . 587) (mu4e-maildir-shortcuts (:maildir "/zaijab2000/Inbox" :key ?i)) (mu4e-bookmarks (:name "Unread messages" :query "maildir:/gmail/Inbox AND flag:unread AND NOT flag:trashed AND NOT outdoorexperten" :key ?u) (:name "Today's messages" :query "maildir:/gmail/Inbox AND date:today..now" :key ?t) (:name "Last 7 days" :query "maildir:/gmail/Inbox AND date:7d..now" :hide-unread t :key ?w) (:name "Deleted" :query "flag:trashed" :key ?d) (:name "Possibly garbage" :query "bokio OR outdoorexperten" :key ?g))))) (make-mu4e-context :name "School" :enter-func (lambda () (mu4e-message "Entering school context") (when (string-match-p (buffer-name (current-buffer)) "mu4e-main") (revert-buffer))) :leave-func (lambda () (mu4e-message "Leaving school context") (when (string-match-p (buffer-name (current-buffer)) "mu4e-main") (revert-buffer))) :match-func (lambda (msg) (when msg (or (mu4e-message-contact-field-matches msg :to "zjabbar@hawaii.edu") (mu4e-message-contact-field-matches msg :from "zjabbar@hawaii.edu") (mu4e-message-contact-field-matches msg :cc "zjabbar@hawaii.edu") (mu4e-message-contact-field-matches msg :bcc "zjabbar@hawaii.edu")))) :vars (quote ((user-mail-address . "zjabbar@hawaii.edu") (smtpmail-smtp-user . "zjabbar@hawaii.edu") (smtpmail-smtp-server . "smtp.gmail.com") (smtpmail-smtp-service . 587) (mu4e-compose-signature . "Mahalo") (mu4e-maildir-shortcuts (:maildir "/zjabbar/Inbox" :key ?i)) (mu4e-bookmarks (:name "All school mails" :query "maildir:/zjabbar/Inbox" :key ?a) (:name "Unread school messages" :query "maildir:/zjabbar/Inbox AND flag:unread AND NOT flag:trashed" :key ?u)))))))(use-package citar :bind (:map citar-map ("a" . citar-add-file-to-library)) :bind-keymap ("C-c c" . citar-map) :custom (citar-bibliography (quote ("/home/zjabbar/notes/bibtex/general_bibliography.bib"))) (citar-notes-paths (list "/home/zjabbar/notes/")) (citar-library-paths (list "/home/zjabbar/library/")) (citar-open-note-function (quote orb-citar-edit-note)) (citar-at-point-function (quote embark-act)) :hook (LaTeX-mode . citar-capf-setup) (org-mode . citar-capf-setup))(use-package citar-org :after (citar oc) :custom (org-cite-insert-processor (quote citar)) (org-cite-follow-processor (quote citar)) (org-cite-activate-processor (quote citar)))(use-package citar-embark :after citar embark :no-require :config (citar-embark-mode))(use-package citar-org-roam :after (citar citar-org org-roam org-roam-bibtex) :custom (citar-org-roam-capture-template-key "r") :config (citar-org-roam-mode))(load-theme (quote modus-operandi) t)(use-package orderless :custom (completion-styles (quote (orderless basic))) (completion-category-overrides (quote ((file (styles basic partial-completion))))) (orderless-smart-case nil) (completion-ignore-case t) (read-file-name-completion-ignore-case t) (read-buffer-completion-ignore-case t))(add-to-list (quote auto-mode-alist) (quote ("\\.epub\\'" . nov-mode)))(pdf-tools-install)(defvar *current-mode* (quote light))(defun my/dark-mode () (interactive) (cond ((eq *current-mode* (quote light)) (modus-themes-toggle) (add-hook (quote pdf-view-mode-hook) (function pdf-view-midnight-minor-mode))) (t (modus-themes-toggle) (remove-hook (quote pdf-view-mode-hook) (function pdf-view-midnight-minor-mode)))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+	   (custom-set-variables
+	    ;; custom-set-variables was added by Custom.
+	    ;; If you edit it by hand, you could mess it up, so be careful.
+	    ;; Your init file should contain only one such instance.
+	    ;; If there is more than one, they won't work right.
+	    '(org-modern-table nil)
+	    '(safe-local-variable-values
+	      '((geiser-insert-actual-lambda) (eval modify-syntax-entry 43 "'")
+		(eval modify-syntax-entry 36 "'")
+		(eval modify-syntax-entry 126 "'"))))
+	   (add-hook (quote org-mode-hook) (function visual-line-mode))(add-hook (quote org-mode-hook) (function org-toggle-pretty-entities))(add-hook (quote org-mode-hook) (function org-cdlatex-mode))(setq cfw:org-agenda-schedule-args (quote (:scheduled :sexp :closed :deadline :todo :timestamp)))(setq org-agenda-files (quote ("/home/zjabbar/notes/20211224040925-todo.org" "/home/zjabbar/notes/20240815234918-calendar.org" "/home/zjabbar/notes/20240731154916-uh_jpn_102.org")))(setq cdlatex-math-modify-alist (quote ((?a "\\mathbf" nil t nil nil) (?b "\\mathbb" nil t nil nil) (?f "\\mathfrak" nil t nil nil))))(setq org-startup-with-inline-images t cdlatex-simplify-sub-super-scripts nil org-pretty-entities-include-sub-superscripts nil)(setq org-agenda-time-grid (list (quote (daily weekly remove-match)) (mapcar (lambda (x) (* 100 x)) (number-sequence 6 21)) " \u2504\u2504\u2504\u2504\u2504 " "\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504\u2504"))(defun org-time-to-minutes (time) "Convert an HHMM time to minutes" (+ (* (/ time 100) 60) (% time 100)))(defun org-time-from-minutes (minutes) "Convert a number of minutes to an HHMM time" (+ (* (/ minutes 60) 100) (% minutes 60)))(defadvice org-agenda-add-time-grid-maybe (around mde-org-agenda-grid-tweakify (list ndays todayp)) (if (member (quote remove-match) (car org-agenda-time-grid)) (flet ((extract-window (line) (let ((start (get-text-property 1 (quote time-of-day) line)) (dur (get-text-property 1 (quote duration) line))) (cond ((and start dur) (cons start (org-time-from-minutes (truncate (+ dur (org-time-to-minutes start)))))) (start start) (t nil))))) (let* ((windows (delq nil (mapcar (quote extract-window) list))) (org-agenda-time-grid (list (car org-agenda-time-grid) (remove-if (lambda (time) (find-if (lambda (w) (if (numberp w) (equal w time) (and (>= time (car w)) (< time (cdr w))))) windows)) (cadr org-agenda-time-grid)) (caddr org-agenda-time-grid) (cadddr org-agenda-time-grid)))) ad-do-it)) ad-do-it))(ad-activate (quote org-agenda-add-time-grid-maybe))(setq org-confirm-babel-evaluate nil)(setq org-startup-with-latex-preview t)(setq org-preview-latex-default-process (quote dvisvgm))(add-hook (quote org-mode-hook) (quote org-fragtog-mode))(add-hook (quote org-babel-after-execute-hook) (quote org-display-inline-images))(add-hook (quote org-babel-after-execute-hook) (quote colorize-compilation-buffer))(setq python-indent-guess-indent-offset-verbose nil)(setq org-preview-latex-image-directory "/home/zjabbar/.cache/dvisvgm/")(defun clear-latex-cache () (interactive) (mapc (function delete-file) (file-expand-wildcards (s-concat org-preview-latex-image-directory "*"))))(add-hook (quote org-mode-hook) (function (lambda () (set-syntax-table (let ((table (make-syntax-table))) (modify-syntax-entry ?< "w" table) (modify-syntax-entry ?> "w" table) table)))))(setq org-startup-with-inline-images t)(defun my/text-scale-adjust-latex-previews () "Adjust the size of latex preview fragments when changing the buffer's text scale." (pcase major-mode ((quote latex-mode) (dolist (ov (overlays-in (point-min) (point-max))) (if (eq (overlay-get ov (quote category)) (quote preview-overlay)) (my/text-scale--resize-fragment ov)))) ((quote org-mode) (dolist (ov (overlays-in (point-min) (point-max))) (if (eq (overlay-get ov (quote org-overlay-type)) (quote org-latex-overlay)) (my/text-scale--resize-fragment ov))))))(defun my/text-scale--resize-fragment (ov) (overlay-put ov (quote display) (cons (quote image) (plist-put (cdr (overlay-get ov (quote display))) :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))(add-hook (quote text-scale-mode-hook) (function my/text-scale-adjust-latex-previews))(setq org-format-latex-options (quote (:foreground default :background default :scale 2 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers ("begin" "$1" "$" "$$" "\\(" "\\["))))(setq org-latex-pdf-process (quote ("xelatex -interaction nonstopmode -output-directory %o %f")))(setf (plist-get (alist-get (quote dvisvgm) org-preview-latex-process-alist) :latex-compiler) (quote ("xelatex -no-pdf -interaction -nonstopmode -shell-escape -output-directory %o %f")) (plist-get (alist-get (quote dvisvgm) org-preview-latex-process-alist) :image-input-type) "xdv" (plist-get (alist-get (quote dvisvgm) org-preview-latex-process-alist) :image-converter) (quote ("dvisvgm %f --no-fonts --exact-bbox -n -b min -c %S -o %O")))(setf (alist-get :title org-export-options-alist) (quote ("TITLE" nil "Maybe, \u092e\u0947\u0902 \u092d\u093f \u0645\u06cc\u06ba \u0628\u06be\u06cc, \u660e\u5a9a." t)))(setf (alist-get :with-latex org-export-options-alist) (quote ("t" "tex" (function org-export-with-latex))))(use-package jinx :hook (emacs-startup . global-jinx-mode) :bind (("M-$" . jinx-correct) ("C-M-$" . jinx-languages)))(setq movemail-program-name "movemail")(require (quote mu4e))(require (quote mu4e-alert))(defun mu4e--modeline-string () "")(add-to-list (quote display-buffer-alist) (list (regexp-quote mu4e-main-buffer-name) (quote display-buffer-same-window)))(setq mu4e-get-mail-command (format "INSIDE_EMACS=%s mbsync -c ~/.config/mbsyncrc -a" emacs-version) epa-pinentry-mode (quote ask) mu4e-sent-messages-behavior (quote delete))(setq org-msg-enforce-css "~/notes/static/css/site.css")(setq mu4e-hide-index-messages t)(setq mu4e-mu-home "/home/zjabbar/.cache/mu")(setq mail-user-agent (quote mu4e-user-agent))(add-hook (quote after-init-hook) (function mu4e-alert-enable-mode-line-display))(require (quote org-msg))(setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil title:nil email:nil tex:imagemagick" org-msg-startup "hidestars indent inlineimages" org-msg-greeting-fmt "\nAloha%s,\n\n" org-msg-recipient-names (quote (("zaijab2000@gmail.com" . "Zain") ("pyw@hawaii.edu" . "Dr. Washington") ("sue@math.hawaii.edu" . "Sue"))) org-msg-greeting-name-limit 3 org-msg-default-alternatives (quote ((new text html) (reply-to-html text html) (reply-to-text text))) org-msg-convert-citation t)(org-msg-mode)(add-hook (quote org-msg-edit-mode-hook) (quote mml-secure-message-sign))(setq mml-secure-openpgp-sign-with-sender t)(setq mu4e-change-filenames-when-moving t)(setq mu4e-update-interval 300)(setq mu4e-get-mail-command "mbsync -a -c ~/.config/mbsyncrc")(setq org-export-with-toc nil)(setq org-export-with-tile t)(setq org-mu4e-convert-to-html t)(setq message-send-mail-function (quote message-send-mail-with-sendmail))(setq sendmail-program "msmtp")(setq message-sendmail-extra-arguments (quote ("--read-envelope-from")))(setq message-sendmail-f-is-evil t)(setq mu4e-contexts (list (make-mu4e-context :name "Personal" :enter-func (lambda () (mu4e-message "Entering zaijab2000_gmail context") (when (string-match-p (buffer-name (current-buffer)) "mu4e-main") (revert-buffer))) :leave-func (lambda () (mu4e-message "Leaving gmail context") (when (string-match-p (buffer-name (current-buffer)) "mu4e-main") (revert-buffer))) :match-func (lambda (msg) (when msg (or (mu4e-message-contact-field-matches msg :to "zaijab2000@gmail.com") (mu4e-message-contact-field-matches msg :from "zaijab2000@gmail.com") (mu4e-message-contact-field-matches msg :cc "zaijab2000@gmail.com") (mu4e-message-contact-field-matches msg :bcc "zaijab2000@gmail.com") (string-match-p "^/zaijab2000/Inbox" (mu4e-message-field msg :maildir))))) :vars (quote ((user-mail-address . "zaijab2000@gmail.com") (smtpmail-smtp-user . "zaijab2000@gmail.com") (mu4e-compose-signature . "Mahalo") (smtpmail-smtp-server . "smtp.gmail.com") (smtpmail-smtp-service . 587) (mu4e-maildir-shortcuts (:maildir "/zaijab2000/Inbox" :key ?i)) (mu4e-bookmarks (:name "Unread messages" :query "maildir:/gmail/Inbox AND flag:unread AND NOT flag:trashed AND NOT outdoorexperten" :key ?u) (:name "Today's messages" :query "maildir:/gmail/Inbox AND date:today..now" :key ?t) (:name "Last 7 days" :query "maildir:/gmail/Inbox AND date:7d..now" :hide-unread t :key ?w) (:name "Deleted" :query "flag:trashed" :key ?d) (:name "Possibly garbage" :query "bokio OR outdoorexperten" :key ?g))))) (make-mu4e-context :name "School" :enter-func (lambda () (mu4e-message "Entering school context") (when (string-match-p (buffer-name (current-buffer)) "mu4e-main") (revert-buffer))) :leave-func (lambda () (mu4e-message "Leaving school context") (when (string-match-p (buffer-name (current-buffer)) "mu4e-main") (revert-buffer))) :match-func (lambda (msg) (when msg (or (mu4e-message-contact-field-matches msg :to "zjabbar@hawaii.edu") (mu4e-message-contact-field-matches msg :from "zjabbar@hawaii.edu") (mu4e-message-contact-field-matches msg :cc "zjabbar@hawaii.edu") (mu4e-message-contact-field-matches msg :bcc "zjabbar@hawaii.edu")))) :vars (quote ((user-mail-address . "zjabbar@hawaii.edu") (smtpmail-smtp-user . "zjabbar@hawaii.edu") (smtpmail-smtp-server . "smtp.gmail.com") (smtpmail-smtp-service . 587) (mu4e-compose-signature . "Mahalo") (mu4e-maildir-shortcuts (:maildir "/zjabbar/Inbox" :key ?i)) (mu4e-bookmarks (:name "All school mails" :query "maildir:/zjabbar/Inbox" :key ?a) (:name "Unread school messages" :query "maildir:/zjabbar/Inbox AND flag:unread AND NOT flag:trashed" :key ?u)))))))(use-package citar :bind (:map citar-map ("a" . citar-add-file-to-library)) :bind-keymap ("C-c c" . citar-map) :custom (citar-bibliography (quote ("/home/zjabbar/notes/bibtex/general_bibliography.bib"))) (citar-notes-paths (list "/home/zjabbar/notes/")) (citar-library-paths (list "/home/zjabbar/library/")) (citar-open-note-function (quote orb-citar-edit-note)) (citar-at-point-function (quote embark-act)) :hook (LaTeX-mode . citar-capf-setup) (org-mode . citar-capf-setup))(use-package citar-org :after (citar oc) :custom (org-cite-insert-processor (quote citar)) (org-cite-follow-processor (quote citar)) (org-cite-activate-processor (quote citar)))(use-package citar-embark :after citar embark :no-require :config (citar-embark-mode))(use-package citar-org-roam :after (citar citar-org org-roam org-roam-bibtex) :custom (citar-org-roam-capture-template-key "r") :config (citar-org-roam-mode))(load-theme (quote modus-operandi) t)(use-package orderless :custom (completion-styles (quote (orderless basic))) (completion-category-overrides (quote ((file (styles basic partial-completion))))) (orderless-smart-case nil) (completion-ignore-case t) (read-file-name-completion-ignore-case t) (read-buffer-completion-ignore-case t))(add-to-list (quote auto-mode-alist) (quote ("\\.epub\\'" . nov-mode)))(pdf-tools-install)(defvar *current-mode* (quote light))(defun my/dark-mode () (interactive) (cond ((eq *current-mode* (quote light)) (modus-themes-toggle) (add-hook (quote pdf-view-mode-hook) (function pdf-view-midnight-minor-mode))) (t (modus-themes-toggle) (remove-hook (quote pdf-view-mode-hook) (function pdf-view-midnight-minor-mode)))))
+	   (custom-set-faces
+	    ;; custom-set-faces was added by Custom.
+	    ;; If you edit it by hand, you could mess it up, so be careful.
+	    ;; Your init file should contain only one such instance.
+	    ;; If there is more than one, they won't work right.
+	    )
 
 	   
 	   (setq user-full-name "Zain Jabbar")
@@ -1511,17 +1619,17 @@ Valid contexts:
 		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
 
 #;(define shell-configuration
-  (home-emacs-configuration
-   (packages (list emacs-eat))
-   (init '((use-package eat
-			:hook
-			(eshell-first-time-mode . (function eat-eshell-mode))
-			(eshell-first-time-mode . (function eat-eshell-visual-command-mode)))))))
+(home-emacs-configuration
+(packages (list emacs-eat))
+(init '((use-package eat
+:hook
+(eshell-first-time-mode . (function eat-eshell-mode))
+(eshell-first-time-mode . (function eat-eshell-visual-command-mode)))))))
 
 (define exwm-configuration
   (home-emacs-configuration
    (packages (list
-	      ;jami
+					;jami
 	      emacs-exwm
 	      emacs-windsize
 	      emacs-vterm
