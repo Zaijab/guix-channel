@@ -10,6 +10,7 @@
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages java)
+  #:use-module (gnu packages pdf)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages shellutils)
   #:use-module (gnu packages browser-extensions)
