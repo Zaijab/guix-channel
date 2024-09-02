@@ -240,7 +240,8 @@
 ;; "Right Click"
 (define consult-configuration
   (home-emacs-configuration
-   (packages (list emacs-consult))
+   (packages (list emacs-consult
+		   ripgrep-all))
    (init '((require 'consult)
 	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
 	   (setq register-preview-delay 0.5

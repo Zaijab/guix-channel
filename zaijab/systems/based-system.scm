@@ -19,6 +19,7 @@
   #:use-module (gnu services linux)
   #:use-module (gnu packages search)
   #:use-module (gnu services base)
+  #:use-module (gnu packages base)
   #:use-module (gnu services file-sharing)
   #:use-module (gnu services admin)
   #:use-module (gnu services desktop)
@@ -125,7 +126,7 @@
 	       (specification->package "git")
 	       (specification->package "scrot")
 	       (specification->package "xauth")
-	       (specification->package "make")
+	       make
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
     
