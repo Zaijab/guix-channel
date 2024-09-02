@@ -470,10 +470,7 @@ See `consult-grep' for details."
 			(tabspaces-include-buffers '("*scratch*"))
 			(tab-bar-new-tab-choice "*scratch*")
 			:config
-			(dolist (name '("Code" "Theory" "Paper" "Japanese" "System") ())
-				(sleep-for 0.01)
-				(tab-switch name))
-			(tab-bar-close-tab-by-name "*scratch*")
+			
 			(consult-customize consult--source-buffer :hidden t :default nil)
 			;; set consult-workspace buffer list
 			(defvar consult--source-workspace
@@ -1880,6 +1877,10 @@ Valid contexts:
 		 (pixel-scroll-precision-mode)))
    (init '((setq org-startup-truncated nil)
 	   (tab-bar-mode)
+	   (dolist (name '("Code" "Theory" "Paper" "Japanese" "System") ())
+				(sleep-for 0.01)
+				(tab-switch name))
+			(tab-bar-close-tab-by-name "*scratch*")
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
 	   (setq battery-mode-line-limit 97)
