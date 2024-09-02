@@ -242,7 +242,9 @@
 (define consult-configuration
   (home-emacs-configuration
    (packages (list emacs-consult
-		   ripgrep-all))
+		   ripgrep-all
+		   poppler
+		   poppler-data))
    (init '((require 'consult)
 	   (add-hook 'completion-list-mode-hook consult-preview-at-point-mode)
 	   (setq register-preview-delay 0.5
