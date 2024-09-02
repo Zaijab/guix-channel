@@ -532,6 +532,7 @@ See `consult-grep' for details."
 		   font-vazir
 		   font-ipa-mj-mincho
 		   font-iosevka))
+   (early-init '((global-unset-key (kbd "C-x t"))))
    (init '((use-package skk
 			:after (consult)
 			:if (display-graphic-p)
