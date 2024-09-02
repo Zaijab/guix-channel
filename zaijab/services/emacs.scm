@@ -273,7 +273,7 @@ Can be either a string, or a list of strings or expressions."
 			  (let* ((cmd (consult--build-args consult-ripgrep-all-args))
 				 (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
 			    (lambda (input)
-			      (pcase-let* ((`(,arg . ,opts) (consult--command-split input))
+			      (pcase-let* (((cons arg opts) (consult--command-split input))
 					   (flags (append cmd opts))
 					   (ignore-case
 					    (and (not (or (member "-s" flags) (member "--case-sensitive" flags)))
@@ -286,7 +286,7 @@ Can be either a string, or a list of strings or expressions."
 					      (cons (append cmd (list "-e" arg) opts paths)
 						    (apply-partially (function consult--highlight-regexps)
 								     (list (regexp-quote arg)) ignore-case))
-					      (pcase-let ((`(,re . ,hl) (funcall consult--regexp-compiler arg type ignore-case)))
+					      (pcase-let (((cons re hl) (funcall consult--regexp-compiler arg type ignore-case)))
 							 (when re
 							   (cons (append cmd (and (eq type 'pcre) '("-P"))
 									 (list "-e" (consult--join-regexps re type))
