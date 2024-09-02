@@ -4,6 +4,10 @@
  (version 0)
  (dependencies
   (channel
+   (name 'ruther)
+   (url "https://github.com/Rutherther/guix-exprs")
+   (branch "main")) ; ripgrep-all
+  (channel
    (name nonguix)
    (url "https://gitlab.com/nonguix/nonguix")
    (introduction
