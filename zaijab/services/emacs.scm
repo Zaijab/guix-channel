@@ -803,7 +803,7 @@ See `consult-grep' for details."
 
 	   ))))
 
-(define music-configuration
+#;(define music-configuration
   (home-emacs-configuration
    (packages (list
 	      ffmpeg
@@ -812,52 +812,55 @@ See `consult-grep' for details."
 	      emacs-bluetooth
 	      emacs-emms
 	      python-tinytag))
-   (init '((require 'emms-setup)
-	   (require 'emms-info-tinytag)
-	   (setq emms-info-tinytag-python-name "python3")
-
-	   (emms-all)
-	   (setq emms-player-list '(emms-player-mpv)
-		 emms-info-functions '(emms-info-tinytag))
-
-	   (defvar emms-player-mpv-volume 100)
-	   (defun emms-player-mpv-get-volume ()
-	     (emms-player-mpv-cmd '(get_property volume)
-				  (function (lambda (vol err)
-					      (unless err
-						(let ((vol (truncate vol)))
-						  (setq emms-player-mpv-volume vol)
-						  (message "Music volume: %s%%"
-							   vol)))))))
-
-	   (defun emms-player-mpv-raise-volume (&optional amount)
-	     (interactive)
-	     (let* ((amount (or amount 10))
-		    (new-volume (+ emms-player-mpv-volume amount)))
-	       (if (> new-volume 100)
-		   (emms-player-mpv-cmd '(set_property volume 100))
-		   (emms-player-mpv-cmd (list 'add 'volume amount))))
-	     (emms-player-mpv-get-volume))
-	   (defun emms-player-mpv-lower-volume (&optional amount)
-	     (interactive)
-	     (emms-player-mpv-cmd (list 'add 'volume (- (or amount '10))))
-	     (emms-player-mpv-get-volume))
-	   (emms-add-directory-tree "~/music/random/")
-	   (emms-shuffle)
-	   (emms-player-mpv-lower-volume 30)
-
-	   (global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
-	   (global-set-key (kbd "<XF86AudioNext>") 'emms-next)
-	   (global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
-	   (global-set-key (kbd "<XF86AudioRaiseVolume>") 'alsamixer-up-volume)
-	   (global-set-key (kbd "<XF86AudioLowerVolume>") 'alsamixer-down-volume)
-	   (global-set-key (kbd "<XF86AudioMute>") 'alsamixer-toggle-mute)
-	   (global-set-key (kbd "<f9>") 'emms-previous)
-	   (global-set-key (kbd "<f10>") 'emms-next)
-	   (global-set-key (kbd "<f11>") 'emms-pause)
-	   (global-set-key (kbd "<f3>") 'alsamixer-up-volume)
-	   (global-set-key (kbd "<f2>") 'alsamixer-down-volume)
-	   (global-set-key (kbd "<f1>") 'alsamixer-toggle-mute)))))
+   (init '((use-package emms
+			:config
+			(require 'emms-setup)
+			(require 'emms-info-tinytag)
+			(setq emms-info-tinytag-python-name "python3")
+			
+			(emms-all)
+			(setq emms-player-list '(emms-player-mpv)
+			      emms-info-functions '(emms-info-tinytag))
+			
+			(defvar emms-player-mpv-volume 100)
+			(defun emms-player-mpv-get-volume ()
+			  (emms-player-mpv-cmd '(get_property volume)
+					       (function (lambda (vol err)
+							   (unless err
+							     (let ((vol (truncate vol)))
+							       (setq emms-player-mpv-volume vol)
+							       (message "Music volume: %s%%"
+									vol)))))))
+			
+			(defun emms-player-mpv-raise-volume (&optional amount)
+			  (interactive)
+			  (let* ((amount (or amount 10))
+				 (new-volume (+ emms-player-mpv-volume amount)))
+			    (if (> new-volume 100)
+				(emms-player-mpv-cmd '(set_property volume 100))
+				(emms-player-mpv-cmd (list 'add 'volume amount))))
+			  (emms-player-mpv-get-volume))
+			(defun emms-player-mpv-lower-volume (&optional amount)
+			  (interactive)
+			  (emms-player-mpv-cmd (list 'add 'volume (- (or amount '10))))
+			  (emms-player-mpv-get-volume))
+			(emms-add-directory-tree "~/music/random/")
+			(emms-shuffle)
+			(emms-player-mpv-lower-volume 30)
+			
+			(global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
+			(global-set-key (kbd "<XF86AudioNext>") 'emms-next)
+			(global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
+			(global-set-key (kbd "<XF86AudioRaiseVolume>") 'alsamixer-up-volume)
+			(global-set-key (kbd "<XF86AudioLowerVolume>") 'alsamixer-down-volume)
+			(global-set-key (kbd "<XF86AudioMute>") 'alsamixer-toggle-mute)
+			(global-set-key (kbd "<f9>") 'emms-previous)
+			(global-set-key (kbd "<f10>") 'emms-next)
+			(global-set-key (kbd "<f11>") 'emms-pause)
+			(global-set-key (kbd "<f3>") 'alsamixer-up-volume)
+			(global-set-key (kbd "<f2>") 'alsamixer-down-volume)
+			(global-set-key (kbd "<f1>") 'alsamixer-toggle-mute))
+	   ))))
 
 (define email-configuration
   (home-emacs-configuration
@@ -994,10 +997,10 @@ See `consult-grep' for details."
 	      emacs-org-fc
 	      emacs-org-drill
 	      emacs-kanji))
-   (init '(
+   (init '((use-package sqlite)
 
 	   (use-package org-roam
-			:after org
+			:after (org sqlite)
 			:custom
 			(org-roam-directory "~/notes")
 			(org-roam-v2-ack t)
