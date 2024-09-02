@@ -1475,7 +1475,7 @@ Valid contexts:
 (define exwm-configuration
   (home-emacs-configuration
    (packages (list
-	      jami
+	      ;jami
 	      emacs-exwm
 	      emacs-windsize
 	      emacs-vterm
