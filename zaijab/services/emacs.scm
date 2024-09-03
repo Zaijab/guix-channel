@@ -235,6 +235,7 @@
 
 			;; Configure other variables and modes in the :config section,
 			;; after lazily loading the package.
+			:commands (consult-ripgrep-all consult-search-library)
 			:config
 
 			;; Optionally configure preview. The default value
@@ -1888,7 +1889,7 @@ Valid contexts:
 	       )
 	   ))))
 
-#;(define ui-configuration
+(define ui-configuration
   (home-emacs-configuration
    (packages (list emacs-rainbow-delimiters))
    (early-init '((setq gc-cons-threshold 800000
