@@ -274,7 +274,7 @@ Can be either a string, or a list of strings or expressions."
 			  (let* ((cmd (consult--build-args consult-ripgrep-all-args))
 				 (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
 			    (lambda (input)
-			      (pcase-let* ((arg (car (consult--command-split input)))
+			      (let* ((arg (car (consult--command-split input)))
 					   (opts (cdr (consult--command-split input)))
 					   (flags (append cmd opts))
 					   (ignore-case
@@ -288,7 +288,7 @@ Can be either a string, or a list of strings or expressions."
 					      (cons (append cmd (list "-e" arg) opts paths)
 						    (apply-partially (function consult--highlight-regexps)
 								     (list (regexp-quote arg)) ignore-case))
-					      (pcase-let (
+					      (let (
 							  (re (car (funcall consult--regexp-compiler arg type ignore-case)))
 							  (hl (cdr (funcall consult--regexp-compiler arg type ignore-case)))
 							  )
@@ -320,6 +320,9 @@ See `consult-grep' for details."
 			  
 			  "Set workspace buffer list for consult-buffer.")
 			(add-to-list 'consult-buffer-sources 'consult--source-workspace)
+
+			(defun consult-search-library () (interactive)
+			  (consult-ripgrep-all "~/library/"))
 			)
 
 	   
