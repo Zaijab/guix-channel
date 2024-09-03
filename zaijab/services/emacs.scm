@@ -157,6 +157,7 @@
 		   poppler-data))
    (init '(;; Example configuration for Consult
 	   (use-package consult
+			:demand t
 			;; Replace bindings. Lazily loaded by `use-package'.
 			:bind (;; C-c bindings in `mode-specific-map'
 			       ("C-c M-x" . consult-mode-command)
