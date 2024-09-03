@@ -1916,6 +1916,7 @@ Valid contexts:
 		  left-margin-width 0
 		  right-fringe-width 0
 		  right-margin-width 0)
+		 (setq native-comp-speed -1)
 
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
