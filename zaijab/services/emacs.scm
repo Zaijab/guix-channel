@@ -37,6 +37,8 @@
   #:use-module (gnu packages imagemagick)
   #:use-module (gnu packages graphviz)
   #:use-module (gnu packages tree-sitter)
+  #:use-module (gnu packages rust-apps)
+  #:use-module (gnu packages base)
   #:use-module (gnu services)
   #:use-module (gnu home services)
   #:use-module (gnu services)
