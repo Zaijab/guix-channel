@@ -259,53 +259,53 @@
 
 			;; Optionally make narrowing help available in the minibuffer.
 			;; You may want to use `embark-prefix-help-command' or which-key instead.
-			(keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
-			(defcustom consult-ripgrep-all-args
-			  "rga --null --line-buffered --color=never --max-columns=1000 --path-separator /\
-   --smart-case --no-heading --with-filename --line-number"
-			  "Command line arguments for ripgrep, see `consult-ripgrep'.
-The dynamically computed arguments are appended.
-Can be either a string, or a list of strings or expressions."
-			  :type '(choice string (repeat (choice string sexp))))
+			;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
+;; 			(defcustom consult-ripgrep-all-args
+;; 			  "rga --null --line-buffered --color=never --max-columns=1000 --path-separator /\
+;;    --smart-case --no-heading --with-filename --line-number"
+;; 			  "Command line arguments for ripgrep, see `consult-ripgrep'.
+;; The dynamically computed arguments are appended.
+;; Can be either a string, or a list of strings or expressions."
+;; 			  :type '(choice string (repeat (choice string sexp))))
 
 
-			(defun consult--ripgrep-all-make-builder (paths)
-			  "Create ripgrep command line builder given PATHS."
-			  (let* ((cmd (consult--build-args consult-ripgrep-all-args))
-				 (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
-			    (lambda (input)
-			      (let* ((arg (car (consult--command-split input)))
-					   (opts (cdr (consult--command-split input)))
-					   (flags (append cmd opts))
-					   (ignore-case
-					    (and (not (or (member "-s" flags) (member "--case-sensitive" flags)))
-						 (or (member "-i" flags) (member "--ignore-case" flags)
-						     (and (or (member "-S" flags) (member "--smart-case" flags))
-							  (let (case-fold-search)
-							    ;; Case insensitive if there are no uppercase letters
-							    (not (string-match-p "[[:upper:]]" arg))))))))
-					  (if (or (member "-F" flags) (member "--fixed-strings" flags))
-					      (cons (append cmd (list "-e" arg) opts paths)
-						    (apply-partially (function consult--highlight-regexps)
-								     (list (regexp-quote arg)) ignore-case))
-					      (let (
-							  (re (car (funcall consult--regexp-compiler arg type ignore-case)))
-							  (hl (cdr (funcall consult--regexp-compiler arg type ignore-case)))
-							  )
-							 (when re
-							   (cons (append cmd (and (eq type 'pcre) '("-P"))
-									 (list "-e" (consult--join-regexps re type))
-									 opts paths)
-								 hl))))))))
+;; 			(defun consult--ripgrep-all-make-builder (paths)
+;; 			  "Create ripgrep command line builder given PATHS."
+;; 			  (let* ((cmd (consult--build-args consult-ripgrep-all-args))
+;; 				 (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
+;; 			    (lambda (input)
+;; 			      (let* ((arg (car (consult--command-split input)))
+;; 					   (opts (cdr (consult--command-split input)))
+;; 					   (flags (append cmd opts))
+;; 					   (ignore-case
+;; 					    (and (not (or (member "-s" flags) (member "--case-sensitive" flags)))
+;; 						 (or (member "-i" flags) (member "--ignore-case" flags)
+;; 						     (and (or (member "-S" flags) (member "--smart-case" flags))
+;; 							  (let (case-fold-search)
+;; 							    ;; Case insensitive if there are no uppercase letters
+;; 							    (not (string-match-p "[[:upper:]]" arg))))))))
+;; 					  (if (or (member "-F" flags) (member "--fixed-strings" flags))
+;; 					      (cons (append cmd (list "-e" arg) opts paths)
+;; 						    (apply-partially (function consult--highlight-regexps)
+;; 								     (list (regexp-quote arg)) ignore-case))
+;; 					      (let (
+;; 							  (re (car (funcall consult--regexp-compiler arg type ignore-case)))
+;; 							  (hl (cdr (funcall consult--regexp-compiler arg type ignore-case)))
+;; 							  )
+;; 							 (when re
+;; 							   (cons (append cmd (and (eq type 'pcre) '("-P"))
+;; 									 (list "-e" (consult--join-regexps re type))
+;; 									 opts paths)
+;; 								 hl))))))))
 
-			(defun consult-ripgrep-all (&optional dir initial)
-			  "Search with `rg' for files in DIR with INITIAL input.
-See `consult-grep' for details."
-			  (interactive "P")
-			  (consult--grep "Ripgrep All" (function consult--ripgrep-all-make-builder) dir initial))
+;; 			(defun consult-ripgrep-all (&optional dir initial)
+;; 			  "Search with `rg' for files in DIR with INITIAL input.
+;; See `consult-grep' for details."
+;; 			  (interactive "P")
+;; 			  (consult--grep "Ripgrep All" (function consult--ripgrep-all-make-builder) dir initial))
 
-			(defun consult-search-library () (interactive)
-			  (consult-ripgrep-all "~/library/"))
+			;; (defun consult-search-library () (interactive)
+			;;   (consult-ripgrep-all "~/library/"))
 
 			
 			(consult-customize consult--source-buffer :hidden t :default nil)
