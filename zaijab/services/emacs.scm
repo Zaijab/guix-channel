@@ -152,6 +152,8 @@
 (define consult-configuration
   (home-emacs-configuration
    (packages (list emacs-consult
+		   grep
+		   ripgrep
 		   ripgrep-all
 		   poppler
 		   poppler-data))
