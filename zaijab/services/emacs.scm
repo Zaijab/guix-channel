@@ -1888,7 +1888,7 @@ Valid contexts:
 	       )
 	   ))))
 
-(define ui-configuration
+#;(define ui-configuration
   (home-emacs-configuration
    (packages (list emacs-rainbow-delimiters))
    (early-init '((setq gc-cons-threshold 800000
