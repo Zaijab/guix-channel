@@ -157,7 +157,6 @@
 		   poppler-data))
    (init '(;; Example configuration for Consult
 	   (use-package consult
-			:after (tabspaces)
 			;; Replace bindings. Lazily loaded by `use-package'.
 			:bind (;; C-c bindings in `mode-specific-map'
 			       ("C-c M-x" . consult-mode-command)
@@ -350,23 +349,7 @@ See `consult-grep' for details."
 
 (defun consult-search-library () (interactive)
        (consult-ripgrep-all "~/library/"))
-			
-			(consult-customize consult--source-buffer :hidden t :default nil)
-			;; set consult-workspace buffer list
-			(defvar consult--source-workspace
-			  (list :name     "Workspace Buffers"
-				:narrow   ?w
-				:history  'buffer-name-history
-				:category 'buffer
-				:state    (function consult--buffer-state)
-				:default  t
-				:items    (lambda () (consult--buffer-query
-						      :predicate (function tabspaces--local-buffer-p)
-						      :sort 'visibility
-						      :as (function buffer-name))))
-			  
-			  "Set workspace buffer list for consult-buffer.")
-			(add-to-list 'consult-buffer-sources 'consult--source-workspace)
+
 
 			)
 
@@ -564,6 +547,24 @@ See `consult-grep' for details."
 				(sleep-for 0.01)
 				(tab-switch name))
 			(tab-bar-close-tab-by-name "*scratch*")
+			
+(with-eval-after-load 'consult
+			(consult-customize consult--source-buffer :hidden t :default nil)
+			;; set consult-workspace buffer list
+			(defvar consult--source-workspace
+			  (list :name     "Workspace Buffers"
+				:narrow   ?w
+				:history  'buffer-name-history
+				:category 'buffer
+				:state    (function consult--buffer-state)
+				:default  t
+				:items    (lambda () (consult--buffer-query
+						      :predicate (function tabspaces--local-buffer-p)
+						      :sort 'visibility
+						      :as (function buffer-name))))
+			  
+			  "Set workspace buffer list for consult-buffer.")
+			(add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
 			)
 	   ))
