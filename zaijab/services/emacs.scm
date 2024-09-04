@@ -229,6 +229,8 @@
 			(setq register-preview-delay 0.5
 			      register-preview-function (function consult-register-format))
 
+			(setq consult-preview-partial-size 104857600)
+
 			;; Optionally tweak the register preview window.
 			;; This adds thin lines, sorting and hides the mode line of the window.
 			(advice-add (function register-preview) :override (function consult-register-window))
@@ -813,7 +815,7 @@ See `consult-grep' for details."
 
 	   ))))
 
-#;(define music-configuration
+(define music-configuration
   (home-emacs-configuration
    (packages (list
 	      ffmpeg
@@ -1743,9 +1745,7 @@ Valid contexts:
 			(global-set-key (kbd "s-c") (function
 						     (lambda () (interactive)
 							     (find-file "~/code/guix-channel/zaijab/services/emacs.scm"))))
-			(global-set-key (kbd "s-b") (function
-						     (lambda () (interactive)
-							     (find-file (read-file-name "" "~/books/")))))
+			(global-set-key (kbd "s-b") (function consult-search-library))
 			(global-set-key (kbd "s-n") 'org-roam-node-find)
 			(global-set-key (kbd "s-i") 'org-roam-node-insert)
 			(global-set-key (kbd "s-N") 'org-roam-dailies-capture-today)
