@@ -1581,6 +1581,7 @@ Valid contexts:
 	   (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
 	   (setq jupyter-use-zmq nil)
 	   (setq org-babel-python-command "python3"
+		 org-confirm-babel-evaluate nil
 		 python-interpreter "python3"
 		 python-shell-interpreter "python3"
 		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
