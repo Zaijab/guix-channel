@@ -86,7 +86,7 @@
          (cups-configuration
            (web-interface? #t)
            (extensions
-             (list cups-filters epson-inkjet-printer-escpr hplip-minimal))))
+             (list cups-filters epson-inkjet-printer-escpr hplip-minimal hplip))))
 
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
