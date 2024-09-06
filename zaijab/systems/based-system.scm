@@ -92,7 +92,6 @@
      (delete pulseaudio-service-type)
      (delete gdm-service-type)
      (delete network-manager-service-type)
-    ; (delete elogind-service-type)
      (mingetty-service-type
       config => (mingetty-configuration
 		 (inherit config)
@@ -133,6 +132,7 @@
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       gnu-make
+	       cups
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
     
