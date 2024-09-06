@@ -12,6 +12,7 @@
   #:use-module (gnu system)
   #:use-module (gnu home)
   #:use-module (gnu services guix)
+  #:use-module (gnu packages cups)
   #:use-module (gnu services cups)
   #:use-module (gnu services pm)  
   #:use-module (gnu packages)
