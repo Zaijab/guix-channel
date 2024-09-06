@@ -266,7 +266,7 @@
 
 			;; Optionally make narrowing help available in the minibuffer.
 			;; You may want to use `embark-prefix-help-command' or which-key instead.
-			;; (keymap-set consult-narrow-map (concat consult-narrow-key " ?") #'consult-narrow-help)
+			(keymap-set consult-narrow-map (concat consult-narrow-key " ?") (function consult-narrow-help))
 
 (defcustom consult-ripgrep-all-args
   "rga --null --line-buffered --color=never --max-columns=1000 --path-separator /\
@@ -1957,7 +1957,8 @@ Valid contexts:
 	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
 	   (setq enable-recursive-minibuffers t)
 	   (setq read-extended-command-predicate (function command-completion-default-include-p))
-	   (which-key-mode)))))
+	   ;(which-key-mode)
+	   ))))
 
 ;;; Combine all Emacs-Configurations within module
 
