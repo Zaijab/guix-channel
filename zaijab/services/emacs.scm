@@ -1956,9 +1956,7 @@ Valid contexts:
 		   (cdr args)))
 	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
 	   (setq enable-recursive-minibuffers t)
-	   (setq read-extended-command-predicate (function command-completion-default-include-p))
-	   ;(which-key-mode)
-	   ))))
+	   (setq read-extended-command-predicate (function command-completion-default-include-p))))))
 
 ;;; Combine all Emacs-Configurations within module
 
