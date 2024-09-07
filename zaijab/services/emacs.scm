@@ -1873,13 +1873,7 @@ Valid contexts:
 		       max-mini-window-height 10
 	    	       initial-scratch-message nil
 	    	       large-file-warning-threshold 100000000)
-		 (setq
-		  left-fringe-width 0
-		  left-margin-width 0
-		  right-fringe-width 0
-		  right-margin-width 0)
-		 (setq native-comp-speed -1)
-		 (setq no-byte-compile t)
+
 
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
