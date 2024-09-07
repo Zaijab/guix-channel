@@ -567,6 +567,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list emacs-ddskk
 		   font-lohit
+		   font-amiri
 		   font-vazir
 		   font-ipa-mj-mincho
 		   font-iosevka))
