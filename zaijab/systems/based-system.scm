@@ -112,6 +112,7 @@
 (define-public tao-operating-system
   (operating-system
     (kernel linux)
+    (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp" %default-kernel-arguments)
     (firmware (list linux-firmware))
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
