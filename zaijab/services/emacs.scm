@@ -773,17 +773,17 @@ See `consult-grep' for details."
 	   (setq-default elfeed-search-title-max-width 100)
 	   (setq-default elfeed-search-title-min-width 100)
 
-	   (defun browse-url-mpv (url &optional new-window)
-	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=\"bestvideo[height<?720]\"" url))
+	   ;; (defun browse-url-mpv (url &optional new-window)
+	   ;;   (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=\"bestvideo[height<?720]\"" url))
 
 	   (defun browse-url-mpv (url &optional new-window)
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
 
-	   (defun browse-url-mpv (url &optional new-window)
-	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?480]+bestaudio/best" url))
+	   ;; (defun browse-url-mpv (url &optional new-window)
+	   ;;   (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?480]+bestaudio/best" url))
 
-	   (defun browse-url-mpv (url &optional new-window)
-	     (start-process "mpv" "*mpv*" "mpv" url))
+	   ;; (defun browse-url-mpv (url &optional new-window)
+	   ;;   (start-process "mpv" "*mpv*" "mpv" url))
 
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.youtube." 'browse-url-mpv))
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.twitch." 'browse-url-mpv))
@@ -1063,7 +1063,7 @@ See `consult-grep' for details."
 			(org-fc-flashcard-tag "FC")
 			(org-fc-suspended-tag "Suspended")
 			:config
-			(defun org-fc-review-cram (context)
+			#;(defun org-fc-review-cram (context)
 			  "Start a review session for all cards in CONTEXT.
 Called interactively, prompt for the context.
 Valid contexts:
