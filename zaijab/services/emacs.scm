@@ -1063,7 +1063,8 @@ See `consult-grep' for details."
 			(org-fc-flashcard-tag "FC")
 			(org-fc-suspended-tag "Suspended")
 			:config
-			#;(defun org-fc-review-cram (context)
+			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card))
+			(defun org-fc-review-cram (context)
 			  "Start a review session for all cards in CONTEXT.
 Called interactively, prompt for the context.
 Valid contexts:
