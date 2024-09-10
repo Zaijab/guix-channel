@@ -879,8 +879,8 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list
 	      ((options->transformation
-		'((with-branch . "emacs-org-msg=1.12")
-		  (with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")))
+		'((with-branch . "emacs-org-msg=master")
+		  #;(with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")))
 	       emacs-org-msg)
 	      isync
 	      mu
