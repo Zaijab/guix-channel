@@ -566,6 +566,8 @@ See `consult-grep' for details."
 (define language-configuration
   (home-emacs-configuration
    (packages (list emacs-ddskk
+		   inkscape
+		   jbr21
 		   font-lohit
 		   font-amiri
 		   font-vazir
