@@ -568,6 +568,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list emacs-ddskk
 		   inkscape
+		   anki
 		   jbr21
 		   font-lohit
 		   font-amiri
