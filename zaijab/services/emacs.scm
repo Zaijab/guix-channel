@@ -1068,37 +1068,7 @@ See `consult-grep' for details."
 			(org-fc-flashcard-tag "FC")
 			(org-fc-suspended-tag "Suspended")
 			:config
-			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card))
-			(defun org-fc-review-cram (context)
-			  "Start a review session for all cards in CONTEXT.
-Called interactively, prompt for the context.
-Valid contexts:
-- 'all, all cards in `org-fc-directories'
-- 'buffer, all cards in the current buffer
-- a list of paths"
-			  (interactive (list (org-fc-select-context)))
-			  (if org-fc-review--session
-			      (when (yes-or-no-p "Flashcards are already being reviewed. Resume? ")
-				(org-fc-review-resume))
-			      (let* ((index (org-fc-index context))
-				     (cards (identity index))
-				     (order
-				      (or
-				       (plist-get context :order)
-				       (if org-fc-shuffle-positions 'shuffled 'ordered)))
-				     (scheduler
-				      (cl-case order
-					       (ordered (org-fc-scheduler))
-					       (shuffled (org-fc-scheduler-shuffled))
-					       (t (error "Unknown review order %s" order)))))
-				(if (null cards)
-				    (message "No cards due right now")
-				    (progn
-				     (org-fc-scheduler-init scheduler cards)
-				     (setq org-fc-review--session
-					   (org-fc-make-review-session scheduler))
-				     (run-hooks 'org-fc-before-review-hook)
-				     (org-fc-review-next-card)))))))
+			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card)))
 	   
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
