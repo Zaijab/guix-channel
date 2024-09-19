@@ -607,6 +607,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list icecat
 		   ublock-origin/icecat
+		   exwm-firefox
 		   passff/icecat))))
 
 (define pdf-tools-configuration
