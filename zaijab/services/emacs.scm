@@ -608,6 +608,7 @@ See `consult-grep' for details."
    (packages (list icecat
 		   ublock-origin/icecat
 		   emacs-exwm-firefox
+		   jami
 		   passff/icecat))))
 
 (define pdf-tools-configuration
