@@ -1070,6 +1070,7 @@ See `consult-grep' for details."
 			(org-fc-flashcard-tag "FC")
 			(org-fc-suspended-tag "Suspended")
 			:config
+			(org-fc-cache-mode)
 			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card)))
 	   
 	   (defun jisho-word->japanese-part (jisho-word)
