@@ -6,6 +6,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages education)
+  #:use-module (gnu packages gnome)
   #:use-module (gnu packages video)
   #:use-module (gnu packages curl)
   #:use-module (gnu packages fonts)
