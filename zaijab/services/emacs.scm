@@ -609,6 +609,7 @@ See `consult-grep' for details."
 		   ublock-origin/icecat
 		   emacs-exwm-firefox
 		   jami
+		   hicolor-icon-theme
 		   passff/icecat))))
 
 (define pdf-tools-configuration
