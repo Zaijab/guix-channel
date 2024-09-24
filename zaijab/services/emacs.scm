@@ -689,6 +689,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list
 	      mpv
+	      emacs-empv
 	      yt-dlp
 	      emacs-elfeed
 	      emacs-elfeed-tube
