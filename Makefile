@@ -1,4 +1,5 @@
 image=$(shell guix system image /home/zjabbar/code/guix-channel/zaijab/systems/pinephone.scm --no-grafts --image-type=rock64-raw)
+home=/home/$(whoami)
 
 all: git pull_from_lock system
 
