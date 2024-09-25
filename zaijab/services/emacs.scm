@@ -35,6 +35,7 @@
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages python-build)
   #:use-module (gnu packages haskell-xyz)
+  #:use-module (gnu packages machine-learning)
   #:use-module (gnu packages texlive)
   #:use-module (gnu packages tex)
   #:use-module (gnu packages imagemagick)
