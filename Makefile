@@ -1,5 +1,4 @@
 image=$(shell guix system image /home/zjabbar/code/guix-channel/zaijab/systems/pinephone.scm --no-grafts --image-type=rock64-raw)
-home=/home/$(whoami)
 
 all: git pull_from_lock system
 
@@ -24,10 +23,10 @@ update_lock:
 	guix describe --format=channels > /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl
 
 system:
-	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades
+	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts
 
 system_from_file:
-	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades -v 4
+	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades -v 4 --no-grafts
 
 print_shepherd_log:
 	sudo cat /var/log/messages

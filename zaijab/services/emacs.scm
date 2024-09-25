@@ -1540,17 +1540,23 @@ See `consult-grep' for details."
    (packages (list
 	      python
 	      jupyter
+
 	      expect
 	      sshpass
-	      emacs-ob-async
 
-	      (identity #;(options->transformation '((with-git-url . "emacs-jupyter=https://github.com/emacs-jupyter/jupyter.git")))
-	       emacs-jupyter)
-	      
+	      emacs-ob-async
+	      emacs-jupyter
 	      emacs-pydoc
+	      
 	      python-lsp-server
 	      tree-sitter
 	      tree-sitter-python
+
+	      python-numpy
+	      python-tensorflow
+	      python-scikit-learn
+	      python-pandas
+	      python-tqdm
 
 	      emacs-csv-mode
 	      emacs-py-isort
