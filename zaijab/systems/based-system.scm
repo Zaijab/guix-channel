@@ -55,7 +55,6 @@
    (service openssh-service-type)
    (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
    (service guix-home-service-type `(("zjabbar" ,zains-home)))
-   ;(service connman-service-type)
    (service tlp-service-type)
    (service docker-service-type)
    (service containerd-service-type)
@@ -94,7 +93,6 @@
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
      (delete gdm-service-type)
-     ;(delete network-manager-service-type)
      (mingetty-service-type
       config => (mingetty-configuration
 		 (inherit config)
@@ -114,9 +112,9 @@
 
 (define-public tao-operating-system
   (operating-system
-    ;(kernel linux)
+    (kernel linux)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp" %default-kernel-arguments))
-    ;(firmware (list linux-firmware))
+    (firmware (list linux-firmware))
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
     (keyboard-layout (keyboard-layout "us"))
