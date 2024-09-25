@@ -1555,6 +1555,7 @@ See `consult-grep' for details."
 	      tree-sitter-python
 
 	      python-numpy
+	      python-sympy
 	      python-tensorflow
 	      python-scikit-learn
 	      python-pandas
