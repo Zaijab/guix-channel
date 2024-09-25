@@ -43,7 +43,7 @@
                   ("EDITOR" . "emacsclient -n")
                   ("PATH" . "$PATH:/home/zjabbar/.local/bin")
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
-                  ("TF_CPP_MIN_LOG_LEVEL" . "3")
+                  ("TF_CPP_MIN_LOG_LEVEL" . "1")
                   ("DISABLE_RTKIT" . "1")
                   ("LD_LIBRARY_PATH" . "/run/current-system/profile/lib/")
                   ("GUILE_LOAD_PATH" . "$GUILE_LOAD_PATH:/home/zjabbar/.config/guix/current/share/guile/site/3.0/")))

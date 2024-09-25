@@ -55,7 +55,7 @@
    (service openssh-service-type)
    (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
    (service guix-home-service-type `(("zjabbar" ,zains-home)))
-   (service connman-service-type)
+   ;(service connman-service-type)
    (service tlp-service-type)
    (service docker-service-type)
    (service containerd-service-type)
@@ -94,7 +94,7 @@
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
      (delete gdm-service-type)
-     (delete network-manager-service-type)
+     ;(delete network-manager-service-type)
      (mingetty-service-type
       config => (mingetty-configuration
 		 (inherit config)
