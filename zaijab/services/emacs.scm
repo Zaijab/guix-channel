@@ -1557,6 +1557,8 @@ See `consult-grep' for details."
 	      python-numpy
 	      python-sympy
 	      python-tensorflow
+	      python-jax
+	      python-seaborn
 	      python-scikit-learn
 	      python-pandas
 	      python-tqdm
