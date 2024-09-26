@@ -3,6 +3,9 @@
   #:use-module (gnu packages python-science)
   #:use-module (gnu packages python-web)
   #:use-module (gnu packages python-crypto)
+  #:use-module (gnu packages machine-learning)
+  #:use-module (guix-science packages python)
+  #:use-module (gnu packages python-build)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages password-utils)
   #:use-module (gnu packages haskell-xyz)  
@@ -102,4 +105,22 @@ support can easily be added.")
 files.")
     (license license:expat)))
 
-python-tinytag
+(define-public python-equinox
+  (package
+    (name "python-equinox")
+    (version "0.11.7")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "equinox" version))
+       (sha256
+        (base32 "1gjilam3mnw72995zib2gmzgndjan6xby32v8sqw8bl2kmm23q4n"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-jax python-jaxtyping
+                             python-typing-extensions python-hatchling))
+    (home-page "")
+    (synopsis "Elegant easy-to-use neural networks in JAX.")
+    (description "Elegant easy-to-use neural networks in JAX.")
+    (license #f)))
+
+python-equinox
