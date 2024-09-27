@@ -381,7 +381,9 @@ See `consult-grep' for details."
 ;; In Buffer Completion
 (define corfu-configuration
   (home-emacs-configuration
-   (packages (list emacs-corfu))
+   (packages (list emacs-corfu
+		   ((options->transformation '((with-branch . "emacs-compat=main")))
+		    emacs-compat)))
    (init '((use-package corfu
 			;; Optional customizations
 			:custom
@@ -1257,7 +1259,20 @@ See `consult-grep' for details."
 		    :with-toc nil
 		    :exclude-tags ("draft")
 		    :html-head
-		    "<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/posts\">/posts</a></li></ul></div></header><script src=\"static/js/nastaliq.js\"></script>"
+		    "
+ <link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>
+ <header><div class=\"menu\"><ul>
+ <li><a href=\"/\">/</a></li>
+ <li><a href=\"/about\">/about</a></li>
+ <li><a href=\"/posts\">/posts</a></li></ul></div></header>
+ <script src=\"static/js/nastaliq.js\"></script>
+ <script src=\"static/js/stacking.js\"></script>
+ <script>
+ document.addEventListener('DOMContentLoaded', function() {
+   initializePreviews(document.querySelector('.page'));
+ });
+ </script>"
+		    ;"<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/posts\">/posts</a></li></ul></div></header><script src=\"static/js/nastaliq.js\"></script>"
 		    :recursive t
 		    :html-postamble nil
 		    :html-mathjax-template "
@@ -1290,6 +1305,62 @@ See `consult-grep' for details."
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-publish-attachment)
 		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
+
+	   
+	   (setq org-publish-project-alist
+      '(("orgfiles"
+         :base-directory "~/notes/"
+         :publishing-directory "~/code/zaijab.github.io/"
+         :publishing-function org-html-publish-to-html
+         :exclude ".*org"
+         :include ("20220925152629-index.org"
+                   "20220925155207-about.org"
+                   "20230225143306-posts.org"
+                   "20230225142818-notation.org"
+                   "20230225142533-category_theory.org")
+         :with-toc nil
+         :exclude-tags ("draft")
+         :html-head
+         "
+          <link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>
+          <header><div class=\"menu\"><ul>
+          <li><a href=\"/\">/</a></li>
+          <li><a href=\"/about\">/about</a></li>
+          <li><a href=\"/posts\">/posts</a></li></ul></div></header>
+          <script src=\"static/js/nastaliq.js\"></script>
+          <script src=\"static/js/stacking.js\"></script>
+          <script src=\"https://unpkg.com/@popperjs/core@2\"></script>
+          <script src=\"https://unpkg.com/tippy.js@6\"></script>
+          <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            let page = document.querySelector('.page');
+            if (page) {
+              initializePreviews(page);
+            }
+          });
+          </script>
+<script>MathJax = { loader: { load: ['[custom]/xypic.js'], paths: {custom: 'https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/'} }, tex: { packages: {'[+]': ['xypic']}, macros: { R: \"{\\\\bf R}\" } } };</script><script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js\"></script>
+<div class=\"grid-container\"><div class=\"ds-grid\"><div class=\"page\">"
+         :html-preamble nil
+         :html-postamble nil
+         :recursive t
+         
+         :html-mathjax-template "<script>MathJax = { loader: { load: ['[custom]/xypic.js'], paths: {custom: 'https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/'} }, tex: { packages: {'[+]': ['xypic']}, macros: { R: \"{\\\\bf R}\" } } };</script><script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js\"></script>")
+        ("static"
+         :base-directory "~/notes/static"
+         :base-extension any
+         :recursive t
+         :publishing-directory "~/code/zaijab.github.io/static"
+         :publishing-function org-publish-attachment)
+        ("CNAME"
+         :base-directory "~/notes/CNAME/"
+         :base-extension any
+         :publishing-directory "~/code/zaijab.github.io/"
+         :publishing-function org-publish-attachment)
+        ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
+
+
+	   
 	   ))))
 
 
