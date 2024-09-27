@@ -382,7 +382,7 @@ See `consult-grep' for details."
 (define corfu-configuration
   (home-emacs-configuration
    (packages (list emacs-corfu
-		   ((options->transformation '((with-branch . "emacs-compat=main")))
+		   #;((options->transformation '((with-branch . "emacs-compat=main")))
 		    emacs-compat)))
    (init '((use-package corfu
 			;; Optional customizations
