@@ -1919,7 +1919,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list emacs-rainbow-delimiters
 		   emacs-speed-type))
-   (early-init '((setq load-suffixes '(".el" ".elc" ".so"))
+   (early-init '(;(setq load-suffixes '(".el" ".elc" ".so"))
 		 (setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
 		       indicate-empty-lines nil
