@@ -1329,6 +1329,8 @@ See `consult-grep' for details."
           <li><a href=\"/posts\">/posts</a></li></ul></div></header>
           <script src=\"static/js/nastaliq.js\"></script>
           <script src=\"static/js/stacking.js\"></script>
+          <link href='https://unpkg.com/tippy.js@6.2.3/themes/light.css' rel='stylesheet'>
+
           <script src=\"https://unpkg.com/@popperjs/core@2\"></script>
           <script src=\"https://unpkg.com/tippy.js@6\"></script>
           <script>
@@ -1613,6 +1615,7 @@ See `consult-grep' for details."
    (packages (list
 	      python
 	      jupyter
+	      guix-jupyter
 
 	      expect
 	      sshpass
