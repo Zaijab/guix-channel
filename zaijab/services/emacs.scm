@@ -879,8 +879,8 @@ See `consult-grep' for details."
 			  (interactive)
 			  (emms-player-mpv-cmd (list 'add 'volume (- (or amount '10))))
 			  (emms-player-mpv-get-volume))
-			(emms-add-directory-tree "~/music/random/")
-			(emms-shuffle)
+			;(emms-add-directory-tree "~/music/random/")
+			;(emms-shuffle)
 			(emms-player-mpv-lower-volume 30)
 			
 			(global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
