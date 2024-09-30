@@ -1666,6 +1666,7 @@ See `consult-grep' for details."
 								    (eshell . t)
 								    (shell . t)
 								    (jupyter . t)))
+	   
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))))))
 
 (define lisp-configuration
