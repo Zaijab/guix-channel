@@ -328,7 +328,7 @@ See `consult-grep' for details."
 
 	   ))))
 
-;; Live Preview Selection
+;; 
 (define embark-configuration
   (home-emacs-configuration
    (packages (list emacs-embark
@@ -455,6 +455,10 @@ See `consult-grep' for details."
 			(setq tab-always-indent 'complete)
 			(add-to-list 'completion-at-point-functions (function cape-file)))
 	   ))))
+
+(define file-configuration
+  (home-emacs-configuration
+   (init '((setq dired-dwim-target t)))))
 
 
 (define web-configuration
