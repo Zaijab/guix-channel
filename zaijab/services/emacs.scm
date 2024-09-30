@@ -620,6 +620,7 @@ See `consult-grep' for details."
 		   emacs-exwm-firefox
 		   jami
 		   emacs-mentor
+		   rtorrent
 		   hicolor-icon-theme
 		   passff/icecat))))
 
