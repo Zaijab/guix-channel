@@ -7,6 +7,7 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages education)
   #:use-module (gnu packages gnome)
+  #:use-module (gnu packages bittorrent)
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages video)
   #:use-module (gnu packages curl)
