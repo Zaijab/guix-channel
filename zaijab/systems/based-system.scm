@@ -62,6 +62,8 @@
    (service oci-container-service-type
 	    (list
 	     (oci-container-configuration
+	      (image "jami-daemon"))
+	     (oci-container-configuration
 	      (image "docker.io/library/caddy:2-alpine")
 	      (network "host")
 	      (volumes '("/home/zjabbar/code/guix-channel/zaijab/files/Caddyfile:/etc/caddy/Caddyfile:ro"
