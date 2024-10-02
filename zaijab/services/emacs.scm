@@ -620,6 +620,7 @@ See `consult-grep' for details."
 		   ublock-origin/icecat
 		   emacs-exwm-firefox
 		   jami
+		   jami-docs
 		   hicolor-icon-theme
 		   passff/icecat))))
 
@@ -1394,7 +1395,7 @@ See `consult-grep' for details."
 			      org-image-actual-width nil)
 					;(global-org-modern-mode)
 			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
-			(setq org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
+			(setq ;org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
 			      jupyter-org-resource-directory "/home/zjabbar/.cache/jupyter/")
 			(setq org-todo-keywords
 			      '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
