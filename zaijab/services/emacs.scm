@@ -1619,6 +1619,7 @@ See `consult-grep' for details."
 	      sicp
 	      xdot
 	      emacs-guix
+	      emacs-daemons
 	      tree-sitter-scheme
 	      emacs-srfi
 	      emacs-arei
