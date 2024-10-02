@@ -275,50 +275,50 @@
 			;; You may want to use `embark-prefix-help-command' or which-key instead.
 			(keymap-set consult-narrow-map (concat consult-narrow-key " ?") (function consult-narrow-help))
 
-(defcustom consult-ripgrep-all-args
-  "rga --null --line-buffered --color=never --max-columns=1000 --path-separator /\
+			(defcustom consult-ripgrep-all-args
+			  "rga --null --line-buffered --color=never --max-columns=1000 --path-separator /\
    --smart-case --no-heading --with-filename --line-number"
-  "Command line arguments for ripgrep, see `consult-ripgrep'.
+			  "Command line arguments for ripgrep, see `consult-ripgrep'.
 The dynamically computed arguments are appended.
 Can be either a string, or a list of strings or expressions."
-  :type '(choice string (repeat (choice string sexp))))
+			  :type '(choice string (repeat (choice string sexp))))
 
-(eval-expression (quote
-(defun consult--ripgrep-all-make-builder (paths)
-  "Create ripgrep command line builder given PATHS."
-  (let* ((cmd (consult--build-args consult-ripgrep-all-args))
-	 (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
-    (lambda (input)
-      (let* ((arg  (car (consult--command-split input)))
-	     (opts (cdr (consult--command-split input)))
-	     (flags (append cmd opts))
-	     (ignore-case
-	      (and (not (or (member "-s" flags) (member "--case-sensitive" flags)))
-		   (or (member "-i" flags) (member "--ignore-case" flags)
-		       (and (or (member "-S" flags) (member "--smart-case" flags))
-			    (let (case-fold-search)
-			      ;; Case insensitive if there are no uppercase letters
-			      (not (string-match-p "[[:upper:]]" arg))))))))
-	(if (or (member "-F" flags) (member "--fixed-strings" flags))
-	    (cons (append cmd (list "-e" arg) opts paths)
-		  (apply-partially (function consult--highlight-regexps)
-				   (list (regexp-quote arg)) ignore-case))
-	  (let ((re (car (funcall consult--regexp-compiler arg type ignore-case)))
-		(hl (cdr (funcall consult--regexp-compiler arg type ignore-case))))
-	    (when re
-	      (cons (append cmd (and (eq type 'pcre) '("-P"))
-			    (list "-e" (consult--join-regexps re type))
-			    opts paths)
-		    hl))))))))))
+			(eval-expression (quote
+					  (defun consult--ripgrep-all-make-builder (paths)
+					    "Create ripgrep command line builder given PATHS."
+					    (let* ((cmd (consult--build-args consult-ripgrep-all-args))
+						   (type (if (consult--grep-lookahead-p (car cmd) "-P") 'pcre 'extended)))
+					      (lambda (input)
+						(let* ((arg  (car (consult--command-split input)))
+						       (opts (cdr (consult--command-split input)))
+						       (flags (append cmd opts))
+						       (ignore-case
+							(and (not (or (member "-s" flags) (member "--case-sensitive" flags)))
+							     (or (member "-i" flags) (member "--ignore-case" flags)
+								 (and (or (member "-S" flags) (member "--smart-case" flags))
+								      (let (case-fold-search)
+									;; Case insensitive if there are no uppercase letters
+									(not (string-match-p "[[:upper:]]" arg))))))))
+						  (if (or (member "-F" flags) (member "--fixed-strings" flags))
+						      (cons (append cmd (list "-e" arg) opts paths)
+							    (apply-partially (function consult--highlight-regexps)
+									     (list (regexp-quote arg)) ignore-case))
+						      (let ((re (car (funcall consult--regexp-compiler arg type ignore-case)))
+							    (hl (cdr (funcall consult--regexp-compiler arg type ignore-case))))
+							(when re
+							  (cons (append cmd (and (eq type 'pcre) '("-P"))
+									(list "-e" (consult--join-regexps re type))
+									opts paths)
+								hl))))))))))
 
-(defun consult-ripgrep-all (&optional dir initial)
-  "Search with `rg' for files in DIR with INITIAL input.
+			(defun consult-ripgrep-all (&optional dir initial)
+			  "Search with `rg' for files in DIR with INITIAL input.
 See `consult-grep' for details."
-  (interactive "P")
-  (consult--grep "Ripgrep All" (function consult--ripgrep-all-make-builder) dir initial))
+			  (interactive "P")
+			  (consult--grep "Ripgrep All" (function consult--ripgrep-all-make-builder) dir initial))
 
-(defun consult-search-library () (interactive)
-       (consult-ripgrep-all "~/library/"))
+			(defun consult-search-library () (interactive)
+			  (consult-ripgrep-all "~/library/"))
 
 
 			)
@@ -385,7 +385,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list emacs-corfu
 		   #;((options->transformation '((with-branch . "emacs-compat=main")))
-		    emacs-compat)))
+		   emacs-compat)))
    (init '((use-package corfu
 			;; Optional customizations
 			:custom
@@ -508,7 +508,7 @@ See `consult-grep' for details."
    (packages (list emacs-tabspaces))
    (init '(
 	   (use-package tabspaces
-			;:after (consult)
+					;:after (consult)
 			:hook (after-init . tabspaces-mode) 
 			:commands (tabspaces-switch-or-create-workspace
 				   tabspaces-open-or-create-project-and-workspace)
@@ -524,23 +524,23 @@ See `consult-grep' for details."
 				(tab-switch name))
 			(tab-bar-close-tab-by-name "*scratch*")
 			
-(with-eval-after-load 'consult
-			(consult-customize consult--source-buffer :hidden t :default nil)
-			;; set consult-workspace buffer list
-			(defvar consult--source-workspace
-			  (list :name     "Workspace Buffers"
-				:narrow   ?w
-				:history  'buffer-name-history
-				:category 'buffer
-				:state    (function consult--buffer-state)
-				:default  t
-				:items    (lambda () (consult--buffer-query
-						      :predicate (function tabspaces--local-buffer-p)
-						      :sort 'visibility
-						      :as (function buffer-name))))
-			  
-			  "Set workspace buffer list for consult-buffer.")
-			(add-to-list 'consult-buffer-sources 'consult--source-workspace))
+			(with-eval-after-load 'consult
+					      (consult-customize consult--source-buffer :hidden t :default nil)
+					      ;; set consult-workspace buffer list
+					      (defvar consult--source-workspace
+						(list :name     "Workspace Buffers"
+						      :narrow   ?w
+						      :history  'buffer-name-history
+						      :category 'buffer
+						      :state    (function consult--buffer-state)
+						      :default  t
+						      :items    (lambda () (consult--buffer-query
+									    :predicate (function tabspaces--local-buffer-p)
+									    :sort 'visibility
+									    :as (function buffer-name))))
+						
+						"Set workspace buffer list for consult-buffer.")
+					      (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
 			)
 	   ))
@@ -877,8 +877,8 @@ See `consult-grep' for details."
 			  (interactive)
 			  (emms-player-mpv-cmd (list 'add 'volume (- (or amount '10))))
 			  (emms-player-mpv-get-volume))
-			;(emms-add-directory-tree "~/music/random/")
-			;(emms-shuffle)
+					;(emms-add-directory-tree "~/music/random/")
+					;(emms-shuffle)
 			(emms-player-mpv-lower-volume 30)
 			
 			(global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
@@ -1250,6 +1250,7 @@ See `consult-grep' for details."
 					  "\\vspace*{\\fill}\n"
 					  "\\end{titlepage}\n"))
 
+	   
 	   (setq org-publish-project-alist
 		 '(("orgfiles"
 		    :base-directory "~/notes/"
@@ -1260,73 +1261,11 @@ See `consult-grep' for details."
 			      "20220925155207-about.org"
 			      "20230225143306-posts.org"
 			      "20230225142818-notation.org"
-			      "20230225142533-category_theory.org") 
+			      "20230225142533-category_theory.org")
 		    :with-toc nil
 		    :exclude-tags ("draft")
 		    :html-head
 		    "
- <link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>
- <header><div class=\"menu\"><ul>
- <li><a href=\"/\">/</a></li>
- <li><a href=\"/about\">/about</a></li>
- <li><a href=\"/posts\">/posts</a></li></ul></div></header>
- <script src=\"static/js/nastaliq.js\"></script>
- <script src=\"static/js/stacking.js\"></script>
- <script>
- document.addEventListener('DOMContentLoaded', function() {
-   initializePreviews(document.querySelector('.page'));
- });
- </script>"
-		    ;"<title></title><link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>\n<header><div class=\"menu\"><ul>\n<li><a href=\"/\">/</a></li>\n<li><a href=\"/about\">/about</a></li>\n<li><a href=\"/posts\">/posts</a></li></ul></div></header><script src=\"static/js/nastaliq.js\"></script>"
-		    :recursive t
-		    :html-postamble nil
-		    :html-mathjax-template "
-<script>
-  MathJax = {
-    loader: {
-      load: ['[custom]/xypic.js'],
-      paths: {custom: 'https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/'}
-    },
-    tex: {
-      packages: {'[+]': ['xypic']},
-      macros: {
-        R: \"{\\\\bf R}\"
-      }
-    }
-  };
-</script>
-<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js\"></script>
-"
-		    )
-		   ("static"
-		    :base-directory "~/notes/static"
-		    :base-extension any
-		    :recursive t
-		    :publishing-directory "~/code/zaijab.github.io/static"
-		    :publishing-function org-publish-attachment)
-		   ("CNAME"
-		    :base-directory "~/notes/CNAME/"
-		    :base-extension any
-		    :publishing-directory "~/code/zaijab.github.io/"
-		    :publishing-function org-publish-attachment)
-		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
-
-	   
-	   (setq org-publish-project-alist
-      '(("orgfiles"
-         :base-directory "~/notes/"
-         :publishing-directory "~/code/zaijab.github.io/"
-         :publishing-function org-html-publish-to-html
-         :exclude ".*org"
-         :include ("20220925152629-index.org"
-                   "20220925155207-about.org"
-                   "20230225143306-posts.org"
-                   "20230225142818-notation.org"
-                   "20230225142533-category_theory.org")
-         :with-toc nil
-         :exclude-tags ("draft")
-         :html-head
-         "
           <link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>
           <header><div class=\"menu\"><ul>
           <li><a href=\"/\">/</a></li>
@@ -1348,23 +1287,22 @@ See `consult-grep' for details."
           </script>
 <script>MathJax = { loader: { load: ['[custom]/xypic.js'], paths: {custom: 'https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/'} }, tex: { packages: {'[+]': ['xypic']}, macros: { R: \"{\\\\bf R}\" } } };</script><script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js\"></script>
 <div class=\"grid-container\"><div class=\"ds-grid\"><div class=\"page\">"
-         :html-preamble nil
-         :html-postamble nil
-         :recursive t
-         
-         :html-mathjax-template "<script>MathJax = { loader: { load: ['[custom]/xypic.js'], paths: {custom: 'https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/'} }, tex: { packages: {'[+]': ['xypic']}, macros: { R: \"{\\\\bf R}\" } } };</script><script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js\"></script>")
-        ("static"
-         :base-directory "~/notes/static"
-         :base-extension any
-         :recursive t
-         :publishing-directory "~/code/zaijab.github.io/static"
-         :publishing-function org-publish-attachment)
-        ("CNAME"
-         :base-directory "~/notes/CNAME/"
-         :base-extension any
-         :publishing-directory "~/code/zaijab.github.io/"
-         :publishing-function org-publish-attachment)
-        ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
+		    :html-preamble nil
+		    :html-postamble nil
+		    :recursive t
+		    :html-mathjax-template "<script>MathJax = { loader: { load: ['[custom]/xypic.js'], paths: {custom: 'https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/'} }, tex: { packages: {'[+]': ['xypic']}, macros: { R: \"{\\\\bf R}\" } } };</script><script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js\"></script>")
+		   ("static"
+		    :base-directory "~/notes/static"
+		    :base-extension any
+		    :recursive t
+		    :publishing-directory "~/code/zaijab.github.io/static"
+		    :publishing-function org-publish-attachment)
+		   ("CNAME"
+		    :base-directory "~/notes/CNAME/"
+		    :base-extension any
+		    :publishing-directory "~/code/zaijab.github.io/"
+		    :publishing-function org-publish-attachment)
+		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
 
 
 	   
@@ -1456,7 +1394,8 @@ See `consult-grep' for details."
 			      org-image-actual-width nil)
 					;(global-org-modern-mode)
 			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
-
+			(setq org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
+			      jupyter-org-resource-directory "/home/zjabbar/.cache/jupyter/")
 			(setq org-todo-keywords
 			      '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
 			(defconst org-latex-math-environments-re
@@ -1708,7 +1647,7 @@ See `consult-grep' for details."
 	   ;; (add-hook 'scheme-mode-hook (function auto-start-arei))
 	   ;; (add-hook 'scheme-mode-hook (function arei-mode))
 	   (remove-hook 'scheme-mode-hook (function geiser-mode--maybe-activate))
-	  
+	   
 
 	   
 	   (setq user-full-name "Zain Jabbar")
