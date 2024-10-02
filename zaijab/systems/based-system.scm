@@ -62,7 +62,14 @@
    (service oci-container-service-type
 	    (list
 	     (oci-container-configuration
-	      (image "jami-daemon"))
+	      (image "jami-daemon")
+	      (volumes '("/var/run/client/src:/web-client/client/src"
+			 "/var/run/server/src:/web-client/server/src"
+			 "/var/run/client/.env.development:/web-client/client/.env.development"
+			 "/var/run/server/.env:/web-client/server/.env"))
+	      (network "host")
+	      (ports '(("3000" . "3000")
+		       ("5000" . "5000"))))
 	     (oci-container-configuration
 	      (image "docker.io/library/caddy:2-alpine")
 	      (network "host")
