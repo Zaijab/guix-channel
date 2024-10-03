@@ -1196,7 +1196,7 @@ See `consult-grep' for details."
 	     (message output-file)
 	     (let* ((title (get-title (buffer-file-name (buffer-base-buffer))))
 		    (directory (file-name-directory output-file))
-		    (slug (commonplace/slugify-title title)))
+		    (slug (s-truncate 80 (commonplace/slugify-title title) "")))
 	       (concat directory slug ".html")))
 
 
@@ -1257,14 +1257,14 @@ See `consult-grep' for details."
 		    :base-directory "~/notes/"
 		    :publishing-directory "~/code/zaijab.github.io/"
 		    :publishing-function org-html-publish-to-html
-		    :exclude ".*org"
+		    :exclude "latex_header.org"
 		    :include ("20220925152629-index.org"
 			      "20220925155207-about.org"
 			      "20230225143306-posts.org"
 			      "20230225142818-notation.org"
 			      "20230225142533-category_theory.org")
 		    :with-toc nil
-		    :exclude-tags ("draft")
+		    :exclude-tags ("draft" "private" "noexport")
 		    :html-head
 		    "
           <link rel=\"stylesheet\" href=\"static/css/site.css\" type=\"text/css\"/>
@@ -1275,7 +1275,6 @@ See `consult-grep' for details."
           <script src=\"static/js/nastaliq.js\"></script>
           <script src=\"static/js/stacking.js\"></script>
           <link href='https://unpkg.com/tippy.js@6.2.3/themes/light.css' rel='stylesheet'>
-
           <script src=\"https://unpkg.com/@popperjs/core@2\"></script>
           <script src=\"https://unpkg.com/tippy.js@6\"></script>
           <script>
@@ -1696,6 +1695,7 @@ See `consult-grep' for details."
    (init '((use-package exwm
 			:if (display-graphic-p)
 			:init
+			(setq exwm-randr-workspace-monitor-plist '(0 "eDP-1" 1 "HDMI-1"))
 			(exwm-randr-mode)
 			(require 'xelb)
 			(require 'windsize)
