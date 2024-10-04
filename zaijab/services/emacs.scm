@@ -1218,7 +1218,10 @@ See `consult-grep' for details."
 
 	   (advice-add 'org-export-resolve-id-link :filter-return (function my/org-id-underscore-fix))
 	   (setq org-export-with-broken-links t
-		 org-export-babel-evaluate nil)
+		 org-export-with-properties nil
+		 org-export-with-tags nil
+		 org-export-babel-evaluate nil
+		 org-export-with-drawers '(not "LOGBOOK" "REVIEW_DATA"))
 	   (defun zain-publish ()
 	     (interactive)
 	     (let ((current-prefix-arg (list 4))
