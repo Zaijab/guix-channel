@@ -1217,7 +1217,8 @@ See `consult-grep' for details."
 	     (s-replace-regexp "_" "-" strlist))
 
 	   (advice-add 'org-export-resolve-id-link :filter-return (function my/org-id-underscore-fix))
-	   (setq org-export-with-broken-links t)
+	   (setq org-export-with-broken-links t
+		 org-export-babel-evaluate nil)
 	   (defun zain-publish ()
 	     (interactive)
 	     (let ((current-prefix-arg (list 4))
