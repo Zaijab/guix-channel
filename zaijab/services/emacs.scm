@@ -519,7 +519,7 @@ See `consult-grep' for details."
 			(tabspaces-include-buffers '("*scratch*"))
 			(tab-bar-new-tab-choice "*scratch*")
 			:config
-			(dolist (name '("Code" "Theory" "Paper" "Japanese" "System") ())
+			(dolist (name '("Development" "State Estimation" "Fair Active Learning" "Japanese" "System") ())
 				(sleep-for 0.01)
 				(tab-switch name))
 			(tab-bar-close-tab-by-name "*scratch*")
