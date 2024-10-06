@@ -1795,6 +1795,11 @@ See `consult-grep' for details."
 							   (interactive (list (read-shell-command "$ ")))
 							   (start-process-shell-command command nil command))))
 					;(global-set-key (kbd "s-a") 'toggle-exwm-input-line-mode-passthrough)
+
+			(setq exwm-input-simulation-keys
+			      (list (cons (kbd "C-s") (kbd "C-f"))
+				    (cons (kbd "M-w") (kbd "C-c"))
+				    ))
 			(defun exwm-rename-buffer-to-title () (exwm-workspace-rename-buffer exwm-class-name))
 			(defun exwm-rename-buffer ()
 			  (interactive)
