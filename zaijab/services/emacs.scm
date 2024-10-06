@@ -323,13 +323,13 @@ See `consult-grep' for details."
 
 			)
 
-	   
-	   
-	   
+
+
+
 
 	   ))))
 
-;; 
+;;
 (define embark-configuration
   (home-emacs-configuration
    (packages (list emacs-embark
@@ -370,7 +370,7 @@ See `consult-grep' for details."
 			(embark-collect-mode . consult-preview-at-point-mode))))))
 
 
-;; Spell checking - DONE 
+;; Spell checking - DONE
 (define spellcheck-configuration
   (home-emacs-configuration
    (packages (list emacs-jinx
@@ -452,7 +452,7 @@ See `consult-grep' for details."
    (packages (list emacs-cape))
    (init '((use-package cape
 			:bind ("C-c p" . cape-prefix-map)
-			:init 
+			:init
 			(setq tab-always-indent 'complete)
 			(add-to-list 'completion-at-point-functions (function cape-file)))
 	   ))))
@@ -478,7 +478,7 @@ See `consult-grep' for details."
 			:custom
 			(citar-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
 			(citar-notes-paths (list "/home/zjabbar/notes/")) ; List of directories for reference nodes
-			(citar-library-paths (list "/home/zjabbar/library/")) ; 
+			(citar-library-paths (list "/home/zjabbar/library/")) ;
 			(citar-open-note-function 'orb-citar-edit-note) ; Open notes in `org-roam'
 			(citar-at-point-function 'embark-act)           ; Use `embark'
 			:hook
@@ -509,7 +509,7 @@ See `consult-grep' for details."
    (init '(
 	   (use-package tabspaces
 					;:after (consult)
-			:hook (after-init . tabspaces-mode) 
+			:hook (after-init . tabspaces-mode)
 			:commands (tabspaces-switch-or-create-workspace
 				   tabspaces-open-or-create-project-and-workspace)
 			:custom
@@ -523,7 +523,7 @@ See `consult-grep' for details."
 				(sleep-for 0.01)
 				(tab-switch name))
 			(tab-bar-close-tab-by-name "*scratch*")
-			
+
 			(with-eval-after-load 'consult
 					      (consult-customize consult--source-buffer :hidden t :default nil)
 					      ;; set consult-workspace buffer list
@@ -538,7 +538,7 @@ See `consult-grep' for details."
 									    :predicate (function tabspaces--local-buffer-p)
 									    :sort 'visibility
 									    :as (function buffer-name))))
-						
+
 						"Set workspace buffer list for consult-buffer.")
 					      (add-to-list 'consult-buffer-sources 'consult--source-workspace))
 
@@ -559,7 +559,7 @@ See `consult-grep' for details."
    (packages (list emacs-undo-tree))
    (init '((require 'undo-tree)
 	   (setq undo-tree-history-directory-alist  '(("." . "~/.config/emacs/undo-tree/")))
-	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)	   
+	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)
 	   (global-undo-tree-mode)))))
 
 (define project-configuration
@@ -608,7 +608,7 @@ See `consult-grep' for details."
 			:config
 			(global-unset-key (kbd "C-x t"))
 			)
-	   
+
 	   (use-package facemenu
 			:after skk)
 
@@ -652,7 +652,7 @@ See `consult-grep' for details."
 	   (window-buffer window)))
 	   (setf (pdf-view-window-needs-redisplay window) t)))))
 	   (force-mode-line-update)))
-	   
+
 	   (defun my/dark-mode ()
 	     (interactive)
 	     (cond ((eq *current-mode* 'light)
@@ -708,7 +708,7 @@ See `consult-grep' for details."
 				("https://karthinks.com/index.xml" crafter karthinks)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
-				
+
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
 				;; ("https://twitchrss.appspot.com/vod/nicob" fun nicob twitch)
@@ -741,20 +741,24 @@ See `consult-grep' for details."
 				("https://protesilaos.com/codelog.xml" crafter prot)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCuj_loxODrOPxSsXDfJmpng" crafter andrew)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UChW6oX-CYk5jWYZKZaMpVKg" crafter guix_social)
-				
+
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkdmU8hGK4Fg3LghTVtKltQ" japanese cure-dolly)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2_krAagEXVPftDXZCDiVZA" japanese kanamenaito)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCiX01KrL5XyKsxhjRhCC7oA" japanese takashi)
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2Zs9v2hL2qZZ7vsAENsg4w" learning sung)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCjmynbA3C3Tm0koVy_8pfLw" learning sung)
-				
+
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCm0MFprGs8VWcfsq743FJ7A" lecture machine-learning washington intro)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL5B3KLQNAC5j46Ro64xF7hLV6Uf-gHUHL" lecture continuum-mechanics)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" lecture machine-learning statistics ng)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLPW2keNyw-usgvmR7FTQ3ZRjfLs5jT4BO" lecture machine-learning statistics theory)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLoROMvodv4rP8nAmISxFINlGKSK4rbLKh" lecture machine-learning statistics theory)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLhhyoLH6IjfxVOdVC1P1L5z5azs0XjMsb" lecture machine-learning tensorflow intro)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLUl4u3cNGP62EaLLH92E_VCN4izBKK6OE" lecture machine-learning matrix-calculus)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k" lecture machine-learning matrix-methods)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLArBKNfJxuukeHyrA_bqc1g52Acr_YQkz" lecture math optimal-transport)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLJ6garKOlK2qKVhRm6UwvcQ46wK-ciHbl" lecture math optimal-transport)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLhhyoLH6IjfxeoooqP9rhU3HJIAVAJ3Vz" lecture machine-learning pytorch intro)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLE18841CABEA24090" lecture mit sicp)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLUl4u3cNGP60B0PQXVQyGNdCyCTDU1Q5j" lecture mit ml-health)
@@ -851,11 +855,11 @@ See `consult-grep' for details."
 			(require 'emms-setup)
 			(require 'emms-info-tinytag)
 			(setq emms-info-tinytag-python-name "python3")
-			
+
 			(emms-all)
 			(setq emms-player-list '(emms-player-mpv)
 			      emms-info-functions '(emms-info-tinytag))
-			
+
 			(defvar emms-player-mpv-volume 100)
 			(defun emms-player-mpv-get-volume ()
 			  (emms-player-mpv-cmd '(get_property volume)
@@ -865,7 +869,7 @@ See `consult-grep' for details."
 							       (setq emms-player-mpv-volume vol)
 							       (message "Music volume: %s%%"
 									vol)))))))
-			
+
 			(defun emms-player-mpv-raise-volume (&optional amount)
 			  (interactive)
 			  (let* ((amount (or amount 10))
@@ -881,7 +885,7 @@ See `consult-grep' for details."
 					;(emms-add-directory-tree "~/music/random/")
 					;(emms-shuffle)
 			(emms-player-mpv-lower-volume 30)
-			
+
 			(global-set-key (kbd "<XF86AudioPrev>") 'emms-previous)
 			(global-set-key (kbd "<XF86AudioNext>") 'emms-next)
 			(global-set-key (kbd "<XF86AudioPlay>") 'emms-pause)
@@ -940,7 +944,7 @@ See `consult-grep' for details."
 	   (setq mu4e-change-filenames-when-moving t)
 	   (setq mu4e-update-interval 300)
 	   (setq mu4e-get-mail-command  "mbsync -a -c ~/.config/mbsyncrc")
-	   
+
 	   (setq org-export-with-toc nil)
 	   (setq org-export-with-tile t)
 	   (setq org-mu4e-convert-to-html t)
@@ -1055,7 +1059,7 @@ See `consult-grep' for details."
 			:config
 			(org-roam-db-autosync-mode)
 			(define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add)))
-	   
+
 	   (use-package org-roam-node
 			:after org-roam)
 
@@ -1065,10 +1069,10 @@ See `consult-grep' for details."
 			(org-roam-bibtex-mode)
 			(setq bibtex-completion-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib")))
 
-	   
+
 	   (use-package websocket
 			:after org-roam)
-	   
+
 	   (use-package org-roam-ui
 			:after org-roam
 			:hook (after-init . org-roam-ui-mode)
@@ -1077,7 +1081,7 @@ See `consult-grep' for details."
 			(org-roam-ui-follow t)
 			(org-roam-ui-update-on-save t)
 			(org-roam-ui-open-on-start nil))
-	   
+
 	   (use-package org-fc
 			:custom
 			(org-fc-directories '("~/notes/"))
@@ -1086,7 +1090,7 @@ See `consult-grep' for details."
 			:config
 			(org-fc-cache-mode)
 			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card)))
-	   
+
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
 		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))
@@ -1135,7 +1139,7 @@ See `consult-grep' for details."
 
 	   (defun kana-word->drill (word)
 	     (apply 'format "{{%s}}\n{{%s}}\n" word))
-	   
+
 	   (defun simple-kanji-word->drill (word)
 	     (apply 'format "%s\n{{%s}} {{%s}}\n" word))
 
@@ -1145,7 +1149,7 @@ See `consult-grep' for details."
 				 (end-of-buffer)
 				 (insert (concat "* " (word->drill (jisho-search->completing-read)) "\n"))
 				 (org-fc-type-cloze-init 'deletion)))
-	   
+
 	   (defun simple-jisho->fc ()
 	     (interactive)
 	     (org-roam-with-file "/home/zjabbar/notes/20240702021713-japanese_vocabulary.org" t
@@ -1255,7 +1259,7 @@ See `consult-grep' for details."
 					  "\\vspace*{\\fill}\n"
 					  "\\end{titlepage}\n"))
 
-	   
+
 	   (setq org-publish-project-alist
 		 '(("orgfiles"
 		    :base-directory "~/notes/"
@@ -1309,7 +1313,7 @@ See `consult-grep' for details."
 		   ("zaindaman" :components ("orgfiles" "static" "CNAME"))))
 
 
-	   
+
 	   ))))
 
 
@@ -1332,7 +1336,7 @@ See `consult-grep' for details."
    (init '(
 	   (use-package org
 			:config
-			
+
 			(require 'org-tree-slide)
 			(setq org-tree-slide-cursor-init nil)
 			(require 'ox)
@@ -1340,19 +1344,19 @@ See `consult-grep' for details."
 			(require 'calfw-org)
 			(require 'calfw-blocks)
 			(setq org-startup-folded t)
-			
+
 
 			(setq org-structure-template-alist
 			      '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
 				("e" . "example") ("E" . "export") ("h" . "export html")
 				("l" . "export latex") ("q" . "quote") ("s" . "src") ("v" . "verse")
 				("p" . "PROOF") ("t" . "THEOREM")))
-			
+
 			(defun cfw:date-before (date num)
 			  "Return the date before NUM days from DATE."
 			  (calendar-gregorian-from-absolute
 			   (- (calendar-absolute-from-gregorian date) num)))
-			
+
 			(setq calfw-blocks-lines-per-hour 3
 			      calfw-blocks-min-block-width 1
 			      calfw-blocks-earliest-visible-time '(6 0))
@@ -1377,7 +1381,7 @@ See `consult-grep' for details."
 				  (cfw:tp str 'help-echo org))
 				str)
 			      org))
-			
+
 			(defun cfw:org-get-timerange (text)
 			  "Return a range object (begin end text). If TEXT does not have a range, return nil."
 			  (let* ((dotime (cfw:org-tp text 'dotime)))
@@ -1393,7 +1397,7 @@ See `consult-grep' for details."
 					    (calendar-gregorian-from-absolute
 					     (time-to-days
 					      (org-read-date nil t end-date))) text))))))
-			
+
 			(setq org-tags-column 0
 			      org-image-actual-width nil)
 					;(global-org-modern-mode)
@@ -1428,7 +1432,7 @@ See `consult-grep' for details."
 							     :deadline
 							     :todo
 							     :timestamp))
-			
+
 			(setq org-agenda-files '("/home/zjabbar/notes/20211224040925-todo.org"
 						 "/home/zjabbar/notes/20240815234918-calendar.org"
 						 "/home/zjabbar/notes/20240731154916-uh_jpn_102.org"))
@@ -1446,7 +1450,7 @@ See `consult-grep' for details."
 			      (list '(daily weekly remove-match)
 				    (mapcar (lambda (x) (* 100 x)) (number-sequence 6 21))
 				    " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄"))
-			
+
 			(defun org-time-to-minutes (time)
 			  "Convert an HHMM time to minutes"
 			  (+ (* (/ time 100) 60) (% time 100)))
@@ -1503,7 +1507,7 @@ See `consult-grep' for details."
 
 			(add-hook 'org-mode-hook (function (lambda () (set-syntax-table
 								       (let ((table (make-syntax-table)))
-									 (modify-syntax-entry ?< "w" table) 
+									 (modify-syntax-entry ?< "w" table)
 									 (modify-syntax-entry ?> "w" table)
 									 table)))))
 			(setq org-startup-with-inline-images t)
@@ -1530,7 +1534,7 @@ See `consult-grep' for details."
 				  :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))
 
 			(add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
-			
+
 			(setq org-format-latex-options '(:foreground default
 							 :background default
 							 :scale 2
@@ -1571,7 +1575,7 @@ See `consult-grep' for details."
 	      emacs-ob-async
 	      emacs-jupyter
 	      emacs-pydoc
-	      
+
 	      python-lsp-server
 	      tree-sitter
 	      tree-sitter-python
@@ -1602,23 +1606,23 @@ See `consult-grep' for details."
 		 python-interpreter "python3"
 		 python-shell-interpreter "python3"
 		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
-	   
+
 	   (add-hook 'python-mode-hook (function run-python))
 	   (add-hook 'python-mode-hook (function python-black-on-save-mode))
 	   (add-hook 'python-mode-hook (function eglot-ensure))
-	   
+
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
 								    (sql . t)
 								    (eshell . t)
 								    (shell . t)
 								    (jupyter . t)))
-	   
+
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))))))
 
 (define lisp-configuration
   (home-emacs-configuration
-   (packages (list 
+   (packages (list
 	      sicp
 	      xdot
 	      emacs-guix
@@ -1652,9 +1656,9 @@ See `consult-grep' for details."
 	   ;; (add-hook 'scheme-mode-hook (function auto-start-arei))
 	   ;; (add-hook 'scheme-mode-hook (function arei-mode))
 	   (remove-hook 'scheme-mode-hook (function geiser-mode--maybe-activate))
-	   
 
-	   
+
+
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
@@ -1732,7 +1736,7 @@ See `consult-grep' for details."
 			(global-set-key (kbd "<f8>") 'toggle-exwm-input-line-mode-passthrough)
 			(define-key exwm-mode-map (kbd "M-<escape>") (function toggle-exwm-input-line-mode-passthrough))
 			(define-key exwm-mode-map (kbd "C-c C-c") (function exwm-input-send-next-key))
-			
+
 			(global-set-key (kbd "s-0") 'delete-window)
 			(global-set-key (kbd "s-1") 'delete-other-windows)
 			(global-set-key (kbd "s-2") 'split-window-below)
@@ -1771,7 +1775,7 @@ See `consult-grep' for details."
 			(global-set-key (kbd "s-i") 'org-roam-node-insert)
 			(global-set-key (kbd "s-N") 'org-roam-dailies-capture-today)
 			(global-set-key (kbd "C-x C-t") 'vterm)
-			(global-set-key (kbd "C-x C-n") 'org-roam-node-find)           
+			(global-set-key (kbd "C-x C-n") 'org-roam-node-find)
 			(global-set-key (kbd "s-a") 'cfw:open-org-calendar)
 			(global-set-key (kbd "s-s") (function jisho->fc))
 
@@ -1782,7 +1786,7 @@ See `consult-grep' for details."
 			(global-set-key (kbd "s-H") 'windsize-left)
 			(global-set-key (kbd "s-L") 'windsize-right)
 			(global-set-key (kbd "s-h") 'windmove-left)
-			
+
 			(global-set-key (kbd "s-j") 'windmove-down)
 			(global-set-key (kbd "s-k") 'windmove-up)
 			(global-set-key (kbd "s-l") 'windmove-right)
@@ -1798,7 +1802,7 @@ See `consult-grep' for details."
 			   (concat exwm-class-name ":"
 				   (if (<= (length exwm-title) 25) exwm-title
 				       (concat (substring exwm-title 0 24) "...")))))
-			
+
 			;; Add these hooks in a suitable place (e.g., as done in exwm-config-default)
 			(add-hook 'exwm-update-class-hook 'exwm-rename-buffer)
 			(add-hook 'exwm-update-title-hook 'exwm-rename-buffer)
@@ -1811,7 +1815,7 @@ See `consult-grep' for details."
 				       (memq 'super (event-modifiers maybe-event)))
 				  (add-to-list 'super-keys maybe-event)))
 			    (setq km (cdr km))))
-			
+
 			(setq exwm-input-prefix-keys (append super-keys '(f7
 									  XF86AudioRaiseVolume
 									  XF86AudioLowerVolume
@@ -1898,7 +1902,7 @@ See `consult-grep' for details."
 
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
-		 
+
 		 (defcustom password-colon-equivalents
 		   '(?\u003a ; ?\N{COLON}
 		     ?\uff1a ; ?\N{FULLWIDTH COLON}
@@ -1927,7 +1931,7 @@ See `consult-grep' for details."
 		 (push '(vertical-scroll-bars) default-frame-alist)
 		 (blink-cursor-mode 0)
 		 (setq comp-async-report-warnings-errors nil)
-		 (setq native-comp-async-report-warnings-errors nil) 
+		 (setq native-comp-async-report-warnings-errors nil)
 		 (setq warning-suppress-log-types '((comp) (comp)))
 		 (setq warning-suppress-types '((comp) (comp)))
 		 (setq user-emacs-directory "~/.config/emacs")
@@ -1938,7 +1942,7 @@ See `consult-grep' for details."
 		 (pixel-scroll-precision-mode)))
    (init '((setq org-startup-truncated nil)
 	   (tab-bar-mode)
-	   
+
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
 	   (setq battery-mode-line-limit 97)
@@ -1949,7 +1953,7 @@ See `consult-grep' for details."
 				     tab-bar-format-add-tab
 				     tab-bar-format-align-right
 				     tab-bar-format-global))
-	   
+
 	   (defun move-to-second (word list)
 	     (cons "" (cons word (remove word (cdr list)))))
 	   (setq global-mode-string (move-to-second 'emms-mode-line-string global-mode-string))
@@ -1990,4 +1994,3 @@ See `consult-grep' for details."
 		(map variable-ref
 		     (filter variable-bound?
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
-
