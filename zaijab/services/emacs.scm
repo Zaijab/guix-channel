@@ -622,7 +622,8 @@ See `consult-grep' for details."
 		   jami
 		   jami-docs
 		   hicolor-icon-theme
-		   passff/icecat))))
+		   passff/icecat))
+   (init '((setq browse-url-new-window-flag t)))))
 
 (define pdf-tools-configuration
   (home-emacs-configuration
@@ -801,11 +802,11 @@ See `consult-grep' for details."
 	   ;; (defun browse-url-mpv (url &optional new-window)
 	   ;;   (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=\"bestvideo[height<?720]\"" url))
 
-	   (defun browse-url-mpv (url &optional new-window)
-	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
-
 	   ;; (defun browse-url-mpv (url &optional new-window)
-	   ;;   (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?480]+bestaudio/best" url))
+	   ;;   (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
+
+	   (defun browse-url-mpv (url &optional new-window)
+	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?480]+bestaudio/best" url))
 
 	   ;; (defun browse-url-mpv (url &optional new-window)
 	   ;;   (start-process "mpv" "*mpv*" "mpv" url))
