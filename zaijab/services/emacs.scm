@@ -71,10 +71,7 @@
 
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like
-    ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
-				(without-tests . "emacs-org")))
-     emacs-next))
+   (file-like emacs-next)
    "The Emacs package to use.")
   (packages
    (file-likes '())
