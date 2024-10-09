@@ -103,6 +103,14 @@
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
      (delete gdm-service-type)
+     (network-manager-service-type
+		  config => (network-manager-configuration
+			     (inherit config)
+			     (vpn-plugins
+			      (list
+			       (specification->package "network-manager-openvpn")
+			       (specification->package "network-manager-openconnect")
+			       (specification->package "openconnect-sso")))))
      (mingetty-service-type
       config => (mingetty-configuration
 		 (inherit config)
