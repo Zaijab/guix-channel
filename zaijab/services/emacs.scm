@@ -1582,18 +1582,6 @@ See `consult-grep' for details."
 	      tree-sitter
 	      tree-sitter-python
 
-	      python-numpy
-	      python-sympy
-	      python-tensorflow
-	      python-jax
-	      ((options->transformation '((with-input . "python-optree=python-optree@0.13.0")))
-	       python-flax)
-	      python-matplotlib
-	      python-seaborn
-	      python-scikit-learn
-	      python-pandas
-	      python-tqdm
-
 	      emacs-csv-mode
 	      emacs-py-isort
 	      emacs-python-black
