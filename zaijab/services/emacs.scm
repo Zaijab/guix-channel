@@ -1585,6 +1585,8 @@ See `consult-grep' for details."
 	      python-sympy
 	      python-tensorflow
 	      python-jax
+	      python-flax
+	      python-matplotlib
 	      python-seaborn
 	      python-scikit-learn
 	      python-pandas
