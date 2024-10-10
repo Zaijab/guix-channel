@@ -1586,7 +1586,8 @@ See `consult-grep' for details."
 	      python-sympy
 	      python-tensorflow
 	      python-jax
-	      python-flax
+	      ((options->transformation '((with-input . "python-optree=python-optree@0.13.0")))
+	       python-flax)
 	      python-matplotlib
 	      python-seaborn
 	      python-scikit-learn
