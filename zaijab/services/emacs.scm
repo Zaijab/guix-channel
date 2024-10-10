@@ -1584,9 +1584,10 @@ See `consult-grep' for details."
 
 	      python-numpy
 	      python-sympy
-	      ;python-tensorflow
-	      ;python-jax
-	      python-flax
+	      python-tensorflow
+	      python-jax
+	      ((options->transformation '((with-input . "python-optree=python-optree@0.11.0")))
+	       python-flax)
 	      python-matplotlib
 	      python-seaborn
 	      python-scikit-learn
