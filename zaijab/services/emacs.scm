@@ -1222,7 +1222,7 @@ See `consult-grep' for details."
 	     (s-replace-regexp "_" "-" strlist))
 
 	   (advice-add 'org-export-resolve-id-link :filter-return (function my/org-id-underscore-fix))
-	   (setq org-export-with-broken-links t
+	   (setq org-export-with-broken-links 'mark
 		 org-export-with-properties nil
 		 org-export-with-tags nil
 		 org-export-babel-evaluate nil
