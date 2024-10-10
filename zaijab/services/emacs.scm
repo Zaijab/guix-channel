@@ -1584,8 +1584,8 @@ See `consult-grep' for details."
 
 	      python-numpy
 	      python-sympy
-	      python-tensorflow
-	      python-jax
+	      ;python-tensorflow
+	      ;python-jax
 	      python-flax
 	      python-matplotlib
 	      python-seaborn
