@@ -1405,7 +1405,7 @@ See `consult-grep' for details."
 					;(global-org-modern-mode)
 			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
 			(setq ;org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
-			      jupyter-org-resource-directory "/home/zjabbar/.cache/jupyter/")
+			 jupyter-org-resource-directory "/home/zjabbar/.cache/jupyter/")
 			(setq org-todo-keywords
 			      '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
 			(defconst org-latex-math-environments-re
@@ -1608,30 +1608,30 @@ See `consult-grep' for details."
 
 	   (require 'eglot)
 
-(defun sloth/org-babel-edit-prep (info)
-  (setq buffer-file-name (or (alist-get :file (caddr info))
-                             "org-src-babel-tmp"))
-  (eglot-ensure))
+	   (defun sloth/org-babel-edit-prep (info)
+	     (setq buffer-file-name (or (alist-get :file (caddr info))
+					"org-src-babel-tmp"))
+	     (eglot-ensure))
 
-(advice-add 'org-edit-src-code
-            :before (defun sloth/org-edit-src-code/before (&rest args)
-                      (when-let* ((element (org-element-at-point))
-                                  (type (org-element-type element))
-                                  (lang (org-element-property :language element))
-                                  (mode (org-src-get-lang-mode lang))
-                                  ((eglot--lookup-mode mode))
-                                  (edit-pre (intern
-                                             (format "org-babel-edit-prep:%s" lang))))
-                        (if (fboundp edit-pre)
-                            (advice-add edit-pre :after #'sloth/org-babel-edit-prep)
-                            (fset edit-pre #'sloth/org-babel-edit-prep)))))
+	   (advice-add 'org-edit-src-code
+		       :before (defun sloth/org-edit-src-code/before (&rest args)
+				 (when-let* ((element (org-element-at-point))
+					     (type (org-element-type element))
+					     (lang (org-element-property :language element))
+					     (mode (org-src-get-lang-mode lang))
+					     ((eglot--lookup-mode mode))
+					     (edit-pre (intern
+							(format "org-babel-edit-prep:%s" lang))))
+					    (if (fboundp edit-pre)
+						(advice-add edit-pre :after #'sloth/org-babel-edit-prep)
+						(fset edit-pre #'sloth/org-babel-edit-prep)))))
 
-(add-hook 'python-base-mode-hook
-	  (lambda ()
-	    (add-hook 'eglot-managed-mode-hook
-		      (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
-		      nil t)
-	    ))
+	   (add-hook 'python-base-mode-hook
+		     (lambda ()
+		       (add-hook 'eglot-managed-mode-hook
+				 (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
+				 nil t)
+		       ))
 
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
