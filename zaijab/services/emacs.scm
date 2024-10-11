@@ -381,6 +381,12 @@ See `consult-grep' for details."
 			:bind (("M-$" . jinx-correct)
 			       ("C-M-$" . jinx-languages)))))))
 
+(define llm-configuration
+  (home-emacs-configuration
+   (packages (list emacs-gptel))
+   (init '())))
+
+
 ;; In Buffer Completion
 (define corfu-configuration
   (home-emacs-configuration
@@ -1596,6 +1602,7 @@ See `consult-grep' for details."
 			     (jupyter-api-http-error nil)))
 	   (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
 	   (setq jupyter-use-zmq nil)
+	   (advice-add 'jupyter-command :around (function envrc-propagate-environment))
 	   (setq org-babel-python-command "python3"
 		 org-confirm-babel-evaluate nil
 		 python-interpreter "python3"
@@ -1623,7 +1630,7 @@ See `consult-grep' for details."
 					     (edit-pre (intern
 							(format "org-babel-edit-prep:%s" lang))))
 					    (if (fboundp edit-pre)
-						(advice-add edit-pre :after #'sloth/org-babel-edit-prep)
+						(advice-add edit-pre :after (function sloth/org-babel-edit-prep))
 						(fset edit-pre #'sloth/org-babel-edit-prep)))))
 
 	   (add-hook 'python-base-mode-hook
