@@ -1715,9 +1715,9 @@ See `consult-grep' for details."
 					      (eval modify-syntax-entry 126 "'")))
 	   (use-package envrc
 			:after (org jupyter)
-			:config
-			(add-hook 'after-init-hook 'envrc-global-mode)
-			(with-eval-after-load 'envrc (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)))))))
+			:bind-keymap ("C-c e" . envrc-command-map)
+			:hook (after-init . envrc-global-mode)
+									)))))
 
 
 (define blight-configuration '())
