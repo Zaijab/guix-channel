@@ -1620,7 +1620,7 @@ See `consult-grep' for details."
 								    (jupyter . t)))
 
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
-	   (advice-add 'jupyter-command :around (function envrc-propagate-environment))
+	   (eval-expression '(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
 	   )
 
 
