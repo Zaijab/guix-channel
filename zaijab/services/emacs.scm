@@ -1593,7 +1593,9 @@ See `consult-grep' for details."
 	      emacs-python-black
 	      python-pip
 	      pandoc))
-   (init '((require 'jupyter)
+   (init '(
+	   (use-package jupyter
+			:config
 	   (setq major-mode-remap-alist
 		 '((python-mode . python-ts-mode)))
 	   (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
@@ -1608,14 +1610,20 @@ See `consult-grep' for details."
 		 python-interpreter "python3"
 		 python-shell-interpreter "python3"
 		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
+	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
+								    (python . t)
+								    (sql . t)
+								    (eshell . t)
+								    (shell . t)
+								    (jupyter . t)))
 
-	   (add-hook 'python-ts-mode-hook (function run-python))
-	   (add-hook 'python-ts-mode-hook (function python-black-on-save-mode))
-	   (add-hook 'python-ts-mode-hook (function eglot-ensure))
+	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
+	   )
 
-	   (require 'eglot)
 
-	   (defun sloth/org-babel-edit-prep (info)
+	   (use-package eglot
+			:config
+				   (defun sloth/org-babel-edit-prep (info)
 	     (setq buffer-file-name (or (alist-get :file (caddr info))
 					"org-src-babel-tmp"))
 	     (eglot-ensure))
@@ -1632,7 +1640,11 @@ See `consult-grep' for details."
 					    (if (fboundp edit-pre)
 						(advice-add edit-pre :after (function sloth/org-babel-edit-prep))
 						(fset edit-pre #'sloth/org-babel-edit-prep)))))
+	   )
 
+
+	   (use-package python
+			:config
 	   (add-hook 'python-base-mode-hook
 		     (lambda ()
 		       (add-hook 'eglot-managed-mode-hook
@@ -1640,14 +1652,14 @@ See `consult-grep' for details."
 				 nil t)
 		       ))
 
-	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
-								    (python . t)
-								    (sql . t)
-								    (eshell . t)
-								    (shell . t)
-								    (jupyter . t)))
+	   	   (add-hook 'python-base-mode-hook (function run-python))
+	   (add-hook 'python-base-mode-hook (function python-black-on-save-mode))
+	   (add-hook 'python-base-mode-hook (function eglot-ensure))
+			)
 
-	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))))))
+
+
+	   ))))
 
 (define lisp-configuration
   (home-emacs-configuration
