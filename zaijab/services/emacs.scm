@@ -1339,6 +1339,7 @@ See `consult-grep' for details."
 		   emacs-calfw
 		   emacs-calfw-blocks
 		   texlive
+		   texlive-xypic
 		   texlive-bin
 		   imagemagick))
    (init '(
