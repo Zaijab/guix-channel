@@ -1588,6 +1588,8 @@ See `consult-grep' for details."
 	      python-pip
 	      pandoc))
    (init '((require 'jupyter)
+	   (setq major-mode-remap-alist
+		 '((python-mode . python-ts-mode)))
 	   (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
 	     (condition-case nil
 			     (apply func args)
@@ -1600,9 +1602,36 @@ See `consult-grep' for details."
 		 python-shell-interpreter "python3"
 		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
 
-	   (add-hook 'python-mode-hook (function run-python))
-	   (add-hook 'python-mode-hook (function python-black-on-save-mode))
-	   (add-hook 'python-mode-hook (function eglot-ensure))
+	   (add-hook 'python-ts-mode-hook (function run-python))
+	   (add-hook 'python-ts-mode-hook (function python-black-on-save-mode))
+	   (add-hook 'python-ts-mode-hook (function eglot-ensure))
+
+	   (require 'eglot)
+
+(defun sloth/org-babel-edit-prep (info)
+  (setq buffer-file-name (or (alist-get :file (caddr info))
+                             "org-src-babel-tmp"))
+  (eglot-ensure))
+
+(advice-add 'org-edit-src-code
+            :before (defun sloth/org-edit-src-code/before (&rest args)
+                      (when-let* ((element (org-element-at-point))
+                                  (type (org-element-type element))
+                                  (lang (org-element-property :language element))
+                                  (mode (org-src-get-lang-mode lang))
+                                  ((eglot--lookup-mode mode))
+                                  (edit-pre (intern
+                                             (format "org-babel-edit-prep:%s" lang))))
+                        (if (fboundp edit-pre)
+                            (advice-add edit-pre :after #'sloth/org-babel-edit-prep)
+                            (fset edit-pre #'sloth/org-babel-edit-prep)))))
+
+(add-hook 'python-base-mode-hook
+	  (lambda ()
+	    (add-hook 'eglot-managed-mode-hook
+		      (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
+		      nil t)
+	    ))
 
 	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 								    (python . t)
