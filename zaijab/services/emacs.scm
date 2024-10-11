@@ -1596,6 +1596,7 @@ See `consult-grep' for details."
 	      pandoc))
    (init '(
 	   (use-package jupyter
+			:after (org eglot envrc)
 			:config
 	   (setq major-mode-remap-alist
 		 '((python-mode . python-ts-mode)))
@@ -1605,7 +1606,7 @@ See `consult-grep' for details."
 			     (jupyter-api-http-error nil)))
 	   (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
 	   (setq jupyter-use-zmq nil)
-	   (advice-add 'jupyter-command :around (function envrc-propagate-environment))
+	   
 	   (setq org-babel-python-command "python3"
 		 org-confirm-babel-evaluate nil
 		 python-interpreter "python3"
@@ -1619,6 +1620,7 @@ See `consult-grep' for details."
 								    (jupyter . t)))
 
 	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
+	   (advice-add 'jupyter-command :around (function envrc-propagate-environment))
 	   )
 
 
@@ -1640,7 +1642,7 @@ See `consult-grep' for details."
 							(format "org-babel-edit-prep:%s" lang))))
 					    (if (fboundp edit-pre)
 						(advice-add edit-pre :after (function sloth/org-babel-edit-prep))
-						(fset edit-pre #'sloth/org-babel-edit-prep)))))
+						(fset edit-pre (function sloth/org-babel-edit-prep))))))
 	   )
 
 
@@ -1707,8 +1709,10 @@ See `consult-grep' for details."
 	   (setq safe-local-variable-values '((eval modify-syntax-entry 43 "'")
 					      (eval modify-syntax-entry 36 "'")
 					      (eval modify-syntax-entry 126 "'")))
-	   (add-hook 'after-init-hook 'envrc-global-mode)
-	   (with-eval-after-load 'envrc (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map))))))
+	   (use-package envrc
+			:config
+			(add-hook 'after-init-hook 'envrc-global-mode)
+			(with-eval-after-load 'envrc (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)))))))
 
 
 (define blight-configuration '())
