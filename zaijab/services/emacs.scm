@@ -1714,7 +1714,7 @@ See `consult-grep' for details."
 					      (eval modify-syntax-entry 36 "'")
 					      (eval modify-syntax-entry 126 "'")))
 	   (use-package envrc
-			:after (org jupyter)
+			;:after (org jupyter)
 			:bind-keymap ("C-c e" . envrc-command-map)
 			:hook (after-init . envrc-global-mode)
 			:config (advice-add 'jupyter-command :around (function envrc-propagate-environment))
