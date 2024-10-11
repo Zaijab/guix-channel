@@ -1046,6 +1046,7 @@ See `consult-grep' for details."
    (init '((use-package sqlite)
 
 	   (use-package org-roam
+			:demand t
 			:after (org sqlite)
 			:custom
 			(org-roam-directory "~/notes")
