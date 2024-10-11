@@ -1596,7 +1596,7 @@ See `consult-grep' for details."
 	      pandoc))
    (init '(
 	   (use-package jupyter
-			:after (org eglot envrc)
+			:after (org eglot)
 			:config
 	   (setq major-mode-remap-alist
 		 '((python-mode . python-ts-mode)))
@@ -1605,7 +1605,7 @@ See `consult-grep' for details."
 			     (apply func args)
 			     (jupyter-api-http-error nil)))
 	   (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
-	   (setq jupyter-use-zmq nil)
+	   ;(setq jupyter-use-zmq nil)
 	   
 	   (setq org-babel-python-command "python3"
 		 org-confirm-babel-evaluate nil
@@ -1623,7 +1623,7 @@ See `consult-grep' for details."
 
 	   )
 	   (use-package jupyter-repl
-			:defer t
+			:after (org jupyter)
 			:config
 			(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
 
@@ -1652,7 +1652,7 @@ See `consult-grep' for details."
 
 	   (use-package python
 			:config
-	   (add-hook 'python-base-mode-hook
+	   (add-hook 'python-mode-hook
 		     (lambda ()
 		       (add-hook 'eglot-managed-mode-hook
 				 (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
@@ -1714,6 +1714,7 @@ See `consult-grep' for details."
 					      (eval modify-syntax-entry 36 "'")
 					      (eval modify-syntax-entry 126 "'")))
 	   (use-package envrc
+			:after (org jupyter)
 			:config
 			(add-hook 'after-init-hook 'envrc-global-mode)
 			(with-eval-after-load 'envrc (define-key envrc-mode-map (kbd "C-c e") 'envrc-command-map)))))))
