@@ -515,6 +515,7 @@ See `consult-grep' for details."
    (packages (list emacs-tabspaces))
    (init '(
 	   (use-package tabspaces
+			:demand t
 					;:after (consult)
 			:hook (after-init . tabspaces-mode)
 			:commands (tabspaces-switch-or-create-workspace
@@ -1606,7 +1607,7 @@ See `consult-grep' for details."
 			:bind-keymap ("C-c e" . envrc-command-map)
 			;:hook (after-init . envrc-global-mode)
 			:config
-			(add-hook 'after-init (function envrc-global-mode) 99)
+			(add-hook 'after-init (function envrc-global-mode) -99)
 			(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
 	
 	   #;(use-package eglot
