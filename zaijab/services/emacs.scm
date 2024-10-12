@@ -580,8 +580,7 @@ See `consult-grep' for details."
 	     (let ((inhibit-read-only t))
 	       (ansi-color-apply-on-region (point-min) (point-max))))
 	   (add-hook 'compilation-filter-hook (function colorize-compilation-buffer))
-	   (add-hook 'org-mode-hook (function colorize-compilation-buffer))
-	   ))))
+	   (add-hook 'org-mode-hook (function colorize-compilation-buffer))))))
 
 (define language-configuration
   (home-emacs-configuration
@@ -597,29 +596,9 @@ See `consult-grep' for details."
    (early-init '((global-unset-key (kbd "C-x t"))))
    (init '((use-package skk
 			:after (consult)
-			:if (display-graphic-p)
-			:init
-			#;(advice-add
-			'skk-previous-candidate :around
-			(lambda (func &optional arg)
-			(interactive "p")
-			(if (and (not (eq skk-henkan-mode 'active))
-			(not (eq last-command 'skk-kakutei-henkan))
-			last-command-event
-			(eq last-command-event
-			(seq-first (car (where-is-internal
-			'meow-prev
-			meow-normal-state-keymap)))))
-			(previous-line)
-			(funcall func arg))))
-			:config
-			(global-unset-key (kbd "C-x t"))
-			)
-
+			:if (display-graphic-p))
 	   (use-package facemenu
-			:after skk)
-
-	   ))))
+			:after skk)))))
 
 (define graphical-browser-configuration
   (home-emacs-configuration
@@ -1595,79 +1574,70 @@ See `consult-grep' for details."
 	      emacs-python-black
 	      python-pip
 	      pandoc))
-   (init '(
-	   (use-package jupyter
+   (init '((use-package jupyter
 			:after (org eglot)
 			:config
-	   (setq major-mode-remap-alist
-		 '((python-mode . python-ts-mode)))
-	   (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
-	     (condition-case nil
-			     (apply func args)
-			     (jupyter-api-http-error nil)))
-	   (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
-	   ;(setq jupyter-use-zmq nil)
-	   
-	   (setq org-babel-python-command "python3"
-		 org-confirm-babel-evaluate nil
-		 python-interpreter "python3"
-		 python-shell-interpreter "python3"
-		 treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
-	   (org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
-								    (python . t)
-								    (sql . t)
-								    (eshell . t)
-								    (shell . t)
-								    (jupyter . t)))
+			;; (setq major-mode-remap-alist
+			;;       '((python-mode . python-ts-mode)))
+			;; (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
+			;;   (condition-case nil
+			;; 		  (apply func args)
+			;; 		  (jupyter-api-http-error nil)))
+			;; (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
+			
+			(setq org-babel-python-command "python3"
+			      org-confirm-babel-evaluate nil
+			      python-interpreter "python3"
+			      python-shell-interpreter "python3"
+			      treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
+			(org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
+										 (python . t)
+										 (sql . t)
+										 (eshell . t)
+										 (shell . t)
+										 (jupyter . t)))
+			
+			(add-to-list 'org-src-lang-modes (cons "python3" 'python)))
 
-	   (add-to-list 'org-src-lang-modes (cons "python3" 'python))
-
-	   )
-	   (use-package jupyter-repl
-			:after (org jupyter)
+	   (use-package envrc
+			:demand t
+			:before (org jupyter)
+			:bind-keymap ("C-c e" . envrc-command-map)
+			:hook (after-init . envrc-global-mode)
+			:config (advice-add 'jupyter-command :around (function envrc-propagate-environment)))
+	
+	   #;(use-package eglot
 			:config
-			)
+			(defun sloth/org-babel-edit-prep (info)
+			  (setq buffer-file-name (or (alist-get :file (caddr info))
+						     "org-src-babel-tmp"))
+			  (eglot-ensure))
+			
+			(advice-add 'org-edit-src-code
+				    :before (defun sloth/org-edit-src-code/before (&rest args)
+					      (when-let* ((element (org-element-at-point))
+							  (type (org-element-type element))
+							  (lang (org-element-property :language element))
+							  (mode (org-src-get-lang-mode lang))
+							  ((eglot--lookup-mode mode))
+							  (edit-pre (intern
+								     (format "org-babel-edit-prep:%s" lang))))
+							 (if (fboundp edit-pre)
+							     (advice-add edit-pre :after (function sloth/org-babel-edit-prep))
+							     (fset edit-pre (function sloth/org-babel-edit-prep)))))))
 
 
-	   (use-package eglot
+	   #;(use-package python
 			:config
-				   (defun sloth/org-babel-edit-prep (info)
-	     (setq buffer-file-name (or (alist-get :file (caddr info))
-					"org-src-babel-tmp"))
-	     (eglot-ensure))
-
-	   (advice-add 'org-edit-src-code
-		       :before (defun sloth/org-edit-src-code/before (&rest args)
-				 (when-let* ((element (org-element-at-point))
-					     (type (org-element-type element))
-					     (lang (org-element-property :language element))
-					     (mode (org-src-get-lang-mode lang))
-					     ((eglot--lookup-mode mode))
-					     (edit-pre (intern
-							(format "org-babel-edit-prep:%s" lang))))
-					    (if (fboundp edit-pre)
-						(advice-add edit-pre :after (function sloth/org-babel-edit-prep))
-						(fset edit-pre (function sloth/org-babel-edit-prep))))))
-	   )
-
-
-	   (use-package python
-			:config
-	   (add-hook 'python-mode-hook
-		     (lambda ()
-		       (add-hook 'eglot-managed-mode-hook
-				 (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
-				 nil t)
-		       ))
-
-	   	   (add-hook 'python-base-mode-hook (function run-python))
-	   (add-hook 'python-base-mode-hook (function python-black-on-save-mode))
-	   (add-hook 'python-base-mode-hook (function eglot-ensure))
-			)
-
-
-
-	   ))))
+			(add-hook 'python-mode-hook
+				  (lambda ()
+				    (add-hook 'eglot-managed-mode-hook
+					      (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
+					      nil t)))
+			
+	   		(add-hook 'python-base-mode-hook (function run-python))
+			(add-hook 'python-base-mode-hook (function python-black-on-save-mode))
+			(add-hook 'python-base-mode-hook (function eglot-ensure)))))))
 
 (define lisp-configuration
   (home-emacs-configuration
@@ -1714,12 +1684,8 @@ See `consult-grep' for details."
 	   (setq safe-local-variable-values '((eval modify-syntax-entry 43 "'")
 					      (eval modify-syntax-entry 36 "'")
 					      (eval modify-syntax-entry 126 "'")))
-	   (use-package envrc
-			;:after (org jupyter)
-			:bind-keymap ("C-c e" . envrc-command-map)
-			:hook (after-init . envrc-global-mode)
-			:config (advice-add 'jupyter-command :around (function envrc-propagate-environment))
-									)))))
+	   
+	   ))))
 
 
 (define blight-configuration '())

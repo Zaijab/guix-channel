@@ -28,6 +28,9 @@ system:
 system_from_file:
 	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades -v 4 --no-grafts
 
+system_vm:
+	sudo guix system vm /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades -v 4 --no-grafts
+
 print_shepherd_log:
 	sudo cat /var/log/messages
 
