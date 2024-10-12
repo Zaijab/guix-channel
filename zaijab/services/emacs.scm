@@ -1605,9 +1605,9 @@ See `consult-grep' for details."
 			:demand t
 			;:before (org jupyter)
 			:bind-keymap ("C-c e" . envrc-command-map)
-			;:hook (after-init . envrc-global-mode)
+			:hook (after-init . envrc-global-mode)
 			:config
-			(add-hook 'after-init (function envrc-global-mode) -99)
+			;(add-hook 'after-init (function envrc-global-mode) -99)
 			(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
 	
 	   #;(use-package eglot
