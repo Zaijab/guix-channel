@@ -1575,7 +1575,8 @@ See `consult-grep' for details."
 	      python-pip
 	      pandoc))
    (init '((use-package jupyter
-			:after (org eglot)
+			:demand t
+			:after org
 			:config
 			;; (setq major-mode-remap-alist
 			;;       '((python-mode . python-ts-mode)))
