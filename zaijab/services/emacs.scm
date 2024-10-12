@@ -1216,7 +1216,7 @@ See `consult-grep' for details."
 		 org-export-with-drawers '(not "LOGBOOK" "REVIEW_DATA"))
 	   (defun zain-publish ()
 	     (interactive)
-	     (let ((current-prefix-arg (list 4))
+	     (let (;(current-prefix-arg (list 4))
 		   (default-directory "~/code/zaijab.github.io"))
 	       (advice-add 'org-export-output-file-name :filter-return (function commonplace/slugify-export-output-file-name))
 	       (call-interactively 'org-publish-all)
@@ -1285,7 +1285,7 @@ See `consult-grep' for details."
 <div class=\"grid-container\"><div class=\"ds-grid\"><div class=\"page\">"
 		    :html-preamble nil
 		    :html-postamble nil
-		    :recursive t
+		    :recursive nil
 		    :html-mathjax-template "<script>MathJax = { loader: { load: ['[custom]/xypic.js'], paths: {custom: 'https://cdn.jsdelivr.net/gh/sonoisa/XyJax-v3@3.0.1/build/'} }, tex: { packages: {'[+]': ['xypic']}, macros: { R: \"{\\\\bf R}\" } } };</script><script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js\"></script>")
 		   ("static"
 		    :base-directory "~/notes/static"
