@@ -1601,7 +1601,7 @@ See `consult-grep' for details."
 
 	   (use-package envrc
 			:demand t
-			:before (org jupyter)
+			;:before (org jupyter)
 			:bind-keymap ("C-c e" . envrc-command-map)
 			:hook (after-init . envrc-global-mode)
 			:config (advice-add 'jupyter-command :around (function envrc-propagate-environment)))
