@@ -1579,13 +1579,13 @@ See `consult-grep' for details."
 			:demand t
 			:after org
 			:config
-			;; (setq major-mode-remap-alist
-			;;       '((python-mode . python-ts-mode)))
-			;; (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
-			;;   (condition-case nil
-			;; 		  (apply func args)
-			;; 		  (jupyter-api-http-error nil)))
-			;; (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
+			(setq major-mode-remap-alist
+			      '((python-mode . python-ts-mode)))
+			(defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
+			  (condition-case nil
+					  (apply func args)
+					  (jupyter-api-http-error nil)))
+			(advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
 			
 			(setq org-babel-python-command "python3"
 			      org-confirm-babel-evaluate nil
@@ -1610,7 +1610,7 @@ See `consult-grep' for details."
 			;(add-hook 'after-init (function envrc-global-mode) -99)
 			(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
 	
-	   #;(use-package eglot
+	   (use-package eglot
 			:config
 			(defun sloth/org-babel-edit-prep (info)
 			  (setq buffer-file-name (or (alist-get :file (caddr info))
@@ -1631,7 +1631,7 @@ See `consult-grep' for details."
 							     (fset edit-pre (function sloth/org-babel-edit-prep)))))))
 
 
-	   #;(use-package python
+	   (use-package python
 			:config
 			(add-hook 'python-mode-hook
 				  (lambda ()
