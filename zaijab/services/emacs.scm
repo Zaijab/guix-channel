@@ -1579,7 +1579,7 @@ See `consult-grep' for details."
 			:demand t
 			:after org
 			:config
-			(setq major-mode-remap-alist
+			#;(setq major-mode-remap-alist
 			      '((python-mode . python-ts-mode)))
 			(defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
 			  (condition-case nil
@@ -1603,11 +1603,9 @@ See `consult-grep' for details."
 
 	   (use-package envrc
 			:demand t
-			;:before (org jupyter)
-			:bind-keymap ("C-c e" . envrc-command-map)
+       			:bind-keymap ("C-c e" . envrc-command-map)
 			:hook (after-init . envrc-global-mode)
 			:config
-			;(add-hook 'after-init (function envrc-global-mode) -99)
 			(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
 	
 	   (use-package eglot
@@ -1639,9 +1637,9 @@ See `consult-grep' for details."
 					      (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
 					      nil t)))
 			
-	   		(add-hook 'python-base-mode-hook (function run-python))
-			(add-hook 'python-base-mode-hook (function python-black-on-save-mode))
-			(add-hook 'python-base-mode-hook (function eglot-ensure)))))))
+	   		(add-hook 'python-mode-hook (function run-python))
+			(add-hook 'python-mode-hook (function python-black-on-save-mode))
+			(add-hook 'python-mode-hook (function eglot-ensure)))))))
 
 (define lisp-configuration
   (home-emacs-configuration
