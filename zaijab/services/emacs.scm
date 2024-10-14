@@ -1335,7 +1335,7 @@ See `consult-grep' for details."
 			(require 'calfw-blocks)
 			(setq org-startup-folded t)
 
-
+			(setq org-list-allow-alphabetical t)
 			(setq org-structure-template-alist
 			      '(("a" . "export ascii") ("c" . "center") ("C" . "comment")
 				("e" . "example") ("E" . "export") ("h" . "export html")
@@ -1826,7 +1826,6 @@ See `consult-grep' for details."
 			(global-set-key (kbd "C-x C-n") 'org-roam-node-find)
 			(global-set-key (kbd "s-a") 'cfw:open-org-calendar)
 			(global-set-key (kbd "s-s") (function jisho->fc))
-
 			(global-set-key (kbd "s-m") 'mu4e)
 			(global-set-key (kbd "s-z") (function elfeed))
 			(global-set-key (kbd "s-g") (function guix))
@@ -1834,7 +1833,6 @@ See `consult-grep' for details."
 			(global-set-key (kbd "s-H") 'windsize-left)
 			(global-set-key (kbd "s-L") 'windsize-right)
 			(global-set-key (kbd "s-h") 'windmove-left)
-
 			(global-set-key (kbd "s-j") 'windmove-down)
 			(global-set-key (kbd "s-k") 'windmove-up)
 			(global-set-key (kbd "s-l") 'windmove-right)
@@ -1842,12 +1840,12 @@ See `consult-grep' for details."
 							 (lambda (command)
 							   (interactive (list (read-shell-command "$ ")))
 							   (start-process-shell-command command nil command))))
+			
 					;(global-set-key (kbd "s-a") 'toggle-exwm-input-line-mode-passthrough)
 
 			(setq exwm-input-simulation-keys
 			      (list (cons (kbd "C-s") (kbd "C-f"))
-				    (cons (kbd "M-w") (kbd "C-c"))
-				    ))
+				    (cons (kbd "M-w") (kbd "C-c"))))
 			(defun exwm-rename-buffer-to-title () (exwm-workspace-rename-buffer exwm-class-name))
 			(defun exwm-rename-buffer ()
 			  (interactive)
@@ -1878,7 +1876,7 @@ See `consult-grep' for details."
 									  XF86AudioMute
 									  XF86MonBrightnessDown
 									  XF86MonBrightnessUp)))
-					;(define-key exwm-mode-map (kbd "C-c") nil)
+
 			(setq exwm-input-global-keys (list (cons (kbd "M-x") 'execute-extended-command)))
 			(defun exwm-input-line-mode ()
 			  "Set exwm window to line-mode and show mode line"
@@ -1907,8 +1905,7 @@ See `consult-grep' for details."
 			      (progn
 			       (setq exwm-input-line-mode-passthrough t)
 			       (message "emacs receives all the keys now")))
-			  (force-mode-line-update)))
-	   ))))
+			  (force-mode-line-update)))))))
 
 (define theme-configuration
   (home-emacs-configuration
@@ -1922,16 +1919,13 @@ See `consult-grep' for details."
 	       (set-fontset-font nil 'symbol "Iosevka")
 	       (set-fontset-font nil 'han "IPAmjMincho")
 	       (set-fontset-font nil 'kana "IPAmjMincho")
-	       (set-fontset-font nil 'cjk-misc "IPAmjMincho")
-	       )
-	   ))))
+	       (set-fontset-font nil 'cjk-misc "IPAmjMincho"))))))
 
 (define ui-configuration
   (home-emacs-configuration
    (packages (list emacs-rainbow-delimiters
 		   emacs-speed-type))
-   (early-init '(;(setq load-suffixes '(".el" ".elc" ".so"))
-		 (setq gc-cons-threshold 800000
+   (early-init '((setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
