@@ -1217,7 +1217,7 @@ See `consult-grep' for details."
 		 org-export-with-drawers '(not "LOGBOOK" "REVIEW_DATA"))
 	   (defun zain-publish ()
 	     (interactive)
-	     (let (;(current-prefix-arg (list 4))
+	     (let ((current-prefix-arg (list 4))
 		   (default-directory "~/code/zaijab.github.io"))
 	       (advice-add 'org-export-output-file-name :filter-return (function commonplace/slugify-export-output-file-name))
 	       (call-interactively 'org-publish-all)
@@ -1390,37 +1390,10 @@ See `consult-grep' for details."
 
 			(setq org-tags-column 0
 			      org-image-actual-width nil)
-
-			(defun org-inline-image--get-current-image ()
-  "Return the overlay associated with the image under point."
-  (car (--select (eq (overlay-get it 'org-image-overlay) t) (overlays-at (point)))))
-
-(defun org-inline-image--get (prop)
-  "Return the value of property PROP for image under point."
-  (let ((image (org-inline-image--get-current-image)))
-    (when image
-      (overlay-get image prop))))
-
-(defun org-inline-image-animate ()
-  "Animate the image if it's possible."
-  (interactive)
-  (let ((image-props (org-inline-image--get 'display)))
-    (when (image-animated-p image-props)
-      (image-animate image-props))))
-
-(defun org-inline-image-animate-auto ()
-  (interactive)
-  (when (eq 'org-mode major-mode)
-    (while-no-input 
-      (run-with-idle-timer 0.3 nil 'org-inline-image-animate))))
-
-(setq org-inline-image--get-current-image (byte-compile 'org-inline-image--get-current-image))
-(setq org-inline-image-animate  (byte-compile 'org-inline-image-animate ))
-(add-hook 'post-command-hook 'org-inline-image-animate-auto)
-					;(global-org-modern-mode)
+			;(global-org-modern-mode)
 			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
 			(setq ;org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
-			 jupyter-org-resource-directory "/home/zjabbar/notes/data/jupyter/")
+			 jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
 			(setq org-todo-keywords
 			      '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
 			(defconst org-latex-math-environments-re
