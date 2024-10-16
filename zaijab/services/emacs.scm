@@ -583,23 +583,95 @@ See `consult-grep' for details."
 	   (add-hook 'compilation-filter-hook (function colorize-compilation-buffer))
 	   (add-hook 'org-mode-hook (function colorize-compilation-buffer))))))
 
-(define language-configuration
+
+(define hindi-configuration
+  (home-emacs-configuration
+   (packages (list font-lohit))))
+
+(define urdu-configuration
+  (home-emacs-configuration
+   (packages (list font-vazir
+		   font-amiri))))
+
+(define japanese-configuration
   (home-emacs-configuration
    (packages (list emacs-ddskk
 		   inkscape
-		   anki
 		   jbr21
-		   font-lohit
-		   font-amiri
-		   font-vazir
-		   font-ipa-mj-mincho
-		   font-iosevka))
+		   font-ipa-mj-mincho))
    (early-init '((global-unset-key (kbd "C-x t"))))
    (init '((use-package skk
 			:after (consult)
 			:if (display-graphic-p))
+	   
 	   (use-package facemenu
-			:after skk)))))
+			:after skk)
+	   
+	   (defun jisho-word->japanese-part (jisho-word)
+	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
+		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))
+
+	   (defun jisho-word->english-part (jisho-word)
+	     (gethash "english_definitions" (elt (gethash "senses" jisho-word) 0)))
+
+	   (defun word->drill (word)
+	     (if (car word)
+		 (kanji-word->drill word)
+		 (kana-word->drill (cdr word))))
+	   (defun simple-word->drill (word)
+	     (if (car word)
+		 (simple-kanji-word->drill word)
+		 (kana-word->drill (cdr word))))
+
+	   (defvar *jisho-results* ())
+
+	   (defun jisho-search->completing-read ()
+	     (interactive)
+	     (let* ((search-term (read-string "Search JISHO: "))
+		    (url (concat "https://www.jisho.org/api/v1/search/words?keyword=" search-term)) ; Get correct URL to access Jisho API ; ; ;
+		    ;; Get JSON File from URL
+		    (contents (with-temp-buffer
+			       (url-insert-file-contents url)
+			       (json-parse-buffer :array-type 'list)))
+		    ;; JSON File contains metadata on status, then a list of words
+		    (status (gethash "meta" contents))
+		    (words (gethash "data" contents))
+		    ;; We will iterate over all words via word, and return a certain list in results
+		    (word)
+		    (vertico-sort-override-function (function identity)))
+	       ;; Build Results
+	       (setq *jisho-results* ())
+	       (while words
+		 (setq word (car words))
+		 (setq total-word (append (jisho-word->japanese-part word) (jisho-word->english-part word)))
+		 (setq *jisho-results* (append *jisho-results* (list (cons (string-join total-word " ") total-word))))
+		 (setq words (cdr words)))
+	       (alist-get
+		(completing-read "Results: " *jisho-results*)
+		*jisho-results* nil nil 'equal)))
+
+	   (defun kanji-word->drill (word)
+	     (apply 'format "{{%s}}\n{{%s}} {{%s}}\n" word))
+
+	   (defun kana-word->drill (word)
+	     (apply 'format "{{%s}}\n{{%s}}\n" word))
+
+	   (defun simple-kanji-word->drill (word)
+	     (apply 'format "%s\n{{%s}} {{%s}}\n" word))
+
+	   (defun jisho->fc ()
+	     (interactive)
+	     (org-roam-with-file "/home/zjabbar/notes/20240702021713-japanese_vocabulary.org" t
+				 (end-of-buffer)
+				 (insert (concat "* " (word->drill (jisho-search->completing-read)) "\n"))
+				 (org-fc-type-cloze-init 'deletion)))
+
+	   (defun simple-jisho->fc ()
+	     (interactive)
+	     (org-roam-with-file "/home/zjabbar/notes/20240702021713-japanese_vocabulary.org" t
+				 (end-of-buffer)
+				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read)) "\n"))
+				 (org-fc-type-cloze-init 'deletion)))))))
 
 (define graphical-browser-configuration
   (home-emacs-configuration
@@ -1079,72 +1151,6 @@ See `consult-grep' for details."
 			:config
 			(org-fc-cache-mode)
 			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card)))
-
-	   (defun jisho-word->japanese-part (jisho-word)
-	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
-		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))
-
-	   (defun jisho-word->english-part (jisho-word)
-	     (gethash "english_definitions" (elt (gethash "senses" jisho-word) 0)))
-
-	   (defun word->drill (word)
-	     (if (car word)
-		 (kanji-word->drill word)
-		 (kana-word->drill (cdr word))))
-	   (defun simple-word->drill (word)
-	     (if (car word)
-		 (simple-kanji-word->drill word)
-		 (kana-word->drill (cdr word))))
-
-	   (defvar *jisho-results* ())
-
-	   (defun jisho-search->completing-read ()
-	     (interactive)
-	     (let* ((search-term (read-string "Search JISHO: "))
-		    (url (concat "https://www.jisho.org/api/v1/search/words?keyword=" search-term)) ; Get correct URL to access Jisho API ; ; ;
-		    ;; Get JSON File from URL
-		    (contents (with-temp-buffer
-			       (url-insert-file-contents url)
-			       (json-parse-buffer :array-type 'list)))
-		    ;; JSON File contains metadata on status, then a list of words
-		    (status (gethash "meta" contents))
-		    (words (gethash "data" contents))
-		    ;; We will iterate over all words via word, and return a certain list in results
-		    (word)
-		    (vertico-sort-override-function (function identity)))
-	       ;; Build Results
-	       (setq *jisho-results* ())
-	       (while words
-		 (setq word (car words))
-		 (setq total-word (append (jisho-word->japanese-part word) (jisho-word->english-part word)))
-		 (setq *jisho-results* (append *jisho-results* (list (cons (string-join total-word " ") total-word))))
-		 (setq words (cdr words)))
-	       (alist-get
-		(completing-read "Results: " *jisho-results*)
-		*jisho-results* nil nil 'equal)))
-
-	   (defun kanji-word->drill (word)
-	     (apply 'format "{{%s}}\n{{%s}} {{%s}}\n" word))
-
-	   (defun kana-word->drill (word)
-	     (apply 'format "{{%s}}\n{{%s}}\n" word))
-
-	   (defun simple-kanji-word->drill (word)
-	     (apply 'format "%s\n{{%s}} {{%s}}\n" word))
-
-	   (defun jisho->fc ()
-	     (interactive)
-	     (org-roam-with-file "/home/zjabbar/notes/20240702021713-japanese_vocabulary.org" t
-				 (end-of-buffer)
-				 (insert (concat "* " (word->drill (jisho-search->completing-read)) "\n"))
-				 (org-fc-type-cloze-init 'deletion)))
-
-	   (defun simple-jisho->fc ()
-	     (interactive)
-	     (org-roam-with-file "/home/zjabbar/notes/20240702021713-japanese_vocabulary.org" t
-				 (end-of-buffer)
-				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read)) "\n"))
-				 (org-fc-type-cloze-init 'deletion)))
 
 	   ))))
 
