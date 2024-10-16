@@ -1396,7 +1396,7 @@ See `consult-grep' for details."
 
 			(setq org-tags-column 0
 			      org-image-actual-width nil)
-			;(global-org-modern-mode)
+					;(global-org-modern-mode)
 			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
 			(setq ;org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
 			 jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
@@ -1586,7 +1586,7 @@ See `consult-grep' for details."
 			:after org
 			:config
 			#;(setq major-mode-remap-alist
-			      '((python-mode . python-ts-mode)))
+			'((python-mode . python-ts-mode)))
 			(defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
 			  (condition-case nil
 					  (apply func args)
@@ -1613,7 +1613,7 @@ See `consult-grep' for details."
 			:hook (after-init . envrc-global-mode)
 			:config
 			(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
-	
+	   
 	   (use-package eglot
 			:config
 			(defun sloth/org-babel-edit-prep (info)
@@ -1710,13 +1710,13 @@ See `consult-grep' for details."
 		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
 		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
 
-#;(define shell-configuration
-(home-emacs-configuration
-(packages (list emacs-eat))
-(init '((use-package eat
-:hook
-(eshell-first-time-mode . (function eat-eshell-mode))
-(eshell-first-time-mode . (function eat-eshell-visual-command-mode)))))))
+(define shell-configuration
+  (home-emacs-configuration
+   (packages (list emacs-eat))
+   (init '((use-package eat
+			:hook
+			(eshell-first-time-mode . (function eat-eshell-mode))
+			(eshell-first-time-mode . (function eat-eshell-visual-command-mode)))))))
 
 (define exwm-configuration
   (home-emacs-configuration
