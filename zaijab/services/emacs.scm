@@ -1903,7 +1903,8 @@ See `consult-grep' for details."
 (define ui-configuration
   (home-emacs-configuration
    (packages (list emacs-rainbow-delimiters
-		   emacs-speed-type))
+		   emacs-speed-type
+		   font-iosevka))
    (early-init '((setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
 		       indicate-empty-lines nil
