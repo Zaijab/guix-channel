@@ -1714,6 +1714,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list emacs-eat))
    (init '((use-package eat
+			:demand t
 			:hook
 			(eshell-first-time-mode . (function eat-eshell-mode))
 			(eshell-first-time-mode . (function eat-eshell-visual-command-mode)))))))
