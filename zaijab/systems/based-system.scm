@@ -153,6 +153,7 @@
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
+	       (specification->package "network-manager-applet")
 	       gnu-make
 	       cups
 	       (specification->package "gsettings-desktop-schemas")
