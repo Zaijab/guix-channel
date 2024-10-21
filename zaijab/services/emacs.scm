@@ -2031,9 +2031,11 @@ See `consult-grep' for details."
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
 
 (define (use-emacs-next package)
-  ((options->transformation '((with-input . "emacs=emacs-next")
-			      (with-input . "emacs-minimal=emacs-next-minimal")))
-   package))
+  (if (or (eq package emacs-orderless))
+      package
+      ((options->transformation '((with-input . "emacs=emacs-next")
+				  (with-input . "emacs-minimal=emacs-next-minimal")))
+       package)))
 
 (define home-emacs-next-total-configuration
   (home-emacs-configuration
