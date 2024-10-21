@@ -66,7 +66,8 @@
   #:use-module (guix-science packages machine-learning)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
-	    home-emacs-total-configuration))
+	    home-emacs-total-configuration
+	    home-emacs-next-total-configuration))
 
 (define file-likes? (list-of file-like?))
 
@@ -118,9 +119,7 @@
 ;; Completion Style - DONE
 (define orderless-configuration
   (home-emacs-configuration
-   (packages (list ((options->transformation '((with-input . "emacs=emacs-next")
-					       (with-input . "emacs-minimal=emacs-next-minimal")))
-		    emacs-orderless)))
+   (packages (list emacs-orderless))
    (init '((use-package orderless
 			:custom
 			(completion-styles '(orderless basic))
@@ -133,9 +132,7 @@
 ;; Completion UI - DONE
 (define vertico-configuration
   (home-emacs-configuration
-   (packages (list ((options->transformation '((with-input . "emacs=emacs-next")
-					       (with-input . "emacs-minimal=emacs-next-minimal")))
-		    emacs-vertico)))
+   (packages (list emacs-vertico))
    (init '((use-package vertico
 			:custom
 			(vertico-cycle t)
@@ -2032,3 +2029,14 @@ See `consult-grep' for details."
 		(map variable-ref
 		     (filter variable-bound?
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
+
+(define use-emacs-next (package)
+  ((options->transformation '((with-input . "emacs=emacs-next")
+			      (with-input . "emacs-minimal=emacs-next-minimal")))
+   package))
+
+(define home-emacs-next-total-configuration
+  (home-emacs-configuration
+   (inherit home-emacs-total-configuration)
+   (packages (map use-emacs-next
+		  (home-emacs-configuration-packages home-emacs-total-configuration)))))
