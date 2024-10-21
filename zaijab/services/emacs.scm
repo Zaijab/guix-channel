@@ -131,7 +131,9 @@
 ;; Completion UI - DONE
 (define vertico-configuration
   (home-emacs-configuration
-   (packages (list emacs-vertico))
+   (packages (list ((options->transformation '((with-input . "emacs=emacs-next")
+					       (with-input . "emacs-minimal=emacs-next-minimal")))
+		    emacs-vertico)))
    (init '((use-package vertico
 			:custom
 			(vertico-cycle t)
