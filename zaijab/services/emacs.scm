@@ -795,6 +795,7 @@ See `consult-grep' for details."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCU8Nm_HV-GouPa-WmujPltQ" math barker)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC6jM0RFkr4eSkzT5Gx0HOAw" math penn)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCSju5G2aFaWMqn-_0YBtq5A" math parker)
+								("https://www.youtube.com/feeds/videos.xml?channel_id=UCIu2_2RVc6_F6_7wv5TDHoA" math jsb)
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" crafter david)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC0uTPqBCFIpZxlz_Lv1tk_g" crafter prot)
