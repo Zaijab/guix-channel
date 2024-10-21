@@ -118,7 +118,9 @@
 ;; Completion Style - DONE
 (define orderless-configuration
   (home-emacs-configuration
-   (packages (list emacs-orderless))
+   (packages (list ((options->transformation '((with-input . "emacs=emacs-next")
+					       (with-input . "emacs-minimal=emacs-next-minimal")))
+		    emacs-orderless)))
    (init '((use-package orderless
 			:custom
 			(completion-styles '(orderless basic))
