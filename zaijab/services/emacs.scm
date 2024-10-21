@@ -2030,7 +2030,7 @@ See `consult-grep' for details."
 		     (filter variable-bound?
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
 
-(define use-emacs-next (package)
+(define (use-emacs-next package)
   ((options->transformation '((with-input . "emacs=emacs-next")
 			      (with-input . "emacs-minimal=emacs-next-minimal")))
    package))
@@ -2040,3 +2040,4 @@ See `consult-grep' for details."
    (inherit home-emacs-total-configuration)
    (packages (map use-emacs-next
 		  (home-emacs-configuration-packages home-emacs-total-configuration)))))
+
