@@ -2032,6 +2032,7 @@ See `consult-grep' for details."
 
 (define (use-emacs-next package)
   (if (or (eq? package emacs-elfeed-tube)
+	  (not (eq? package mu))
 	  (not (string-contains (package-name package) "emacs")))
       package
       ((options->transformation '((with-input . "emacs=emacs-next")
