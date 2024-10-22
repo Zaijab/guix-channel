@@ -2030,7 +2030,7 @@ See `consult-grep' for details."
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
 
 (define (use-emacs-next package)
-  (if (or #t #;(eq? package emacs-citar-org-roam))
+  (if (or #f #;(eq? package emacs-citar-org-roam))
       package
       ((options->transformation '((with-input . "emacs=emacs-next")
 				  (with-input . "emacs-minimal=emacs-next")))
