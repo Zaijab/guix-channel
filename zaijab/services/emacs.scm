@@ -763,7 +763,7 @@ See `consult-grep' for details."
 	      emacs-empv
 	      yt-dlp
 	      emacs-elfeed
-	      ;emacs-elfeed-tube
+	      emacs-elfeed-tube
 	      curl))
    (init '((setq elfeed-feeds '(("https://almostsuremath.com/feed/" math almost-sure)
 				("https://karthinks.com/index.xml" crafter karthinks)
@@ -2031,17 +2031,15 @@ See `consult-grep' for details."
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
 
 (define (use-emacs-next package)
-  (if (or (eq? package emacs-elfeed-tube)
-	  (not (eq? package mu))
-	  (not (string-contains (package-name package) "emacs")))
-      package
+  (if (or (and (string-contains (package-name package) "emacs") (not (eq? package emacs-elfeed-tube)))
+	  (eq? package mu))
       ((options->transformation '((with-input . "emacs=emacs-next")
 				  (with-input . "emacs-minimal=emacs-next")))
-       package)))
+       package)
+      package))
 
 (define home-emacs-next-total-configuration
   (home-emacs-configuration
    (inherit home-emacs-total-configuration)
    (packages (map use-emacs-next
 		  (home-emacs-configuration-packages home-emacs-total-configuration)))))
-
