@@ -871,8 +871,8 @@ See `consult-grep' for details."
 	   (defun browse-url-mpv (url &optional new-window)
 	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=mp4" url))
 
-	   (defun browse-url-mpv (url &optional new-window)
-	     (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?480]+bestaudio/best" url))
+	   ;; (defun browse-url-mpv (url &optional new-window)
+	   ;;   (start-process "mpv" "*mpv*" "mpv" "--ytdl-format=bestvideo[height<=?480]+bestaudio/best" url))
 
 	   ;; (defun browse-url-mpv (url &optional new-window)
 	   ;;   (start-process "mpv" "*mpv*" "mpv" url))
