@@ -763,7 +763,7 @@ See `consult-grep' for details."
 	      emacs-empv
 	      yt-dlp
 	      emacs-elfeed
-	      emacs-elfeed-tube
+	      ;; emacs-elfeed-tube
 	      curl))
    (init '((setq elfeed-feeds '(("https://almostsuremath.com/feed/" math almost-sure)
 				("https://karthinks.com/index.xml" crafter karthinks)
@@ -858,9 +858,9 @@ See `consult-grep' for details."
 	     (if elfeed-db
 		 (apply oldfun args)
 		 "No database loaded yet"))
-	   (require 'elfeed-tube)
-	   (require 'elfeed-tube-fill)
-	   (elfeed-tube-setup)
+	   ;; (require 'elfeed-tube)
+	   ;; (require 'elfeed-tube-fill)
+	   ;; (elfeed-tube-setup)
 	   (setq-default elfeed-search-filter "")
 	   (setq-default elfeed-search-title-max-width 100)
 	   (setq-default elfeed-search-title-min-width 100)
