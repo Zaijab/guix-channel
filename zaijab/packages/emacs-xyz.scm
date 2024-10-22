@@ -601,7 +601,7 @@ Usage To automatically apply when saving a python file, use the following code:
        (sha256
         (base32 "06yh6w4zgvvkfllmcr0szsgjrfhh9rpjwgmcrf6h2gai2ps9xdqr"))))
     (build-system emacs-build-system)
-    (propagated-inputs (list emacs-compat emacs-embark emacs-consult))
+    (propagated-inputs (list emacs-embark emacs-consult))
     (home-page "https://github.com/oantolin/embark")
     (synopsis "Consult integration for Embark")
     (description
