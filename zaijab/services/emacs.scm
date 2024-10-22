@@ -3,6 +3,7 @@
 
 (define-module (zaijab services emacs)
   #:use-module (gnu home)
+  #:use-module (guix packages)
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages education)

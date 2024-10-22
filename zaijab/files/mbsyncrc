@@ -42,3 +42,24 @@ Patterns * ![Gmail]* "[Gmail]/Sent Mail"
 Create Both
 SyncState *
 
+IMAPAccount zjabbar_hawaii_math
+Host imap.math.hawaii.edu:993
+User zjabbar
+PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/mbsync/zjabbar_hawaii_math.gpg"
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore zjabbar_hawaii_math-remote
+Account zjabbar_hawaii_math
+
+MaildirStore zjabbar_hawaii_math-local
+Subfolders Verbatim
+Path ~/.mail/zjabbar_hawaii_math/
+Inbox ~/.mail/zjabbar_hawaii_math/Inbox
+
+Channel math_channel
+Far :zjabbar_hawaii_math-remote:
+Near :zjabbar_hawaii_math-local:
+Patterns *
+Create Both
+SyncState *
