@@ -1077,7 +1077,10 @@ See `consult-grep' for details."
 					(or (mu4e-message-contact-field-matches msg :to "zjabbar@hawaii.edu")
 					    (mu4e-message-contact-field-matches msg :from "zjabbar@hawaii.edu")
 					    (mu4e-message-contact-field-matches msg :cc "zjabbar@hawaii.edu")
-					    (mu4e-message-contact-field-matches msg :bcc "zjabbar@hawaii.edu"))))
+					    (mu4e-message-contact-field-matches msg :bcc "zjabbar@hawaii.edu")
+
+
+					    )))
 
 			:vars '((user-mail-address       . "zjabbar@hawaii.edu")
 				(smtpmail-smtp-user      . "zjabbar@hawaii.edu")
@@ -1091,7 +1094,44 @@ See `consult-grep' for details."
 						  :key ?a)
 						 (:name  "Unread school messages"
 						  :query "maildir:/zjabbar/Inbox AND flag:unread AND NOT flag:trashed"
-						  :key ?u)))))))))))
+						  :key ?u)))))
+		       
+		       (make-mu4e-context
+			:name "Math"
+			:enter-func (lambda ()
+				      (mu4e-message "Entering Math context")
+				      (when (string-match-p (buffer-name (current-buffer)) "mu4e-main")
+					(revert-buffer)))
+			:leave-func (lambda ()
+				      (mu4e-message "Leaving Math context")
+				      (when (string-match-p (buffer-name (current-buffer)) "mu4e-main")
+					(revert-buffer)))
+			:match-func (lambda (msg)
+				      (when msg
+					(or (mu4e-message-contact-field-matches msg :to "zjabbar@math.hawaii.edu")
+					    (mu4e-message-contact-field-matches msg :from "zjabbar@math.hawaii.edu")
+					    (mu4e-message-contact-field-matches msg :cc "zjabbar@math.hawaii.edu")
+					    (mu4e-message-contact-field-matches msg :bcc "zjabbar@math.hawaii.edu")
+
+
+					    )))
+
+			:vars '((user-mail-address       . "zjabbar@math.hawaii.edu")
+				(smtpmail-smtp-user      . "zjabbar@math.hawaii.edu")
+				(smtpmail-smtp-server    . "smtp.gmail.com")
+				(smtpmail-smtp-service   . 587)
+				(mu4e-compose-signature  . "Mahalo")
+				(mu4e-maildir-shortcuts  . ((:maildir "/zjabbar_hawaii_math/Inbox" :key ?i)))
+				(mu4e-bookmarks .
+						((:name  "All school mails"
+						  :query "maildir:/zjabbar_hawaii_math/Inbox"
+						  :key ?a)
+						 (:name  "Unread school messages"
+						  :query "maildir:/zjabbar_hawaii_math/Inbox AND flag:unread AND NOT flag:trashed"
+						  :key ?u)))))
+		       ))
+
+	   ))))
 
 (define notes-configuration
   (home-emacs-configuration

@@ -2,7 +2,7 @@ IMAPAccount zaijab2000_gmail
 Host imap.gmail.com
 User zaijab2000@gmail.com
 PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/mbsync/zaijab2000.gpg"
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore zaijab2000_gmail-remote
@@ -24,7 +24,7 @@ IMAPAccount zjabbar_hawaii
 Host imap.gmail.com
 User zjabbar@hawaii.edu
 PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/mbsync/zjabbar.gpg"
-SSLType IMAPS
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore zjabbar_hawaii-remote
@@ -46,7 +46,7 @@ IMAPAccount zjabbar_hawaii_math
 Host imap.math.hawaii.edu
 User zjabbar
 PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/mbsync/zjabbar_hawaii_math.gpg"
-SSLType IMAP
+TLSType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore zjabbar_hawaii_math-remote
