@@ -74,7 +74,7 @@
 
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like emacs-next)
+   (file-like emacs)
    "The Emacs package to use.")
   (packages
    (file-likes '())
