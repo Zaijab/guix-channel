@@ -477,8 +477,7 @@ See `consult-grep' for details."
 
 (define citation-configuration
   (home-emacs-configuration
-   (packages (list emacs-citar
-		   emacs-citar-org-roam))
+   (packages (list emacs-citar-org-roam))
    (init '((use-package citar
 			:bind (:map citar-map
 			       ("a" . citar-add-file-to-library))
@@ -2031,7 +2030,7 @@ See `consult-grep' for details."
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
 
 (define (use-emacs-next package)
-  (if (or (eq? package emacs-citar))
+  (if (or (eq? package emacs-citar-org-roam))
       package
       ((options->transformation '((with-input . "emacs=emacs-next")
 				  (with-input . "emacs-minimal=emacs-next-minimal")))
