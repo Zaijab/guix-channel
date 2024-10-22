@@ -796,7 +796,8 @@ See `consult-grep' for details."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCU8Nm_HV-GouPa-WmujPltQ" math barker)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC6jM0RFkr4eSkzT5Gx0HOAw" math penn)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCSju5G2aFaWMqn-_0YBtq5A" math parker)
-								("https://www.youtube.com/feeds/videos.xml?channel_id=UCIu2_2RVc6_F6_7wv5TDHoA" math jsb)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCIu2_2RVc6_F6_7wv5TDHoA" math jsb)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLTGkWQjAP0wovgVKVz1tUCYKZXCSmqsLm" math geometric-algebra)
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCAiiOTio8Yu69c3XnR7nQBQ" crafter david)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC0uTPqBCFIpZxlz_Lv1tk_g" crafter prot)
@@ -836,6 +837,7 @@ See `consult-grep' for details."
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLEC88901EBADDD980" lecture mit odes)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL221E2BBF13BECF6C" lecture mit linear)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLNfNKbfMcu1GohKHv_u7Kf0AQwD2uyFew" lecture arnold feec)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=PL1ysOEBe5977vlocXuRt6KBCYu_sdu1Ru" lecture cuda)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLUl4u3cNGP63micsJp_--fRAjZXPrQzW_" lecture mit functional)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLo4jXE-LdDTTIIIRwqK35CbFJieSJEcVR" lecture functional)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=PLLq_gUfXAnkkvL_UoCGivS0wOYhwCtczI" lecture pde ictp-2016)
@@ -1763,8 +1765,8 @@ See `consult-grep' for details."
    (init '((use-package eat
 			:demand t
 			:hook
-			(eshell-first-time-mode . (function eat-eshell-mode))
-			(eshell-first-time-mode . (function eat-eshell-visual-command-mode)))))))
+			(eshell-load . (function eat-eshell-mode))
+			(eshell-load . (function eat-eshell-visual-command-mode)))))))
 
 (define exwm-configuration
   (home-emacs-configuration
