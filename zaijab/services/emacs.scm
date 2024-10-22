@@ -2031,7 +2031,7 @@ See `consult-grep' for details."
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
 
 (define (use-emacs-next package)
-  (if (or (eq package emacs-orderless))
+  (if (or (eq? package emacs-orderless))
       package
       ((options->transformation '((with-input . "emacs=emacs-next")
 				  (with-input . "emacs-minimal=emacs-next-minimal")))
