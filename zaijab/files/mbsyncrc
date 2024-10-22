@@ -43,10 +43,10 @@ Create Both
 SyncState *
 
 IMAPAccount zjabbar_hawaii_math
-Host imap.math.hawaii.edu:993
+Host imap.math.hawaii.edu
 User zjabbar
 PassCmd "gpg --quiet --for-your-eyes-only --no-tty --decrypt ~/.password-store/mbsync/zjabbar_hawaii_math.gpg"
-SSLType IMAPS
+SSLType IMAP
 CertificateFile /etc/ssl/certs/ca-certificates.crt
 
 IMAPStore zjabbar_hawaii_math-remote
