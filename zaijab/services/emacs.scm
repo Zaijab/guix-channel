@@ -762,7 +762,7 @@ See `consult-grep' for details."
 	      emacs-empv
 	      yt-dlp
 	      emacs-elfeed
-	      emacs-elfeed-tube
+	      ;emacs-elfeed-tube
 	      curl))
    (init '((setq elfeed-feeds '(("https://almostsuremath.com/feed/" math almost-sure)
 				("https://karthinks.com/index.xml" crafter karthinks)
