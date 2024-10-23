@@ -1957,7 +1957,7 @@ See `consult-grep' for details."
 		   font-iosevka))
    (early-init '((setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
-		       ;load-suffixes '(".so" ".el")
+		       load-suffixes '(".so" ".el")
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
 		       tool-bar-mode nil
