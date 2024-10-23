@@ -1957,6 +1957,7 @@ See `consult-grep' for details."
 		   font-iosevka))
    (early-init '((setq gc-cons-threshold 800000
 		       package-enable-at-startup nil
+		       ;load-suffixes '(".so" ".el")
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
 		       tool-bar-mode nil
@@ -2007,10 +2008,10 @@ See `consult-grep' for details."
 		 (push '(tool-bar-lines . 0)   default-frame-alist)
 		 (push '(vertical-scroll-bars) default-frame-alist)
 		 (blink-cursor-mode 0)
-		 (setq comp-async-report-warnings-errors nil)
-		 (setq native-comp-async-report-warnings-errors nil)
-		 (setq warning-suppress-log-types '((comp) (comp)))
-		 (setq warning-suppress-types '((comp) (comp)))
+		 ;(setq comp-async-report-warnings-errors nil)
+		 ;(setq native-comp-async-report-warnings-errors nil)
+		 ;(setq warning-suppress-log-types '((comp) (comp)))
+		 ;(setq warning-suppress-types '((comp) (comp)))
 		 (setq user-emacs-directory "~/.config/emacs")
 		 (setq byte-compile-warnings '(cl-functions))
 		 (setq make-backup-files nil)
