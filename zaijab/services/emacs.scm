@@ -1759,7 +1759,7 @@ See `consult-grep' for details."
 		   (global-set-key (kbd "<f5>") (blight-step my/blight -10))
 		   (global-set-key (kbd "<f6>") (blight-step my/blight 10)))))))
 
-(define shell-configuration
+#;(define shell-configuration
   (home-emacs-configuration
    (packages (list emacs-eat))
    (init '((use-package eat
