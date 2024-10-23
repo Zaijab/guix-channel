@@ -1943,12 +1943,13 @@ See `consult-grep' for details."
 (define font-configuration
   (home-emacs-configuration
    (init '((if (display-graphic-p)
-	       (set-face-attribute 'default nil :font "Iosevka-14")
-	       (set-fontset-font nil 'tibetan "Iosevka")
-	       (set-fontset-font nil 'symbol "Iosevka")
-	       (set-fontset-font nil 'han "IPAmjMincho")
-	       (set-fontset-font nil 'kana "IPAmjMincho")
-	       (set-fontset-font nil 'cjk-misc "IPAmjMincho"))))))
+	       (progn
+		(set-face-attribute 'default nil :font "Iosevka-14")
+		(set-fontset-font nil 'tibetan "Iosevka")
+		(set-fontset-font nil 'symbol "Iosevka")
+		(set-fontset-font nil 'han "IPAmjMincho")
+		(set-fontset-font nil 'kana "IPAmjMincho")
+		(set-fontset-font nil 'cjk-misc "IPAmjMincho")))))))
 
 (define ui-configuration
   (home-emacs-configuration
