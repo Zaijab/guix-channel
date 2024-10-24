@@ -56,7 +56,7 @@
    (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
    (service guix-home-service-type `(("zjabbar" ,zains-home)))
    (service tlp-service-type)
-   ;(service opendht-service-type)
+   (service opendht-service-type)
    (service docker-service-type)
    (service containerd-service-type)
    (service oci-container-service-type
@@ -154,6 +154,7 @@
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
 	       (specification->package "network-manager-applet")
+	       (specification->package "pavucontrol")
 	       gnu-make
 	       cups
 	       (specification->package "gsettings-desktop-schemas")
