@@ -1662,7 +1662,7 @@ See `consult-grep' for details."
        			:bind-keymap ("C-c e" . envrc-command-map)
 			:hook (after-init . envrc-global-mode)
 			:config
-			(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
+			#;(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
 	   
 	   (use-package eglot
 			:config
