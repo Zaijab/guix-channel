@@ -767,6 +767,7 @@ See `consult-grep' for details."
 	      curl))
    (init '((setq elfeed-feeds '(("https://almostsuremath.com/feed/" math almost-sure)
 				("https://karthinks.com/index.xml" crafter karthinks)
+				("https://jamesg.blog/hf-papers.xml" machine-learning)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 

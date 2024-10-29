@@ -1,8 +1,8 @@
 image=$(shell guix system image /home/zjabbar/code/guix-channel/zaijab/systems/pinephone.scm --no-grafts --image-type=rock64-raw)
 
-all: git pull_from_lock system
+all: git system_from_lock
 
-all_update_lock: git update_lock system
+all_update_lock: git update_lock system_from_lock
 
 gc:
 	guix gc -d 1m
@@ -30,6 +30,9 @@ system_from_file:
 
 system_vm:
 	sudo guix system vm /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades -v 4 --no-grafts
+
+system_from_lock:
+	sudo guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl -- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)'
 
 print_shepherd_log:
 	sudo cat /var/log/messages
