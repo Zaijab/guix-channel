@@ -24,7 +24,7 @@
 #   '(.*\.)?datacamp\.com$': false
 #   '(.*\.)?towardsdatascience\.com$': false
 
-use_default_settings: false
+use_default_settings: true
 
 server:
   secret_key: "megasecretkey"  # change this!
