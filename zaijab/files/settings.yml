@@ -17,10 +17,9 @@ hostname_replace:
   '(.*\.)?youtube-noocookie\.com$': invidious.privacyredirect.com
   '(.*\.)?reddit\.com$':            false
   '(.*\.)?redd\.it$':               false
-  '(www\.)?twitter\.com$':          false
-  'www\.libhunt\.com':              false
-  '(www\.)?medium\.com$': false
-  '(www\.)?geeksforgeeks\.org$': false
-  '(www\.)?w3schools\.com$': false
-  '(www\.)?datacamp\.com$': false
-  '(www\.)?towardsdatascience\.com$': false
+  '(.*\.)?twitter\.com$':          false
+  '(.*\.)?medium\.com$': false
+  '(.*\.)?geeksforgeeks\.org$': false
+  '(.*\.)?w3schools\.com$': false
+  '(.*\.)?datacamp\.com$': false
+  '(.*\.)??towardsdatascience\.com$': false
