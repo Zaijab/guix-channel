@@ -41,10 +41,10 @@ enabled_plugins:
   - 'Hostnames plugin'
 
 hostnames:
-   replace:
-  '(.*\.)?youtube\.com$':           invidious.privacyredirect.com
-  '(.*\.)?youtu\.be$':              invidious.privacyredirect.com
-  '(.*\.)?youtube-noocookie\.com$': invidious.privacyredirect.com
+  replace:
+    '(.*\.)?youtube\.com$':           invidious.privacyredirect.com
+    '(.*\.)?youtu\.be$':              invidious.privacyredirect.com
+    '(.*\.)?youtube-noocookie\.com$': invidious.privacyredirect.com
    remove:
     - '(.*\.)?reddit\.com$'
     - '(.*\.)?redd\.it$'
