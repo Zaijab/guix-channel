@@ -9,13 +9,8 @@ ui:
   static_use_hash: true
 redis:
   url: redis://redis:6379/0
-# enabled_plugins:
-#   - 'Hostnames plugin'
-#   hostnames:
-#   replace:
-#     '(.*\.)?youtube\.com$': 'invidious.example.com'
-#     '(.*\.)?youtu\.be$': 'invidious.example.com'
-#     ...
+enabled_plugins:
+  - 'Hostnames plugin'
 # hostnames:
 #   replace:
 #     '(.*\.)?youtube\.com$':           invidious.privacyredirect.com
