@@ -16,7 +16,7 @@ hostnames:
     '(.*\.)?youtube\.com$':           'invidious.privacyredirect.com'
     '(.*\.)?youtu\.be$':              'invidious.privacyredirect.com'
     '(.*\.)?youtube-noocookie\.com$': 'invidious.privacyredirect.com'
-   remove:
+  remove:
     - '(.*\.)?reddit\.com$'
     - '(.*\.)?redd\.it$'
     - '(.*\.)?twitter\.com$'
@@ -25,4 +25,3 @@ hostnames:
     - '(.*\.)?w3schools\.com$'
     - '(.*\.)?datacamp\.com$'
     - '(.*\.)?towardsdatascience\.com$'
-
