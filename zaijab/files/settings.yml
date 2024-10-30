@@ -38,17 +38,19 @@ redis:
   url: redis://redis:6379/0
 
 enabled_plugins:
-  - 'Hostname replace'
+  - 'Hostnames plugin'
 
-hostname_replace:
+hostnames:
+   replace:
   '(.*\.)?youtube\.com$':           invidious.privacyredirect.com
   '(.*\.)?youtu\.be$':              invidious.privacyredirect.com
   '(.*\.)?youtube-noocookie\.com$': invidious.privacyredirect.com
-  '(.*\.)?reddit\.com$':            false
-  '(.*\.)?redd\.it$':               false
-  '(.*\.)?twitter\.com$':           false
-  '(.*\.)?medium\.com$':            false
-  '(.*\.)?geeksforgeeks\.org$':     false
-  '(.*\.)?w3schools\.com$':         false
-  '(.*\.)?datacamp\.com$':          false
-  '(.*\.)?towardsdatascience\.com$': false
+   remove:
+    - '(.*\.)?reddit\.com$'
+    - '(.*\.)?redd\.it$'
+    - '(.*\.)?twitter\.com$'
+    - '(.*\.)?medium\.com$'
+    - '(.*\.)?geeksforgeeks\.org$'
+    - '(.*\.)?w3schools\.com$'
+    - '(.*\.)?datacamp\.com$'
+    - '(.*\.)?towardsdatascience\.com$'
