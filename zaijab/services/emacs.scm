@@ -70,6 +70,9 @@
 	    home-emacs-total-configuration
 	    home-emacs-next-total-configuration))
 
+(module-set! (resolve-module '(gnu packages emacs))
+  'emacs-minimal emacs-next-minimal)
+
 (define file-likes? (list-of file-like?))
 
 (define-configuration/no-serialization home-emacs-configuration
@@ -131,7 +134,7 @@
 			(read-buffer-completion-ignore-case t))))))
 
 ;; Completion UI - DONE
-#;(define vertico-configuration
+(define vertico-configuration
   (home-emacs-configuration
    (packages (list emacs-vertico))
    (init '((use-package vertico
