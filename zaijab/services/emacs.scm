@@ -131,7 +131,7 @@
 			(read-buffer-completion-ignore-case t))))))
 
 ;; Completion UI - DONE
-(define vertico-configuration
+#;(define vertico-configuration
   (home-emacs-configuration
    (packages (list emacs-vertico))
    (init '((use-package vertico
