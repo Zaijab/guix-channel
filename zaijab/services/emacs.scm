@@ -70,8 +70,8 @@
 	    home-emacs-total-configuration
 	    home-emacs-next-total-configuration))
 
-(module-set! (resolve-module '(gnu packages emacs))
-  'emacs-minimal emacs-next-minimal)
+;; (module-set! (resolve-module '(gnu packages emacs))
+;;   'emacs-minimal emacs-next-minimal)
 
 (define file-likes? (list-of file-like?))
 
