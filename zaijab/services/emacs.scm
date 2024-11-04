@@ -451,7 +451,7 @@ See `consult-grep' for details."
 		     (lambda ()
 		       (remove-hook 'completion-at-point-functions
 				    'ispell-completion-at-point t)))
-	   (define-key tempel-map (kbd "C-a") (function tempel-prev))
+	   (define-key tempel-map (kbd "C-a") (function tempel-previous))
 	   (define-key tempel-map (kbd "C-d") (function tempel-next))
 	   (global-set-key (kbd "M-+") (function tempel-complete))))))
 
