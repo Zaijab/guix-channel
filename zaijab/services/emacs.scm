@@ -566,7 +566,7 @@ See `consult-grep' for details."
 		   (set-window-dedicated-p (selected-window)
 					   (not (window-dedicated-p (selected-window)))))))))
 
-(define undo-configuration
+#;(define undo-configuration
   (home-emacs-configuration
    (packages (list emacs-undo-tree))
    (init '((require 'undo-tree)
