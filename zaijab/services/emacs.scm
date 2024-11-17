@@ -556,8 +556,7 @@ See `consult-grep' for details."
 
 			)
 	   ))
-   (early-init '(
-		 (setq desktop-restore-frames nil
+   (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
 		 (setq switch-to-buffer-obey-display-actions t)
 		 (defun mp-toggle-window-dedication ()
@@ -568,13 +567,8 @@ See `consult-grep' for details."
 
 (define undo-configuration
   (home-emacs-configuration
-   (packages (list emacs-undo-fu
-		   emacs-vundo))
-   (init '(
-	   
-	   
-	   
-	   ))))
+   (packages (list emacs-vundo))
+   (init '((global-set-key (kbd "C-x u") (function vundo))))))
 
 (define project-configuration
   (home-emacs-configuration
@@ -1962,9 +1956,9 @@ See `consult-grep' for details."
    (packages (list emacs-rainbow-delimiters
 		   emacs-speed-type
 		   font-iosevka))
-   (early-init '((setq gc-cons-threshold 800000
+   (early-init '((setq ;gc-cons-threshold 800000
 		       package-enable-at-startup nil
-		       load-suffixes '(".so" ".elc" ".el")
+		       ;load-suffixes '(".so" ".elc" ".el")
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
 		       tool-bar-mode nil
