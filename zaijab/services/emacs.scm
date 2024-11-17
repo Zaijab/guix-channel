@@ -566,13 +566,15 @@ See `consult-grep' for details."
 		   (set-window-dedicated-p (selected-window)
 					   (not (window-dedicated-p (selected-window)))))))))
 
-#;(define undo-configuration
+(define undo-configuration
   (home-emacs-configuration
-   (packages (list emacs-undo-tree))
-   (init '((require 'undo-tree)
-	   (setq undo-tree-history-directory-alist  '(("." . "~/.config/emacs/undo-tree/")))
-	   (add-to-list 'undo-tree-incompatible-major-modes 'elfeed-search-mode)
-	   (global-undo-tree-mode)))))
+   (packages (list emacs-undo-fu
+		   emacs-vundo))
+   (init '(
+	   
+	   
+	   
+	   ))))
 
 (define project-configuration
   (home-emacs-configuration
