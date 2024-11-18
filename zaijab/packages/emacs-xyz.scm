@@ -1464,7 +1464,7 @@ Kaleem] <https://github.com/mohkale>.")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
-          (base32 "077g7gvn1k6i2x4m2kd3dkrznc89f5a5pd916wsmpy703pv0aca5"))))
+          (base32 "0d8y88n1d9agq5w5d4jss2dlygm6w0rkvvnmc0k6i62hzqmxxf0i"))))
       (build-system emacs-build-system)
       (propagated-inputs
        (list emacs-htmlize))
