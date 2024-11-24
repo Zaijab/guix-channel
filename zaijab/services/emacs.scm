@@ -764,9 +764,9 @@ See `consult-grep' for details."
 	      emacs-elfeed
 	      emacs-elfeed-tube
 	      curl))
-   (init '((setq elfeed-feeds '(("https://almostsuremath.com/feed/" math almost-sure)
-				("https://karthinks.com/index.xml" crafter karthinks)
-				("https://jamesg.blog/hf-papers.xml" machine-learning)
+   (init '((setq elfeed-feeds '(("https://almostsuremath.com/feed/" math almost-sure reading)
+				("https://karthinks.com/index.xml" crafter karthinks reading)
+				("https://jamesg.blog/hf-papers.xml" machine-learning reading)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
 
@@ -808,6 +808,8 @@ See `consult-grep' for details."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkdmU8hGK4Fg3LghTVtKltQ" japanese cure-dolly)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2_krAagEXVPftDXZCDiVZA" japanese kanamenaito)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCiX01KrL5XyKsxhjRhCC7oA" japanese takashi)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCpGJxlhKXfdOKkBhuDH6ujA" japanese ikechan)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkex1wLTvYFnF0hfLXGE1kQ" japanese yuka)
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2Zs9v2hL2qZZ7vsAENsg4w" learning sung)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCjmynbA3C3Tm0koVy_8pfLw" learning sung)
