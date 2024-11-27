@@ -1959,9 +1959,7 @@ See `consult-grep' for details."
    (packages (list emacs-rainbow-delimiters
 		   emacs-speed-type
 		   font-iosevka))
-   (early-init '((setq ;gc-cons-threshold 800000
-		       package-enable-at-startup nil
-		       ;load-suffixes '(".so" ".elc" ".el")
+   (early-init '((setq package-enable-at-startup nil
 		       indicate-empty-lines nil
 		       menu-bar-mode nil
 		       tool-bar-mode nil
@@ -2077,16 +2075,3 @@ See `consult-grep' for details."
 		     (filter variable-bound?
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
 
-(define (use-emacs-next package)
-  (if #f #;(or (and (string-contains (package-name package) "emacs") (not (eq? package emacs-elfeed-tube)))
-	  (eq? package mu))
-      ((options->transformation '((with-input . "emacs=emacs-next")
-				  (with-input . "emacs-minimal=emacs-next")))
-       package)
-      package))
-
-(define home-emacs-next-total-configuration
-  (home-emacs-configuration
-   (inherit home-emacs-total-configuration)
-   (packages (map use-emacs-next
-		  (home-emacs-configuration-packages home-emacs-total-configuration)))))
