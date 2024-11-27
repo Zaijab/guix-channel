@@ -1801,10 +1801,10 @@ See `consult-grep' for details."
 			(defun my/tabspace-kill-current-buffer () (interactive)
 			  (let ((buffer-list (cl-remove-if (lambda (buf) (string-match-p (regexp-quote "*Minibuf-") (buffer-name buf))) (tabspaces--buffer-list))))
 			    (cond
-			     ((and (string-match-p (regexp-quote "scratch") (buffer-name)) (< 1 (length buffer-list))) (tabspaces-switch-to-buffer (cadr buffer-list)))
-			     ((and (not (string-match-p (regexp-quote "scratch") (buffer-name))) (< 1 (length buffer-list))) (kill-current-buffer))
-			     ((and (string-match-p (regexp-quote "scratch") (buffer-name)) (= 1 (length buffer-list))) (set-buffer-modified-p nil) (erase-buffer))
-			     ((and (not (string-match-p (regexp-quote "scratch") (buffer-name))) (= 1 (length buffer-list))) (let ((buf (current-buffer))) (scratch-buffer) (kill-buffer buf))))))
+			     ((and (string-match-p (regexp-quote "*scratch*") (buffer-name)) (< 1 (length buffer-list))) (tabspaces-switch-to-buffer (cadr buffer-list)))
+			     ((and (not (string-match-p (regexp-quote "*scratch*") (buffer-name))) (< 1 (length buffer-list))) (kill-current-buffer))
+			     ((and (string-match-p (regexp-quote "*scratch*") (buffer-name)) (= 1 (length buffer-list))) (set-buffer-modified-p nil) (erase-buffer))
+			     ((and (not (string-match-p (regexp-quote "*scratch*") (buffer-name))) (= 1 (length buffer-list))) (let ((buf (current-buffer))) (scratch-buffer) (kill-buffer buf))))))
 
 			(global-set-key (kbd "s-q") (function my/tabspace-kill-current-buffer))
 
