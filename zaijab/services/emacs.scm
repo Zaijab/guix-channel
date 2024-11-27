@@ -67,11 +67,7 @@
   #:use-module (guix-science packages machine-learning)
   #:export (home-emacs-service-type
 	    home-emacs-configuration
-	    home-emacs-total-configuration
-	    home-emacs-next-total-configuration))
-
-;; (module-set! (resolve-module '(gnu packages emacs))
-;;   'emacs-minimal emacs-next-minimal)
+	    home-emacs-total-configuration))
 
 (define file-likes? (list-of file-like?))
 
