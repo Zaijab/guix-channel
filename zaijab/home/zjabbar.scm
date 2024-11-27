@@ -63,7 +63,7 @@
 				  "fi\n"
 				  "[ -n \"$EAT_SHELL_INTEGRATION_DIR\" ] && \\\n"
 				  "source \"$EAT_SHELL_INTEGRATION_DIR/bash\"")))))
-     (service home-emacs-service-type home-emacs-next-total-configuration)
+     (service home-emacs-service-type home-emacs-total-configuration)
      (service home-dbus-service-type)
      (service home-pipewire-service-type)
      (service home-gpg-agent-service-type
