@@ -42,6 +42,7 @@
   #:use-module (gnu packages python-science)
   #:use-module (gnu packages texlive)
   #:use-module (gnu packages tex)
+  #:use-module (gnu packages librewolf)
   #:use-module (gnu packages imagemagick)
   #:use-module (gnu packages graphviz)
   #:use-module (gnu packages tree-sitter)
@@ -673,6 +674,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list icecat
 		   ublock-origin/icecat
+		   librewolf
 		   emacs-exwm-firefox
 		   jami
 		   jami-docs
