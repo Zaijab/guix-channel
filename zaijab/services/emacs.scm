@@ -679,6 +679,8 @@ See `consult-grep' for details."
 		   jami
 		   jami-docs
 		   hicolor-icon-theme
+		   passff-host
+		   passff
 		   passff/icecat))
    (init '((setq browse-url-new-window-flag t)))))
 
