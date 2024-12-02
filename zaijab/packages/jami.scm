@@ -58,7 +58,7 @@
 ;;; When updating Jami, make sure that the patches used for ffmpeg-jami are up
 ;;; to date with those listed in
 ;;; <https://review.jami.net/plugins/gitiles/jami-daemon/+/refs/heads/master/contrib/src/ffmpeg/rules.mak>.
-(define %jami-nightly-version "20240823.0")
+(define %jami-nightly-version "20241126.0")
 (define %jami-daemon-commit "fd2f2815448ce4072dcbc3995950788573d63f3b")
 (define %jami-hash "0cky0fpwxyk86c9znjjy053rz2zi61y7qmjd90vr9m38440db1rv")
 
