@@ -672,8 +672,8 @@ See `consult-grep' for details."
 
 (define graphical-browser-configuration
   (home-emacs-configuration
-   (packages (list icecat
-		   ublock-origin/icecat
+   (packages (list ;icecat
+		   ;ublock-origin/icecat
 		   librewolf
 		   emacs-exwm-firefox
 		   jami
