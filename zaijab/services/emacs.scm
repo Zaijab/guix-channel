@@ -1825,15 +1825,15 @@ See `consult-grep' for details."
 			(global-set-key (kbd "s-e") (function
 						     (lambda () (interactive)
 							     (start-process-shell-command
-							      "icecat"
+							      "librewolf"
 							      nil
-							      "icecat"))))
+							      "librewolf"))))
 			(global-set-key (kbd "s-E") (function
 						     (lambda () (interactive)
 							     (start-process-shell-command
-							      "icecat --private-window http://localhost:8080"
+							      "librewolf --private-window http://localhost:8080"
 							      nil
-							      "icecat --private-window http://localhost:8080"))))
+							      "librewolf --private-window http://localhost:8080"))))
 			(global-set-key (kbd "s-v") (function
 						     (lambda () (interactive)
 							     (start-process-shell-command "Kanji Dojo" nil "guix shell jbr coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/notes/data/kanji.jar"))))
