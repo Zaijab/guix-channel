@@ -4,6 +4,8 @@
   #:use-module (gnu packages python-web)
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages machine-learning)
+  #:use-module (gnu packages libusb)
+  #:use-module (gnu packages security-token)
   #:use-module (guix-science packages python)
   #:use-module (gnu packages python-build)
   #:use-module (gnu packages xml)
@@ -123,4 +125,53 @@ files.")
     (description "Elegant easy-to-use neural networks in JAX.")
     (license #f)))
 
-python-equinox
+(define-public python-onlykey-solo-python
+  (package
+    (name "python-onlykey-solo-python")
+    (version "0.0.32")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "onlykey-solo-python" version))
+       (sha256
+        (base32 "1r4yl94h1h2151jyb1prsx2n7jw0jqdf3w5c40rjq57q0n3fxh7k"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-click
+                             python-cryptography
+                             python-ecdsa
+                             python-fido2
+                             python-intelhex
+                             python-pyserial
+                             python-pyusb
+                             python-requests))
+    (home-page "https://github.com/trustcrypto/onlykey-solo-python")
+    (synopsis "Python library for OnlyKey with Solo FIDO2")
+    (description "Python library for @code{OnlyKey} with Solo FIDO2.")
+    (license #f)))
+
+(define-public python-onlykey
+  (package
+    (name "python-onlykey")
+    (version "1.2.10")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "onlykey" version))
+       (sha256
+        (base32 "054q6fc2wx94xr3bphnwsw091gyd6r2nf7f3qh454qkxkk4jfr36"))))
+    (build-system pyproject-build-system)
+    (propagated-inputs (list python-aenum
+                             python-cython
+                             python-ecdsa
+                             python-hidapi
+                             python-onlykey-solo-python
+                             python-prompt-toolkit
+                             python-pynacl
+                             python-six))
+    (home-page "https://github.com/trustcrypto/python-onlykey")
+    (synopsis "OnlyKey client and command-line tool")
+    (description "@code{OnlyKey} client and command-line tool.")
+    (license license:expat)))
+
+
+python-onlykey
