@@ -72,14 +72,9 @@
 
 (define file-likes? (list-of file-like?))
 
-(define my-crazy-emacs
-  ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
-			      (without-tests . "emacs-org")))
-   emacs-org))
-
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like my-crazy-emacs)
+   (file-like emacs-next)
    "The Emacs package to use.")
   (packages
    (file-likes '())
@@ -2082,3 +2077,16 @@ See `consult-grep' for details."
 		     (filter variable-bound?
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
 
+
+(define (use-emacs-next package)
+  (if #t
+      ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
+				  (without-tests . "emacs-org")))
+       package)
+      package))
+
+(define home-emacs-total-configuration
+  (home-emacs-configuration
+   (inherit home-emacs-total-configuration)
+   (packages (map use-emacs-next
+		  (home-emacs-configuration-packages home-emacs-total-configuration)))))
