@@ -173,5 +173,38 @@ files.")
     (description "@code{OnlyKey} client and command-line tool.")
     (license license:expat)))
 
+(define-public python-easydict
+  (package
+    (name "python-easydict")
+    (version "1.13")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "easydict" version))
+       (sha256
+        (base32 "103pr3b4j53r2rsci8g1pi1alzscfk4pxxy15c703j21pknms4xi"))))
+    (build-system pyproject-build-system)
+    (home-page "https://github.com/makinacorpus/easydict")
+    (synopsis "Access dict values as attributes (works recursively).")
+    (description "Access dict values as attributes (works recursively).")
+    (license #f)))
 
-python-onlykey
+(define-public python-motmetrics
+  (package
+    (name "python-motmetrics")
+    (version "1.4.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri "https://github.com/cheind/py-motmetrics.git")
+       (sha256
+        (base32 "1lj20v6ih4py3q6s9fi5rpkxawrdprx1iwmrg2cqas2dyng9qnkc"))))
+    (build-system pyproject-build-system)
+    (propogated-inputs python-numpy python-pandas python-scipy python-xmltodict )
+    (home-page "https://github.com/makinacorpus/easydict")
+    (synopsis "Access dict values as attributes (works recursively).")
+    (description "Access dict values as attributes (works recursively).")
+    (license #f)))
+
+
+python-motmetrics

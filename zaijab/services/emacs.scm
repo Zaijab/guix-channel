@@ -72,9 +72,14 @@
 
 (define file-likes? (list-of file-like?))
 
+(define my-crazy-emacs
+  ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
+			      (without-tests . "emacs-org")))
+   emacs-org))
+
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like emacs-next)
+   (file-like my-crazy-emacs)
    "The Emacs package to use.")
   (packages
    (file-likes '())
