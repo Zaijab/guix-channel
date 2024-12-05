@@ -1290,9 +1290,9 @@ See `consult-grep' for details."
 		 (make-directory pub-dir)))
 	     (apply orig-fun extension subtreep pub-dir nil))
 	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
-	   (setq org-latex-listings 'engraved)
+	   ;; (setq org-latex-listings 'engraved)
 	   (setq texmathp-tex-commands '(("lflalign" env-on)))
-	   (setq org-latex-compiler "xelatex")
+	   (setq org-latex-compiler "pdflatex")
 	   (setq org-latex-title-command (concat
 					  "\\pagestyle{fancy}"
 					  "\\begin{titlepage}\n"
@@ -1543,8 +1543,8 @@ See `consult-grep' for details."
 			;; (ad-activate 'org-agenda-add-time-grid-maybe)
 			;; (setq org-confirm-babel-evaluate nil)
 			(setq org-startup-with-latex-preview t)
-			(setq org-preview-latex-default-process 'dvisvgm)
-			(add-hook 'org-mode-hook 'org-fragtog-mode)
+			;; (setq org-preview-latex-default-process 'dvisvgm)
+			;(add-hook 'org-mode-hook 'org-fragtog-mode)
 			(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 			(add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
 			(setq python-indent-guess-indent-offset-verbose nil)
@@ -1559,29 +1559,29 @@ See `consult-grep' for details."
 									 (modify-syntax-entry ?> "w" table)
 									 table)))))
 			(setq org-startup-with-inline-images t)
-			(defun my/text-scale-adjust-latex-previews ()
-			  "Adjust the size of latex preview fragments when changing the buffer's text scale."
-			  (pcase major-mode
-				 ('latex-mode
-				  (dolist (ov (overlays-in (point-min) (point-max)))
-					  (if (eq (overlay-get ov 'category)
-						  'preview-overlay)
-					      (my/text-scale--resize-fragment ov))))
-				 ('org-mode
-				  (dolist (ov (overlays-in (point-min) (point-max)))
-					  (if (eq (overlay-get ov 'org-overlay-type)
-						  'org-latex-overlay)
-					      (my/text-scale--resize-fragment ov))))))
+			;; (defun my/text-scale-adjust-latex-previews ()
+			;;   "Adjust the size of latex preview fragments when changing the buffer's text scale."
+			;;   (pcase major-mode
+			;; 	 ('latex-mode
+			;; 	  (dolist (ov (overlays-in (point-min) (point-max)))
+			;; 		  (if (eq (overlay-get ov 'category)
+			;; 			  'preview-overlay)
+			;; 		      (my/text-scale--resize-fragment ov))))
+			;; 	 ('org-mode
+			;; 	  (dolist (ov (overlays-in (point-min) (point-max)))
+			;; 		  (if (eq (overlay-get ov 'org-overlay-type)
+			;; 			  'org-latex-overlay)
+			;; 		      (my/text-scale--resize-fragment ov))))))
 
-			(defun my/text-scale--resize-fragment (ov)
-			  (overlay-put
-			   ov 'display
-			   (cons 'image
-				 (plist-put
-				  (cdr (overlay-get ov 'display))
-				  :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))
+			;; (defun my/text-scale--resize-fragment (ov)
+			;;   (overlay-put
+			;;    ov 'display
+			;;    (cons 'image
+			;; 	 (plist-put
+			;; 	  (cdr (overlay-get ov 'display))
+			;; 	  :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))
 
-			(add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
+			;; (add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
 
 			(setq org-format-latex-options '(:foreground default
 							 :background default
@@ -1591,20 +1591,53 @@ See `consult-grep' for details."
 							 :html-scale 1.0
 							 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 
-			(setq org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"))
-			(setf
-			 (plist-get
-			  (alist-get 'dvisvgm org-preview-latex-process-alist)
-			  :latex-compiler)
-			 '("xelatex -no-pdf -interaction -nonstopmode -shell-escape -output-directory %o %f")
-			 (plist-get
-			  (alist-get 'dvisvgm org-preview-latex-process-alist)
-			  :image-input-type)
-			 "xdv"
-			 (plist-get
-			  (alist-get 'dvisvgm org-preview-latex-process-alist)
-			  :image-converter)
-			 '("dvisvgm %f --no-fonts --exact-bbox -n -b min -c %S -o %O"))
+ ;; 			(setq org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"))
+ ;; 			(setq org-latex-pdf-process '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"))
+
+ ;; 			(setq org-latex-preview-process-alist '((dvipng :programs ("latex" "dvipng") :description "dvi > png"
+ ;; 	 :message
+ ;; 	 "you need to install the programs: latex and dvipng."
+ ;; 	 :image-input-type "dvi" :image-output-type "png"
+ ;; 	 :latex-compiler
+ ;; 	 ("%l -interaction nonstopmode -output-directory %o %f")
+ ;; 	 :latex-precompiler
+ ;; 	 ("%l -output-directory %o -ini -jobname=%b \"&%L\" mylatexformat.ltx %f")
+ ;; 	 :image-converter
+ ;; 	 ("dvipng --follow -D %D -T tight --depth --height -o %B-%%09d.png %f")
+ ;; 	 :transparent-image-converter
+ ;; 	 ("dvipng --follow -D %D -T tight -bg Transparent --depth --height -o %B-%%09d.png %f"))
+ ;; (dvisvgm :programs ("latex" "dvisvgm") :description "dvi > svg"
+ ;; 	  :message
+ ;; 	  "you need to install the programs: latex and dvisvgm."
+ ;; 	  :image-input-type "dvi" :image-output-type "svg"
+ ;; 	  :latex-compiler
+ ;; 	  ("%l -interaction nonstopmode -output-directory %o %f")
+ ;; 	  :latex-precompiler
+ ;; 	  ("%l -output-directory %o -ini -jobname=%b \"&%L\" mylatexformat.ltx %f")
+ ;; 	  :image-converter determined-at-runtime)
+ ;; (imagemagick :programs ("pdflatex" "convert") :description
+ ;; 	      "pdf > png" :message
+ ;; 	      "you need to install the programs: latex and imagemagick."
+ ;; 	      :image-input-type "pdf" :image-output-type "png"
+ ;; 	      :latex-compiler
+ ;; 	      ("pdflatex -interaction nonstopmode -output-directory %o %f")
+ ;; 	      :latex-precompiler
+ ;; 	      ("pdftex -output-directory %o -ini -jobname=%b \"&pdflatex\" mylatexformat.ltx %f")
+ ;; 	      :image-converter
+ ;; 	      ("convert -density %D -trim -antialias %f -quality 100 %B-%%09d.png"))))
+			;; (setf
+			;;  (plist-get
+			;;   (alist-get 'dvisvgm org-preview-latex-process-alist)
+			;;   :latex-compiler)
+			;;  '("xelatex -no-pdf -interaction -nonstopmode -shell-escape -output-directory %o %f")
+			;;  (plist-get
+			;;   (alist-get 'dvisvgm org-preview-latex-process-alist)
+			;;   :image-input-type)
+			;;  "xdv"
+			;;  (plist-get
+			;;   (alist-get 'dvisvgm org-preview-latex-process-alist)
+			;;   :image-converter)
+			;;  '("dvisvgm %f --no-fonts --exact-bbox -n -b min -c %S -o %O"))
 
 			(setf (alist-get :title org-export-options-alist) '("TITLE" nil "Maybe, में भि میں بھی, 明媚." t))
 			(setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex))))
