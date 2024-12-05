@@ -1298,6 +1298,8 @@ See `consult-grep' for details."
 			(plist-put org-latex-preview-appearance-options
 				   :page-width 0.8)
 
+			(plist-put org-latex-preview-appearance-options
+				   :zoom 1.5)
 			;; Use dvisvgm to generate previews
 			;; You don't need this, it's the default:
 			(setq org-latex-preview-process-default 'dvisvgm)
