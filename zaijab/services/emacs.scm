@@ -1617,13 +1617,13 @@ See `consult-grep' for details."
 
 			;; (add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
 
-			(setq org-format-latex-options '(:foreground default
-							 :background default
-							 :scale 2
-							 :html-foreground "Black"
-							 :html-background "Transparent"
-							 :html-scale 1.0
-							 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+			;; (setq org-format-latex-options '(:foreground default
+			;; 				 :background default
+			;; 				 :scale 2
+			;; 				 :html-foreground "Black"
+			;; 				 :html-background "Transparent"
+			;; 				 :html-scale 1.0
+			;; 				 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 
  ;; 			(setq org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"))
  ;; 			(setq org-latex-pdf-process '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"))
