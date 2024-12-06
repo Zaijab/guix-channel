@@ -1401,7 +1401,7 @@ See `consult-grep' for details."
 (define org-mode-configuration
   (home-emacs-configuration
    (packages (list 
-		   emacs-org-modern
+;		   emacs-org-modern
 		   emacs-cdlatex
 		   font-latin-modern
 		   emacs-tempel
@@ -1482,7 +1482,7 @@ See `consult-grep' for details."
 
 			(setq org-tags-column 0
 			      org-image-actual-width nil)
-			(global-org-modern-mode)
+;			(global-org-modern-mode)
 			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
 			(setq ;org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
 			 jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
@@ -1503,7 +1503,7 @@ See `consult-grep' for details."
 			  "Regexp of LaTeX math environments.")
 
 
-			(custom-set-variables '(org-modern-table nil))
+;			(custom-set-variables '(org-modern-table nil))
 					;(add-hook 'org-mode-hook (function valign-mode))
 			(add-hook 'org-mode-hook (function visual-line-mode))
 			(add-hook 'org-mode-hook (function org-toggle-pretty-entities))
