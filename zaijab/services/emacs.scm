@@ -1004,6 +1004,7 @@ See `consult-grep' for details."
 		 org-msg-greeting-fmt "\nAloha%s,\n\n"
 		 org-msg-recipient-names '(("zaijab2000@gmail.com" . "Zain")
 					   ("pyw@hawaii.edu" . "Dr. Washington")
+					   ("apopov@hawaii.edu" . "Dr. Popov")
 					   ("sue@math.hawaii.edu" . "Sue"))
 		 org-msg-greeting-name-limit 3
 		 org-msg-default-alternatives '((new		. (text html))
