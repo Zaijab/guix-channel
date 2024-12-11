@@ -47,6 +47,9 @@
   #:use-module (gnu services vpn) 
   #:use-module (gnu services mcron) 
   #:use-module (gnu services virtualization)
+  #:use-module (gnu services xorg)
+  #:use-module (nongnu packages nvidia)
+  #:use-module (nongnu services nvidia)
   #:use-module (zaijab home zjabbar))
 
 (define-public main-services
@@ -132,7 +135,9 @@
 (define-public tao-operating-system
   (operating-system
     (kernel linux)
-    (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp" %default-kernel-arguments))
+    (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
+			     "modprobe.blacklist=nouveau"
+			     %default-kernel-arguments))
     (firmware (list linux-firmware))
     (locale "en_US.utf8")
     (timezone "Pacific/Honolulu")
@@ -148,7 +153,6 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       (specification->package "connman")
 	       (specification->package "git")
 	       (specification->package "scrot")
 	       (specification->package "xauth")
@@ -179,7 +183,13 @@
 		  (supplementary-groups '("wheel" "netdev" "audio" "lp" "lpadmin" "video" "docker")))
 		 %base-user-accounts))
     
-    (services main-services)))
+    (services (cons*
+	       (service nvidia-service-type)
+	       (set-xorg-configuration
+		(xorg-configuration
+		 (modules (cons nvda %default-xorg-modules))
+		 (drivers '("nvidia"))))
+	       main-services))))
 
 
 (define-public euler-operating-system
