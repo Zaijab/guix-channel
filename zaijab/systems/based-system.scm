@@ -64,15 +64,6 @@
    (service containerd-service-type)
    (service oci-container-service-type
 	    (list
-	     ;; (oci-container-configuration
-	     ;;  (image "jami-daemon")
-	     ;;  (volumes '("/var/run/client/src:/web-client/client/src"
-	     ;; 		 "/var/run/server/src:/web-client/server/src"
-	     ;; 		 "/var/run/client/.env.development:/web-client/client/.env.development"
-	     ;; 		 "/var/run/server/.env:/web-client/server/.env"))
-	     ;;  (network "host")
-	     ;;  (ports '(("3000" . "3000")
-	     ;; 	       ("5000" . "5000"))))
 	     (oci-container-configuration
 	      (image "docker.io/library/caddy:2-alpine")
 	      (network "host")
@@ -97,24 +88,23 @@
 			 "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"))
 	      (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080")))
 	      (respawn? #t))))
-(service cups-service-type
-         (cups-configuration
-           (web-interface? #t)
-           (extensions
-             (list cups-filters epson-inkjet-printer-escpr hplip-minimal hplip))))
+   (service cups-service-type
+            (cups-configuration
+             (web-interface? #t)
+             (extensions
+              (list cups-filters epson-inkjet-printer-escpr hplip-minimal hplip))))
+
 
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
-     (delete gdm-service-type)
+     (gdm-service-type
+      config => (gdm-configuration (inherit config) (auto-login? #t) (default-user "zjabbar") (gdm (replace-mesa gdm))))
      (network-manager-service-type
 		  config => (network-manager-configuration
 			     (inherit config)
 			     (vpn-plugins
 			      (list
-			       (specification->package "network-manager-openvpn")
-			       ;(specification->package "network-manager-openconnect")
-			       ;(specification->package "openconnect-sso")
-			       ))))
+			       (specification->package "network-manager-openvpn")))))
      (mingetty-service-type
       config => (mingetty-configuration
 		 (inherit config)
