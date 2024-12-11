@@ -99,7 +99,7 @@
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
      (gdm-service-type
-      config => (gdm-configuration (inherit config) (auto-login? #t) (default-user "zjabbar") (gdm (replace-mesa gdm))))
+      config => (gdm-configuration (inherit config) (auto-login? #t) (default-user "zjabbar")))
      (network-manager-service-type
 		  config => (network-manager-configuration
 			     (inherit config)
@@ -123,7 +123,7 @@
 			 (plain-file "bordeaux.pub" "(public-key (ecc (curve Ed25519) (q #89FBA276A976A8DE2A69774771A92C8C879E0F24614AAAAE23119608707B3F06#)))")
 			 %default-authorized-guix-keys)))))))
 
-(define-public tao-operating-system
+(define-public based-operating-system
   (operating-system
     (kernel linux)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
@@ -174,14 +174,21 @@
 		  (supplementary-groups '("wheel" "netdev" "audio" "lp" "lpadmin" "video" "docker")))
 		 %base-user-accounts))
     
+    (services main-services)))
+
+(define-public tao-operating-system
+  (operating-system
+    (interhit based-operating-system)
+    (host-name "tao")
+    
     (services (cons*
 	       (service nvidia-service-type)
 	       (set-xorg-configuration
 		(xorg-configuration
 		 (modules (cons nvda %default-xorg-modules))
 		 (drivers '("nvidia"))))
-	       main-services))))
-
+	       main-services))
+    ))
 
 (define-public euler-operating-system
   (operating-system
