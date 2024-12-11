@@ -38,6 +38,7 @@
   #:use-module (gnu services syncthing)
   #:use-module (gnu services ssh)
   #:use-module (gnu packages networking)
+  #:use-module (gnu packages gnome)
   #:use-module (gnu services base)
   #:use-module (gnu services desktop)
   #:use-module (gnu services xorg)
