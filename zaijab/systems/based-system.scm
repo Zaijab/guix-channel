@@ -179,6 +179,10 @@
 (define-public tao-operating-system
   (operating-system
     (interhit based-operating-system)
+    (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
+			     "modprobe.blacklist=nouveau"
+			     %default-kernel-arguments))
+    
     (host-name "tao")
     
     (services (cons*
@@ -192,7 +196,9 @@
 
 (define-public euler-operating-system
   (operating-system
-    (inherit tao-operating-system)
+    (inherit based-operating-system)
+    (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
+			     %default-kernel-arguments))
     (host-name "euler")))
 
 (define-public my-operating-system
