@@ -178,7 +178,7 @@
 
 (define-public tao-operating-system
   (operating-system
-    (interhit based-operating-system)
+    (inherit based-operating-system)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
 			     "modprobe.blacklist=nouveau"
 			     %default-kernel-arguments))
