@@ -999,7 +999,7 @@ See `consult-grep' for details."
 	   (setq mail-user-agent 'mu4e-user-agent)
 	   (add-hook 'after-init-hook (function mu4e-alert-enable-mode-line-display))
 	   (require 'org-msg)
-	   (setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil title:nil email:nil tex:imagemagick"
+	   (setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil title:nil email:nil tex:dvipng"
 		 org-msg-startup "hidestars indent inlineimages"
 		 org-msg-greeting-fmt "\nAloha%s,\n\n"
 		 org-msg-recipient-names '(("zaijab2000@gmail.com" . "Zain")
