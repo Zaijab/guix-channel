@@ -920,7 +920,8 @@ See `consult-grep' for details."
 	      emacs-alsamixer-el
 	      emacs-bluetooth
 	      emacs-emms
-	      python-tinytag))
+	      ;python-tinytag
+	      ))
    (init '((use-package emms
 			:config
 			(require 'emms-setup)
@@ -1683,24 +1684,24 @@ See `consult-grep' for details."
    (packages (list
 	      python
 	      ;conda
-	      jupyter
-	      guix-jupyter
+	      ;; jupyter
+	      ;; guix-jupyter
 
-	      expect
-	      sshpass
+	      ;; expect
+	      ;; sshpass
 
-	      emacs-ob-async
-	      emacs-jupyter
-	      emacs-pydoc
+	      ;; emacs-ob-async
+	      ;; emacs-jupyter
+	      ;; emacs-pydoc
 
-	      python-lsp-server
-	      tree-sitter
-	      tree-sitter-python
+	      ;; python-lsp-server
+	      ;; tree-sitter
+	      ;; tree-sitter-python
 
-	      emacs-csv-mode
-	      emacs-py-isort
-	      emacs-python-black
-	      python-pip
+	      ;; emacs-csv-mode
+	      ;; emacs-py-isort
+	      ;; emacs-python-black
+	      ;; python-pip
 	      pandoc))
    (init '((use-package jupyter
 			:demand t
