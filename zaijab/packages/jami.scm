@@ -60,7 +60,7 @@
 ;;; <https://review.jami.net/plugins/gitiles/jami-daemon/+/refs/heads/master/contrib/src/ffmpeg/rules.mak>.
 (define %jami-nightly-version "20241126.0")
 (define %jami-daemon-commit "fd2f2815448ce4072dcbc3995950788573d63f3b")
-(define %jami-hash "0cky0fpwxyk86c9znjjy053rz2zi61y7qmjd90vr9m38440db1rv")
+(define %jami-hash "1m5nsgspmqx7zcwmfs3d98a0apmk3ldm1ff0mwgw8q7jhvn4qfm1")
 
 (define webrtc-audio-processing/jami
   ;; libjami still requires an 0.x version of this package.  Remove it when
