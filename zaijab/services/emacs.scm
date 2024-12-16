@@ -731,7 +731,7 @@ See `consult-grep' for details."
 		   emacs-pinentry
 		   pinentry-emacs
 		   password-store
-		   pass-import
+		   ;pass-import
 		   pass-otp
 		   emacs-pass
 		   emacs-password-store
@@ -1684,24 +1684,24 @@ See `consult-grep' for details."
    (packages (list
 	      python
 	      ;conda
-	      ;; jupyter
-	      ;; guix-jupyter
+	      jupyter
+	      guix-jupyter
 
-	      ;; expect
-	      ;; sshpass
+	      expect
+	      sshpass
 
-	      ;; emacs-ob-async
-	      ;; emacs-jupyter
-	      ;; emacs-pydoc
+	      emacs-ob-async
+	      emacs-jupyter
+	      emacs-pydoc
 
-	      ;; python-lsp-server
-	      ;; tree-sitter
-	      ;; tree-sitter-python
+	      python-lsp-server
+	      tree-sitter
+	      tree-sitter-python
 
-	      ;; emacs-csv-mode
-	      ;; emacs-py-isort
-	      ;; emacs-python-black
-	      ;; python-pip
+	      emacs-csv-mode
+	      emacs-py-isort
+	      emacs-python-black
+	      python-pip
 	      pandoc))
    (init '((use-package jupyter
 			:demand t
