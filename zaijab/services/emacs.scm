@@ -1693,8 +1693,9 @@ See `consult-grep' for details."
 	      emacs-ob-async
 	      emacs-jupyter
 	      emacs-pydoc
-
-	      python-lsp-server
+	      ((options->transformation '((without-tests . "python-nptyping")))
+	       python-lsp-server)
+	      
 	      tree-sitter
 	      tree-sitter-python
 
