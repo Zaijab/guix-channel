@@ -1679,13 +1679,13 @@ See `consult-grep' for details."
 			(setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex))))
 	   ))))
 
-#;(define python-configuration
+(define python-configuration
   (home-emacs-configuration
    (packages (list
 	      python
 	      ;conda
-	      ; jupyter
-	      ;guix-jupyter
+	      jupyter
+	      guix-jupyter
 
 	      expect
 	      sshpass
@@ -1693,8 +1693,8 @@ See `consult-grep' for details."
 	      emacs-ob-async
 	      emacs-jupyter
 	      emacs-pydoc
-	      ;; ((options->transformation '((without-tests . "python-nptyping")))
-	      ;;  python-lsp-server)
+	      
+	      python-lsp-server
 	      
 	      tree-sitter
 	      tree-sitter-python
