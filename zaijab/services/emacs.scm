@@ -1679,7 +1679,7 @@ See `consult-grep' for details."
 			(setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex))))
 	   ))))
 
-(define python-configuration
+#;(define python-configuration
   (home-emacs-configuration
    (packages (list
 	      python
