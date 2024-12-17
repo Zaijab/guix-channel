@@ -1486,8 +1486,8 @@ See `consult-grep' for details."
 			      org-image-actual-width nil)
 ;			(global-org-modern-mode)
 			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
-			(setq ;org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
-			 jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
+
+
 			(setq org-todo-keywords
 			      '((sequence "TODO(t)" "|" "DONE(d)" "WAITING(w)" "CANCELED(c)")))
 			(defconst org-latex-math-environments-re
@@ -1714,8 +1714,9 @@ See `consult-grep' for details."
 			  (condition-case nil
 					  (apply func args)
 					  (jupyter-api-http-error nil)))
-			(advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
-			
+(advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
+(setq ;org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
+			 jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
 			(setq org-babel-python-command "python3"
 			      org-confirm-babel-evaluate nil
 			      python-interpreter "python3"
