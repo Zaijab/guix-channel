@@ -124,3 +124,4 @@ files.")
     (synopsis "Elegant easy-to-use neural networks in JAX.")
     (description "Elegant easy-to-use neural networks in JAX.")
     (license #f)))
+

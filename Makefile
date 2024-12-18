@@ -25,6 +25,9 @@ update_lock:
 system:
 	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts
 
+system_from_main:
+	sudo guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/channel.scm -- system build -e '(@ (zaijab systems based-system) my-operating-system)'
+
 system_from_file:
 	sudo guix system reconfigure /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades -v 4 --no-grafts
 
@@ -33,6 +36,8 @@ system_vm:
 
 system_from_lock:
 	sudo guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl -- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)'
+
+
 
 print_shepherd_log:
 	sudo cat /var/log/messages
