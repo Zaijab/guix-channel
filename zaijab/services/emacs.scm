@@ -1684,7 +1684,7 @@ See `consult-grep' for details."
    (packages (list
 	      python
 	      ;conda
-	      jupyter
+	      ;jupyter
 	      ;guix-jupyter
 
 	      expect
