@@ -70,6 +70,33 @@
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
 
+					; Test inferior
+
+
+     ;; (use-modules (guix inferior) (guix channels)
+     ;;              (srfi srfi-1))   ;for 'first'
+
+     ;; (define channels
+     ;;   ;; This is the old revision from which we want to
+     ;;   ;; extract guile-json.
+     ;;   (list (channel
+     ;;          (name 'guix)
+     ;;          (url "https://git.savannah.gnu.org/git/guix.git")
+     ;;          (commit
+     ;;           "65956ad3526ba09e1f7a40722c96c6ef7c0936fe"))))
+
+     ;; (define inferior
+     ;;   ;; An inferior representing the above revision.
+     ;;   (inferior-for-channels channels))
+
+     ;; ;; Now create a manifest with the current "guile" package
+     ;; ;; and the old "guile-json" package.
+     ;; (packages->manifest
+     ;;  (list (first (lookup-inferior-packages inferior "guile-json"))
+     ;;        (specification->package "guile")))
+
+
+
 (define file-likes? (list-of file-like?))
 
 (define-configuration/no-serialization home-emacs-configuration
