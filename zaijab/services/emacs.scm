@@ -62,7 +62,7 @@
   #:use-module (zaijab packages emacs-xyz)
   #:use-module (zaijab packages python-xyz)
   #:use-module (nongnu packages emacs)
-  #:use-module (ruther packages ripgrep-all)
+;  #:use-module (ruther packages ripgrep-all)
   #:use-module (nongnu packages fonts)
   #:use-module (guix-science packages python)
   #:use-module (guix-science packages machine-learning)
@@ -193,7 +193,7 @@
    (packages (list emacs-consult
 		   grep
 		   ripgrep
-		   ripgrep-all
+		   ;; ripgrep-all
 		   poppler
 		   poppler-data))
    (init '(;; Example configuration for Consult

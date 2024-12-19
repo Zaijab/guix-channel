@@ -3,7 +3,7 @@
 (channel
  (version 0)
  (dependencies
-  (channel
+  #;(channel
    (name ruther)
    (url "https://git.ditigal.xyz/~ruther/guix-exprs")
    (branch "main")) ; ripgrep-all
