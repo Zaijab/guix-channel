@@ -1674,9 +1674,8 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list
 	      python
-	      ;; conda
-	      ;; jupyter
-	      ;; guix-jupyter
+	      jupyter
+	      guix-jupyter
 
 	      expect
 	      sshpass
