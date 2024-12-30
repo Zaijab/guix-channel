@@ -1698,15 +1698,12 @@ See `consult-grep' for details."
 			:demand t
 			:after org
 			:config
-			#;(setq major-mode-remap-alist
-			'((python-mode . python-ts-mode)))
 			(defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
 			  (condition-case nil
 					  (apply func args)
 					  (jupyter-api-http-error nil)))
-(advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
-(setq ;org-babel-jupyter-resource-directory "/home/zjabbar/.cache/jupyter/"
-			 jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
+			(advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
+			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
 			(setq org-babel-python-command "python3"
 			      org-confirm-babel-evaluate nil
 			      python-interpreter "python3"
@@ -1724,9 +1721,7 @@ See `consult-grep' for details."
 	   (use-package envrc
 			:demand t
        			:bind-keymap ("C-c e" . envrc-command-map)
-			:hook (after-init . envrc-global-mode)
-			:config
-			#;(advice-add 'jupyter-command :around (function envrc-propagate-environment)))
+			:hook (after-init . envrc-global-mode))
 	   
 	   (use-package eglot
 			:config
@@ -1836,7 +1831,6 @@ See `consult-grep' for details."
 (define exwm-configuration
   (home-emacs-configuration
    (packages (list
-					;jami
 	      emacs-exwm
 	      emacs-windsize
 	      emacs-vterm

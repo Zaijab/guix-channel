@@ -34,6 +34,10 @@ system_from_file:
 system_vm:
 	sudo guix system vm /home/zjabbar/code/guix-channel/zaijab/systems/based-system.scm --allow-downgrades -v 4 --no-grafts
 
+system_test:
+	guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/channel.scm -- system build -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades
+
+
 system_from_lock:
 	sudo guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl -- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades
 
