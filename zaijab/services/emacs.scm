@@ -2140,7 +2140,7 @@ See `consult-grep' for details."
       ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
 				  (with-commit . "emacs-org=119426b1dde3f5bf9a1b180fe4344fc31ae82f9e")
 				  (without-tests . "emacs-org")))
-       (replace-mesa package))
+       package)
       package))
 
 (define home-emacs-total-configuration
