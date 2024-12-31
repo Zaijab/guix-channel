@@ -2115,6 +2115,11 @@ See `consult-grep' for details."
 		   (cdr args)))
 	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
 	   (setq enable-recursive-minibuffers t)
+	   (add-to-list 'save-some-buffers-action-alist
+             (list "d"
+                   (lambda (buffer) (diff-buffer-with-file (buffer-file-name buffer)))
+                   "show diff between the buffer and its file"))
+
 	   (setq read-extended-command-predicate (function command-completion-default-include-p))))))
 
 ;;; Combine all Emacs-Configurations within module
