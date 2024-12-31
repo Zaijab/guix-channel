@@ -128,6 +128,8 @@
     (kernel linux)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
 			     "modprobe.blacklist=nouveau"
+			     "nvidia_drm.fbdev=1"
+			     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
 			     %default-kernel-arguments))
     (firmware (list linux-firmware))
     (locale "en_US.utf8")
