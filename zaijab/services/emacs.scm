@@ -2119,6 +2119,7 @@ See `consult-grep' for details."
              (list "d"
                    (lambda (buffer) (diff-buffer-with-file (buffer-file-name buffer)))
                    "show diff between the buffer and its file"))
+	   (setq compile-command "make")
 
 	   (setq read-extended-command-predicate (function command-completion-default-include-p))))))
 
