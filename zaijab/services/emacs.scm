@@ -2138,7 +2138,8 @@ See `consult-grep' for details."
   (if #t
       ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
 				  (with-commit . "emacs-org=119426b1dde3f5bf9a1b180fe4344fc31ae82f9e")
-				  (without-tests . "emacs-org")))
+				  (without-tests . "emacs-org")
+				  (with-graft . "mesa=nvda")))
        package)
       package))
 
