@@ -64,6 +64,7 @@
   #:use-module (nongnu packages emacs)
   #:use-module (ruther packages ripgrep-all)
   #:use-module (nongnu packages fonts)
+  #:use-module (nongnu packages nvidia)
   #:use-module (guix-science packages python)
   #:use-module (guix-science packages machine-learning)
   #:export (home-emacs-service-type
