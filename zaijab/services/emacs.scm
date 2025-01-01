@@ -1589,9 +1589,9 @@ See `consult-grep' for details."
 (define python-configuration
   (home-emacs-configuration
    (packages (list
-	      ;; python
-	      ;; jupyter
-	      ;; guix-jupyter
+	      python
+	      jupyter
+	      guix-jupyter
 	      
 	      expect
 	      sshpass
@@ -1611,8 +1611,6 @@ See `consult-grep' for details."
 	      python-pip
 	      pandoc))
    (init '((use-package jupyter
-			:demand t
-			:after org
 			:config
 			(defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
 			  (condition-case nil
