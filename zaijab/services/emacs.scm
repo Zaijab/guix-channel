@@ -1748,7 +1748,7 @@ See `consult-grep' for details."
    (packages (list
 	      emacs-exwm
 	      emacs-windsize
-	      emacs-vterm
+	      emacs-eat
 	      xrandr
 	      arandr))
    (init '((use-package exwm
@@ -1810,7 +1810,7 @@ See `consult-grep' for details."
 			(global-set-key (kbd "s-v") (function
 						     (lambda () (interactive)
 							     (start-process-shell-command "Kanji Dojo" nil "guix shell jbr coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/notes/data/kanji.jar"))))
-			(global-set-key (kbd "s-r") (function eshell))
+			(global-set-key (kbd "s-r") (function eat))
 			(global-set-key (kbd "s-t") (function eval-region))
 			(global-set-key (kbd "s-K") 'windsize-up)
 			(global-set-key (kbd "s-J") 'windsize-down)
@@ -1825,7 +1825,6 @@ See `consult-grep' for details."
 			(global-set-key (kbd "s-n") 'org-roam-node-find)
 			(global-set-key (kbd "s-i") 'org-roam-node-insert)
 			(global-set-key (kbd "s-N") 'org-roam-dailies-capture-today)
-			(global-set-key (kbd "C-x C-t") 'vterm)
 			(global-set-key (kbd "C-x C-n") 'org-roam-node-find)
 			(global-set-key (kbd "s-a") 'cfw:open-org-calendar)
 			(global-set-key (kbd "s-s") (function jisho->fc))
@@ -2034,6 +2033,9 @@ See `consult-grep' for details."
                    (lambda (buffer) (diff-buffer-with-file (buffer-file-name buffer)))
                    "show diff between the buffer and its file"))
 	   (setq compile-command "make")
+	   (defun quick-restart ()
+	     (interactive)
+	     (shell-command "sudo reboot --kexec"))
 	   (setq read-extended-command-predicate (function command-completion-default-include-p))))))
 
 ;;; Combine all Emacs-Configurations within module
