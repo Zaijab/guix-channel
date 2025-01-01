@@ -506,10 +506,8 @@ See `consult-grep' for details."
 (define buffer-configuration
   (home-emacs-configuration
    (packages (list emacs-tabspaces))
-   (init '(
-	   (use-package tabspaces
+   (init '((use-package tabspaces
 			:demand t
-					;:after (consult)
 			:hook (after-init . tabspaces-mode)
 			:commands (tabspaces-switch-or-create-workspace
 				   tabspaces-open-or-create-project-and-workspace)
@@ -520,7 +518,7 @@ See `consult-grep' for details."
 			(tabspaces-include-buffers '("*scratch*"))
 			(tab-bar-new-tab-choice "*scratch*")
 			:config
-			(dolist (name '("Development" "State Estimation" "Fair Active Learning" "Japanese" "System") ())
+			(dolist (name '("State Estimation" "Development" "Japanese" "System") ())
 				(sleep-for 0.01)
 				(tab-switch name))
 			(tab-bar-close-tab-by-name "*scratch*")
@@ -541,10 +539,7 @@ See `consult-grep' for details."
 									    :as (function buffer-name))))
 
 						"Set workspace buffer list for consult-buffer.")
-					      (add-to-list 'consult-buffer-sources 'consult--source-workspace))
-
-			)
-	   ))
+					      (add-to-list 'consult-buffer-sources 'consult--source-workspace)))))
    (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
 		 (setq switch-to-buffer-obey-display-actions t)
@@ -1587,86 +1582,6 @@ See `consult-grep' for details."
 									 (modify-syntax-entry ?> "w" table)
 									 table)))))
 			(setq org-startup-with-inline-images t)
-			;; (defun my/text-scale-adjust-latex-previews ()
-			;;   "Adjust the size of latex preview fragments when changing the buffer's text scale."
-			;;   (pcase major-mode
-			;; 	 ('latex-mode
-			;; 	  (dolist (ov (overlays-in (point-min) (point-max)))
-			;; 		  (if (eq (overlay-get ov 'category)
-			;; 			  'preview-overlay)
-			;; 		      (my/text-scale--resize-fragment ov))))
-			;; 	 ('org-mode
-			;; 	  (dolist (ov (overlays-in (point-min) (point-max)))
-			;; 		  (if (eq (overlay-get ov 'org-overlay-type)
-			;; 			  'org-latex-overlay)
-			;; 		      (my/text-scale--resize-fragment ov))))))
-
-			;; (defun my/text-scale--resize-fragment (ov)
-			;;   (overlay-put
-			;;    ov 'display
-			;;    (cons 'image
-			;; 	 (plist-put
-			;; 	  (cdr (overlay-get ov 'display))
-			;; 	  :scale (+ 1.0 (* 0.25 text-scale-mode-amount))))))
-
-			;; (add-hook 'text-scale-mode-hook (function my/text-scale-adjust-latex-previews))
-
-			;; (setq org-format-latex-options '(:foreground default
-			;; 				 :background default
-			;; 				 :scale 2
-			;; 				 :html-foreground "Black"
-			;; 				 :html-background "Transparent"
-			;; 				 :html-scale 1.0
-			;; 				 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
-
- ;; 			(setq org-latex-pdf-process '("xelatex -interaction nonstopmode -output-directory %o %f"))
- ;; 			(setq org-latex-pdf-process '("latexmk -f -pdf -%latex -interaction=nonstopmode -output-directory=%o %f"))
-
- ;; 			(setq org-latex-preview-process-alist '((dvipng :programs ("latex" "dvipng") :description "dvi > png"
- ;; 	 :message
- ;; 	 "you need to install the programs: latex and dvipng."
- ;; 	 :image-input-type "dvi" :image-output-type "png"
- ;; 	 :latex-compiler
- ;; 	 ("%l -interaction nonstopmode -output-directory %o %f")
- ;; 	 :latex-precompiler
- ;; 	 ("%l -output-directory %o -ini -jobname=%b \"&%L\" mylatexformat.ltx %f")
- ;; 	 :image-converter
- ;; 	 ("dvipng --follow -D %D -T tight --depth --height -o %B-%%09d.png %f")
- ;; 	 :transparent-image-converter
- ;; 	 ("dvipng --follow -D %D -T tight -bg Transparent --depth --height -o %B-%%09d.png %f"))
- ;; (dvisvgm :programs ("latex" "dvisvgm") :description "dvi > svg"
- ;; 	  :message
- ;; 	  "you need to install the programs: latex and dvisvgm."
- ;; 	  :image-input-type "dvi" :image-output-type "svg"
- ;; 	  :latex-compiler
- ;; 	  ("%l -interaction nonstopmode -output-directory %o %f")
- ;; 	  :latex-precompiler
- ;; 	  ("%l -output-directory %o -ini -jobname=%b \"&%L\" mylatexformat.ltx %f")
- ;; 	  :image-converter determined-at-runtime)
- ;; (imagemagick :programs ("pdflatex" "convert") :description
- ;; 	      "pdf > png" :message
- ;; 	      "you need to install the programs: latex and imagemagick."
- ;; 	      :image-input-type "pdf" :image-output-type "png"
- ;; 	      :latex-compiler
- ;; 	      ("pdflatex -interaction nonstopmode -output-directory %o %f")
- ;; 	      :latex-precompiler
- ;; 	      ("pdftex -output-directory %o -ini -jobname=%b \"&pdflatex\" mylatexformat.ltx %f")
- ;; 	      :image-converter
- ;; 	      ("convert -density %D -trim -antialias %f -quality 100 %B-%%09d.png"))))
-			;; (setf
-			;;  (plist-get
-			;;   (alist-get 'dvisvgm org-preview-latex-process-alist)
-			;;   :latex-compiler)
-			;;  '("xelatex -no-pdf -interaction -nonstopmode -shell-escape -output-directory %o %f")
-			;;  (plist-get
-			;;   (alist-get 'dvisvgm org-preview-latex-process-alist)
-			;;   :image-input-type)
-			;;  "xdv"
-			;;  (plist-get
-			;;   (alist-get 'dvisvgm org-preview-latex-process-alist)
-			;;   :image-converter)
-			;;  '("dvisvgm %f --no-fonts --exact-bbox -n -b min -c %S -o %O"))
-
 			(setf (alist-get :title org-export-options-alist) '("TITLE" nil "Maybe, में भि میں بھی, 明媚." t))
 			(setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex))))
 	   ))))
@@ -1674,10 +1589,10 @@ See `consult-grep' for details."
 (define python-configuration
   (home-emacs-configuration
    (packages (list
-	      python
-	      jupyter
-	      guix-jupyter
-
+	      ;; python
+	      ;; jupyter
+	      ;; guix-jupyter
+	      
 	      expect
 	      sshpass
 
@@ -1710,6 +1625,7 @@ See `consult-grep' for details."
 			      python-interpreter "python3"
 			      python-shell-interpreter "python3"
 			      treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
+			
 			(org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 										 (python . t)
 										 (sql . t)
@@ -2120,7 +2036,6 @@ See `consult-grep' for details."
                    (lambda (buffer) (diff-buffer-with-file (buffer-file-name buffer)))
                    "show diff between the buffer and its file"))
 	   (setq compile-command "make")
-
 	   (setq read-extended-command-predicate (function command-completion-default-include-p))))))
 
 ;;; Combine all Emacs-Configurations within module
