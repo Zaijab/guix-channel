@@ -1610,7 +1610,7 @@ See `consult-grep' for details."
 	      emacs-python-black
 	      python-pip
 	      pandoc))
-   (init '((use-package jupyter
+   (init '(#;(use-package jupyter
 			:demand t
 			:after org
 			:config
@@ -1626,7 +1626,7 @@ See `consult-grep' for details."
 			      python-shell-interpreter "python3"
 			      treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
 			
-			(org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
+			#;(org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 										 (python . t)
 										 (sql . t)
 										 (eshell . t)
