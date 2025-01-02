@@ -381,6 +381,18 @@ See `consult-grep' for details."
    (init '())))
 
 
+#;(define lsp-configuration
+  (home-emacs-configuration
+   (packages (list emacs-gptel))
+   (init '())))
+
+
+(define dape-configuration
+  (home-emacs-configuration
+   (packages (list emacs-dape
+		   python-debugpy))
+   (init '())))
+
 ;; In Buffer Completion
 (define corfu-configuration
   (home-emacs-configuration
