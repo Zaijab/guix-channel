@@ -20,6 +20,7 @@
   #:use-module (gnu packages linux)
   #:use-module (gnu packages shellutils)
   #:use-module (gnu packages browser-extensions)
+  #:use-module (gnu packages gdb)
   #:use-module (gnu packages gnuzilla)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages emacs-xyz)
@@ -390,6 +391,7 @@ See `consult-grep' for details."
 (define dape-configuration
   (home-emacs-configuration
    (packages (list emacs-dape
+		   gdb
 		   python-debugpy))
    (init '((use-package dape
 			:preface
