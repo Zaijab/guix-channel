@@ -382,16 +382,49 @@ See `consult-grep' for details."
 
 
 #;(define lsp-configuration
-  (home-emacs-configuration
-   (packages (list emacs-gptel))
-   (init '())))
+(home-emacs-configuration
+(packages (list emacs-gptel))
+(init '())))
 
 
 (define dape-configuration
   (home-emacs-configuration
    (packages (list emacs-dape
 		   python-debugpy))
-   (init '())))
+   (init '((use-package dape
+			:preface
+			;; By default dape shares the same keybinding prefix as `gud'
+			;; If you do not want to use any prefix, set it to nil.
+			;; (setq dape-key-prefix "\C-x\C-a")
+
+			:hook
+			;; Save breakpoints on quit
+			(kill-emacs . dape-breakpoint-save)
+			;; Load breakpoints on startup
+			(after-init . dape-breakpoint-load)
+
+			:config
+			;; Turn on global bindings for setting breakpoints with mouse
+			(dape-breakpoint-global-mode)
+
+			;; Info buffers to the right
+			(setq dape-buffer-window-arrangement 'right)
+
+			;; Info buffers like gud (gdb-mi)
+			(setq dape-buffer-window-arrangement 'gud)
+			(setq dape-info-hide-mode-line nil)
+
+			;; Pulse source line (performance hit)
+			(add-hook 'dape-display-source-hook 'pulse-momentary-highlight-one-line)
+
+			;; Showing inlay hints
+			(setq dape-inlay-hints t)
+
+			;; Save buffers on startup, useful for interpreted languages
+			(add-hook 'dape-start-hook (lambda () (save-some-buffers t t)))
+
+			;; Kill compile buffer on build success
+			(add-hook 'dape-compile-hook 'kill-buffer))))))
 
 ;; In Buffer Completion
 (define corfu-configuration
@@ -672,15 +705,15 @@ See `consult-grep' for details."
 (define graphical-browser-configuration
   (home-emacs-configuration
    (packages (list ;icecat
-		   ;ublock-origin/icecat
-		   librewolf
-		   emacs-exwm-firefox
-		   jami
-		   jami-docs
-		   hicolor-icon-theme
-		   passff-host
-		   
-		   passff/icecat))
+					;ublock-origin/icecat
+	      librewolf
+	      emacs-exwm-firefox
+	      jami
+	      jami-docs
+	      hicolor-icon-theme
+	      passff-host
+	      
+	      passff/icecat))
    (init '((setq browse-url-new-window-flag t)))))
 
 (define pdf-tools-configuration
@@ -730,7 +763,7 @@ See `consult-grep' for details."
 		   emacs-pinentry
 		   pinentry-emacs
 		   password-store
-		   ;pass-import
+					;pass-import
 		   pass-otp
 		   emacs-pass
 		   emacs-password-store
@@ -919,7 +952,7 @@ See `consult-grep' for details."
 	      emacs-alsamixer-el
 	      emacs-bluetooth
 	      emacs-emms
-	      ;python-tinytag
+					;python-tinytag
 	      ))
    (init '((use-package emms
 			:config
@@ -975,9 +1008,9 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list
 	      #;((options->transformation
-		'((with-branch . "emacs-org-msg=master")
-		  #;(with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")))
-	       emacs-org-msg)
+	      '((with-branch . "emacs-org-msg=master")
+	      #;(with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")))
+	      emacs-org-msg)
 	      emacs-org-msg-master
 	      isync
 	      mu
@@ -1402,20 +1435,20 @@ See `consult-grep' for details."
 (define org-mode-configuration
   (home-emacs-configuration
    (packages (list 
-;		   emacs-org-modern
-		   emacs-cdlatex
-		   font-latin-modern
-		   emacs-tempel
-		   emacs-valign
-		   emacs-org-present
-		   emacs-org-tree-slide
-		   emacs-consult-org-roam
-		   emacs-calfw
-		   emacs-calfw-blocks
-		   texlive
-		   texlive-xypic
-		   texlive-bin
-		   imagemagick))
+					;		   emacs-org-modern
+	      emacs-cdlatex
+	      font-latin-modern
+	      emacs-tempel
+	      emacs-valign
+	      emacs-org-present
+	      emacs-org-tree-slide
+	      emacs-consult-org-roam
+	      emacs-calfw
+	      emacs-calfw-blocks
+	      texlive
+	      texlive-xypic
+	      texlive-bin
+	      imagemagick))
    (init '(
 	   (use-package org
 			:config
@@ -1483,7 +1516,7 @@ See `consult-grep' for details."
 
 			(setq org-tags-column 0
 			      org-image-actual-width nil)
-;			(global-org-modern-mode)
+					;			(global-org-modern-mode)
 			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
 
 
@@ -1504,7 +1537,7 @@ See `consult-grep' for details."
 			  "Regexp of LaTeX math environments.")
 
 
-;			(custom-set-variables '(org-modern-table nil))
+					;			(custom-set-variables '(org-modern-table nil))
 					;(add-hook 'org-mode-hook (function valign-mode))
 			(add-hook 'org-mode-hook (function visual-line-mode))
 			(add-hook 'org-mode-hook (function org-toggle-pretty-entities))
@@ -1579,7 +1612,7 @@ See `consult-grep' for details."
 			;; (setq org-confirm-babel-evaluate nil)
 			(setq org-startup-with-latex-preview t)
 			;; (setq org-preview-latex-default-process 'dvisvgm)
-			;(add-hook 'org-mode-hook 'org-fragtog-mode)
+					;(add-hook 'org-mode-hook 'org-fragtog-mode)
 			(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 			(add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
 			(setq python-indent-guess-indent-offset-verbose nil)
@@ -1750,10 +1783,10 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list emacs-eat))
    (init '(#;(use-package eat
-			:demand t
-			:hook
-			(eshell-load . (function eat-eshell-mode))
-			(eshell-load . (function eat-eshell-visual-command-mode)))))))
+	   :demand t
+	   :hook
+	   (eshell-load . (function eat-eshell-mode))
+	   (eshell-load . (function eat-eshell-visual-command-mode)))))))
 
 (define exwm-configuration
   (home-emacs-configuration
@@ -2041,9 +2074,9 @@ See `consult-grep' for details."
 	   (advice-add (function completing-read-multiple) :filter-args (function crm-indicator))
 	   (setq enable-recursive-minibuffers t)
 	   (add-to-list 'save-some-buffers-action-alist
-             (list "d"
-                   (lambda (buffer) (diff-buffer-with-file (buffer-file-name buffer)))
-                   "show diff between the buffer and its file"))
+			(list "d"
+			      (lambda (buffer) (diff-buffer-with-file (buffer-file-name buffer)))
+			      "show diff between the buffer and its file"))
 	   (setq compile-command "make")
 	   (defun quick-restart ()
 	     (interactive)
