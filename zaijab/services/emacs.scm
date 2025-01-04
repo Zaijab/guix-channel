@@ -1665,10 +1665,10 @@ See `consult-grep' for details."
 					  (jupyter-api-http-error nil)))
 			(advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
-			(setq org-babel-python-command "python3"
+			(setq org-babel-python-command ""
 			      org-confirm-babel-evaluate nil
-			      python-interpreter "python3"
-			      python-shell-interpreter "python3"
+			      python-interpreter ""
+			      python-shell-interpreter ""
 			      treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
 			
 			(org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
