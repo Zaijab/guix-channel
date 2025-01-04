@@ -431,22 +431,21 @@ See `consult-grep' for details."
 				       port (lambda () (read-number "Port: " 5678))
 				       :request "attach"
 				       :type "python"
-				       :pathMappings (vector (:localRoot "/home/zjabbar/code/data_science_utils/data_science_utils/dynamical_systems"
+				       :pathMappings ((:localRoot "/home/zjabbar/code/data_science_utils/data_science_utils/dynamical_systems"
 						       :remoteRoot "/home/zjabbar/code/data_science_utils/data_science_utils/dynamical_systems"))
 				       :justMyCode nil
 				       :showReturnValue t))
 
 			
 			(add-to-list 'dape-configs
-				     '(debugpy-attach-port-zain
-				       modes (python-mode python-ts-mode)
-				       port (lambda () (read-number "Port: " 5678))
-				       :request "attach"
-				       :type "python"
-				       :pathMappings (vector (:localRoot "/home/zjabbar/code/"
-						       :remoteRoot "/home/zjabbar/code/"))
-				       :justMyCode nil
-				       :showReturnValue t))
+				            (list 'debugpy-attach-port-zain
+						  'modes '(python-mode python-ts-mode)
+						  'port '(lambda () (read-number "Port: " 5678))
+						  ':request "attach"
+						  ':type "python"
+						  ':pathMappings (vector '(:localRoot "/home/zjabbar/code/" :remoteRoot "/home/zjabbar/code/"))
+						  ':justMyCode 'nil
+						  ':showReturnValue 't))
 
 
 			;; Kill compile buffer on build success
@@ -1689,10 +1688,10 @@ See `consult-grep' for details."
 					  (jupyter-api-http-error nil)))
 			(advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
-			(setq org-babel-python-command ""
+			(setq org-babel-python-command "python3"
 			      org-confirm-babel-evaluate nil
-			      python-interpreter ""
-			      python-shell-interpreter ""
+			      python-interpreter "python3"
+			      python-shell-interpreter "python3"
 			      treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
 			
 			(org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
