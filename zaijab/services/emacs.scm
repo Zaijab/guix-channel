@@ -425,6 +425,30 @@ See `consult-grep' for details."
 			;; Save buffers on startup, useful for interpreted languages
 			(add-hook 'dape-start-hook (lambda () (save-some-buffers t t)))
 
+			(add-to-list 'dape-configs
+				     '(debugpy-attach-port-gavin
+				       modes (python-mode python-ts-mode)
+				       port (lambda () (read-number "Port: " 5678))
+				       :request "attach"
+				       :type "python"
+				       :pathMappings [(:localRoot "/home/zjabbar/code/data_science_utils/data_science_utils/dynamical_systems"
+						       :remoteRoot "/home/zjabbar/code/data_science_utils/data_science_utils/dynamical_systems")]
+				       :justMyCode nil
+				       :showReturnValue t))
+
+			
+			(add-to-list 'dape-configs
+				     '(debugpy-attach-port-zain
+				       modes (python-mode python-ts-mode)
+				       port (lambda () (read-number "Port: " 5678))
+				       :request "attach"
+				       :type "python"
+				       :pathMappings [(:localRoot "/home/zjabbar/code/"
+						       :remoteRoot "/home/zjabbar/code/")]
+				       :justMyCode nil
+				       :showReturnValue t))
+
+
 			;; Kill compile buffer on build success
 			(add-hook 'dape-compile-hook 'kill-buffer))))))
 
