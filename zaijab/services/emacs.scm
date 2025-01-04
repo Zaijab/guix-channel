@@ -431,8 +431,8 @@ See `consult-grep' for details."
 				       port (lambda () (read-number "Port: " 5678))
 				       :request "attach"
 				       :type "python"
-				       :pathMappings [(:localRoot "/home/zjabbar/code/data_science_utils/data_science_utils/dynamical_systems"
-						       :remoteRoot "/home/zjabbar/code/data_science_utils/data_science_utils/dynamical_systems")]
+				       :pathMappings (vector (:localRoot "/home/zjabbar/code/data_science_utils/data_science_utils/dynamical_systems"
+						       :remoteRoot "/home/zjabbar/code/data_science_utils/data_science_utils/dynamical_systems"))
 				       :justMyCode nil
 				       :showReturnValue t))
 
@@ -443,8 +443,8 @@ See `consult-grep' for details."
 				       port (lambda () (read-number "Port: " 5678))
 				       :request "attach"
 				       :type "python"
-				       :pathMappings [(:localRoot "/home/zjabbar/code/"
-						       :remoteRoot "/home/zjabbar/code/")]
+				       :pathMappings (vector (:localRoot "/home/zjabbar/code/"
+						       :remoteRoot "/home/zjabbar/code/"))
 				       :justMyCode nil
 				       :showReturnValue t))
 
