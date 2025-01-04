@@ -1714,7 +1714,6 @@ See `consult-grep' for details."
 					      (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
 					      nil t)))
 			
-	   		(add-hook 'python-mode-hook (function run-python))
 			(add-hook 'python-mode-hook (function python-black-on-save-mode))
 			(add-hook 'python-mode-hook (function eglot-ensure)))))))
 
