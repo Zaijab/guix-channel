@@ -1651,6 +1651,7 @@ See `consult-grep' for details."
 	      python
 	      jupyter
 	      guix-jupyter
+	      conda
 	      
 	      expect
 	      sshpass
