@@ -1700,6 +1700,16 @@ See `consult-grep' for details."
 	   
 	   (use-package eglot
 			:config
+			(with-eval-after-load 'eglot
+					      (add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
+					      (setq eglot-workspace-configuration
+						    '((:pylsp
+						       (:configurationSources ["flake8"]
+							:plugins
+							(:pycodestyle (:enabled :json-false)
+							 :pyflakes (:enabled :json-false)
+							 :flake8 (:enabled t))))))
+					      (setq eglot-send-changes-idle-time 0.1))
 			(defun sloth/org-babel-edit-prep (info)
 			  (setq buffer-file-name (or (alist-get :file (caddr info))
 						     "org-src-babel-tmp"))
