@@ -127,24 +127,3 @@ files.")
     (synopsis "Elegant easy-to-use neural networks in JAX.")
     (description "Elegant easy-to-use neural networks in JAX.")
     (license #f)))
-
-(define-public python-ruff
-  (package
-    (name "python-ruff")
-    (version "0.8.4")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (pypi-uri "ruff" version))
-       (sha256
-        (base32 "1s5cay7941shdkbglw56swszkdw0bym8qy8m2sprjrw3akr8jpqd"))))
-    (build-system pyproject-build-system)
-    (native-inputs (list maturin rust-cargo rust rust-salsa-0.17))
-    (home-page "https://docs.astral.sh/ruff")
-    (synopsis
-     "An extremely fast Python linter and code formatter, written in Rust.")
-    (description
-     "An extremely fast Python linter and code formatter, written in Rust.")
-    (license license:expat)))
-
-python-ruff
