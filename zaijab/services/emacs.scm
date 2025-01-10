@@ -1464,6 +1464,10 @@ See `consult-grep' for details."
 	      texlive-bin
 	      imagemagick))
    (init '(
+	   (use-package consult-org-roam
+			:after (org-roam org consult)
+			:config (consult-org-roam-mode))
+	   
 	   (use-package org
 			:config
 
