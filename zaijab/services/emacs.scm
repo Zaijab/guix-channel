@@ -1707,7 +1707,7 @@ See `consult-grep' for details."
 		     
 			(add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
 			(setq-default eglot-workspace-configuration
-				      '((:pylsp .
+				      '((cons :pylsp
 					 (:configurationSources ["flake8"]
 					  :plugins
 					  (:pycodestyle (:enabled :json-false)
