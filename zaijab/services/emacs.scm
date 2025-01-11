@@ -1707,10 +1707,10 @@ See `consult-grep' for details."
 		     
 			(add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
 			(setq-default eglot-workspace-configuration
-				      '((cons :pylsp
-					 (:configurationSources ["flake8"]
+				      (list (cons :pylsp
+					 (list :configurationSources (vector "flake8")
 					  :plugins
-					  (:pycodestyle (:enabled :json-false)
+					  '(:pycodestyle (:enabled :json-false)
 					   :pyflakes (:enabled :json-false)
 					   :flake8 (:enabled t))))))
 			(setq eglot-send-changes-idle-time 0.1)
