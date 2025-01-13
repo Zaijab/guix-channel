@@ -577,7 +577,16 @@ See `consult-grep' for details."
 			(tabspaces-include-buffers '("*scratch*"))
 			(tab-bar-new-tab-choice "*scratch*")
 			:config
-			(dolist (name '("State Estimation" "Fair Active Learning" "Development" "Puzzles" "Japanese" "System" "Communications") ())
+			(dolist (name '(
+					"State Estimation" ; State Estimation Learning
+					"Foundations" ; Pure Math / Flashcards
+					"Fair Active Learning" ; Finalizing Peter's Work
+					"Development" ; Actual Work
+					"Puzzles" ; LeetCode
+					"Japanese" ; Japanese Learning / Coursework
+					"System" ; Emacs / Guix Sysadmin
+					"Communications" ; Google Voice / Email / Discord
+					) ())
 				(sleep-for 0.01)
 				(tab-switch name))
 			(tab-bar-close-tab-by-name "*scratch*")
