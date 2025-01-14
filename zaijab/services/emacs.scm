@@ -381,9 +381,9 @@ See `consult-grep' for details."
    (packages (list emacs-gptel))
    (init '())))
 
-(define communication-configuration
+#;(define communication-configuration
   (home-emacs-configuration
-   (packages (list emacs-ement))
+   (packages (list emacs-ement pantalaimon))
    (init '())))
 
 
