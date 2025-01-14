@@ -381,6 +381,11 @@ See `consult-grep' for details."
    (packages (list emacs-gptel))
    (init '())))
 
+(define communication-configuration
+  (home-emacs-configuration
+   (packages (list emacs-ement))
+   (init '())))
+
 
 #;(define lsp-configuration
 (home-emacs-configuration
