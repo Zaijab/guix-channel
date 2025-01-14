@@ -77,7 +77,7 @@
                              python-secretstorage
                              python-defusedxml
                              python-secretstorage
-                             python-cryptography-rust
+                             python-cryptography
                              password-store))
     (home-page "https://github.com/roddhjav/pass-import")
     (synopsis
