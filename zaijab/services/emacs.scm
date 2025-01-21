@@ -633,7 +633,7 @@ See `consult-grep' for details."
 		   direnv
 		   emacs-envrc))
    (init '((require 'ansi-color)
-	   (setq project-vc-ignores '(".direnv/*" "*.pyc"))
+	   (setq project-vc-ignores '(".direnv/*" "*.pyc" ".ob-jupyter/*"))
 	   (defun colorize-compilation-buffer ()
 	     (interactive)
 	     (let ((inhibit-read-only t))
