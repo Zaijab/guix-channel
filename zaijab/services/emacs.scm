@@ -589,8 +589,8 @@ See `consult-grep' for details."
 					"Development" ; Actual Work
 					"Puzzles" ; LeetCode
 					"Japanese" ; Japanese Learning / Coursework
-					"System" ; Emacs / Guix Sysadmin
 					"Communications" ; Google Voice / Email / Discord
+					"System" ; Emacs / Guix Sysadmin
 					) ())
 				(sleep-for 0.01)
 				(tab-switch name))
