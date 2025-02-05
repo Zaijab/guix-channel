@@ -1208,6 +1208,7 @@ See `consult-grep' for details."
 	      emacs-org-roam-ui
 	      emacs-org-roam-bibtex
 	      emacs-org-fc
+	      anki
 	      emacs-org-drill
 	      emacs-kanji))
    (init '((use-package sqlite)
