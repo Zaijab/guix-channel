@@ -2139,7 +2139,7 @@ See `consult-grep' for details."
 
 
 (define (use-emacs-next package)
-  (if #f
+  (if #t
       ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
 				  (with-commit . "emacs-org=ce4a745b0aa746686376c5927b3165fe4cb4b4d7")
 				  (without-tests . "emacs-org")))
