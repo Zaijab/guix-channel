@@ -381,17 +381,10 @@ See `consult-grep' for details."
    (packages (list emacs-gptel))
    (init '())))
 
-#;(define communication-configuration
+(define lsp-configuration
   (home-emacs-configuration
-   (packages (list emacs-ement pantalaimon))
+   (packages (list emacs-treemacs))
    (init '())))
-
-
-#;(define lsp-configuration
-(home-emacs-configuration
-(packages (list emacs-gptel))
-(init '())))
-
 
 (define dape-configuration
   (home-emacs-configuration
@@ -569,7 +562,7 @@ See `consult-grep' for details."
 
 (define buffer-configuration
   (home-emacs-configuration
-   (packages (list emacs-tabspaces))
+   (packages (list emacs-tabspaces emacs-ace-window))
    (init '((use-package tabspaces
 			:demand t
 			:hook (after-init . tabspaces-mode)
