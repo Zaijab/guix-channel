@@ -1200,9 +1200,7 @@ See `consult-grep' for details."
 	      emacs-org-roam
 	      emacs-org-roam-ui
 	      emacs-org-roam-bibtex
-	      ((options->transformation '((with-commit . "emacs-org-fc=main")))
-	       emacs-org-fc)
-	      ;; emacs-org-fc
+	      emacs-org-fc
 	      anki
 	      emacs-org-drill
 	      emacs-kanji))
