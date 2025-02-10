@@ -1200,7 +1200,9 @@ See `consult-grep' for details."
 	      emacs-org-roam
 	      emacs-org-roam-ui
 	      emacs-org-roam-bibtex
-	      emacs-org-fc
+	      ((options->transformation '((with-commit . "emacs-org-fc=master")))
+	       emacs-org-fc)
+	      ;; emacs-org-fc
 	      anki
 	      emacs-org-drill
 	      emacs-kanji))
@@ -1258,7 +1260,7 @@ See `consult-grep' for details."
 			(org-fc-flashcard-tag "FC")
 			(org-fc-suspended-tag "Suspended")
 			:config
-			(org-fc-cache-mode)
+			;; (org-fc-cache-mode)
 			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card)))
 
 	   ))))
