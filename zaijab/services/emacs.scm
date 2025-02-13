@@ -376,6 +376,14 @@ See `consult-grep' for details."
 			:bind (("M-$" . jinx-correct)
 			       ("C-M-$" . jinx-languages)))))))
 
+(define openwith-configuration
+  (home-emacs-configuration
+   (packages (list emacs-openwith))
+   (init '((require 'openwith)
+	   (openwith-mode t)
+	   (setq openwith-associations '(("\\.mp4\\'" "mpv" (file))))))))
+
+
 (define llm-configuration
   (home-emacs-configuration
    (packages (list emacs-gptel))
