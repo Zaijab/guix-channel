@@ -381,7 +381,15 @@ See `consult-grep' for details."
    (packages (list emacs-openwith))
    (init '((require 'openwith)
 	   (openwith-mode t)
-	   (setq openwith-associations '(("\\.mp4\\'" "mpv" (file))))))))
+	   (setq openwith-associations
+		 (list
+		  (list (openwith-make-extension-regexp
+			 '("mpg" "mpeg" "mp3" "mp4"
+			   "avi" "wmv" "wav" "mov" "flv"
+			   "ogm" "ogg" "mkv" "webm"))
+			"mpv"
+			'(file))
+		  ))))))
 
 
 (define llm-configuration
