@@ -1925,6 +1925,7 @@ END is the start of the line with :END: on it."
 			(global-set-key (kbd "s-5") 'exwm-workspace-switch)
 			(global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
 
+			(setq browse-url-firefox-program "librewolf")
 			(global-set-key (kbd "s-e") (function
 						     (lambda () (interactive)
 							     (start-process-shell-command
