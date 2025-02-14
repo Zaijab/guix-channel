@@ -1529,6 +1529,9 @@ END is the start of the line with :END: on it."
 			:config
 
 			(require 'org-tree-slide)
+			(setq org-tree-slide-activate-message ""
+			      org-tree-slide-deactivate-message "")
+			
 			(setq org-tree-slide-cursor-init nil)
 			(require 'ox)
 			(require 'calfw)
@@ -1884,7 +1887,7 @@ END is the start of the line with :END: on it."
    (init '((use-package exwm
 			:if (display-graphic-p)
 			:init
-			(setq exwm-randr-workspace-monitor-plist '(0 "eDP-1" 1 "HDMI-1"))
+			(setq exwm-randr-workspace-monitor-plist '(0 "eDP-1" 1 "HDMI-A-0"))
 			(exwm-randr-mode)
 			(require 'xelb)
 			(require 'windsize)
