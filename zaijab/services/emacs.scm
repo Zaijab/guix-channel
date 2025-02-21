@@ -440,14 +440,14 @@ See `consult-grep' for details."
 			(add-hook 'dape-start-hook (lambda () (save-some-buffers t t)))
 			
 			(add-to-list 'dape-configs
-				            (list 'debugpy-attach-port-zain
-						  'modes '(python-mode python-ts-mode)
-						  'port '(lambda () (read-number "Port: " 5678))
-						  ':request "attach"
-						  ':type "python"
-						  ':pathMappings (vector '(:localRoot "/home/zjabbar/code/" :remoteRoot "/home/zjabbar/code/"))
-						  ':justMyCode 'nil
-						  ':showReturnValue 't))
+				     (list 'debugpy-attach-port-zain
+					   'modes '(python-mode python-ts-mode)
+					   'port '(lambda () (read-number "Port: " 5678))
+					   ':request "attach"
+					   ':type "python"
+					   ':pathMappings (vector '(:localRoot "/home/zjabbar/code/" :remoteRoot "/home/zjabbar/code/"))
+					   ':justMyCode 'nil
+					   ':showReturnValue 't))
 
 
 			;; Kill compile buffer on build success
@@ -1276,36 +1276,36 @@ See `consult-grep' for details."
 			:config
 			;; (org-fc-cache-mode)
 			;; Based on `org-log-beginning'
-(defun org-fc-review-data-position (&optional create)
-  "Return (BEGINNING . END) points of the review data drawer.
+			(defun org-fc-review-data-position (&optional create)
+			  "Return (BEGINNING . END) points of the review data drawer.
 When optional argument CREATE is non-nil, the function creates a
 drawer, if necessary.  Returned position ignores narrowing.
 
 BEGINNING is the start of the first line inside the drawer,
 END is the start of the line with :END: on it."
-  (org-with-wide-buffer
-   (org-end-of-meta-data)
-   (let ((regexp (concat "^[ \t]*:" (regexp-quote org-fc-review-data-drawer) ":[ \t]*$"))
-         (end (if (org-at-heading-p) (point)
-                (save-excursion (outline-next-heading) (point))))
-         (case-fold-search t))
-     (catch 'exit
-       ;; Try to find existing drawer.
-       (while (re-search-forward regexp end t)
-         (let ((element (org-element-at-point)))
-           (when (eq (org-element-type element) 'drawer)
-             (throw 'exit
-                    (cons (org-element-property :contents-begin element)
-                          (org-element-property :contents-end element))))))
-       ;; No drawer found.  Create one, if permitted.
-       (when create
-         (unless (bolp) (insert "\n"))
-         (let ((beg (point)))
-           (insert ":" org-fc-review-data-drawer ":\n:END:\n")
-           (org-indent-region beg (point)))
-         (cons
-          (line-beginning-position 0)
-          (line-beginning-position 0)))))))
+			  (org-with-wide-buffer
+			   (org-end-of-meta-data)
+			   (let ((regexp (concat "^[ \t]*:" (regexp-quote org-fc-review-data-drawer) ":[ \t]*$"))
+				 (end (if (org-at-heading-p) (point)
+					  (save-excursion (outline-next-heading) (point))))
+				 (case-fold-search t))
+			     (catch 'exit
+			       ;; Try to find existing drawer.
+			       (while (re-search-forward regexp end t)
+				 (let ((element (org-element-at-point)))
+				   (when (eq (org-element-type element) 'drawer)
+				     (throw 'exit
+					    (cons (org-element-property :contents-begin element)
+						  (org-element-property :contents-end element))))))
+			       ;; No drawer found.  Create one, if permitted.
+			       (when create
+				 (unless (bolp) (insert "\n"))
+				 (let ((beg (point)))
+				   (insert ":" org-fc-review-data-drawer ":\n:END:\n")
+				   (org-indent-region beg (point)))
+				 (cons
+				  (line-beginning-position 0)
+				  (line-beginning-position 0)))))))
 
 			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card)))
 
@@ -1764,15 +1764,15 @@ END is the start of the line with :END: on it."
 	   
 	   (use-package eglot
 			:config
-		     
+			
 			(add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
 			(setq-default eglot-workspace-configuration
 				      (list (cons :pylsp
-					 (list :configurationSources (vector "flake8")
-					  :plugins
-					  '(:pycodestyle (:enabled :json-false)
-					   :pyflakes (:enabled :json-false)
-					   :flake8 (:enabled t))))))
+						  (list :configurationSources (vector "flake8")
+							:plugins
+							'(:pycodestyle (:enabled :json-false)
+							  :pyflakes (:enabled :json-false)
+							  :flake8 (:enabled t))))))
 			(setq eglot-send-changes-idle-time 0.1)
 			(defun sloth/org-babel-edit-prep (info)
 			  (setq buffer-file-name (or (alist-get :file (caddr info))
@@ -2167,6 +2167,30 @@ END is the start of the line with :END: on it."
 			      (lambda (buffer) (diff-buffer-with-file (buffer-file-name buffer)))
 			      "show diff between the buffer and its file"))
 	   (setq compile-command "make")
+	   (custom-set-variables
+	    ;; custom-set-variables was added by Custom.
+	    ;; If you edit it by hand, you could mess it up, so be careful.
+	    ;; Your init file should contain only one such instance.
+	    ;; If there is more than one, they won't work right.
+	    '(safe-local-variable-values
+	      '((default-directory . my-project-path)
+		(eval set (make-local-variable 'my-project-path)
+		      (file-name-directory
+		       (let ((d (dir-locals-find-file ".")))
+			 (if (stringp d) d (car d)))))
+		(default-directory pwd) (geiser-guile-binary "guix" "repl")
+		(geiser-insert-actual-lambda) (eval modify-syntax-entry 43 "'")
+		(eval modify-syntax-entry 36 "'")
+		(eval modify-syntax-entry 126 "'")))
+	    '(warning-suppress-types '((org-element org-element-parser) (comp) (comp))))
+	   (custom-set-faces
+	    ;; custom-set-faces was added by Custom.
+	    ;; If you edit it by hand, you could mess it up, so be careful.
+	    ;; Your init file should contain only one such instance.
+	    ;; If there is more than one, they won't work right.
+	    )
+
+	   
 	   (defun quick-restart ()
 	     (interactive)
 	     (shell-command "sudo reboot --kexec"))
