@@ -2167,28 +2167,7 @@ END is the start of the line with :END: on it."
 			      (lambda (buffer) (diff-buffer-with-file (buffer-file-name buffer)))
 			      "show diff between the buffer and its file"))
 	   (setq compile-command "make")
-	   (custom-set-variables
-	    ;; custom-set-variables was added by Custom.
-	    ;; If you edit it by hand, you could mess it up, so be careful.
-	    ;; Your init file should contain only one such instance.
-	    ;; If there is more than one, they won't work right.
-	    '(safe-local-variable-values
-	      '((default-directory . my-project-path)
-		(eval set (make-local-variable 'my-project-path)
-		      (file-name-directory
-		       (let ((d (dir-locals-find-file ".")))
-			 (if (stringp d) d (car d)))))
-		(default-directory pwd) (geiser-guile-binary "guix" "repl")
-		(geiser-insert-actual-lambda) (eval modify-syntax-entry 43 "'")
-		(eval modify-syntax-entry 36 "'")
-		(eval modify-syntax-entry 126 "'")))
-	    '(warning-suppress-types '((org-element org-element-parser) (comp) (comp))))
-	   (custom-set-faces
-	    ;; custom-set-faces was added by Custom.
-	    ;; If you edit it by hand, you could mess it up, so be careful.
-	    ;; Your init file should contain only one such instance.
-	    ;; If there is more than one, they won't work right.
-	    )
+
 
 	   
 	   (defun quick-restart ()
