@@ -105,7 +105,8 @@
 			     (inherit config)
 			     (vpn-plugins
 			      (list
-			       (specification->package "network-manager-openvpn")))))
+			       (specification->package "network-manager-openvpn")
+			       (specification->package "network-manager-fortisslvpn")))))
      (mingetty-service-type
       config => (mingetty-configuration
 		 (inherit config)
