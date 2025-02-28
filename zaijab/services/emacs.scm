@@ -400,7 +400,7 @@ See `consult-grep' for details."
 (define lsp-configuration
   (home-emacs-configuration
    (packages (list emacs-treemacs))
-   (init '())))
+   (init '((setq eldoc-echo-area-use-multiline-p nil)))))
 
 (define dape-configuration
   (home-emacs-configuration
