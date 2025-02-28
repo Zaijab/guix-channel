@@ -61,6 +61,10 @@
    (service guix-home-service-type `(("zjabbar" ,zains-home)))
    (service tlp-service-type)
    (service opendht-service-type)
+   (service strongswan-service-type
+            (strongswan-configuration
+             (ipsec-conf "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.conf")
+             (ipsec-secrets "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.secrets")))
    (service docker-service-type)
    (service containerd-service-type)
    (service oci-container-service-type
@@ -89,10 +93,7 @@
 			 "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"))
 	      (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080")))
 	      (respawn? #t))))
-   (service strongswan-service-type
-            (strongswan-configuration
-             (ipsec-conf "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.conf")
-             (ipsec-secrets "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.secrets")))
+
    (service cups-service-type
             (cups-configuration
              (web-interface? #t)
