@@ -89,6 +89,10 @@
 			 "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"))
 	      (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080")))
 	      (respawn? #t))))
+   (service strongswan-service-type
+            (strongswan-configuration
+             (ipsec-conf "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.conf")
+             (ipsec-secrets "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.secrets")))
    (service cups-service-type
             (cups-configuration
              (web-interface? #t)
