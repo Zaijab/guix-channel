@@ -5,6 +5,7 @@
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu services)
   #:use-module (gnu packages)
+  #:use-module (gnu packages vpn)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu home services shells)
   #:use-module (gnu home services gnupg)
@@ -20,14 +21,16 @@
 
 (define-public zains-home
   (home-environment
-   (packages (list (specification->package "xmodmap")
-		   (specification->package "unzip")
-                   (specification->package "xset")
-                   (specification->package "xinit")
-                   (specification->package "xorg-server")
-                   (specification->package "xf86-input-libinput")
-                   (specification->package "xf86-video-fbdev")
-                   (specification->package "xf86-video-nouveau")))
+   (packages (list
+	      strongswan
+	      (specification->package "xmodmap")
+	      (specification->package "unzip")
+              (specification->package "xset")
+              (specification->package "xinit")
+              (specification->package "xorg-server")
+              (specification->package "xf86-input-libinput")
+              (specification->package "xf86-video-fbdev")
+              (specification->package "xf86-video-nouveau")))
    (services
     (list
      (service home-bash-service-type
@@ -45,6 +48,7 @@
                   ("PATH" . "$PATH:/home/zjabbar/.local/bin")
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
                   ("TF_CPP_MIN_LOG_LEVEL" . "1")
+		  ("SWANCTL_DIR" . "/home/zjabbar/.config/swanctl/")
                   ("DISABLE_RTKIT" . "1")
                   ("LD_LIBRARY_PATH" . "/run/current-system/profile/lib/")
                   ("GUILE_LOAD_PATH" . "$GUILE_LOAD_PATH:/home/zjabbar/.config/guix/current/share/guile/site/3.0/")))
