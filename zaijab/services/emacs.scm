@@ -595,8 +595,9 @@ See `consult-grep' for details."
 					"State Estimation" ; State Estimation Learning
 					"Foundations" ; Pure Math / Flashcards
 					"Fair Active Learning" ; Finalizing Peter's Work
-					"Development" ; Actual Work
-					"Puzzles" ; LeetCode
+					"Optimal Transport"
+					"Normalizing Flows"
+					"Multi-Object Tracking"
 					"Japanese" ; Japanese Learning / Coursework
 					"Communications" ; Google Voice / Email / Discord
 					"System" ; Emacs / Guix Sysadmin
@@ -1595,6 +1596,17 @@ END is the start of the line with :END: on it."
 			(setq org-tags-column 0
 			      org-image-actual-width nil)
 					;			(global-org-modern-mode)
+			(defun my-print-duplicate-headings ()
+			  "Print duplicate headings from the current org buffer."
+			  (interactive)
+			  (let ((header-list '())) ; start with empty list
+			    (org-element-map (org-element-parse-buffer) 'headline
+					     (lambda (x)
+					       (let ((header (org-element-property :raw-value x)))
+						 (when (-contains? header-list header)
+						   (princ header))
+						 (push header header-list))))))
+
 			(add-to-list 'org-babel-after-execute-hook (function org-latex-preview))
 
 
