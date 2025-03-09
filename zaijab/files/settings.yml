@@ -5,6 +5,8 @@ server:
   secret_key: "megasecretkey"  # change this!
   limiter: true  # can be disabled for a private instance
   image_proxy: true
+search:
+  method: GET
 ui:
   static_use_hash: true
 redis:
