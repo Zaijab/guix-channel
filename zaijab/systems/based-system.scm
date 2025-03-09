@@ -13,6 +13,9 @@
   #:use-module (gnu home)
   #:use-module (gnu services guix)
   #:use-module (gnu packages cups)
+  #:use-module (gnu packages admin)
+  #:use-module (gnu packages disk)
+  #:use-module (gnu packages version-control)
   #:use-module (gnu services cups)
   #:use-module (gnu services pm)  
   #:use-module (gnu packages)
@@ -150,14 +153,16 @@
 		 (keyboard-layout keyboard-layout)))
     
     (packages (cons*
-	       (specification->package "git")
+	       tree
+	       parted
+	       git
+	       gnu-make
+	       cups
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
 	       (specification->package "network-manager-applet")
 	       (specification->package "pavucontrol")
-	       gnu-make
-	       cups
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
     
