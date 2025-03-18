@@ -653,9 +653,3 @@ Usage To automatically apply when saving a python file, use the following code:
 Mail User Agent Mode (Message, mu4e, or Notmuch) to compose and reply to
 emails in a Outlook HTML friendly style.")
       (license license:gpl3+))))
-
-;emacs-elfeed-tube
-;emacs-embark-consult
-;emacs-nano-emacs
-;emacs-mu4e-thread-folding
-emacs-cape-jinx-completion

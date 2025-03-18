@@ -1047,10 +1047,6 @@ See `consult-grep' for details."
 (define email-configuration
   (home-emacs-configuration
    (packages (list
-	      #;((options->transformation
-	      '((with-branch . "emacs-org-msg=master")
-	      #;(with-git-url . "emacs-org-msg=https://github.com/danielfleischer/org-msg.git")))
-	      emacs-org-msg)
 	      emacs-org-msg-master
 	      isync
 	      mu
