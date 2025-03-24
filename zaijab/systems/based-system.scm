@@ -158,6 +158,7 @@
 	       git
 	       gnu-make
 	       cups
+	       htop
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
