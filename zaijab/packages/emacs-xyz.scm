@@ -653,3 +653,17 @@ Usage To automatically apply when saving a python file, use the following code:
 Mail User Agent Mode (Message, mu4e, or Notmuch) to compose and reply to
 emails in a Outlook HTML friendly style.")
       (license license:gpl3+))))
+
+(define-public emacs-org-parallel-latex
+  (package
+    (inherit emacs-org)
+    (name "emacs-org-parallel-latex")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://code.tecosaur.net/tec/org-mode.git")
+             (commit "ce4a745b0aa746686376c5927b3165fe4cb4b4d7")))
+       ;; (file-name (git-file-name name version))
+       (sha256
+        (base32 "1wi8kj0vhlnzslarjfbi1ljqh71jlsbi4krsx6cr1ch5cm9v78y9"))))))

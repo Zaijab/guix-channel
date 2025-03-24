@@ -579,7 +579,10 @@ See `consult-grep' for details."
 (define buffer-configuration
   (home-emacs-configuration
    (packages (list emacs-tabspaces emacs-ace-window))
-   (init '((use-package tabspaces
+   (init '((use-package windsize)
+	   (use-package ace-window
+			:bind ("M-o" . ace-window))
+	   (use-package tabspaces
 			:demand t
 			:hook (after-init . tabspaces-mode)
 			:commands (tabspaces-switch-or-create-workspace
@@ -1899,7 +1902,7 @@ END is the start of the line with :END: on it."
 			(setq exwm-randr-workspace-monitor-plist '(0 "eDP-1" 1 "HDMI-A-0"))
 			(exwm-randr-mode)
 			(require 'xelb)
-			(require 'windsize)
+
 			(advice-add (function exwm-layout--hide)
 				    :after (lambda (id)
 					     (with-current-buffer (exwm--id->buffer id)
@@ -2133,7 +2136,10 @@ END is the start of the line with :END: on it."
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)))
-   (init '((setq org-startup-truncated nil)
+   (init '((use-package emacs
+			:custom)
+
+	   (setq org-startup-truncated nil)
 	   (tab-bar-mode)
 	   (setq custom-file (locate-user-emacs-file "custom.el"))
 	   (load custom-file :no-error-if-file-is-missing)
