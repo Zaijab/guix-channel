@@ -2136,8 +2136,7 @@ END is the start of the line with :END: on it."
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)))
-   (init '((use-package emacs
-			:custom)
+   (init '(
 
 	   (setq org-startup-truncated nil)
 	   (tab-bar-mode)
@@ -2209,12 +2208,27 @@ END is the start of the line with :END: on it."
 
 
 (define (use-emacs-next package)
-  (if #t
+  (if #f
       ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
 				  (with-commit . "emacs-org=ce4a745b0aa746686376c5927b3165fe4cb4b4d7")
 				  (without-tests . "emacs-org")))
        package)
       package))
+
+(use-modules (guix graft))
+
+;; Define your replacement package first (as you already have)
+;; Then define a graft
+
+(define org-mode-graft
+  (graft
+   (origin emacs-org)                   ;; The original package to replace
+   (replacement emacs-org-parallel-latex) ;; Your replacement package
+   (key #f)))                           ;; A key is optional 
+
+;; Add the graft to the current grafting configuration
+(set-grafting! #t)
+(register-graft! org-mode-graft)
 
 (define home-emacs-total-configuration
   (home-emacs-configuration

@@ -654,10 +654,37 @@ Mail User Agent Mode (Message, mu4e, or Notmuch) to compose and reply to
 emails in a Outlook HTML friendly style.")
       (license license:gpl3+))))
 
+;; (define-public emacs-org-parallel-latex
+;;   (package
+;;     (inherit emacs-org)
+;;     (name "emacs-org-parallel-latex")
+;;     (source
+;;      (origin
+;;        (method git-fetch)
+;;        (uri (git-reference
+;;              (url "https://code.tecosaur.net/tec/org-mode.git")
+;;              (commit "ce4a745b0aa746686376c5927b3165fe4cb4b4d7")))
+;;        ;; (file-name (git-file-name name version))
+;;        (sha256
+;;         (base32 "1f1647k67gpdcpamfcy2g1rjcwkg8xyzgk45pz86q0bnl6plv2wf"))))
+;;     ))
+
+
 (define-public emacs-org-parallel-latex
   (package
-    (inherit emacs-org)
+    ;; (name "emacs-org")
+    ;; (version "9.7.25")
+    ;; (source
+    ;;  (origin
+    ;;    (method git-fetch)
+    ;;    (uri (git-reference
+    ;;          (url "https://git.savannah.gnu.org/git/emacs/org-mode")
+    ;;          (commit (string-append "release_" version))))
+    ;;    (file-name (git-file-name name version))
+    ;;    (sha256
+    ;;     (base32 "1wi8kj0vhlnzslarjfbi1ljqh71jlsbi4krsx6cr1ch5cm9v78y9"))))
     (name "emacs-org-parallel-latex")
+    (version "9.7.25")
     (source
      (origin
        (method git-fetch)
@@ -666,4 +693,92 @@ emails in a Outlook HTML friendly style.")
              (commit "ce4a745b0aa746686376c5927b3165fe4cb4b4d7")))
        ;; (file-name (git-file-name name version))
        (sha256
-        (base32 "1wi8kj0vhlnzslarjfbi1ljqh71jlsbi4krsx6cr1ch5cm9v78y9"))))))
+        (base32 "1f1647k67gpdcpamfcy2g1rjcwkg8xyzgk45pz86q0bnl6plv2wf"))))
+    (build-system emacs-build-system)
+    (arguments
+     (list
+      #:tests? #f
+      ;; #:test-command #~(list "make" "test-dirty")
+      #:phases
+      #~(modify-phases %standard-phases
+          (replace 'expand-load-path
+            ;; Make sure `load-path' includes "lisp" directory, otherwise
+            ;; byte-compilation fails.
+            (lambda args
+              (with-directory-excursion "lisp"
+                (apply (assoc-ref %standard-phases 'expand-load-path) args))))
+          (add-after 'expand-load-path 'bootstrap
+            ;; XXX: Generate "org-loaddefs.el".
+            (lambda _
+              (invoke "make" "autoloads")))
+          (add-before 'check 'fix-tests
+            (lambda* (#:key inputs #:allow-other-keys)
+              ;; XXX: Running tests updates ID locations.  The process expects
+              ;; a file to be writeable in "~/.emacs.d/".
+              (setenv "HOME" (getcwd))
+              (mkdir-p ".emacs.d")
+              ;; These files are modified during testing.
+              (with-directory-excursion "testing/examples"
+                (for-each make-file-writable
+                          '("babel.org"
+                            "ob-awk-test.org"
+                            "ob-sed-test.org"))
+                ;; Specify where sh executable is.
+                (let ((sh (search-input-file inputs "/bin/sh")))
+                  (substitute* "babel.org"
+                    (("/bin/sh") sh))))
+              ;; XXX: Fix failure in ob-tangle/collect-blocks.  The test
+              ;; assumes that ~/../.. corresponds to /.  This isn't true in
+              ;; our case.
+              (substitute* "testing/lisp/test-ob-tangle.el"
+                ((" ~/\\.\\./\\.\\./")
+                 (string-append " ~"
+                                ;; relative path from ${HOME} to / during
+                                ;; build
+                                (string-join
+                                 (map-in-order
+                                  (lambda (x)
+                                    (if (equal? x "") "" ".."))
+                                  (string-split (getcwd) #\/)) "/")
+                                "/")))
+              ;; XXX: Skip failing tests.
+              (substitute* "testing/lisp/test-ob-shell.el"
+                (("ob-shell/remote-with-stdin-or-cmdline .*" all)
+                 (string-append all "  (skip-unless nil)\n")))
+              (substitute* "testing/lisp/test-org.el"
+                (("test-org/org-(encode-time|time-string-to-time) .*" all)
+                 (string-append all "  (skip-unless nil)\n")))))
+          (replace 'build
+            (lambda args
+              (with-directory-excursion "lisp"
+                (apply (assoc-ref %standard-phases 'build) args))))
+          (replace 'install
+            (lambda _
+              (let ((elpa (elpa-directory #$output))
+                    (info (string-append #$output "/share/info")))
+                (substitute* "local.mk"
+                  (("^lispdir.*") (string-append "lispdir = " elpa))
+                  (("^datadir.*") (string-append "datadir = " elpa "/etc"))
+                  (("^infodir.*") (string-append "infodir = " info))))
+              (invoke "make" "install" (string-append "ORGVERSION=" #$version))))
+          (add-after 'install 'install-org-news
+            ;; Install ORG-NEWS files in doc directory.
+            (lambda _
+              (install-file "etc/ORG-NEWS"
+                            (string-append #$output "/share/doc/"
+                                           #$name "-" #$version)))))))
+    (native-inputs
+     (list texinfo))
+    (home-page "https://orgmode.org/")
+    (synopsis "Outline-based notes management and organizer")
+    (description "Org is an Emacs mode for keeping notes, maintaining TODO
+lists, and project planning with a fast and effective lightweight markup
+language.  It also is an authoring system with unique support for literate
+programming and reproducible research.  If you work with the LaTeX output
+capabilities of Org-mode, you may want to install the
+@code{emacs-org-texlive-collection} meta-package, which propagates the TexLive
+components required by the produced @file{.tex} file.")
+    (license license:gpl3+)))
+
+
+emacs-org-parallel-latex
