@@ -2094,6 +2094,7 @@ END is the start of the line with :END: on it."
 		       redisplay-dont-pause t
 		       max-mini-window-height 10
 	    	       initial-scratch-message nil
+		       inhibit-compacting-font-caches t
 	    	       large-file-warning-threshold 100000000)
 
 		 (set-face-attribute 'mode-line nil :box nil)
