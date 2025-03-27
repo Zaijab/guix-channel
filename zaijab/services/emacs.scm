@@ -559,7 +559,7 @@ See `consult-grep' for details."
 			(org-mode . citar-capf-setup))
 
 	   (use-package citar-org
-			:after (citar oc)
+			;; :after (citar oc)
 			:custom
 			(org-cite-global-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
 			(org-cite-insert-processor 'citar)
@@ -567,7 +567,7 @@ See `consult-grep' for details."
 			(org-cite-activate-processor 'citar))
 
 	   (use-package citar-embark
-			:after citar embark
+			;; :after citar embark
 			:no-require
 			:config (citar-embark-mode))
 
