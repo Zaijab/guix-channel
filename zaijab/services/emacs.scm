@@ -561,6 +561,7 @@ See `consult-grep' for details."
 	   (use-package citar-org
 			:after (citar oc)
 			:custom
+			(org-cite-global-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
 			(org-cite-insert-processor 'citar)
 			(org-cite-follow-processor 'citar)
 			(org-cite-activate-processor 'citar))
@@ -2211,7 +2212,7 @@ END is the start of the line with :END: on it."
 (define (use-emacs-next package)
   (if #t
       ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
-				  (with-commit . "emacs-org=ce4a745b0aa746686376c5927b3165fe4cb4b4d7")
+				  (with-commit . "emacs-org=4bb159ae7834fa1f4d76153fbee85c7c5518ba66")
 				  (without-tests . "emacs-org")))
        package)
       package))
