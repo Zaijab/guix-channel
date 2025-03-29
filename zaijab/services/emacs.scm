@@ -567,7 +567,7 @@ See `consult-grep' for details."
 			(org-cite-activate-processor 'citar))
 
 	   (use-package citar-embark
-			;; :after citar embark
+			:after citar embark
 			:no-require
 			:config (citar-embark-mode))
 
@@ -1508,7 +1508,7 @@ END is the start of the line with :END: on it."
 (define org-mode-configuration
   (home-emacs-configuration
    (packages (list 
-					;		   emacs-org-modern
+	      emacs-org-modern
 	      emacs-cdlatex
 	      font-latin-modern
 	      emacs-tempel
