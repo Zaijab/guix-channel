@@ -1232,11 +1232,9 @@ See `consult-grep' for details."
 			(org-roam-v2-ack t)
 			(org-roam-capture-templates
 			 '(("i" "Default" plain "%?"
-			    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS:")
-			    :unnarrowed t)
-			   ("p" "Python" plain "%?"
-			    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Programming:Python:\n#+PROPERTY: header-args:jupyter-python :session ${slug}")
-			    :unnarrowed t)
+			    :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+TITLE: ${title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :TODO:\n\n* ${title}")
+			    :unnarrowed t
+			    :immediate-finish t)
 			   ("r" "reference" plain "%?" :if-new
 			    (file+head
 			     "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
@@ -1787,6 +1785,7 @@ END is the start of the line with :END: on it."
 							  :pyflakes (:enabled :json-false)
 							  :flake8 (:enabled t))))))
 			(setq eglot-send-changes-idle-time 0.1)
+			(setq eglot-report-progress nil)
 			(defun sloth/org-babel-edit-prep (info)
 			  (setq buffer-file-name (or (alist-get :file (caddr info))
 						     "org-src-babel-tmp"))
