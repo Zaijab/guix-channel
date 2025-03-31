@@ -1518,7 +1518,7 @@ END is the start of the line with :END: on it."
 	      emacs-calfw-blocks
 	      texlive
 	      texlive-xypic
-	      texlive-bin
+	      ;; texlive-bin
 	      imagemagick))
    (init '(
 	   (use-package consult-org-roam
