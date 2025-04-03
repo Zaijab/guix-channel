@@ -750,6 +750,7 @@ See `consult-grep' for details."
    (packages (list ;icecat
 					;ublock-origin/icecat
 	      librewolf
+	      
 	      emacs-exwm-firefox
 	      jami
 	      jami-docs
@@ -2138,7 +2139,7 @@ END is the start of the line with :END: on it."
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)))
    (init '(
-
+	   (setq global-auto-revert-non-file-buffers t)
 	   (setq org-startup-truncated nil)
 	   (tab-bar-mode)
 	   (setq custom-file (locate-user-emacs-file "custom.el"))
