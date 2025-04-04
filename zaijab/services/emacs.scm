@@ -1229,6 +1229,7 @@ See `consult-grep' for details."
 			:demand t
 			:after (org sqlite)
 			:custom
+			(org-roam-node-formatter (lambda (node) (downcase (org-roam-node-title node))))
 			(org-roam-directory "~/notes")
 			(org-roam-v2-ack t)
 			(org-roam-capture-templates
