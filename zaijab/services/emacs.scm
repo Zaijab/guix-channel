@@ -844,8 +844,8 @@ See `consult-grep' for details."
 				("https://karthinks.com/index.xml" crafter karthinks reading)
 				("https://jamesg.blog/hf-papers.xml" machine-learning reading)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2D2CMWXMOVWx7giW1n3LIg" health huberman)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCe0TLA0EsQbE-MjuHXevj2A" health jeff)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UClHVl2N3jPEbkNJVx-ItQIQ" health alok)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=UULFe0TLA0EsQbE-MjuHXevj2A" health jeff)
+				("https://www.youtube.com/feeds/videos.xml?playlist_id=UULFlHVl2N3jPEbkNJVx-ItQIQ" health alok)
 
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
