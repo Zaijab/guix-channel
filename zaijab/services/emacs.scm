@@ -1957,7 +1957,7 @@ END is the start of the line with :END: on it."
 							      "librewolf --private-window http://localhost:8080"))))
 			(global-set-key (kbd "s-v") (function
 						     (lambda () (interactive)
-							     (start-process-shell-command "Kanji Dojo" nil "guix shell jbr coreutils --preserve='^LD_LIBRARY_PATH$' --preserve='^DISPLAY$' -- java -jar /home/zjabbar/notes/data/kanji.jar"))))
+							     (start-process-shell-command "Kanji Dojo" nil "/home/zjabbar/notes/data/kanji_dojo/run_kanij.sh"))))
 			(global-set-key (kbd "s-r") (function eat))
 			(global-set-key (kbd "s-t") (function eval-region))
 			(global-set-key (kbd "s-K") 'windsize-up)
