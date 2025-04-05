@@ -1,4 +1,4 @@
-;; The module zaijab / services / emacs
+;; The module zaijab / services / emacs something
 ;; Creates the module "Emacs" in the "Services" for the "zaijab" Channel
 
 (define-module (zaijab services emacs)
