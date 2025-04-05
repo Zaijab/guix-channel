@@ -1955,9 +1955,15 @@ END is the start of the line with :END: on it."
 							      "librewolf --private-window http://localhost:8080"
 							      nil
 							      "librewolf --private-window http://localhost:8080"))))
+
+			(global-set-key (kbd "s-'")
+					(lambda () (interactive)
+						(start-file-process-shell-command "Kanji Dojo" nil "/home/zjabbar/notes/data/kanji_dojo/run_kanij.sh")))
 			(global-set-key (kbd "s-v") (function
 						     (lambda () (interactive)
-							     (start-process-shell-command "Kanji Dojo" nil "/home/zjabbar/notes/data/kanji_dojo/run_kanij.sh"))))
+							     
+							     (start-file-process-shell-command "Kanji Dojo" nil "/home/zjabbar/notes/data/kanji_dojo/run_kanij.sh")
+							     )))
 			(global-set-key (kbd "s-r") (function eat))
 			(global-set-key (kbd "s-t") (function eval-region))
 			(global-set-key (kbd "s-K") 'windsize-up)
