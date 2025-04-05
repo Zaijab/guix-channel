@@ -95,7 +95,13 @@
 			 "/home/zjabbar/code/guix-channel/zaijab/files/limiter.toml:/etc/searxng/limiter.toml"
 			 "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"))
 	      (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080")))
-	      (respawn? #t))))
+	      (respawn? #t))
+	     (oci-container-configuration
+	      (image "docker.io/jami-daemon/jami-daemon")
+	      (network "host"))
+	     
+
+	     ))
 
    (service cups-service-type
             (cups-configuration
