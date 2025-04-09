@@ -887,6 +887,9 @@ See `consult-grep' for details."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCiX01KrL5XyKsxhjRhCC7oA" japanese takashi)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCpGJxlhKXfdOKkBhuDH6ujA" japanese ikechan)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkex1wLTvYFnF0hfLXGE1kQ" japanese yuka)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCmjzC93AhDkSNj3oWK0vxdg" japanese interviewing)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCFVzAd9JKNLikLRuWOVB1YA" japanese unfiltered)
+				
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2Zs9v2hL2qZZ7vsAENsg4w" learning sung)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCjmynbA3C3Tm0koVy_8pfLw" learning sung)
