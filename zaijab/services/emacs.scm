@@ -1378,7 +1378,7 @@ END is the start of the line with :END: on it."
 	     (s-replace-regexp "_" "-" strlist))
 
 	   (advice-add 'org-export-resolve-id-link :filter-return (function my/org-id-underscore-fix))
-	   (setq org-export-with-broken-links 'mark
+	   (setq org-export-with-broken-links nil
 		 org-export-with-properties nil
 		 org-export-with-tags nil
 		 org-export-babel-evaluate nil
