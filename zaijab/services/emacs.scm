@@ -1522,6 +1522,9 @@ END is the start of the line with :END: on it."
 	      emacs-calfw
 	      emacs-calfw-blocks
 	      texlive
+	      texlive-amsthm
+	      texlive-amsmath
+	      texlive-amsfonts
 	      texlive-xypic
 	      ;; texlive-bin
 	      imagemagick))
@@ -2220,7 +2223,7 @@ END is the start of the line with :END: on it."
 
 
 (define (use-emacs-next package)
-  (if #f
+  (if #t
       ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
 				  (with-commit . "emacs-org=cd2269ddb64bda7203acf2ee2e26188237a578ea")
 				  (without-tests . "emacs-org")))
