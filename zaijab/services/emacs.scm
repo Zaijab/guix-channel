@@ -1522,9 +1522,9 @@ END is the start of the line with :END: on it."
 	      emacs-calfw
 	      emacs-calfw-blocks
 	      texlive
-	      texlive-amsthm
-	      texlive-amsmath
-	      texlive-amsfonts
+	      ;; texlive-amsthm
+	      ;; texlive-amsmath
+	      ;; texlive-amsfonts
 	      texlive-xypic
 	      ;; texlive-bin
 	      imagemagick))
