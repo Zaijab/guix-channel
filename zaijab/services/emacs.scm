@@ -1525,7 +1525,7 @@ END is the start of the line with :END: on it."
 	      ;; texlive-amsthm
 	      ;; texlive-amsmath
 	      ;; texlive-amsfonts
-	      texlive-xypic
+	      ;; texlive-xypic
 	      ;; texlive-bin
 	      imagemagick))
    (init '(
