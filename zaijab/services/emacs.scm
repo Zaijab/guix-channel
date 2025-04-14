@@ -1248,6 +1248,9 @@ See `consult-grep' for details."
 			(org-roam-db-node-include-function (lambda () (not (member "FC" (org-get-tags)))))
 			(org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 			:config
+			(defun org-roam-element-begin (element)
+			  (or (org-element-property :begin element)
+			      (org-element-begin element)))
 			(org-roam-db-autosync-mode)
 			(define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add)))
 
