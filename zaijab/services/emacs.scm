@@ -1919,6 +1919,7 @@ END is the start of the line with :END: on it."
 								  (exwm-layout--set-ewmh-state id)
 								  (xcb:flush exwm--connection))))
 			(unbind-key (kbd "C-x C-z") 'global-map)
+			(unbind-key (kbd "C-z") 'global-map)
 			(global-set-key (kbd "<f7>") (function
 						      (lambda () (interactive)
 							      (call-process-shell-command "loginctl suspend"))))
