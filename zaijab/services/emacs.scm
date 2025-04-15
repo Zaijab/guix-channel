@@ -1232,7 +1232,7 @@ See `consult-grep' for details."
 			:demand t
 			:after (org sqlite)
 			:custom
-			;; (org-roam-node-formatter (lambda (node) (downcase (org-roam-node-title node))))
+			(org-roam-node-formatter (lambda (node) (downcase (org-roam-node-title node))))
 			(org-roam-directory "~/notes")
 			(org-roam-v2-ack t)
 			(org-roam-capture-templates
@@ -1245,12 +1245,9 @@ See `consult-grep' for details."
 			     "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
 			     "#+TITLE: ${note-title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Reference:\n")
 			    :unnarrowed t :immediate-finish t)))
-			;; (org-roam-db-node-include-function (lambda () (not (member "FC" (org-get-tags)))))
-			;; (org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
+			(org-roam-db-node-include-function (lambda () (not (member "FC" (org-get-tags)))))
+			(org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 			:config
-			;; (defun org-roam-element-begin (element)
-			  ;; (or (org-element-property :begin element)
-			      ;; (org-element-begin element)))
 			(org-roam-db-autosync-mode)
 			(define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add)))
 
