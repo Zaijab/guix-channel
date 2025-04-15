@@ -1219,11 +1219,7 @@ See `consult-grep' for details."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list
-	      ((options->transformation '(
-					  (with-commit . "emacs-org-roam=0b9fcbc97b65b349826e63bad89ca121a08fd2be")
-					  ))
-	       emacs-org-roam)
-	      ;; emacs-org-roam
+	      emacs-org-roam
 	      emacs-org-roam-ui
 	      emacs-org-roam-bibtex
 	      emacs-org-fc
@@ -1525,19 +1521,10 @@ END is the start of the line with :END: on it."
 	      emacs-valign
 	      emacs-org-present
 	      emacs-org-tree-slide
-	      ((options->transformation '(
-					  (with-commit . "emacs-org-roam=0b9fcbc97b65b349826e63bad89ca121a08fd2be")
-					  ))
-	       emacs-consult-org-roam)
-	      ;; emacs-consult-org-roam
+	      emacs-consult-org-roam
 	      emacs-calfw
 	      emacs-calfw-blocks
 	      texlive
-	      ;; texlive-amsthm
-	      ;; texlive-amsmath
-	      ;; texlive-amsfonts
-	      ;; texlive-xypic
-	      ;; texlive-bin
 	      imagemagick))
    (init '(
 	   (use-package consult-org-roam
