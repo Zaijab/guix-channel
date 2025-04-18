@@ -545,7 +545,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list
 	      
-	      ;; emacs-citar-org-roam
+	      emacs-citar-org-roam
 	      ))
    (init '((use-package citar
 			:bind (:map citar-map
@@ -1222,10 +1222,10 @@ See `consult-grep' for details."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list
-	      ;; emacs-org-roam
-	      ;; emacs-org-roam-ui
-	      ;; emacs-org-roam-bibtex
-	      ;; emacs-consult-org-roam
+	      emacs-org-roam
+	      emacs-org-roam-ui
+	      emacs-org-roam-bibtex
+	      emacs-consult-org-roam
 	      emacs-org-fc
 	      anki
 	      emacs-org-drill
