@@ -693,7 +693,7 @@ emails in a Outlook HTML friendly style.")
              (commit "cd2269ddb64bda7203acf2ee2e26188237a578ea"))) ; new - cd2269ddb64bda7203acf2ee2e26188237a578ea
        ;; (file-name (git-file-name name version))
        (sha256
-        (base32 "1f1647k67gpdcpamfcy2g1rjcwkg8xyzgk45pz86q0bnl6plv2wf"))))
+        (base32 "13mfs7nqqia9j2d27qfb14ag13niyw9azdhgirwc0j41glq23gkk"))))
     (build-system emacs-build-system)
     (arguments
      (list
