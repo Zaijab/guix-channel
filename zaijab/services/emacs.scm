@@ -2234,7 +2234,7 @@ END is the start of the line with :END: on it."
 
 (define (use-emacs-next package)
   (if #t
-      ((options->transformation '((with-input . "emacs-org=emacs-org-parallel-latex"))
+      ((options->transformation '((with-input . "emacs-org=emacs-org-parallel-latex")))
        package)
       package))
 
