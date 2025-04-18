@@ -544,7 +544,7 @@ See `consult-grep' for details."
 (define citation-configuration
   (home-emacs-configuration
    (packages (list
-	      ;emacs-citar-org-roam
+	      emacs-citar-org-roam
 	      ))
    (init '((use-package citar
 			:bind (:map citar-map
@@ -1221,9 +1221,9 @@ See `consult-grep' for details."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list
-	      ;; emacs-org-roam
-	      ;; emacs-org-roam-ui
-	      ;; emacs-org-roam-bibtex
+	      emacs-org-roam
+	      emacs-org-roam-ui
+	      emacs-org-roam-bibtex
 	      emacs-org-fc
 	      anki
 	      emacs-org-drill
@@ -1520,7 +1520,7 @@ END is the start of the line with :END: on it."
 	      emacs-valign
 	      emacs-org-present
 	      emacs-org-tree-slide
-	      ;; emacs-consult-org-roam
+	      emacs-consult-org-roam
 	      emacs-calfw
 	      emacs-calfw-blocks
 	      texlive
