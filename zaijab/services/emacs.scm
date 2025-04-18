@@ -543,7 +543,9 @@ See `consult-grep' for details."
 
 (define citation-configuration
   (home-emacs-configuration
-   (packages (list emacs-citar-org-roam))
+   (packages (list
+	      ;emacs-citar-org-roam
+	      ))
    (init '((use-package citar
 			:bind (:map citar-map
 			       ("a" . citar-add-file-to-library))
@@ -1219,9 +1221,9 @@ See `consult-grep' for details."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list
-	      emacs-org-roam
-	      emacs-org-roam-ui
-	      emacs-org-roam-bibtex
+	      ;; emacs-org-roam
+	      ;; emacs-org-roam-ui
+	      ;; emacs-org-roam-bibtex
 	      emacs-org-fc
 	      anki
 	      emacs-org-drill
@@ -1518,7 +1520,7 @@ END is the start of the line with :END: on it."
 	      emacs-valign
 	      emacs-org-present
 	      emacs-org-tree-slide
-	      emacs-consult-org-roam
+	      ;; emacs-consult-org-roam
 	      emacs-calfw
 	      emacs-calfw-blocks
 	      texlive
@@ -2220,7 +2222,7 @@ END is the start of the line with :END: on it."
 
 (define (use-emacs-next package)
   (if #t
-      ((options->transformation '((with-commit . "emacs-org-roam=f3db974bcc73d0b796c82f4fa5601b9e616415a5")
+      ((options->transformation '(;(with-commit . "emacs-org-roam=f3db974bcc73d0b796c82f4fa5601b9e616415a5")
 				  (with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
 				  (with-commit . "emacs-org=cd2269ddb64bda7203acf2ee2e26188237a578ea")
 				  (without-tests . "emacs-org")))
