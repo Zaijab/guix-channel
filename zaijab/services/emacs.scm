@@ -2220,7 +2220,9 @@ END is the start of the line with :END: on it."
 
 (define (use-emacs-next package)
   (if #t
-      ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
+      ((options->transformation '(
+				  (with-commit . "emacs-org-roam=0b9fcbc97b65b349826e63bad89ca121a08fd2be")
+				  (with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
 				  (with-commit . "emacs-org=cd2269ddb64bda7203acf2ee2e26188237a578ea")
 				  (without-tests . "emacs-org")))
        package)
