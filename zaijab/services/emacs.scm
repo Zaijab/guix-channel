@@ -161,7 +161,7 @@
    (packages (list emacs-consult
 		   grep
 		   ripgrep
-		   ripgrep-all
+		   ;; ripgrep-all
 		   poppler
 		   poppler-data))
    (init '(;; Example configuration for Consult
@@ -674,7 +674,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list emacs-ddskk
 		   inkscape
-		   jbr21
+		   ;; jbr21
 		   font-ipa-mj-mincho))
    (early-init '((global-unset-key (kbd "C-x t"))))
    (init '((use-package skk
