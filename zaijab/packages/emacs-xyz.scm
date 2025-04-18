@@ -689,8 +689,8 @@ emails in a Outlook HTML friendly style.")
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://code.tecosaur.net/tec/org-mode.git")
-             (commit "ce4a745b0aa746686376c5927b3165fe4cb4b4d7")))
+             (url "https://code.tecosaur.net/tec/org-mode.git") ; old - ce4a745b0aa746686376c5927b3165fe4cb4b4d7 
+             (commit "cd2269ddb64bda7203acf2ee2e26188237a578ea"))) ; new - cd2269ddb64bda7203acf2ee2e26188237a578ea
        ;; (file-name (git-file-name name version))
        (sha256
         (base32 "1f1647k67gpdcpamfcy2g1rjcwkg8xyzgk45pz86q0bnl6plv2wf"))))
