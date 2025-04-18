@@ -61,7 +61,7 @@
    (service unattended-upgrade-service-type)
    (service openssh-service-type)
    (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
-   ;(service guix-home-service-type `(("zjabbar" ,zains-home)))
+   (service guix-home-service-type `(("zjabbar" ,zains-home)))
    (service tlp-service-type)
    (service opendht-service-type)
    (service strongswan-service-type
