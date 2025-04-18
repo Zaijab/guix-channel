@@ -438,7 +438,7 @@ See `consult-grep' for details."
 
 			;; Save buffers on startup, useful for interpreted languages
 			(add-hook 'dape-start-hook (lambda () (save-some-buffers t t)))
-			
+
 			(add-to-list 'dape-configs
 				     (list 'debugpy-attach-port-zain
 					   'modes '(python-mode python-ts-mode)
@@ -677,10 +677,10 @@ See `consult-grep' for details."
    (init '((use-package skk
 			:after (consult)
 			:if (display-graphic-p))
-	   
+
 	   (use-package facemenu
 			:after skk)
-	   
+
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
 		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))
@@ -752,13 +752,13 @@ See `consult-grep' for details."
    (packages (list ;icecat
 					;ublock-origin/icecat
 	      librewolf
-	      
+
 	      emacs-exwm-firefox
 	      jami
 	      jami-docs
 	      hicolor-icon-theme
 	      passff-host
-	      
+
 	      passff/icecat))
    (init '((setq browse-url-new-window-flag t)))))
 
@@ -891,7 +891,7 @@ See `consult-grep' for details."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkex1wLTvYFnF0hfLXGE1kQ" japanese yuka)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCmjzC93AhDkSNj3oWK0vxdg" japanese interviewing)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCFVzAd9JKNLikLRuWOVB1YA" japanese unfiltered)
-				
+
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2Zs9v2hL2qZZ7vsAENsg4w" learning sung)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCjmynbA3C3Tm0koVy_8pfLw" learning sung)
@@ -1180,7 +1180,7 @@ See `consult-grep' for details."
 						 (:name  "Unread school messages"
 						  :query "maildir:/zjabbar/Inbox AND flag:unread AND NOT flag:trashed"
 						  :key ?u)))))
-		       
+
 		       (make-mu4e-context
 			:name "Math"
 			:enter-func (lambda ()
@@ -1415,7 +1415,7 @@ END is the start of the line with :END: on it."
 			;; Use dvisvgm to generate previews
 			;; You don't need this, it's the default:
 			(setq org-latex-preview-process-default 'dvisvgm)
-			
+
 			;; Turn on auto-mode, it's built into Org and much faster/more featured than
 			;; org-fragtog. (Remember to turn off/uninstall org-fragtog.)
 			(add-hook 'org-mode-hook 'org-latex-preview-auto-mode)
@@ -1436,7 +1436,7 @@ END is the start of the line with :END: on it."
 			;; More immediate live-previews -- the default delay is 1 second
 			(setq org-latex-preview-live-debounce 0.25))
 
-	   
+
 	   (setq texmathp-tex-commands '(("lflalign" env-on)))
 	   (setq org-latex-compiler "pdflatex")
 	   (setq org-latex-title-command (concat
@@ -1512,7 +1512,7 @@ END is the start of the line with :END: on it."
 
 (define org-mode-configuration
   (home-emacs-configuration
-   (packages (list 
+   (packages (list
 	      emacs-org-modern
 	      emacs-cdlatex
 	      font-latin-modern
@@ -1529,14 +1529,14 @@ END is the start of the line with :END: on it."
 	   (use-package consult-org-roam
 			:after (org-roam org consult)
 			:config (consult-org-roam-mode))
-	   
+
 	   (use-package org
 			:config
 
 			(require 'org-tree-slide)
 			(setq org-tree-slide-activate-message ""
 			      org-tree-slide-deactivate-message "")
-			
+
 			(setq org-tree-slide-cursor-init nil)
 			(require 'ox)
 			(require 'calfw)
@@ -1732,16 +1732,16 @@ END is the start of the line with :END: on it."
 	      jupyter
 	      guix-jupyter
 	      python-virtualenv
-	      
+
 	      expect
 	      sshpass
 
 	      emacs-ob-async
 	      emacs-jupyter
 	      emacs-pydoc
-	      
+
 	      python-lsp-server
-	      
+
 	      tree-sitter
 	      tree-sitter-python
 
@@ -1763,24 +1763,24 @@ END is the start of the line with :END: on it."
 			      python-interpreter "python3"
 			      python-shell-interpreter "python3"
 			      treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
-			
+
 			(org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
 										 (python . t)
 										 (sql . t)
 										 (eshell . t)
 										 (shell . t)
 										 (jupyter . t)))
-			
+
 			(add-to-list 'org-src-lang-modes (cons "python3" 'python)))
 
 	   (use-package envrc
 			:demand t
        			:bind-keymap ("C-c e" . envrc-command-map)
 			:hook (after-init . envrc-global-mode))
-	   
+
 	   (use-package eglot
 			:config
-			
+
 			(add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
 			(setq-default eglot-workspace-configuration
 				      (list (cons :pylsp
@@ -1795,7 +1795,7 @@ END is the start of the line with :END: on it."
 			  (setq buffer-file-name (or (alist-get :file (caddr info))
 						     "org-src-babel-tmp"))
 			  (eglot-ensure))
-			
+
 			(advice-add 'org-edit-src-code
 				    :before (defun sloth/org-edit-src-code/before (&rest args)
 					      (when-let* ((element (org-element-at-point))
@@ -1817,7 +1817,7 @@ END is the start of the line with :END: on it."
 				    (add-hook 'eglot-managed-mode-hook
 					      (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
 					      nil t)))
-			
+
 			(add-hook 'python-mode-hook (function python-black-on-save-mode))
 			(add-hook 'python-mode-hook (function eglot-ensure)))))))
 
@@ -1866,7 +1866,7 @@ END is the start of the line with :END: on it."
 	   (setq safe-local-variable-values '((eval modify-syntax-entry 43 "'")
 					      (eval modify-syntax-entry 36 "'")
 					      (eval modify-syntax-entry 126 "'")))
-	   
+
 	   ))))
 
 
@@ -1965,7 +1965,7 @@ END is the start of the line with :END: on it."
 						(start-file-process-shell-command "Kanji Dojo" nil "/home/zjabbar/notes/data/kanji_dojo/run_kanij.sh")))
 			(global-set-key (kbd "s-v") (function
 						     (lambda () (interactive)
-							     
+
 							     (start-file-process-shell-command "Kanji Dojo" nil "/home/zjabbar/notes/data/kanji_dojo/run_kanij.sh")
 							     )))
 			(global-set-key (kbd "s-r") (function eat))
@@ -2000,7 +2000,7 @@ END is the start of the line with :END: on it."
 							 (lambda (command)
 							   (interactive (list (read-shell-command "$ ")))
 							   (start-process-shell-command command nil command))))
-			
+
 					;(global-set-key (kbd "s-a") 'toggle-exwm-input-line-mode-passthrough)
 
 			(setq exwm-input-simulation-keys
@@ -2196,7 +2196,7 @@ END is the start of the line with :END: on it."
 	   (setq compile-command "make")
 
 
-	   
+
 	   (defun quick-restart ()
 	     (interactive)
 	     (shell-command "sudo reboot --kexec"))
@@ -2222,9 +2222,8 @@ END is the start of the line with :END: on it."
 
 (define (use-emacs-next package)
   (if #t
-      ((options->transformation '(;(with-commit . "emacs-org-roam=f3db974bcc73d0b796c82f4fa5601b9e616415a5")
-				  (with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
-				  (with-commit . "emacs-org=cd2269ddb64bda7203acf2ee2e26188237a578ea")
+      ((options->transformation '((with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
+				  (with-commit . "emacs-org=9f954bfc33283907abb6e7085481efa6e94ecbd7")
 				  (without-tests . "emacs-org")))
        package)
       package))
