@@ -61,7 +61,7 @@
    (service unattended-upgrade-service-type)
    (service openssh-service-type)
    (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
-   (service guix-home-service-type `(("zjabbar" ,zains-home)))
+   ;(service guix-home-service-type `(("zjabbar" ,zains-home)))
    (service tlp-service-type)
    (service opendht-service-type)
    (service strongswan-service-type
@@ -107,7 +107,7 @@
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
      (gdm-service-type
-      config => (gdm-configuration (inherit config) (auto-login? #t) (default-user "zjabbar")))
+      config => (gdm-configuration (inherit config) (auto-login? #f) (default-user "zjabbar")))
      (network-manager-service-type
 		  config => (network-manager-configuration
 			     (inherit config)
