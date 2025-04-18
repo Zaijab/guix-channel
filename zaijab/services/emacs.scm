@@ -72,6 +72,8 @@
 	    home-emacs-configuration
 	    home-emacs-total-configuration))
 
+(module-set! (resolve-module '(gnu packages emacs-xyz)) 'emacs-org emacs-org-parallel-latex)
+
 (define file-likes? (list-of file-like?))
 
 (define-configuration/no-serialization home-emacs-configuration
@@ -2233,7 +2235,7 @@ END is the start of the line with :END: on it."
 ;;       package))
 
 (define (use-emacs-next package)
-  (if #t
+  (if #f
       ((options->transformation '((with-input . "emacs-org=emacs-org-parallel-latex")))
        package)
       package))
