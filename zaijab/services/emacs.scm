@@ -76,7 +76,7 @@
 
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like emacs)
+   (file-like emacs-next)
    "The Emacs package to use.")
   (packages
    (file-likes '())
@@ -1402,7 +1402,7 @@ END is the start of the line with :END: on it."
 	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
 	   (setq org-latex-listings 'engraved)
 
-	   #;(use-package org-latex-preview
+	   (use-package org-latex-preview
 			:config
 			;; Increase preview width
 			(plist-put org-latex-preview-appearance-options
@@ -2219,7 +2219,7 @@ END is the start of the line with :END: on it."
 
 
 (define (use-emacs-next package)
-  (if #f
+  (if #t
       ((options->transformation '(
 				  ;(with-commit . "emacs-org-roam=0b9fcbc97b65b349826e63bad89ca121a08fd2be")
 				  (with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
