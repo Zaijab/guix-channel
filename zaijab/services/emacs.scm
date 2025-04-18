@@ -2155,7 +2155,7 @@ END is the start of the line with :END: on it."
 	   (tab-bar-mode)
 	   (setq custom-file (locate-user-emacs-file "custom.el"))
 	   (load custom-file :no-error-if-file-is-missing)
-	   ;; (setq load-suffixes '(".el"))
+	   (setq load-suffixes '(".el"))
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
 	   (setq battery-mode-line-limit 97)
