@@ -2235,8 +2235,8 @@ END is the start of the line with :END: on it."
 ;;       package))
 
 (define (use-emacs-next package)
-  (if #f
-      ((options->transformation '((with-input . "emacs-org=emacs-org-parallel-latex")))
+  (if #t
+      ((options->transformation '((with-commit . "emacs-org-roam=cce9591c1c13718beb6dc809fbdca3f1b1cc075b")))
        package)
       package))
 
