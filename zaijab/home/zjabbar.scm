@@ -37,7 +37,6 @@
               (home-bash-configuration
                (aliases
                 '(("ll"   . "ls -l")
-		  ;; ("guix" . "guix time-machine -C ~/code/guix-channel/zaijab/files/channel.tmpl --")
                   ("mbsync" . "mbsync -c ~/.config/mbsyncrc")))
                (environment-variables
                 '(("GNUPGHOME" . "~/.config/gnupg")
