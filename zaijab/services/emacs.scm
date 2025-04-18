@@ -76,7 +76,7 @@
 
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like emacs-next)
+   (file-like emacs)
    "The Emacs package to use.")
   (packages
    (file-likes '())
@@ -544,7 +544,8 @@ See `consult-grep' for details."
 (define citation-configuration
   (home-emacs-configuration
    (packages (list
-	      emacs-citar-org-roam
+	      
+	      ;; emacs-citar-org-roam
 	      ))
    (init '((use-package citar
 			:bind (:map citar-map
@@ -1221,9 +1222,10 @@ See `consult-grep' for details."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list
-	      emacs-org-roam
-	      emacs-org-roam-ui
-	      emacs-org-roam-bibtex
+	      ;; emacs-org-roam
+	      ;; emacs-org-roam-ui
+	      ;; emacs-org-roam-bibtex
+	      ;; emacs-consult-org-roam
 	      emacs-org-fc
 	      anki
 	      emacs-org-drill
@@ -1520,7 +1522,7 @@ END is the start of the line with :END: on it."
 	      emacs-valign
 	      emacs-org-present
 	      emacs-org-tree-slide
-	      emacs-consult-org-roam
+
 	      emacs-calfw
 	      emacs-calfw-blocks
 	      texlive
@@ -2105,6 +2107,7 @@ END is the start of the line with :END: on it."
 		       frame-inhibit-implied-resize t
 		       redisplay-dont-pause t
 		       max-mini-window-height 10
+		       ; load-suffixes '(".el")
 	    	       initial-scratch-message nil
 		       inhibit-compacting-font-caches t
 	    	       large-file-warning-threshold 100000000)
@@ -2155,7 +2158,7 @@ END is the start of the line with :END: on it."
 	   (tab-bar-mode)
 	   (setq custom-file (locate-user-emacs-file "custom.el"))
 	   (load custom-file :no-error-if-file-is-missing)
-	   (setq load-suffixes '(".el"))
+	   ;; (setq load-suffixes '(".el"))
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
 	   (setq battery-mode-line-limit 97)
