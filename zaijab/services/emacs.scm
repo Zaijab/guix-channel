@@ -1255,7 +1255,7 @@ See `consult-grep' for details."
 			(org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 			:config
 			(mapc (function load)
-      			      (file-expand-wildcards "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.2.2-2.046822b/*.el"))
+      			      (file-expand-wildcards "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.2.2-2.046822b/org-roam-db.el"))
 			(org-roam-db-autosync-mode)
 			(define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add)))
 
@@ -1410,7 +1410,7 @@ END is the start of the line with :END: on it."
 	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
 	   (setq org-latex-listings 'engraved)
 
-	   #;(use-package org-latex-preview
+	   (use-package org-latex-preview
 			:config
 			;; Increase preview width
 			(plist-put org-latex-preview-appearance-options
