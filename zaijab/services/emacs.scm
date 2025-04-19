@@ -1747,6 +1747,8 @@ END is the start of the line with :END: on it."
 	      emacs-pydoc
 
 	      python-lsp-server
+	      python-lsp-black
+	      python-pylsp-mypy
 
 	      tree-sitter
 	      tree-sitter-python
