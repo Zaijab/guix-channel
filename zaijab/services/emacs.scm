@@ -161,7 +161,7 @@
    (packages (list emacs-consult
 		   grep
 		   ripgrep
-		   ;; ripgrep-all
+		   ripgrep-all
 		   poppler
 		   poppler-data))
    (init '(;; Example configuration for Consult
