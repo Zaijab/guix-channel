@@ -208,7 +208,7 @@
 	       (set-xorg-configuration
 		(xorg-configuration
 		 (modules (cons nvda %default-xorg-modules))
-		 (drivers '("nvidia")))
+		 (drivers '("nvidia"))))
 	       main-services))
     ))
 
