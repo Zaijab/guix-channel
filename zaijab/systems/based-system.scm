@@ -189,7 +189,7 @@
     
     (services main-services)))
 
-(module-set! (resolve-module '(gnu packages gl)) 'mesa nvda)
+;; (module-set! (resolve-module '(gnu packages gl)) 'mesa nvda)
 
 (define-public tao-operating-system
   (operating-system
