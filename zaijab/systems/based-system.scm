@@ -52,6 +52,7 @@
   #:use-module (gnu services mcron) 
   #:use-module (gnu services virtualization)
   #:use-module (gnu services xorg)
+  #:use-module (gnu packages gl)
   #:use-module (nongnu packages nvidia)
   #:use-module (nongnu services nvidia)
   #:use-module (zaijab home zjabbar))
@@ -187,6 +188,8 @@
 		 %base-user-accounts))
     
     (services main-services)))
+
+(module-set! (resolve-module '(gnu packages gl)) 'mesa nvda)
 
 (define-public tao-operating-system
   (operating-system
