@@ -78,7 +78,7 @@
 
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like emacs)
+   (file-like emacs-next)
    "The Emacs package to use.")
   (packages
    (file-likes '())
@@ -1788,7 +1788,7 @@ END is the start of the line with :END: on it."
 
 	   (use-package eglot
 			:config
-
+			(setq python-indent-def-block-scale 1)
 			(add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
 			(setq-default eglot-workspace-configuration
 				      (list (cons :pylsp
