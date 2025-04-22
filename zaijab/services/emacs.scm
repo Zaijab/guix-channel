@@ -1754,6 +1754,7 @@ END is the start of the line with :END: on it."
 	      tree-sitter-python
 
 	      emacs-csv-mode
+	      emacs-combobulate
 	      emacs-py-isort
 	      emacs-python-black
 	      python-pip
