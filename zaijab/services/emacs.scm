@@ -2114,7 +2114,6 @@ END is the start of the line with :END: on it."
 		       frame-inhibit-implied-resize t
 		       redisplay-dont-pause t
 		       max-mini-window-height 10
-		       ; load-suffixes '(".el")
 	    	       initial-scratch-message nil
 		       inhibit-compacting-font-caches t
 	    	       large-file-warning-threshold 100000000)
@@ -2159,13 +2158,11 @@ END is the start of the line with :END: on it."
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)))
-   (init '(
-	   (setq global-auto-revert-non-file-buffers t)
+   (init '((setq global-auto-revert-non-file-buffers t)
 	   (setq org-startup-truncated nil)
 	   (tab-bar-mode)
 	   (setq custom-file (locate-user-emacs-file "custom.el"))
 	   (load custom-file :no-error-if-file-is-missing)
-	   ;; (setq load-suffixes '(".el"))
 	   (set-face-attribute 'tab-bar nil :height 140)
 	   (display-time-mode)
 	   (setq battery-mode-line-limit 97)
