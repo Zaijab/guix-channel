@@ -1254,8 +1254,6 @@ See `consult-grep' for details."
 			(org-roam-db-node-include-function (lambda () (not (member "FC" (org-get-tags)))))
 			(org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 			:config
-			#;(mapc (function load)
-      			      (file-expand-wildcards "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-*/org-roam-db.el"))
 			(org-roam-db-autosync-mode)
 			(define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add)))
 
