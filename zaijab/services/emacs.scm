@@ -1286,38 +1286,38 @@ See `consult-grep' for details."
 			(org-fc-flashcard-tag "FC")
 			(org-fc-suspended-tag "Suspended")
 			:config
-			;; (org-fc-cache-mode)
+			(org-fc-cache-mode)
 			;; Based on `org-log-beginning'
-;; 			(defun org-fc-review-data-position (&optional create)
-;; 			  "Return (BEGINNING . END) points of the review data drawer.
-;; When optional argument CREATE is non-nil, the function creates a
-;; drawer, if necessary.  Returned position ignores narrowing.
+			(defun org-fc-review-data-position (&optional create)
+			  "Return (BEGINNING . END) points of the review data drawer.
+When optional argument CREATE is non-nil, the function creates a
+drawer, if necessary.  Returned position ignores narrowing.
 
-;; BEGINNING is the start of the first line inside the drawer,
-;; END is the start of the line with :END: on it."
-;; 			  (org-with-wide-buffer
-;; 			   (org-end-of-meta-data)
-;; 			   (let ((regexp (concat "^[ \t]*:" (regexp-quote org-fc-review-data-drawer) ":[ \t]*$"))
-;; 				 (end (if (org-at-heading-p) (point)
-;; 					  (save-excursion (outline-next-heading) (point))))
-;; 				 (case-fold-search t))
-;; 			     (catch 'exit
-;; 			       ;; Try to find existing drawer.
-;; 			       (while (re-search-forward regexp end t)
-;; 				 (let ((element (org-element-at-point)))
-;; 				   (when (eq (org-element-type element) 'drawer)
-;; 				     (throw 'exit
-;; 					    (cons (org-element-property :contents-begin element)
-;; 						  (org-element-property :contents-end element))))))
-;; 			       ;; No drawer found.  Create one, if permitted.
-;; 			       (when create
-;; 				 (unless (bolp) (insert "\n"))
-;; 				 (let ((beg (point)))
-;; 				   (insert ":" org-fc-review-data-drawer ":\n:END:\n")
-;; 				   (org-indent-region beg (point)))
-;; 				 (cons
-;; 				  (line-beginning-position 0)
-;; 				  (line-beginning-position 0)))))))
+BEGINNING is the start of the first line inside the drawer,
+END is the start of the line with :END: on it."
+			  (org-with-wide-buffer
+			   (org-end-of-meta-data)
+			   (let ((regexp (concat "^[ \t]*:" (regexp-quote org-fc-review-data-drawer) ":[ \t]*$"))
+				 (end (if (org-at-heading-p) (point)
+					  (save-excursion (outline-next-heading) (point))))
+				 (case-fold-search t))
+			     (catch 'exit
+			       ;; Try to find existing drawer.
+			       (while (re-search-forward regexp end t)
+				 (let ((element (org-element-at-point)))
+				   (when (eq (org-element-type element) 'drawer)
+				     (throw 'exit
+					    (cons (org-element-property :contents-begin element)
+						  (org-element-property :contents-end element))))))
+			       ;; No drawer found.  Create one, if permitted.
+			       (when create
+				 (unless (bolp) (insert "\n"))
+				 (let ((beg (point)))
+				   (insert ":" org-fc-review-data-drawer ":\n:END:\n")
+				   (org-indent-region beg (point)))
+				 (cons
+				  (line-beginning-position 0)
+				  (line-beginning-position 0)))))))
 
 			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card)))
 
