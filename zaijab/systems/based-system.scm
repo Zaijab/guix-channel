@@ -8,6 +8,7 @@
   #:use-module (guix transformations)
   #:use-module (guix channels)
   #:use-module (nongnu packages linux)
+  #:use-module (nongnu packages printers)
   #:use-module (gnu)
   #:use-module (gnu system)
   #:use-module (gnu home)
@@ -102,7 +103,7 @@
             (cups-configuration
              (web-interface? #t)
              (extensions
-              (list cups-filters epson-inkjet-printer-escpr hplip-minimal hplip))))
+              (list cups-filters epson-inkjet-printer-escpr hplip-minimal hplip hplip-plugin))))
 
 
    (modify-services %desktop-services
