@@ -103,7 +103,7 @@
             (cups-configuration
              (web-interface? #t)
              (extensions
-              (list cups-filters epson-inkjet-printer-escpr hplip-minimal hplip hplip-plugin))))
+              (list cups-filters epson-inkjet-printer-escpr foo2zjs hplip-minimal hplip hplip-plugin))))
 
 
    (modify-services %desktop-services
