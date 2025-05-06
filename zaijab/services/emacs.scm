@@ -1256,6 +1256,7 @@ See `consult-grep' for details."
 			:config
 			(org-roam-db-autosync-mode)
 			(load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.2.2-2.046822b/org-roam-db.el")
+			(load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.2.2-2.046822b/org-roam.el")
 			(define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add)))
 
 	   (use-package org-roam-node
