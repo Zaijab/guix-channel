@@ -1780,7 +1780,9 @@ END is the start of the line with :END: on it."
 										 (shell . t)
 										 (jupyter . t)))
 
-			(add-to-list 'org-src-lang-modes (cons "python3" 'python)))
+			(add-to-list 'org-src-lang-modes (cons "python3" 'python))
+			(setq major-mode-remap-alist
+			      '((python-mode . python-ts-mode))))
 
 	   (use-package envrc
 			:demand t
