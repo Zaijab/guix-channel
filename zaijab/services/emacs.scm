@@ -1805,7 +1805,7 @@ END is the start of the line with :END: on it."
 	   (use-package eglot
 			:config
 			(setq python-indent-def-block-scale 1)
-			(add-to-list 'eglot-server-programs '(python-mode . ("pylsp")))
+			(add-to-list 'eglot-server-programs '(python-ts-mode . ("pylsp")))
 			(setq-default eglot-workspace-configuration
 				      (list (cons :pylsp
 						  (list :configurationSources (vector "flake8")
@@ -1836,14 +1836,14 @@ END is the start of the line with :END: on it."
 
 	   (use-package python
 			:config
-			(add-hook 'python-mode-hook
+			(add-hook 'python-ts-mode-hook
 				  (lambda ()
 				    (add-hook 'eglot-managed-mode-hook
 					      (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
 					      nil t)))
 
-			(add-hook 'python-mode-hook (function python-black-on-save-mode))
-			(add-hook 'python-mode-hook (function eglot-ensure)))))))
+			(add-hook 'python-ts-mode-hook (function python-black-on-save-mode))
+			(add-hook 'python-ts-mode-hook (function eglot-ensure)))))))
 
 (define lisp-configuration
   (home-emacs-configuration
