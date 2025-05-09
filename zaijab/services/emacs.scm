@@ -1784,6 +1784,13 @@ END is the start of the line with :END: on it."
 			(setq major-mode-remap-alist
 			      '((python-mode . python-ts-mode))))
 
+	   (use-package combobulate
+			:custom
+			;; You can customize Combobulate's key prefix here.
+			;; Note that you may have to restart Emacs for this to take effect!
+			(combobulate-key-prefix "C-c o")
+			:hook ((prog-mode . combobulate-mode)))
+
 	   (use-package envrc
 			:demand t
        			:bind-keymap ("C-c e" . envrc-command-map)
