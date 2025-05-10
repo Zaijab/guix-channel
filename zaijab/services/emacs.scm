@@ -504,23 +504,28 @@ See `consult-grep' for details."
 (define tempel-configuration
   (home-emacs-configuration
    (packages (list emacs-tempel))
-   (init '((require 'tempel)
-	   (defun tempel-setup-capf ()
-	     (setq-local completion-at-point-functions
-			 (cons (function tempel-expand)
-			       completion-at-point-functions)))
-	   (defun tempel-reload ()
-	     (interactive)
-	     (setq tempel--path-templates nil))
-	   (add-hook 'prog-mode-hook 'tempel-setup-capf)
-	   (add-hook 'text-mode-hook 'tempel-setup-capf)
-	   (add-hook 'text-mode-hook
-		     (lambda ()
-		       (remove-hook 'completion-at-point-functions
-				    'ispell-completion-at-point t)))
-	   (define-key tempel-map (kbd "C-<") (function tempel-previous))
-	   (define-key tempel-map (kbd "C->") (function tempel-next))
-	   (global-set-key (kbd "M-+") (function tempel-complete))))))
+   (init '((use-package tempel
+			:bind (("M-+" . tempel-complete) ;; Alternative tempel-expand
+			       ("M-*" . tempel-insert))
+			:init
+			(defun tempel-setup-capf ()
+			  (setq-local completion-at-point-functions
+				      (cons (function tempel-expand)
+					    completion-at-point-functions)))
+			(defun tempel-reload ()
+			  (interactive)
+			  (setq tempel--path-templates nil))
+			(add-hook 'conf-mode-hook 'tempel-setup-capf)
+			(add-hook 'prog-mode-hook 'tempel-setup-capf)
+			(add-hook 'text-mode-hook 'tempel-setup-capf))
+	   
+	   ;; (add-hook 'text-mode-hook
+	   ;; 	     (lambda ()
+	   ;; 	       (remove-hook 'completion-at-point-functions
+	   ;; 			    'ispell-completion-at-point t)))
+	   
+
+			))))
 
 ;; Completion at Point Functions
 (define cape-configuration

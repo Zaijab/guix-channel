@@ -17,7 +17,7 @@ org-mode
 (set "\\{ " p " \\vert " p " \\}")
 (func p " \\colon " p " \\to " p)
 
-python-ts-mode
+python-base-mode
 
 (__contains__ "def __contains__(self, el):" n> p n> "pass")
 (__enter__ "def __enter__(self):" n> p n> "return self")
@@ -106,4 +106,4 @@ python-ts-mode
 (utf-8_encoding "# -*- coding: utf-8 -*-")
 (while "while " p ":" n> q)
 (with "with " p p ":" n> q)
-(with_statement "from __future__ import with_statement"))
+(with_statement "from __future__ import with_statement")
