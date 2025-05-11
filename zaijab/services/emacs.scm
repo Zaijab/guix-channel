@@ -1758,7 +1758,8 @@ END is the start of the line with :END: on it."
 
 	      tree-sitter
 	      tree-sitter-python
-
+	      tree-sitter-org
+	      tree-sitter-scheme
 	      emacs-csv-mode
 	      emacs-combobulate
 	      emacs-py-isort
