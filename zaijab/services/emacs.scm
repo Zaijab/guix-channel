@@ -1260,9 +1260,9 @@ See `consult-grep' for details."
 			(org-roam-db-node-include-function (lambda () (not (member "FC" (org-get-tags)))))
 			(org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 			:config
-			(org-roam-db-autosync-mode)
 			(load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.2.2-2.046822b/org-roam-db.el")
 			(load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.2.2-2.046822b/org-roam.el")
+			(org-roam-db-autosync-mode)
 			(define-key org-mode-map (kbd "C-c C-t") (function org-roam-tag-add)))
 
 	   (use-package org-roam-node
