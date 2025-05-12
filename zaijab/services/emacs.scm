@@ -379,7 +379,7 @@ See `consult-grep' for details."
 			:hook (emacs-startup . global-jinx-mode)
 			:bind (("M-$" . jinx-correct)
 			       ("C-M-$" . jinx-languages))
-			:custom
+			:config
 			(defun jinx--add-to-abbrev (overlay word)
 			  "Add abbreviation to `global-abbrev-table'. The misspelled word is taken from OVERLAY.  WORD is the corrected word."
 			  (let ((abbrev (buffer-substring-no-properties
