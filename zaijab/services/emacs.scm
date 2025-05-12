@@ -388,7 +388,7 @@ See `consult-grep' for details."
 			    (message "Abbrev: %s -> %s" abbrev word)
 			    (define-abbrev global-abbrev-table abbrev word)))
 
-			(advice-add 'jinx--correct-replace :before #'jinx--add-to-abbrev)
+			(advice-add 'jinx--correct-replace :before (function jinx--add-to-abbrev))
 			
 			(setq jinx-exclude-regexps
 			      '((emacs-lisp-mode "Package-Requires:.*$")
@@ -2276,24 +2276,7 @@ END is the start of the line with :END: on it."
 			     (hash-map->list (lambda (x y) y) (struct-ref (current-module) 0)))))))
 
 
-;; (define (use-emacs-next package)
-;;   (if #t
-;;       ((options->transformation '(
-;; 				  (with-git-url . "emacs-org=https://code.tecosaur.net/tec/org-mode.git")
-;; 				  (with-commit . "emacs-org=cd2269ddb64bda7203acf2ee2e26188237a578ea") ;9f954bfc33283907abb6e7085481efa6e94ecbd7
-;; 				  (without-tests . "emacs-org")))
-;;        package)
-;;       package))
-
-(define (use-emacs-next package)
-  (if #f
-      ((options->transformation '((with-commit . "emacs-org-roam=64e302c1269a1a16c4c0b5a7d1e3baf2d5ded174")))
-       package)
-      package))
-
-
 (define home-emacs-total-configuration
   (home-emacs-configuration
    (inherit home-emacs-total-configuration)
-   (packages (map use-emacs-next
-		  (home-emacs-configuration-packages home-emacs-total-configuration)))))
+   (packages (home-emacs-configuration-packages home-emacs-total-configuration))))
