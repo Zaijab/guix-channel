@@ -373,6 +373,7 @@ See `consult-grep' for details."
 (define spellcheck-configuration
   (home-emacs-configuration
    (packages (list emacs-jinx
+		   hunspell
 		   hunspell-dict-en-us))
    (init '((use-package jinx
 			:hook (emacs-startup . global-jinx-mode)
