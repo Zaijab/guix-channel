@@ -378,7 +378,17 @@ See `consult-grep' for details."
    (init '((use-package jinx
 			:hook (emacs-startup . global-jinx-mode)
 			:bind (("M-$" . jinx-correct)
-			       ("C-M-$" . jinx-languages)))))))
+			       ("C-M-$" . jinx-languages))
+			:custom
+			(defun jinx--add-to-abbrev (overlay word)
+			  "Add abbreviation to `global-abbrev-table'. The misspelled word is taken from OVERLAY.  WORD is the corrected word."
+			  (let ((abbrev (buffer-substring-no-properties
+					 (overlay-start overlay)
+					 (overlay-end overlay))))
+			    (message "Abbrev: %s -> %s" abbrev word)
+			    (define-abbrev global-abbrev-table abbrev word)))
+
+			(advice-add 'jinx--correct-replace :before #'jinx--add-to-abbrev))))))
 
 (define openwith-configuration
   (home-emacs-configuration
@@ -2133,6 +2143,7 @@ END is the start of the line with :END: on it."
 	    	       initial-scratch-message nil
 		       inhibit-compacting-font-caches t
 	    	       large-file-warning-threshold 100000000)
+		 (setq-default abbrev-mode t)
 
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
