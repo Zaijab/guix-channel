@@ -44,6 +44,7 @@
                   ("PASSWORD_STORE_ENABLE_EXTENSIONS" . "true")
                   ("GIO_MODULE_DIR" . "/home/zjabbar/.guix-home/profile/lib/gio/modules/")
                   ("EDITOR" . "emacsclient -n")
+		  ("DICPATH" . "~/.guix-home/profile/share/hunspell/")
                   ("PATH" . "$PATH:/home/zjabbar/.local/bin")
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
                   ("TF_CPP_MIN_LOG_LEVEL" . "1")
