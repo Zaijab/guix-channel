@@ -520,14 +520,7 @@ See `consult-grep' for details."
 			(add-hook 'conf-mode-hook 'tempel-setup-capf)
 			(add-hook 'prog-mode-hook 'tempel-setup-capf)
 			(add-hook 'text-mode-hook 'tempel-setup-capf))
-	   
-	   ;; (add-hook 'text-mode-hook
-	   ;; 	     (lambda ()
-	   ;; 	       (remove-hook 'completion-at-point-functions
-	   ;; 			    'ispell-completion-at-point t)))
-	   
-
-			))))
+	   (setq text-mode-ispell-word-completion nil)))))
 
 ;; Completion at Point Functions
 (define cape-configuration
