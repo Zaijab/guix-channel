@@ -93,7 +93,7 @@ python-base-mode
 (setdef p ".setdefault(" p ", []).append(" p ")")
 (setup "from setuptools import setup" n n> "package = '" p "'" n> "version = '" p "'" n n> "setup(name=package," n> "version=version," n> "description=\"" p "\"," n> "url='" p "'" p ")")
 (shebang_line "#!/usr/bin/env python" n> q)
-(size "sys.getsizeof(" p ")")
+;(size "sys.getsizeof(" p ")")
 (static "@staticmethod" n> "def " p "(" p "):" n> q)
 (__str__ "def __str__(self):" n> q)
 (super "super(" p ", self)." p "(" p ")")
