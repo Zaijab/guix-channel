@@ -1809,12 +1809,16 @@ END is the start of the line with :END: on it."
 										 (jupyter . t)))
 
 			(add-to-list 'org-src-lang-modes (cons "python3" 'python))
-			(define-key python-ts-mode-map (kbd "C-c C-p")
-			  (lambda () (interactive)
-				  (jupyter-run-repl "python"
-						    (when current-prefix-arg
-						      (read-string "REPL Name: "))
-						    t nil t)))
+			(define-key python-ts-mode-map
+			  (kbd "C-c C-p")
+			  (function jupyter-repl-associate-buffer))
+			
+			;; (define-key python-ts-mode-map (kbd "C-c C-p")
+			;;   (lambda () (interactive)
+			;; 	  (jupyter-run-repl "python"
+			;; 			    (when current-prefix-arg
+			;; 			      (read-string "REPL Name: "))
+			;; 			    t nil t)))
 			(setq major-mode-remap-alist
 			      '((python-mode . python-ts-mode))))
 
