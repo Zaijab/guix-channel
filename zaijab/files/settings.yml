@@ -1,5 +1,6 @@
 # # see https://docs.searxng.org/admin/settings/settings.html#settings-use-default-settings
 use_default_settings: true
+request_timeout: 20.0
 server:
   # base_url is defined in the SEARXNG_BASE_URL environment variable, see .env and docker-compose.yml
   secret_key: "megasecretkey"  # change this!
