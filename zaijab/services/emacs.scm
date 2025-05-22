@@ -1036,7 +1036,7 @@ See `consult-grep' for details."
 			(emms-all)
 			(setq emms-player-list '(emms-player-mpv)
 			      emms-info-functions '(emms-info-tinytag))
-
+			(emms-mode-line-disable)
 			(defvar emms-player-mpv-volume 100)
 			(defun emms-player-mpv-get-volume ()
 			  (emms-player-mpv-cmd '(get_property volume)
