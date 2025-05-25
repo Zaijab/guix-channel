@@ -207,7 +207,7 @@
     (host-name "tao")
     
     (services (cons*
-	       ;; (service nvidia-service-type)
+	       (service nvidia-service-type)
 	       
 	       ;; (set-xorg-configuration
 		;; (xorg-configuration
