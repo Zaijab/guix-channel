@@ -199,7 +199,7 @@
   (operating-system
     (inherit based-operating-system)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
-			     "modprobe.blacklist=nouveau"
+			     ;; "modprobe.blacklist=nouveau"
 			     ;; "nvidia_drm.fbdev=1"
 			     ;; "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
 			     %default-kernel-arguments))
