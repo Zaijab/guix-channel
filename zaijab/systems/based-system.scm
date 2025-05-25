@@ -202,9 +202,7 @@
 			     "modprobe.blacklist=nouveau"
 			     ;; "nvidia_drm.fbdev=1"
 			     ;; "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-			     %default-kernel-arguments
-			     ;; (list)
-			     ))
+			     %default-kernel-arguments))
     
     (host-name "tao")
     
