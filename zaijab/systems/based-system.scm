@@ -209,10 +209,10 @@
     (services (cons*
 	       (service nvidia-service-type)
 	       
-	       ;; (set-xorg-configuration
-	       ;; 	(xorg-configuration
-	       ;; 	 (modules (cons nvda %default-xorg-modules))
-	       ;; 	 (drivers '("nvidia"))))
+	       (set-xorg-configuration
+		 	(xorg-configuration
+		 	 (modules (cons nvda %default-xorg-modules))
+		 	 (drivers '("nvidia"))))
 	       main-services))
     ))
 
