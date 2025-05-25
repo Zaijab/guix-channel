@@ -202,7 +202,9 @@
 			     "modprobe.blacklist=nouveau"
 			     ;; "nvidia_drm.fbdev=1"
 			     ;; "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
-			     %default-kernel-arguments))
+			     ;; %default-kernel-arguments
+			     (list)
+			     ))
     
     (host-name "tao")
     
@@ -228,4 +230,4 @@
     (cond ((string= hostname "tao") tao-operating-system)
 	  ((string= hostname "euler") euler-operating-system))))
 
-euler-operating-system
+my-operating-system
