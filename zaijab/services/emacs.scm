@@ -2250,6 +2250,10 @@ END is the start of the line with :END: on it."
 			      "show diff between the buffer and its file"))
 	   (setq compile-command "make")
 
+	   (setq display-buffer-alist '(("\\*jupyter-" (display-buffer-no-window)
+					 (allow-no-window . t))))
+	   
+	   (setq switch-to-buffer-obey-display-actions nil)
 
 
 	   (defun quick-restart ()
