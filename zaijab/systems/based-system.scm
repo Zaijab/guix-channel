@@ -199,9 +199,9 @@
   (operating-system
     (inherit based-operating-system)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
-			     ;; "modprobe.blacklist=nouveau"
-			     ;; "nvidia_drm.fbdev=1"
-			     ;; "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+			     "modprobe.blacklist=nouveau"
+			     "nvidia_drm.fbdev=1"
+			     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
 			     %default-kernel-arguments))
     
     (host-name "tao")
@@ -209,10 +209,10 @@
     (services (cons*
 	       (service nvidia-service-type)
 	       
-	       ;; (set-xorg-configuration
-		;; (xorg-configuration
-		 ;; (modules (cons nvda %default-xorg-modules))
-		 ;; (drivers '("nvidia"))))
+	       (set-xorg-configuration
+		(xorg-configuration
+		 (modules (cons nvda %default-xorg-modules))
+		 (drivers '("nvidia"))))
 	       main-services))
     ))
 
