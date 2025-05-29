@@ -1738,8 +1738,6 @@ END is the start of the line with :END: on it."
 			;; (ad-activate 'org-agenda-add-time-grid-maybe)
 			;; (setq org-confirm-babel-evaluate nil)
 			(setq org-startup-with-latex-preview t)
-			;; (setq org-preview-latex-default-process 'dvisvgm)
-					;(add-hook 'org-mode-hook 'org-fragtog-mode)
 			(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 			(add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
 			(setq python-indent-guess-indent-offset-verbose nil)
