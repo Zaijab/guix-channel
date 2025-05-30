@@ -1842,7 +1842,7 @@ END is the start of the line with :END: on it."
 							:plugins
 							'(:pycodestyle (:enabled :json-false)
 							  :pyflakes (:enabled :json-false)
-							  :flake8 (:enabled t))))))
+							  :flake8 (:enabled :json-false))))))
 			(setq eglot-send-changes-idle-time 0.1)
 			(setq eglot-report-progress nil)
 			(defun sloth/org-babel-edit-prep (info)
@@ -2252,6 +2252,48 @@ END is the start of the line with :END: on it."
 					 (allow-no-window . t))))
 	   
 	   (setq switch-to-buffer-obey-display-actions nil)
+	   (defun hs-cycle (&optional level)
+	     (interactive "p")
+	     (let (message-log-max
+		   (inhibit-message t))
+	       (if (= level 1)
+		   (pcase last-command
+			  ('hs-cycle
+			   (hs-hide-level 1)
+			   (setq this-command 'hs-cycle-children))
+			  ('hs-cycle-children
+			   ;; TODO: Fix this case. `hs-show-block' needs to be
+			   ;; called twice to open all folds of the parent
+			   ;; block.
+			   (save-excursion (hs-show-block))
+			   (hs-show-block)
+			   (setq this-command 'hs-cycle-subtree))
+			  ('hs-cycle-subtree
+			   (hs-hide-block))
+			  (_
+			   (if (not (hs-already-hidden-p))
+			       (hs-hide-block)
+			       (hs-hide-level 1)
+			       (setq this-command 'hs-cycle-children))))
+		   (hs-hide-level level)
+		   (setq this-command 'hs-hide-level))))
+
+	   (defun hs-global-cycle ()
+	     (interactive)
+	     (pcase last-command
+		    ('hs-global-cycle
+		     (save-excursion (hs-show-all))
+		     (setq this-command 'hs-global-show))
+		    (_ (hs-hide-all))))
+
+
+	   (define-key python-ts-mode-map (kbd "C-<tab>") (function hs-cycle))
+	   (define-key python-ts-mode-map (kbd "C-S-<tab>") (function hs-global-cycle))
+	   (define-key python-ts-mode-map (kbd "C-<iso-lefttab>") (function hs-global-cycle))
+
+	   (define-key tab-bar-mode-map (kbd "C-<tab>") nil)
+	   (define-key tab-bar-mode-map (kbd "C-S-<tab>") nil)
+	   (define-key tab-bar-mode-map (kbd "C-S-<iso-lefttab>") nil)
 
 
 	   (defun quick-restart ()
