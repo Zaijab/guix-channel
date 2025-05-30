@@ -1873,7 +1873,9 @@ END is the start of the line with :END: on it."
 					      nil t)))
 
 			(add-hook 'python-ts-mode-hook (function python-black-on-save-mode))
-			(add-hook 'python-ts-mode-hook (function eglot-ensure)))))))
+			(add-hook 'python-ts-mode-hook (function eglot-ensure))
+			(add-hook 'python-ts-mode-hook (function hs-minor-mode))
+			)))))
 
 (define lisp-configuration
   (home-emacs-configuration
