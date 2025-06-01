@@ -1761,7 +1761,7 @@ END is the start of the line with :END: on it."
    (packages (list
 	      python
 	      jupyter
-	      guix-jupyter
+	      ;; guix-jupyter
 	      python-virtualenv
 
 	      expect
