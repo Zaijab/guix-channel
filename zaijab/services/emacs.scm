@@ -249,6 +249,7 @@
 			;; after lazily loading the package.
 			:commands (consult-ripgrep-all consult-search-library)
 			:config
+			(load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/consult-2.2/consult.el")
 
 			;; Optionally configure preview. The default value
 			;; is 'any, such that any key triggers the preview.
@@ -380,6 +381,7 @@ See `consult-grep' for details."
 			:bind (("M-$" . jinx-correct)
 			       ("C-M-$" . jinx-languages))
 			:config
+			(load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/jinx-2.1/jinx.el")
 			(defun jinx--add-to-abbrev (overlay word)
 			  "Add abbreviation to `global-abbrev-table'. The misspelled word is taken from OVERLAY.  WORD is the corrected word."
 			  (let ((abbrev (buffer-substring-no-properties
