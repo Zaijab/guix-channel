@@ -381,7 +381,6 @@ See `consult-grep' for details."
 			:bind (("M-$" . jinx-correct)
 			       ("C-M-$" . jinx-languages))
 			:config
-			(load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/jinx-2.1/jinx.el")
 			(defun jinx--add-to-abbrev (overlay word)
 			  "Add abbreviation to `global-abbrev-table'. The misspelled word is taken from OVERLAY.  WORD is the corrected word."
 			  (let ((abbrev (buffer-substring-no-properties
@@ -2292,9 +2291,9 @@ END is the start of the line with :END: on it."
 		    (_ (hs-hide-all))))
 
 
-	   (define-key python-ts-mode-map (kbd "C-<tab>") (function hs-cycle))
-	   (define-key python-ts-mode-map (kbd "C-S-<tab>") (function hs-global-cycle))
-	   (define-key python-ts-mode-map (kbd "C-<iso-lefttab>") (function hs-global-cycle))
+	   (define-key python-base-mode-map (kbd "C-<tab>") (function hs-cycle))
+	   (define-key python-base-mode-map (kbd "C-S-<tab>") (function hs-global-cycle))
+	   (define-key python-base-mode-map (kbd "C-<iso-lefttab>") (function hs-global-cycle))
 
 	   (define-key tab-bar-mode-map (kbd "C-<tab>") nil)
 	   (define-key tab-bar-mode-map (kbd "C-S-<tab>") nil)
