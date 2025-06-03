@@ -484,11 +484,8 @@ See `consult-grep' for details."
 ;; In Buffer Completion
 (define corfu-configuration
   (home-emacs-configuration
-   (packages (list emacs-corfu
-		   #;((options->transformation '((with-branch . "emacs-compat=main")))
-		   emacs-compat)))
+   (packages (list emacs-corfu))
    (init '((use-package corfu
-			;; Optional customizations
 			:custom
 			(corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
 			(corfu-auto t)                 ;; Enable auto completion
@@ -499,31 +496,8 @@ See `consult-grep' for details."
 			(corfu-preselect 'prompt)      ;; Preselect the prompt
 			(corfu-on-exact-match nil)     ;; Configure handling of exact matches
 			(corfu-scroll-margin 5)        ;; Use scroll margin
-
-			;; Enable Corfu only for certain modes. See also `global-corfu-modes'.
-			;; :hook ((prog-mode . corfu-mode)
-			;;        (shell-mode . corfu-mode)
-			;;        (eshell-mode . corfu-mode))
-
-			;; Recommended: Enable Corfu globally.  This is recommended since Dabbrev can
-			;; be used globally (M-/).  See also the customization variable
-			;; `global-corfu-modes' to exclude certain modes.
 			:init
-			(global-corfu-mode))
-	   ;; (global-corfu-mode)
-	   ;; (corfu-history-mode)
-	   ;; (setq corfu-cycle t
-	   ;; 	 corfu-auto t
-	   ;; 	 corfu-auto-prefix 2
-	   ;; 	 corfu-auto-delay 0.0
-	   ;; 	 corfu-quit-at-boundary 'separator
-	   ;; 	 corfu-echo-documentation 0.25
-	   ;; 	 corfu-preview-current 'insert
-	   ;; 	 corfu-preselect-first nil)
-	   ;; (define-key corfu-map (kbd "M-<SPC>") (function corfu-insert-separator))
-	   ;; (define-key corfu-map (kbd "M-}") (function corfu-next))
-	   ;; (define-key corfu-map (kbd "M-{") (function corfu-previous))
-	   ))))
+			(global-corfu-mode))))))
 
 ;; Templates
 (define tempel-configuration
@@ -1815,21 +1789,15 @@ END is the start of the line with :END: on it."
 			(define-key python-ts-mode-map
 			  (kbd "C-c C-p")
 			  (function jupyter-repl-associate-buffer))
+			;; TODO: Find Keys for:
+			;; import-at-point, flymake-goto-error
 			
-			;; (define-key python-ts-mode-map (kbd "C-c C-p")
-			;;   (lambda () (interactive)
-			;; 	  (jupyter-run-repl "python"
-			;; 			    (when current-prefix-arg
-			;; 			      (read-string "REPL Name: "))
-			;; 			    t nil t)))
 			(setq major-mode-remap-alist
 			      '((python-mode . python-ts-mode))))
 
 	   (use-package combobulate
 			:custom
-			;; You can customize Combobulate's key prefix here.
-			;; Note that you may have to restart Emacs for this to take effect!
-			(combobulate-key-prefix "C-c o")
+		       	(combobulate-key-prefix "C-c o")
 			:hook ((prog-mode . combobulate-mode)))
 
 	   (use-package envrc
@@ -1850,6 +1818,7 @@ END is the start of the line with :END: on it."
 							  :flake8 (:enabled :json-false))))))
 			(setq eglot-send-changes-idle-time 0.1)
 			(setq eglot-report-progress nil)
+
 			(defun sloth/org-babel-edit-prep (info)
 			  (setq buffer-file-name (or (alist-get :file (caddr info))
 						     "org-src-babel-tmp"))
@@ -2206,10 +2175,10 @@ END is the start of the line with :END: on it."
 		 (push '(tool-bar-lines . 0)   default-frame-alist)
 		 (push '(vertical-scroll-bars) default-frame-alist)
 		 (blink-cursor-mode 0)
-		 (setq comp-async-report-warnings-errors nil)
-		 (setq native-comp-async-report-warnings-errors nil)
-		 (setq warning-suppress-log-types '((comp) (comp)))
-		 (setq warning-suppress-types '((comp) (comp)))
+		 ;; (setq comp-async-report-warnings-errors nil)
+		 ;; (setq native-comp-async-report-warnings-errors nil)
+		 ;; (setq warning-suppress-log-types '((comp) (comp)))
+		 ;; (setq warning-suppress-types '((comp) (comp)))
 		 (setq user-emacs-directory "~/.config/emacs")
 		 (setq byte-compile-warnings '(cl-functions))
 		 (setq make-backup-files nil)
