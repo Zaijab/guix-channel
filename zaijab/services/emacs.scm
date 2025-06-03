@@ -1786,6 +1786,10 @@ END is the start of the line with :END: on it."
 										 (jupyter . t)))
 
 			(add-to-list 'org-src-lang-modes (cons "python3" 'python))
+			(define-key python-base-mode-map (kbd "C-<tab>") (function hs-cycle))
+			(define-key python-base-mode-map (kbd "C-S-<tab>") (function hs-global-cycle))
+			(define-key python-base-mode-map (kbd "C-<iso-lefttab>") (function hs-global-cycle))
+
 			(define-key python-ts-mode-map
 			  (kbd "C-c C-p")
 			  (function jupyter-repl-associate-buffer))
@@ -2268,9 +2272,6 @@ END is the start of the line with :END: on it."
 		    (_ (hs-hide-all))))
 
 
-	   (define-key python-base-mode-map (kbd "C-<tab>") (function hs-cycle))
-	   (define-key python-base-mode-map (kbd "C-S-<tab>") (function hs-global-cycle))
-	   (define-key python-base-mode-map (kbd "C-<iso-lefttab>") (function hs-global-cycle))
 
 	   (define-key tab-bar-mode-map (kbd "C-<tab>") nil)
 	   (define-key tab-bar-mode-map (kbd "C-S-<tab>") nil)
