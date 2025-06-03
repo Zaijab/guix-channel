@@ -322,6 +322,7 @@ See `consult-grep' for details."
 
 
 			)
+	   (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/consult-2.2/consult.el")
 
 
 
@@ -397,7 +398,10 @@ See `consult-grep' for details."
 				   "<?[-+_.~a-zA-Z][-+_.~:a-zA-Z0-9]*@[-.a-zA-Z0-9]+>?"
 				   "\\(?:Local Variables\\|End\\):\\s-*$"
 				   "jinx-\\(?:languages\\|local-words\\):\\s-+.*$"
-				   "\\cc"))))))))
+				   "\\cc")))
+			)
+	   (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/jinx-2.1/jinx.el")
+	   ))))
 
 (define openwith-configuration
   (home-emacs-configuration
@@ -1788,11 +1792,11 @@ END is the start of the line with :END: on it."
 	      pandoc))
    (init '((use-package jupyter
 			:config
-			(defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
-			  (condition-case nil
-					  (apply func args)
-					  (jupyter-api-http-error nil)))
-			(advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
+			;; (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
+			;;   (condition-case nil
+			;; 		  (apply func args)
+			;; 		  (jupyter-api-http-error nil)))
+			;; (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
 			(setq org-babel-python-command "python3"
 			      org-confirm-babel-evaluate nil
@@ -1867,11 +1871,15 @@ END is the start of the line with :END: on it."
 
 	   (use-package python
 			:config
-			(add-hook 'python-ts-mode-hook
-				  (lambda ()
-				    (add-hook 'eglot-managed-mode-hook
-					      (lambda () (setq-local completion-at-point-functions (list (cape-capf-super (function jupyter-completion-at-point) (function python-completion-at-point) (function eglot-completion-at-point)))))
-					      nil t)))
+			(defun python-capf-super ()
+			  (add-hook 'eglot-managed-mode-hook
+				    (lambda () (setq-local completion-at-point-functions
+							   (list (cape-capf-super
+								  (function jupyter-completion-at-point)
+								  (function python-completion-at-point)
+								  (function eglot-completion-at-point)))))
+				    nil t))
+			;; (add-hook 'python-ts-mode-hook (function python-capf-super))
 
 			(add-hook 'python-ts-mode-hook (function python-black-on-save-mode))
 			(add-hook 'python-ts-mode-hook (function eglot-ensure))
