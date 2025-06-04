@@ -1924,7 +1924,8 @@ END is the start of the line with :END: on it."
 
 (define shell-configuration
   (home-emacs-configuration
-   (packages (list emacs-eat))
+   (packages (list emacs-eat
+		   emacs-bash-completion))
    (init '(#;(use-package eat
 	   :demand t
 	   :hook
