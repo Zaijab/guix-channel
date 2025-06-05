@@ -1236,7 +1236,6 @@ See `consult-grep' for details."
 	   (setq mu4e-headers-auto-update nil
 		 mu4e-view-auto-html nil)
 
-	   (setq mu4e-update-interval 30)
 
 	   ))))
 
