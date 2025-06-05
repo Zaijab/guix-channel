@@ -1219,6 +1219,24 @@ See `consult-grep' for details."
 						  :query "maildir:/zjabbar_hawaii_math/Inbox AND flag:unread AND NOT flag:trashed"
 						  :key ?u)))))
 		       ))
+	   ;; Reduce header processing overhead
+	   (setq mu4e-headers-fields '((:date . 12) (:from . 25) (:subject . nil)))
+
+	   ;; Limit search results to reduce field value calls
+	   (setq mu4e-headers-results-limit 500)
+
+	   ;; Disable expensive threading calculations
+	   (setq mu4e-headers-show-threads nil)
+
+	   ;; Reduce context switching overhead in your bookmarks
+	   (setq mu4e-context-policy 'pick-first
+		 mu4e-compose-context-policy 'ask-if-none)
+
+
+	   (setq mu4e-headers-auto-update nil
+		 mu4e-view-auto-html nil)
+
+	   (setq mu4e-update-interval 30)
 
 	   ))))
 
