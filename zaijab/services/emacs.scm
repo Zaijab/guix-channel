@@ -1772,6 +1772,7 @@ END is the start of the line with :END: on it."
 			;; 		  (jupyter-api-http-error nil)))
 			;; (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
+			(setq jupyter-repl-completion-at-point-hook-depth 1)
 			(setq org-babel-python-command "python3"
 			      org-confirm-babel-evaluate nil
 			      python-interpreter "python3"
