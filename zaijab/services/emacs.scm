@@ -1080,7 +1080,7 @@ See `consult-grep' for details."
 		 mu4e-index-lazy-check t)
 	   (setq mu4e-mu-home "/home/zjabbar/.cache/mu")
 	   (setq mail-user-agent 'mu4e-user-agent)
-	   (add-hook 'after-init-hook (function mu4e-alert-enable-mode-line-display))
+	   ;; (add-hook 'after-init-hook (function mu4e-alert-enable-mode-line-display))
 	   (require 'org-msg)
 	   (setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil title:nil email:nil tex:mathjax"
 		 org-msg-startup "hidestars indent inlineimages"
