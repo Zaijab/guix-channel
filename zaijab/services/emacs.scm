@@ -1227,7 +1227,7 @@ See `consult-grep' for details."
 						  :key ?u)))))
 		       ))
 	   ;; Reduce header processing overhead
-	   (setq mu4e-headers-fields '((:date . 12) (:from . 25) (:subject . nil)))
+	   ;; (setq mu4e-headers-fields '((:date . 12) (:from . 25) (:subject . nil)))
 
 	   ;; Limit search results to reduce field value calls
 	   (setq mu4e-headers-results-limit 500)
