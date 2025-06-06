@@ -1080,7 +1080,14 @@ See `consult-grep' for details."
 		 mu4e-index-lazy-check t)
 	   (setq mu4e-mu-home "/home/zjabbar/.cache/mu")
 	   (setq mail-user-agent 'mu4e-user-agent)
-	   ;; (add-hook 'after-init-hook (function mu4e-alert-enable-mode-line-display))
+	   (setq mu4e-alert-email-notification-types '(count))
+	   (setq mu4e-alert-interesting-mail-query
+		 (concat
+		  "flag:unread"
+		  " AND NOT flag:trashed"
+		  " AND date:2d..now"))
+
+	   (add-hook 'after-init-hook (function mu4e-alert-enable-mode-line-display))
 	   (require 'org-msg)
 	   (setq org-msg-options "html-postamble:nil H:5 num:nil ^:{} toc:nil author:nil title:nil email:nil tex:mathjax"
 		 org-msg-startup "hidestars indent inlineimages"
@@ -1226,15 +1233,15 @@ See `consult-grep' for details."
 	   (setq mu4e-headers-results-limit 500)
 
 	   ;; Disable expensive threading calculations
-	   (setq mu4e-headers-show-threads nil)
+	   ;; (setq mu4e-headers-show-threads nil)
 
 	   ;; Reduce context switching overhead in your bookmarks
 	   (setq mu4e-context-policy 'pick-first
 		 mu4e-compose-context-policy 'ask-if-none)
 
 
-	   (setq mu4e-headers-auto-update nil
-		 mu4e-view-auto-html nil)
+	   ;; (setq mu4e-headers-auto-update nil
+	   ;; 	 mu4e-view-auto-html nil)
 
 
 	   ))))
