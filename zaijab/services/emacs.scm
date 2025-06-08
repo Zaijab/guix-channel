@@ -1905,6 +1905,7 @@ END is the start of the line with :END: on it."
 	   guix-repl-use-latest  nil
 	   guix-repl-use-server  nil))
 	   (setq geiser-guile-binary '("guix" "repl"))
+	   (setq geiser-guile-load-init-file t)
 	   (require 'guix)
 	   (global-guix-prettify-mode)
 
