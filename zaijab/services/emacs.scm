@@ -1261,7 +1261,18 @@ See `consult-grep' for details."
 	      emacs-org-drill
 	      emacs-kanji))
    (init '((use-package sqlite)
-
+	   
+	   (use-package org-node
+			:config
+			(setq org-mem-do-sync-with-org-id t)
+			(setq org-mem-watch-dirs
+			      (list "~/notes/")) ;; Your org-roam-directory here
+			(org-mem-updater-mode)
+			(org-node-cache-mode)
+			(org-node-roam-accelerator-mode)
+			(setq org-node-creation-fn #'org-node-new-via-roam-capture)
+			(setq org-node-file-slug-fn #'org-node-slugify-like-roam-default)
+			(setq org-node-file-timestamp-format "%Y%m%d%H%M%S-"))
 	   (use-package org-roam
 			:demand t
 			:after (org sqlite)
@@ -2051,10 +2062,8 @@ END is the start of the line with :END: on it."
 						     (lambda () (interactive)
 							     (find-file "~/code/guix-channel/zaijab/services/emacs.scm"))))
 			(global-set-key (kbd "s-b") (function consult-search-library))
-			(global-set-key (kbd "s-n") 'org-roam-node-find)
+			(global-set-key (kbd "s-n") 'org-node-find)
 			(global-set-key (kbd "s-i") 'org-roam-node-insert)
-			(global-set-key (kbd "s-N") 'org-roam-dailies-capture-today)
-			(global-set-key (kbd "C-x C-n") 'org-roam-node-find)
 			(global-set-key (kbd "s-a") 'cfw:open-org-calendar)
 			(global-set-key (kbd "s-s") (function jisho->fc))
 			(global-set-key (kbd "s-m") 'mu4e)
