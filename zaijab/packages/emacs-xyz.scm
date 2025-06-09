@@ -668,7 +668,7 @@ emails in a Outlook HTML friendly style.")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
-          (base32 "0d8y88n1d9agq5w5d4jss2dlygm6w0rkvvnmc0k6i62hzqmxxf0i"))))
+          (base32 "1hvji0ig984bglqxmfpqy3rlwixbylm9wi06a3jvjxvnbc65j3rr"))))
       (build-system emacs-build-system)
       (propagated-inputs
        (list emacs-htmlize))
