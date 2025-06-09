@@ -1270,8 +1270,8 @@ See `consult-grep' for details."
 			(org-mem-updater-mode)
 			(org-node-cache-mode)
 			(org-node-roam-accelerator-mode)
-			(setq org-node-creation-fn #'org-node-new-via-roam-capture)
-			(setq org-node-file-slug-fn #'org-node-slugify-like-roam-default)
+			(setq org-node-creation-fn (function org-node-new-via-roam-capture))
+			(setq org-node-file-slug-fn (function org-node-slugify-like-roam-default))
 			(setq org-node-file-timestamp-format "%Y%m%d%H%M%S-"))
 	   (use-package org-roam
 			:demand t
