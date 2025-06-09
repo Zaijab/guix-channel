@@ -1252,6 +1252,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list
 	      emacs-org-node
+	      emacs-org-mem
 	      emacs-org-roam
 	      emacs-org-roam-ui
 	      emacs-org-roam-bibtex
