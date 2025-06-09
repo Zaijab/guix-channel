@@ -1061,7 +1061,7 @@ See `consult-grep' for details."
 (define email-configuration
   (home-emacs-configuration
    (packages (list
-	      emacs-org-msg-master
+	      emacs-org-msg-master-fix
 	      isync
 	      mu
 	      emacs-mu4e-alert
@@ -2177,7 +2177,7 @@ END is the start of the line with :END: on it."
 		       max-mini-window-height 10
 	    	       initial-scratch-message nil
 		       inhibit-compacting-font-caches t
-	    	       large-file-warning-threshold 100000000)
+	    	       large-file-warning-threshold 1000000000)
 		 (setq-default abbrev-mode t)
 		 (load "/home/zjabbar/.guix-home/profile/share/emacs/30.0.92/lisp/subr.el.gz")
 

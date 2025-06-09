@@ -654,6 +654,32 @@ Mail User Agent Mode (Message, mu4e, or Notmuch) to compose and reply to
 emails in a Outlook HTML friendly style.")
       (license license:gpl3+))))
 
+(define-public emacs-org-msg-master-fix
+  ;; No git tags.  The commit below corresponds to the release of version 4.0.
+  (let ((commit "e7b5447ab07a853a9e85fa2fe361903acab5670d"))
+    (package
+      (name "emacs-org-msg")
+      (version "some-fixes")
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/seblemaguer/org-msg.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "0d8y88n1d9agq5w5d4jss2dlygm6w0rkvvnmc0k6i62hzqmxxf0i"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       (list emacs-htmlize))
+      (home-page "https://github.com/jeremy-compostella/org-msg")
+      (synopsis "Mix Org mode and Message mode to compose emails")
+      (description
+       "OrgMsg is a GNU Emacs global minor mode mixing up Org mode and your
+Mail User Agent Mode (Message, mu4e, or Notmuch) to compose and reply to
+emails in a Outlook HTML friendly style.")
+      (license license:gpl3+))))
+
 ;; (define-public emacs-org-parallel-latex
 ;;   (package
 ;;     (inherit emacs-org)
