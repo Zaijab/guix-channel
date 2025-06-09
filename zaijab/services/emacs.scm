@@ -1251,8 +1251,7 @@ See `consult-grep' for details."
 (define notes-configuration
   (home-emacs-configuration
    (packages (list
-	      emacs-org-node
-	      emacs-org-mem
+	      emacs-org-node-3
 	      emacs-org-roam
 	      emacs-org-roam-ui
 	      emacs-org-roam-bibtex
