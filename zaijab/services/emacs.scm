@@ -336,7 +336,7 @@ See `consult-grep' for details."
    (packages (list emacs-embark
 		   emacs-embark-consult))
    (init '((use-package embark
-			:ensure t
+			
 
 			:bind
 			(("C-." . embark-act)         ;; pick some comfortable binding
