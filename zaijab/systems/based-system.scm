@@ -145,7 +145,7 @@
 			     %default-kernel-arguments))
     (firmware (list linux-firmware))
     (locale "en_US.utf8")
-    (timezone "Pacific/Honolulu")
+    (timezone "America/Detroit")
     (keyboard-layout (keyboard-layout "us"))
     (sudoers-file
      (plain-file "sudoers"
