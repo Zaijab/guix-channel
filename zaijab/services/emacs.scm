@@ -322,7 +322,7 @@ See `consult-grep' for details."
 
 
 			)
-	   (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/consult-2.2/consult.el")
+	   (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/consult-2.5/consult.el")
 
 
 
