@@ -173,12 +173,12 @@
 (define-public emacs-tabspaces
   (package
     (name "emacs-tabspaces")
-    (version "20230212.531")
+    (version "main")
     (source (origin
               (method git-fetch)
               (uri (git-reference
                     (url "https://github.com/mclear-tools/tabspaces.git")
-                    (commit "6975c51a2154604db70fd38eba27cf784cc3c4a6")))
+                    (commit "f552823f51f11d66492f754deb51abd709c08ed9")))
               (sha256
                (base32
 		"0i01q1fv6kdpf3fmhdagh7wlhycy3c6lmqkjkhiah55h7xymr8rk"))))
