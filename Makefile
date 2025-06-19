@@ -19,7 +19,7 @@ pull_from_lock:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl --allow-downgrades
 
 update_lock:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org  https://nonguix-proxy.ditigal.xyz/'
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org https://nonguix-proxy.ditigal.xyz/'
 	guix describe --format=channels > /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl
 
 system:
