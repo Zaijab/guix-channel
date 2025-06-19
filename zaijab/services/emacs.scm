@@ -2172,9 +2172,7 @@ END is the start of the line with :END: on it."
   (home-emacs-configuration
    (packages (list emacs-rainbow-delimiters
 		   emacs-speed-type
-		   emacs-explain-pause-mode
 		   emacs-page-break-lines
-		   emacs-meow
 		   font-iosevka))
    (early-init '((setq package-enable-at-startup nil
 		       indicate-empty-lines nil
