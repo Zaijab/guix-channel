@@ -2172,6 +2172,9 @@ END is the start of the line with :END: on it."
   (home-emacs-configuration
    (packages (list emacs-rainbow-delimiters
 		   emacs-speed-type
+		   emacs-explain-pause-mode
+		   emacs-page-break-lines
+		   emacs-meow
 		   font-iosevka))
    (early-init '((setq package-enable-at-startup nil
 		       indicate-empty-lines nil
@@ -2195,9 +2198,6 @@ END is the start of the line with :END: on it."
 		       inhibit-compacting-font-caches t
 	    	       large-file-warning-threshold 1000000000)
 		 (setq-default abbrev-mode t)
-		 ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/30.0.92/lisp/subr.el.gz")
-		 ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/31.0.50/lisp/subr.el.gz")
-		 
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
 
