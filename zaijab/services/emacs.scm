@@ -1949,7 +1949,7 @@ END is the start of the line with :END: on it."
 	   (remove-hook 'scheme-mode-hook (function geiser-mode--maybe-activate))
 
 
-
+x
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
@@ -2198,7 +2198,7 @@ END is the start of the line with :END: on it."
 	    	       large-file-warning-threshold 1000000000)
 		 (setq-default abbrev-mode t)
 		 ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/30.0.92/lisp/subr.el.gz")
-		 (load "/home/zjabbar/.guix-home/profile/share/emacs/31.0.50/lisp/subr.el.gz")
+		 ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/31.0.50/lisp/subr.el.gz")
 		 
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
