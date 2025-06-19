@@ -1948,8 +1948,6 @@ END is the start of the line with :END: on it."
 	   ;; (add-hook 'scheme-mode-hook (function arei-mode))
 	   (remove-hook 'scheme-mode-hook (function geiser-mode--maybe-activate))
 
-
-x
 	   (setq user-full-name "Zain Jabbar")
 	   (setq user-mail-address "zaijab2000@gmail.com")
 	   (add-hook 'scheme-mode-hook 'guix-devel-mode)
