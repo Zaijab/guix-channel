@@ -2323,6 +2323,7 @@ END is the start of the line with :END: on it."
 	   (define-key tab-bar-mode-map (kbd "C-<tab>") nil)
 	   (define-key tab-bar-mode-map (kbd "C-S-<tab>") nil)
 	   (define-key tab-bar-mode-map (kbd "C-S-<iso-lefttab>") nil)
+	   (global-page-break-lines-mode)
 
 
 	   (defun quick-restart ()
