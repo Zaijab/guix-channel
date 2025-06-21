@@ -1810,7 +1810,7 @@ END is the start of the line with :END: on it."
 	      emacs-csv-mode
 	      emacs-combobulate
 	      emacs-py-isort
-	      emacs-python-black
+	      ;; emacs-python-black
 	      python-pip
 	      pandoc))
    (init '((use-package jupyter
@@ -1903,11 +1903,11 @@ END is the start of the line with :END: on it."
 								  (function python-completion-at-point)
 								  (function eglot-completion-at-point)))))
 				    nil t))
-			;; (add-hook 'python-ts-mode-hook (function python-capf-super))
-
-			;; (add-hook 'python-ts-mode-hook (function python-black-on-save-mode))
 			(add-hook 'python-ts-mode-hook (function eglot-ensure))
 			(add-hook 'python-ts-mode-hook (function hs-minor-mode))
+			(add-hook 'python-ts-mode-hook (lambda () (setq-local completion-at-point-functions
+									      (list (function eglot-completion-at-point)
+										    ))))
 			)))))
 
 (define lisp-configuration
@@ -2326,6 +2326,9 @@ END is the start of the line with :END: on it."
 	   (define-key tab-bar-mode-map (kbd "C-S-<tab>") nil)
 	   (define-key tab-bar-mode-map (kbd "C-S-<iso-lefttab>") nil)
 	   (global-page-break-lines-mode)
+	   (define-key prog-mode-map "\C-x\C-n" #'forward-page)
+	   (define-key prog-mode-map "\C-x\C-p" #'backward-page)
+
 
 
 	   (defun quick-restart ()
