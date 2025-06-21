@@ -2326,8 +2326,8 @@ END is the start of the line with :END: on it."
 	   (define-key tab-bar-mode-map (kbd "C-S-<tab>") nil)
 	   (define-key tab-bar-mode-map (kbd "C-S-<iso-lefttab>") nil)
 	   (global-page-break-lines-mode)
-	   (define-key prog-mode-map "\C-x\C-n" (function forward-page))
-	   (define-key prog-mode-map "\C-x\C-p" (function backward-page))
+	   (define-key prog-mode-map (kbd "C-x C-n") (function forward-page))
+	   (define-key prog-mode-map (kbd "C-x C-p") (function backward-page))
 
 
 
