@@ -2328,6 +2328,9 @@ END is the start of the line with :END: on it."
 	   (global-page-break-lines-mode)
 	   (define-key prog-mode-map (kbd "C-x C-n") (function forward-page))
 	   (define-key prog-mode-map (kbd "C-x C-p") (function backward-page))
+	   (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
+           (global-set-key (kbd "H-i") '(lambda () (interactive) (message "Poop")))
+
 
 
 
