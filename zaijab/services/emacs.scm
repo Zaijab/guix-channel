@@ -2226,6 +2226,8 @@ END is the start of the line with :END: on it."
 		 (push '(tool-bar-lines . 0)   default-frame-alist)
 		 (push '(vertical-scroll-bars) default-frame-alist)
 		 (blink-cursor-mode 0)
+		 (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
+		 
 		 ;; (setq comp-async-report-warnings-errors nil)
 		 ;; (setq native-comp-async-report-warnings-errors nil)
 		 ;; (setq warning-suppress-log-types '((comp) (comp)))
@@ -2328,9 +2330,6 @@ END is the start of the line with :END: on it."
 	   (global-page-break-lines-mode)
 	   (define-key prog-mode-map (kbd "C-x C-n") (function forward-page))
 	   (define-key prog-mode-map (kbd "C-x C-p") (function backward-page))
-	   (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
-           (global-set-key (kbd "H-i") '(lambda () (interactive) (message "Poop")))
-
 
 
 
