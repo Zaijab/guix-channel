@@ -2226,7 +2226,7 @@ END is the start of the line with :END: on it."
 		 (push '(tool-bar-lines . 0)   default-frame-alist)
 		 (push '(vertical-scroll-bars) default-frame-alist)
 		 (blink-cursor-mode 0)
-		 (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
+		 ;; (define-key input-decode-map (kbd "C-i") (kbd "H-i"))
 		 
 		 ;; (setq comp-async-report-warnings-errors nil)
 		 ;; (setq native-comp-async-report-warnings-errors nil)
