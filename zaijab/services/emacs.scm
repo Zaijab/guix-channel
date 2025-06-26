@@ -1868,8 +1868,8 @@ END is the start of the line with :END: on it."
 						  (list :configurationSources (vector "flake8")
 							:plugins
 							'(:pycodestyle (:enabled :json-false)
-							  :pyflakes (:enabled :json-false)
-							  :flake8 (:enabled :json-false)
+							  :pyflakes (:enabled t)
+							  :flake8 (:enabled t)
 							  :mypy (:enabled :json-false))))))
 			(setq eglot-send-changes-idle-time 0.1)
 			(setq eglot-report-progress nil)
