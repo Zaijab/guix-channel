@@ -1811,7 +1811,6 @@ END is the start of the line with :END: on it."
 	      emacs-csv-mode
 	      emacs-combobulate
 	      emacs-py-isort
-	      ;; emacs-python-black
 	      python-pip
 	      pandoc))
    (init '((use-package jupyter
