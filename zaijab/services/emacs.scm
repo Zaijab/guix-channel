@@ -322,7 +322,7 @@ See `consult-grep' for details."
 
 
 			)
-	   (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/consult-2.5/consult.el")
+	   ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/consult-2.5/consult.el")
 
 
 
@@ -400,7 +400,7 @@ See `consult-grep' for details."
 				   "jinx-\\(?:languages\\|local-words\\):\\s-+.*$"
 				   "\\cc")))
 			)
-	   (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/jinx-2.1/jinx.el")
+	   ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/jinx-2.1/jinx.el")
 	   ))))
 
 (define openwith-configuration
@@ -1281,8 +1281,8 @@ See `consult-grep' for details."
 	   ;; 		(setq org-node-creation-fn (function org-node-new-via-roam-capture))
 	   ;; 		(setq org-node-file-slug-fn (function org-node-slugify-like-roam-default))
 	   ;; 		(setq org-node-file-timestamp-format "%Y%m%d%H%M%S-"))
-	   (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.3.0/org-roam-db.el")
-	   (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.3.0/org-roam.el")
+	   ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.3.0/org-roam-db.el")
+	   ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.3.0/org-roam.el")
 
 	   (use-package org-roam
 			:demand t
@@ -2238,7 +2238,7 @@ END is the start of the line with :END: on it."
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)
-		 (load "/home/zjabbar/.guix-home/profile/share/emacs/31.0.50/lisp/subr.el.gz")
+		 ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/31.0.50/lisp/subr.el.gz")
 		 ))
    (init '((setq global-auto-revert-non-file-buffers t)
 	   (setq org-startup-truncated nil)
