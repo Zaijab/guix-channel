@@ -2336,6 +2336,11 @@ END is the start of the line with :END: on it."
 	   (defun quick-restart ()
 	     (interactive)
 	     (shell-command "sudo reboot --kexec"))
+
+	   (defun restart-searxng ()
+	     (interactive)
+	     (shell-command "sudo herd restart docker-searxng > /dev/null"))
+	   
 	   (setq read-extended-command-predicate (function command-completion-default-include-p))))))
 
 ;;; Combine all Emacs-Configurations within module
