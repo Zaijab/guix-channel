@@ -19,11 +19,11 @@ pull_from_lock:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl --allow-downgrades 
 
 update_lock:
-	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org https://nonguix-proxy.ditigal.xyz/'
+	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org'
 	guix describe --format=channels > /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl
 
 system:
-	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org https://substitutes.nonguix.org https://nonguix-proxy.ditigal.xyz/'
+	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org https://substitutes.nonguix.org'
 
 system_from_main:
 	sudo guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/channel.scm -- system build -e '(@ (zaijab systems based-system) my-operating-system)'
