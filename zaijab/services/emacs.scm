@@ -667,6 +667,10 @@ See `consult-grep' for details."
 	   (add-hook 'org-mode-hook (function colorize-compilation-buffer))))))
 
 
+(define emoji-configuration
+  (home-emacs-configuration
+   (packages (list font-gnu-unifont))))
+
 (define hindi-configuration
   (home-emacs-configuration
    (packages (list font-lohit))))
