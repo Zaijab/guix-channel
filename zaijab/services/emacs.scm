@@ -1706,6 +1706,7 @@ END is the start of the line with :END: on it."
 			;; (advice-add 'org-persist-gc :around (function tv/advice--org-persist))
 			(setq org-element-cache-persistent nil)
 
+
 			(require 'org-tree-slide)
 			(setq org-tree-slide-activate-message ""
 			      org-tree-slide-deactivate-message "")
@@ -2225,7 +2226,8 @@ END is the start of the line with :END: on it."
 				  (add-to-list 'super-keys maybe-event)))
 			    (setq km (cdr km))))
 
-			(setq exwm-input-prefix-keys (append super-keys '(f7
+			(setq exwm-input-prefix-keys (append super-keys '(?\M-o
+									  f7
 									  XF86AudioRaiseVolume
 									  XF86AudioLowerVolume
 									  XF86AudioNext
@@ -2235,7 +2237,9 @@ END is the start of the line with :END: on it."
 									  XF86MonBrightnessDown
 									  XF86MonBrightnessUp)))
 
-			(setq exwm-input-global-keys (list (cons (kbd "M-x") 'execute-extended-command)))
+			(setq exwm-input-global-keys (list (cons (kbd "M-x") 'execute-extended-command)
+							   (cons (kbd "M-o") 'ace-window)
+							   ))
 			(defun exwm-input-line-mode ()
 			  "Set exwm window to line-mode and show mode line"
 			  (call-interactively 'exwm-input-grab-keyboard)
