@@ -418,6 +418,13 @@ See `consult-grep' for details."
 			'(file))
 		  ))))))
 
+(define garbage-collection-configuration
+  (home-emacs-configuration
+   (packages (list emacs-gcmh))
+   (init '((use-package gcmh
+			:config
+			(gcmh-mode 1))))))
+
 
 (define llm-configuration
   (home-emacs-configuration
