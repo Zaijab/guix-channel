@@ -426,6 +426,13 @@ See `consult-grep' for details."
 			(gcmh-mode 1))))))
 
 
+(define meow-configuration
+  (home-emacs-configuration
+   (packages (list emacs-meow
+		   emacs-meow-tree-sitter))
+   (init '())))
+
+
 (define llm-configuration
   (home-emacs-configuration
    (packages (list emacs-gptel))
@@ -2024,7 +2031,7 @@ END is the start of the line with :END: on it."
 			(global-set-key (kbd "<f4>") (function
 						      (lambda () (interactive)
 							      (call-process-shell-command "xset dpms force off"))))
-
+			(setq exwm-manage-force-tiling t)
 			(defun my/tabspace-kill-current-buffer () (interactive)
 			  (let ((buffer-list (cl-remove-if (lambda (buf) (string-match-p (regexp-quote "*Minibuf-") (buffer-name buf))) (tabspaces--buffer-list))))
 			    (cond
