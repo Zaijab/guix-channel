@@ -692,7 +692,10 @@ See `consult-grep' for details."
    (packages (list emacs-tabspaces emacs-ace-window))
    (init '((use-package windsize)
 	   (use-package ace-window
-			:bind ("M-o" . ace-window))
+			:bind ("M-o" . ace-window)
+			:config
+			(setq aw-display-mode-overlay nil)
+			(ace-window-display-mode))
 	   (use-package tabspaces
 			:demand t
 			:hook (after-init . tabspaces-mode)
