@@ -1587,13 +1587,13 @@ END is the start of the line with :END: on it."
 
 	   (use-package org
 			:config
-			(setq org-persist-disable-when-emacs-Q t)
-			(defun tv/advice--org-persist (old-fn &rest args)
-			  (let (user-init-file)
-			    (apply old-fn args)))
-			(advice-add 'org-persist-write :around (function tv/advice--org-persist))
-			(advice-add 'org-persist-read :around (function tv/advice--org-persist))
-			(advice-add 'org-persist-gc :around (function tv/advice--org-persist))
+			;; (setq org-persist-disable-when-emacs-Q t)
+			;; (defun tv/advice--org-persist (old-fn &rest args)
+			;;   (let (user-init-file)
+			;;     (apply old-fn args)))
+			;; (advice-add 'org-persist-write :around (function tv/advice--org-persist))
+			;; (advice-add 'org-persist-read :around (function tv/advice--org-persist))
+			;; (advice-add 'org-persist-gc :around (function tv/advice--org-persist))
 
 			(require 'org-tree-slide)
 			(setq org-tree-slide-activate-message ""
