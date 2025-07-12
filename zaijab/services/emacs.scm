@@ -1272,17 +1272,18 @@ See `consult-grep' for details."
 	   ;; 		(org-node-cache-mode)
 	   ;; 		(org-node-roam-accelerator-mode)
 			
-	   ;; 		(setq org-node-filter-fn
-	   ;; 		      (lambda (node)
-	   ;; 			(not
-	   ;; 			 (or (org-mem-entry-todo-state node)
-	   ;; 			     (member "FC" (org-mem-entry-tags node))))))
+			(setq org-node-filter-fn
+			      (lambda (node)
+				(not
+				 (or (org-mem-entry-todo-state node)
+				     (member "FC" (org-mem-entry-tags node))))))
 
 	   ;; 		(setq org-node-creation-fn (function org-node-new-via-roam-capture))
 	   ;; 		(setq org-node-file-slug-fn (function org-node-slugify-like-roam-default))
 	   ;; 		(setq org-node-file-timestamp-format "%Y%m%d%H%M%S-"))
 	   ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.3.0/org-roam-db.el")
 	   ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/org-roam-2.3.0/org-roam.el")
+	   (setq org-mem-watch-dirs '("~/notes/"))
 
 	   (use-package org-roam
 			:demand t
