@@ -1594,6 +1594,7 @@ END is the start of the line with :END: on it."
 			;; (advice-add 'org-persist-write :around (function tv/advice--org-persist))
 			;; (advice-add 'org-persist-read :around (function tv/advice--org-persist))
 			;; (advice-add 'org-persist-gc :around (function tv/advice--org-persist))
+			(setq org-element-cache-persistent nil)
 
 			(require 'org-tree-slide)
 			(setq org-tree-slide-activate-message ""
