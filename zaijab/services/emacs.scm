@@ -1904,10 +1904,10 @@ END is the start of the line with :END: on it."
 (define python-configuration
   (home-emacs-configuration
    (packages (list
-	      python
-	      jupyter
+	      ;; python
+	      ;; jupyter
 	      ;; guix-jupyter
-	      python-virtualenv
+	      ;; python-virtualenv
 
 	      expect
 	      sshpass
@@ -1922,14 +1922,13 @@ END is the start of the line with :END: on it."
 
 	      tree-sitter
 	      tree-sitter-python
-	      tree-sitter-css
-	      tree-sitter-org
-	      tree-sitter-scheme
+
 	      emacs-csv-mode
 	      emacs-combobulate
-	      emacs-py-isort
-	      python-pip
-	      pandoc))
+	      ;; emacs-py-isort
+	      ;; python-pip
+	      pandoc
+	      ))
    (init '((use-package jupyter
 			:config
 			;; (defun gm/jupyter-api-request-xsrf-cookie-error-advice (func &rest args)
