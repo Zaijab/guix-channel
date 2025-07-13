@@ -862,18 +862,21 @@ See `consult-grep' for details."
 				 (insert (concat "* " (simple-word->drill (jisho-search->completing-read)) "\n"))
 				 (org-fc-type-cloze-init 'deletion)))))))
 
+(define jami-configuration
+  (home-emacs-configuration
+   (packages (list
+	      jami
+	      jami-docs))))
+
 (define graphical-browser-configuration
   (home-emacs-configuration
-   (packages (list ;icecat
-					;ublock-origin/icecat
+   (packages (list
 	      librewolf
-
 	      emacs-exwm-firefox
 	      jami
 	      jami-docs
 	      hicolor-icon-theme
 	      passff-host
-
 	      passff/icecat))
    (init '((setq browse-url-new-window-flag t)))))
 
@@ -1905,7 +1908,7 @@ END is the start of the line with :END: on it."
   (home-emacs-configuration
    (packages (list
 	      python
-	      jupyter
+	      ;; jupyter
 	      ;; guix-jupyter
 	      python-virtualenv
 
@@ -1936,6 +1939,7 @@ END is the start of the line with :END: on it."
 			;; 		  (apply func args)
 			;; 		  (jupyter-api-http-error nil)))
 			;; (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
+			
 			(defvar jupyter-command-directory nil
 			  "The directory of the Jupyter command. If nil then use Jupyter command from the path environment variable. Used to run the `jupyter-command'.")
 
@@ -1984,7 +1988,9 @@ END is the start of the line with :END: on it."
 	   (use-package envrc
 			:demand t
        			:bind-keymap ("C-c e" . envrc-command-map)
-			:hook (after-init . envrc-global-mode))
+			:hook (after-init . envrc-global-mode)
+			:config
+			(advice-add 'org-babel-execute-src-block :around (function envrc-propagate-environment)))
 
 	   (use-package eglot
 			:config
@@ -2162,18 +2168,22 @@ END is the start of the line with :END: on it."
 			(global-set-key (kbd "s-w") 'tab-bar-switch-to-tab)
 
 			(setq browse-url-firefox-program "librewolf")
+
 			(global-set-key (kbd "s-e") (function
 						     (lambda () (interactive)
 							     (start-process-shell-command
 							      "librewolf"
 							      nil
-							      "librewolf"))))
+							      "/home/zjabbar/.guix-home/profile/bin/librewolf"))))
+
+
+
 			(global-set-key (kbd "s-E") (function
 						     (lambda () (interactive)
 							     (start-process-shell-command
-							      "librewolf --private-window http://localhost:8080"
+							      "librewolf private"
 							      nil
-							      "librewolf --private-window http://localhost:8080"))))
+							      "/home/zjabbar/.guix-home/profile/bin/librewolf --private-window http://localhost:8080"))))
 
 			(global-set-key (kbd "s-'")
 					(lambda () (interactive)
