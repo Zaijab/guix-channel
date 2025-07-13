@@ -1707,8 +1707,9 @@ END is the start of the line with :END: on it."
 			;; (advice-add 'org-persist-write :around (function tv/advice--org-persist))
 			;; (advice-add 'org-persist-read :around (function tv/advice--org-persist))
 			;; (advice-add 'org-persist-gc :around (function tv/advice--org-persist))
-			(setq org-element-cache-persistent nil)
 
+			(setq org-element-cache-persistent nil
+			      org-element-use-cache nil)
 
 			(require 'org-tree-slide)
 			(setq org-tree-slide-activate-message ""
@@ -2432,6 +2433,8 @@ END is the start of the line with :END: on it."
 			       (setq this-command 'hs-cycle-children))))
 		   (hs-hide-level level)
 		   (setq this-command 'hs-hide-level))))
+
+	   (put 'shr 'face 'shr-link)
 
 	   (defun hs-global-cycle ()
 	     (interactive)
