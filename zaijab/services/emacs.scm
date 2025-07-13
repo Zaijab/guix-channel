@@ -1946,7 +1946,7 @@ END is the start of the line with :END: on it."
 			(defun jupyter-command (&rest args)
 			  "Run a Jupyter shell command synchronously, return its output. The shell command run is (in `jupyter-command-directory') jupyter ARGS... If the command fails or the jupyter shell command doesn't exist, return nil."
 			  (with-temp-buffer
-			   (when (zerop (apply #'process-file
+			   (when (zerop (apply (function process-file)
 					       (concat jupyter-command-directory "jupyter")
 					       nil t nil args))
 			     (string-trim-right (buffer-string)))))
