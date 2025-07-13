@@ -1904,10 +1904,10 @@ END is the start of the line with :END: on it."
 (define python-configuration
   (home-emacs-configuration
    (packages (list
-	      ;; python
-	      ;; jupyter
+	      python
+	      jupyter
 	      ;; guix-jupyter
-	      ;; python-virtualenv
+	      python-virtualenv
 
 	      expect
 	      sshpass
@@ -1925,8 +1925,8 @@ END is the start of the line with :END: on it."
 
 	      emacs-csv-mode
 	      emacs-combobulate
-	      ;; emacs-py-isort
-	      ;; python-pip
+	      emacs-py-isort
+	      python-pip
 	      pandoc
 	      ))
    (init '((use-package jupyter
@@ -1940,13 +1940,7 @@ END is the start of the line with :END: on it."
 			  "The directory of the Jupyter command. If nil then use Jupyter command from the path environment variable. Used to run the `jupyter-command'.")
 
 			(defun jupyter-command (&rest args)
-			  "Run a Jupyter shell command synchronously, return its output.
-The shell command run is (in `jupyter-command-directory')
-
-    jupyter ARGS...
-
-If the command fails or the jupyter shell command doesn't exist,
-return nil."
+			  "Run a Jupyter shell command synchronously, return its output. The shell command run is (in `jupyter-command-directory') jupyter ARGS... If the command fails or the jupyter shell command doesn't exist, return nil."
 			  (with-temp-buffer
 			   (when (zerop (apply #'process-file
 					       (concat jupyter-command-directory "jupyter")
