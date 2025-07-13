@@ -1990,7 +1990,8 @@ END is the start of the line with :END: on it."
        			:bind-keymap ("C-c e" . envrc-command-map)
 			:hook (after-init . envrc-global-mode)
 			:config
-			(advice-add 'org-babel-execute-src-block :around (function envrc-propagate-environment)))
+			(advice-add 'org-babel-execute-src-block :around (function envrc-propagate-environment))
+			(add-hook 'org-mode-hook (function envrc-global-mode-enable-in-buffers) -90))
 
 	   (use-package eglot
 			:config
