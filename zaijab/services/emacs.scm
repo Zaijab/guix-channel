@@ -1936,6 +1936,23 @@ END is the start of the line with :END: on it."
 			;; 		  (apply func args)
 			;; 		  (jupyter-api-http-error nil)))
 			;; (advice-add 'jupyter-api-request-xsrf-cookie :around (function gm/jupyter-api-request-xsrf-cookie-error-advice))
+			(defvar jupyter-command-directory nil
+			  "The directory of the Jupyter command. If nil then use Jupyter command from the path environment variable. Used to run the `jupyter-command'.")
+
+			(defun jupyter-command (&rest args)
+			  "Run a Jupyter shell command synchronously, return its output.
+The shell command run is (in `jupyter-command-directory')
+
+    jupyter ARGS...
+
+If the command fails or the jupyter shell command doesn't exist,
+return nil."
+			  (with-temp-buffer
+			   (when (zerop (apply #'process-file
+					       (concat jupyter-command-directory "jupyter")
+					       nil t nil args))
+			     (string-trim-right (buffer-string)))))
+
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
 			(setq jupyter-repl-completion-at-point-hook-depth 1)
 			(setq org-babel-python-command "python3"
