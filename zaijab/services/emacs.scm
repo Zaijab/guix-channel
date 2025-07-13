@@ -1908,8 +1908,8 @@ END is the start of the line with :END: on it."
   (home-emacs-configuration
    (packages (list
 	      python
-	      ;; jupyter
-	      ;; guix-jupyter
+	      jupyter
+	      guix-jupyter
 	      python-virtualenv
 
 	      expect
