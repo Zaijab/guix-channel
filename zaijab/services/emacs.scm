@@ -1926,8 +1926,10 @@ END is the start of the line with :END: on it."
 	      python-pylsp-mypy
 
 	      tree-sitter
+	      
 	      tree-sitter-python
-
+	      tree-sitter-css
+	      
 	      emacs-csv-mode
 	      emacs-combobulate
 	      emacs-py-isort
