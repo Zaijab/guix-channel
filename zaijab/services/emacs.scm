@@ -769,9 +769,9 @@ See `consult-grep' for details."
 	   (add-hook 'org-mode-hook (function colorize-compilation-buffer))))))
 
 
-(define emoji-configuration
-  (home-emacs-configuration
-   (packages (list font-gnu-unifont))))
+;; (define emoji-configuration
+;;   (home-emacs-configuration
+;;    (packages (list font-gnu-unifont))))
 
 (define hindi-configuration
   (home-emacs-configuration
@@ -1489,6 +1489,58 @@ END is the start of the line with :END: on it."
 
 	   ))))
 
+(define latex-configuration
+  (home-emacs-configuration
+   (init '(	   (setq org-latex-listings 'engraved)
+
+	   (use-package org-latex-preview
+			:config
+			;; Increase preview width
+			(plist-put org-latex-preview-appearance-options
+				   :page-width 0.8)
+
+			(plist-put org-latex-preview-appearance-options
+				   :zoom 1.5)
+			;; Use dvisvgm to generate previews
+			;; You don't need this, it's the default:
+			(setq org-latex-preview-process-default 'dvisvgm)
+
+			;; Turn on auto-mode, it's built into Org and much faster/more featured than
+			;; org-fragtog. (Remember to turn off/uninstall org-fragtog.)
+			(add-hook 'org-mode-hook 'org-latex-preview-auto-mode)
+
+			;; Block C-n, C-p etc from opening up previews when using auto-mode
+			(setq org-latex-preview-auto-ignored-commands
+			      '(next-line previous-line mwheel-scroll
+					  scroll-up-command scroll-down-command))
+
+			;; Enable consistent equation numbering
+			(setq org-latex-preview-numbered t)
+
+			;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
+			;; fragment and updates the preview in real-time as you edit it.
+			;; To preview only environments, set it to '(block edit-special) instead
+			(setq org-latex-preview-live t)
+
+			;; More immediate live-previews -- the default delay is 1 second
+			(setq org-latex-preview-live-debounce 0.25))
+
+
+	   (setq texmathp-tex-commands '(("lflalign" env-on)))
+	   (setq org-latex-compiler "pdflatex")
+	   (setq org-latex-title-command (concat
+					  "\\pagestyle{fancy}"
+					  "\\begin{titlepage}\n"
+					  "\\vspace*{\\fill}\n"
+					  "\\centering\n"
+					  "{\\huge \\textmd{\\textbf{%t}} \\par }\n"
+					  "\\vspace{0.1in}\n"
+					  "{\\normalsize %a \\par}\n"
+					  "\\vspace{0.1in}\n"
+					  "{\\large For \\professor \\ On \\duedate \\ \\par}\n"
+					  "\\vspace*{\\fill}\n"
+					  "\\end{titlepage}\n"))))))
+
 (define website-configuration
   (home-emacs-configuration
    (packages (list python-pygments emacs-engrave-faces))
@@ -1573,56 +1625,6 @@ END is the start of the line with :END: on it."
 		 (make-directory pub-dir)))
 	     (apply orig-fun extension subtreep pub-dir nil))
 	   (advice-add 'org-export-output-file-name :around (function org-export-output-file-name-modified))
-	   (setq org-latex-listings 'engraved)
-
-	   (use-package org-latex-preview
-			:config
-			;; Increase preview width
-			(plist-put org-latex-preview-appearance-options
-				   :page-width 0.8)
-
-			(plist-put org-latex-preview-appearance-options
-				   :zoom 1.5)
-			;; Use dvisvgm to generate previews
-			;; You don't need this, it's the default:
-			(setq org-latex-preview-process-default 'dvisvgm)
-
-			;; Turn on auto-mode, it's built into Org and much faster/more featured than
-			;; org-fragtog. (Remember to turn off/uninstall org-fragtog.)
-			(add-hook 'org-mode-hook 'org-latex-preview-auto-mode)
-
-			;; Block C-n, C-p etc from opening up previews when using auto-mode
-			(setq org-latex-preview-auto-ignored-commands
-			      '(next-line previous-line mwheel-scroll
-					  scroll-up-command scroll-down-command))
-
-			;; Enable consistent equation numbering
-			(setq org-latex-preview-numbered t)
-
-			;; Bonus: Turn on live previews.  This shows you a live preview of a LaTeX
-			;; fragment and updates the preview in real-time as you edit it.
-			;; To preview only environments, set it to '(block edit-special) instead
-			(setq org-latex-preview-live t)
-
-			;; More immediate live-previews -- the default delay is 1 second
-			(setq org-latex-preview-live-debounce 0.25))
-
-
-	   (setq texmathp-tex-commands '(("lflalign" env-on)))
-	   (setq org-latex-compiler "pdflatex")
-	   (setq org-latex-title-command (concat
-					  "\\pagestyle{fancy}"
-					  "\\begin{titlepage}\n"
-					  "\\vspace*{\\fill}\n"
-					  "\\centering\n"
-					  "{\\huge \\textmd{\\textbf{%t}} \\par }\n"
-					  "\\vspace{0.1in}\n"
-					  "{\\normalsize %a \\par}\n"
-					  "\\vspace{0.1in}\n"
-					  "{\\large For \\professor \\ On \\duedate \\ \\par}\n"
-					  "\\vspace*{\\fill}\n"
-					  "\\end{titlepage}\n"))
-
 
 	   (setq org-publish-project-alist
 		 '(("orgfiles"
