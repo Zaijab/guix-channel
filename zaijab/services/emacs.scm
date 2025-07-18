@@ -958,7 +958,7 @@ See `consult-grep' for details."
 	      emacs-empv
 	      yt-dlp
 	      emacs-elfeed
-	      emacs-elfeed-tube
+	      emacs-elfeed-tube-current
 	      curl))
    (init '((setq elfeed-feeds '(("https://almostsuremath.com/feed/" math almost-sure reading)
 				("https://karthinks.com/index.xml" crafter karthinks reading)

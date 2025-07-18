@@ -855,6 +855,25 @@ from the Helix project
 queries are licensed under the GPL-compatible Mozilla Public License 2.0.")
     (license #f)))
 
+(define-public emacs-elfeed-tube-current
+  (package
+    (name "emacs-elfeed-tube")
+    (version "c2f517e35fbba07a9d6e6ab4091ee65ad773a32c")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/karthink/elfeed-tube")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1vsrsnvz0ysd36a99zk7n2giv0gxznlnls8zq6lcc0hwqw78i5cq"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list emacs-elfeed emacs-aio emacs-mpv))
+    (home-page "https://github.com/karthink/elfeed-tube/")
+    (synopsis "YouTube integration for Elfeed")
+    (description
+     "@code{elfeed-tube} is an extension for Elfeed that enhances Youtube RSS
+feed subscriptions.")
+    (license license:unlicense)))
 
-emacs-org-parallel-latex
-emacs-meow-tree-sitter
