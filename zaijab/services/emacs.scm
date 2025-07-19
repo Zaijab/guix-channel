@@ -1910,8 +1910,8 @@ END is the start of the line with :END: on it."
   (home-emacs-configuration
    (packages (list
 	      python
-	      jupyter
-	      guix-jupyter
+	      ;; jupyter
+	      ;; guix-jupyter
 	      python-virtualenv
 
 	      expect
@@ -1924,6 +1924,7 @@ END is the start of the line with :END: on it."
 	      python-lsp-server
 	      python-lsp-black
 	      python-pylsp-mypy
+	      python-flake8
 
 	      tree-sitter
 	      
@@ -1989,8 +1990,8 @@ END is the start of the line with :END: on it."
 						  (list :configurationSources (vector "flake8")
 							:plugins
 							'(:pycodestyle (:enabled :json-false)
-							  :pyflakes (:enabled :json-false)
-							  :flake8 (:enabled :json-false)
+							  ;; :pyflakes (:enabled t)
+							  :flake8 (:enabled t)
 							  :mypy (:enabled :json-false))))))
 			(setq eglot-send-changes-idle-time 0.1)
 			(setq eglot-report-progress nil)
