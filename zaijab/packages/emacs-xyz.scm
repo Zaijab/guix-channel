@@ -181,7 +181,7 @@
                     (commit "f552823f51f11d66492f754deb51abd709c08ed9")))
               (sha256
                (base32
-		"0i01q1fv6kdpf3fmhdagh7wlhycy3c6lmqkjkhiah55h7xymr8rk"))))
+		"038il7nvymxh7wryskylz3ma4xl63jjvg6fvdjpa8x4ry60w4z5j"))))
     (build-system emacs-build-system)
     (propagated-inputs (list emacs-project))
     (home-page "https://github.com/mclear-tools/tabspaces")
