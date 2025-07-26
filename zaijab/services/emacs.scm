@@ -520,7 +520,7 @@ See `consult-grep' for details."
 	      '("<escape>" . ignore)))
 	   (require 'meow)
 	   (meow-setup)
-	   (meow-global-mode 1)
+	   ;; (meow-global-mode 1)
 
 	   ))))
 
@@ -1910,8 +1910,8 @@ END is the start of the line with :END: on it."
   (home-emacs-configuration
    (packages (list
 	      python
-	      ;; jupyter
-	      ;; guix-jupyter
+	      jupyter
+	      guix-jupyter
 	      python-virtualenv
 
 	      expect
