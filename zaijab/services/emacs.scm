@@ -1983,6 +1983,8 @@ END is the start of the line with :END: on it."
 
 	   (use-package eglot
 			:config
+			(setq eglot-ignored-server-capabilities '(:semanticTokensProvider))
+			(add-hook 'eglot-managed-mode-hook (lambda () (flymake-mode -1)))
 			(setq python-indent-def-block-scale 1)
 			(add-to-list 'eglot-server-programs '(python-ts-mode . ("pylsp")))
 			(setq-default eglot-workspace-configuration
