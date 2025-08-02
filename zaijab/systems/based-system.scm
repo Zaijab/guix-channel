@@ -70,6 +70,7 @@
             (strongswan-configuration
              (ipsec-conf "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.conf")
              (ipsec-secrets "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.secrets")))
+   (service nscd-service-type)
    (service docker-service-type)
    (service containerd-service-type)
    (service oci-container-service-type
