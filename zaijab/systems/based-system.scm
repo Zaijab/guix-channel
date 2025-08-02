@@ -113,10 +113,10 @@
 
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
-     ;; (nscd-service-type
-     ;;  config => (nscd-configuration
-     ;; 		 (inherit config)
-     ;; 		 (name-services (list nss-mdns))))
+     (nscd-service-type
+      config => (nscd-configuration
+		 (inherit config)
+		 (name-services (list nss-mdns))))
      ;; (avahi-service-type config =>
      ;; 			 (avahi-configuration
      ;; 			  (publish? #t)
