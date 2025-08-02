@@ -15,6 +15,7 @@
   #:use-module (gnu services guix)
   #:use-module (gnu packages cups)
   #:use-module (gnu packages admin)
+  #:use-module (gnu packages avahi)
   #:use-module (gnu packages disk)
   #:use-module (gnu packages version-control)
   #:use-module (gnu services cups)
