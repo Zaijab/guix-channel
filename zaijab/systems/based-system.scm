@@ -113,11 +113,10 @@
 
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
-     (nscd-service-type
-      config =>
-      (nscd-configuration
-       (inherit config)
-       (name-services (list nss-mdns))))
+     ;; (avahi-service-type config =>
+     ;; 			 (avahi-configuration
+     ;; 			  (publish? #t)
+     ;; 			  (publish-workstation? #t)))
      (gdm-service-type
       config => (gdm-configuration (inherit config) (auto-login? #t) (default-user "zjabbar")))
      (network-manager-service-type
@@ -174,6 +173,7 @@
 	       gnu-make
 	       cups
 	       htop
+	       nss-mdns
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
