@@ -19,6 +19,8 @@ org-mode
 
 python-base-mode
 
+(jkey "key = jax.random.key(" p ")" n> "key, subkey = jax.random.split(key)" n> p)
+(ssm "dynamical_system = " p n> "measurement_system = " p n> "stochastic_filter = " p n>)
 ;; (__contains__ "def __contains__(self, el):" n> p n> "pass")
 ;; (__enter__ "def __enter__(self):" n> p n> "return self")
 ;; (__eq__ "def __eq__(self, other):" n> "return self." p " == other." q)
