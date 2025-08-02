@@ -116,8 +116,7 @@
      (nscd-service-type
       config => (nscd-configuration
 		 (inherit config)
-		 (name-services (append (nscd-configuration-name-services config)
-					(list nss-mdns)))))
+		 (name-services (list nss-mdns))))
      ;; (avahi-service-type config =>
      ;; 			 (avahi-configuration
      ;; 			  (publish? #t)
