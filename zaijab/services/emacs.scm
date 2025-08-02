@@ -1696,7 +1696,12 @@ END is the start of the line with :END: on it."
 
 	      emacs-calfw
 	      emacs-calfw-blocks
-	      texlive
+	      ;; texlive
+	      texlive-scheme-basic
+	      texlive-collection-latexrecommended
+	      texlive-collection-latexextra
+	      texlive-collection-fontsrecommended
+	      texlive-collection-mathscience
 	      imagemagick))
    (init '(
 	   (use-package consult-org-roam
