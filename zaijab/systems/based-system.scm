@@ -70,7 +70,7 @@
             (strongswan-configuration
              (ipsec-conf "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.conf")
              (ipsec-secrets "/home/zjabbar/code/guix-channel/zaijab/files/secrets/ipsec.secrets")))
-   (service nscd-service-type)
+   ;; (service nscd-service-type)
    (service docker-service-type)
    (service containerd-service-type)
    (service oci-container-service-type
@@ -112,6 +112,11 @@
 
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
+     (nscd-service-type
+      config =>
+      (nscd-configuration
+       (inherit config)
+       (name-services (list nss-mdns))))
      (gdm-service-type
       config => (gdm-configuration (inherit config) (auto-login? #t) (default-user "zjabbar")))
      (network-manager-service-type
