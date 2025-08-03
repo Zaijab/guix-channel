@@ -110,6 +110,9 @@
 		    epson-inkjet-printer-escpr
 		    foo2zjs hplip-minimal hplip hplip-plugin))))
 
+   (extra-special-file "/etc/nsswitch.conf"
+		       (plain-file "nsswitch.conf"
+				   "group:  files\nhosts: files myhostname mdns4_minimal [NOTFOUND=return] dns mdns4\nnetworks: files dns [!UNAVAIL=return]\npasswd: files\nshadow: files\n"))
 
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
