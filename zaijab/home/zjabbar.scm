@@ -79,7 +79,7 @@
 
      (simple-service 'dotfiles
                      home-files-service-type
-                     `((".xsession" ,(program-file "xsession" (local-file "/home/zjabbar/code/guix-channel/zaijab/files/xsession")))
+                     ;; `((".xsession" ,(program-file "xsession" (local-file "/home/zjabbar/code/guix-channel/zaijab/files/xsession")))
 		       (".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
                        (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
                        (".config/pycodestyle" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/pycodestyle"))
