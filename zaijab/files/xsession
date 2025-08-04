@@ -1,2 +1,6 @@
-pulseaudio --start
-exec emacs --eval "(exwm-enable)"
+#xrandr --output HDMI-A-0 --auto --right-of eDP # New Screen
+#xrandr --output HDMI-A-0 --auto --scale-from 1920x1080 --same-as eDP # Mirror
+xmodmap -e 'clear lock' -e 'keycode 0x42 = Control_L' -e 'add control = Control_L'
+# xmodmap -e 'clear lock' -e 'keycode 0x42 = Escape'
+xset r rate 300 60
+exec emacs --eval "(progn (exwm-wm-mode) (exwm-randr-mode) (server-start) (display-battery-mode))"
