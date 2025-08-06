@@ -715,6 +715,7 @@ See `consult-grep' for details."
 					"Optimal Transport"
 					"Normalizing Flows"
 					"Multi-Object Tracking"
+					"Higher Order EnGMF"
 					"Japanese" ; Japanese Learning / Coursework
 					"Communications" ; Google Voice / Email / Discord
 					"System" ; Emacs / Guix Sysadmin
@@ -1711,14 +1712,6 @@ END is the start of the line with :END: on it."
 
 	   (use-package org
 			:config
-			;; (setq org-persist-disable-when-emacs-Q t)
-			;; (defun tv/advice--org-persist (old-fn &rest args)
-			;;   (let (user-init-file)
-			;;     (apply old-fn args)))
-			;; (advice-add 'org-persist-write :around (function tv/advice--org-persist))
-			;; (advice-add 'org-persist-read :around (function tv/advice--org-persist))
-			;; (advice-add 'org-persist-gc :around (function tv/advice--org-persist))
-
 			(setq org-element-cache-persistent nil
 			      org-element-use-cache nil)
 
