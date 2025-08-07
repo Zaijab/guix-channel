@@ -42,7 +42,7 @@ system_from_lock:
 	-C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl \
 	--substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org' \
 	-- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' \
-	--allow-downgrades --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org https://substitutes.nonguix.org'
+	--allow-downgrades --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org'
 
 
 
