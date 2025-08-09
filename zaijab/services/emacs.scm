@@ -2454,6 +2454,9 @@ END is the start of the line with :END: on it."
 		     (setq this-command 'hs-global-show))
 		    (_ (hs-hide-all))))
 
+	   (setq tramp-sudo-login-shell t)
+
+
 
 
 	   (define-key tab-bar-mode-map (kbd "C-<tab>") nil)
