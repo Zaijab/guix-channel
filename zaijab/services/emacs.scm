@@ -2007,13 +2007,16 @@ END is the start of the line with :END: on it."
 					      (when-let* ((element (org-element-at-point))
 							  (type (org-element-type element))
 							  (lang (org-element-property :language element))
+							  ;; (is-python (string= lang "jupyter-python"))
 							  (mode (org-src-get-lang-mode lang))
 							  ((eglot--lookup-mode mode))
 							  (edit-pre (intern
 								     (format "org-babel-edit-prep:%s" lang))))
 							 (if (fboundp edit-pre)
 							     (advice-add edit-pre :after (function sloth/org-babel-edit-prep))
-							     (fset edit-pre (function sloth/org-babel-edit-prep)))))))
+							     (fset edit-pre (function sloth/org-babel-edit-prep))))))
+			
+			)
 
 
 	   (use-package python
@@ -2059,6 +2062,9 @@ END is the start of the line with :END: on it."
 
 	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
 	     (async-shell-command "guix shell --pure --preserve='^GUILE_LOAD_PATH$' guix guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
+
+	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
+	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
 
 	   (defun arei-server-start-guix-repl () "Start Arei with Default Port" (interactive)
 	     (async-shell-command "guix shell guile-next guile-ares-rs -- echo '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))' | guix repl"))

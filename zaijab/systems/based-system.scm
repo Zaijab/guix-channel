@@ -215,6 +215,23 @@
 (define-public tao-operating-system
   (operating-system
     (inherit based-operating-system)
+    (packages (cons*
+	       tree
+	       parted
+	       git
+	       gnu-make
+	       cups
+	       htop
+	       nss-mdns
+	       cuda
+	       cudnn-8.9.1.23
+	       (specification->package "scrot")
+	       (specification->package "xauth")
+	       (specification->package "openvpn")
+	       (specification->package "network-manager-applet")
+	       (specification->package "pavucontrol")
+	       (specification->package "gsettings-desktop-schemas")
+	       %base-packages))
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
 			     "modprobe.blacklist=nouveau"
 			     "nvidia_drm.fbdev=1"
@@ -224,8 +241,7 @@
     (host-name "tao")
     
     (services (cons*
-	       (service nvidia-service-type)
-	       
+	       (service nvidia-service-type)	       
 	       (set-xorg-configuration
 		 	(xorg-configuration
 		 	 (modules (cons nvda %default-xorg-modules))
