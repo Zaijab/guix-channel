@@ -1704,6 +1704,7 @@ END is the start of the line with :END: on it."
 	      texlive-collection-latexextra
 	      texlive-collection-fontsrecommended
 	      texlive-collection-mathscience
+	      texlive-fancyhdr
 	      imagemagick))
    (init '(
 	   (use-package consult-org-roam
