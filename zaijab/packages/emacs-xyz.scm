@@ -321,7 +321,6 @@ respond with time.  Otherwise don't respond until database updates (long poll)."
                              emacs-evil
                              emacs-evil-surround
                              emacs-hydra
-                             emacs-seq
                              emacs-undo-tree))
     (home-page "https://github.com/countvajhula/symex.el")
     (synopsis "An evil way to edit Lisp symbolic expressions as trees")
