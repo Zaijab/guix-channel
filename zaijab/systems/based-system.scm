@@ -235,8 +235,8 @@
 	       %base-packages))
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
 			     "modprobe.blacklist=nouveau"
-			     "nvidia_drm.fbdev=1"
-			     "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+			     ;; "nvidia_drm.fbdev=1"
+			     ;; "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
 			     %default-kernel-arguments))
     
     (host-name "tao")

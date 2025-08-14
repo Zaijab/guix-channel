@@ -712,7 +712,7 @@ See `consult-grep' for details."
 					"State Estimation" ; State Estimation Learning
 					"Foundations" ; Pure Math / Flashcards
 					"Fair Active Learning" ; Finalizing Peter's Work
-					"Optimal Transport"
+					"Geometric Sensor Tasking"
 					"Normalizing Flows"
 					"Multi-Object Tracking"
 					"Higher Order EnGMF"
