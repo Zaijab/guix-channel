@@ -428,8 +428,11 @@ See `consult-grep' for details."
 
 (define meow-configuration
   (home-emacs-configuration
-   (packages (list emacs-meow
-		   emacs-meow-tree-sitter))
+   (packages (list
+	      emacs-symex
+	      emacs-rigpa
+	      emacs-meow
+	      emacs-meow-tree-sitter))
    (init '(
 
 	   (setq meow-use-clipboard t)
@@ -968,7 +971,7 @@ See `consult-grep' for details."
 				;; ("https://www.youtube.com/feeds/videos.xml?playlist_id=UULFe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=UULFlHVl2N3jPEbkNJVx-ItQIQ" health alok)
 
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
 				;; ("https://twitchrss.appspot.com/vod/nicob" fun nicob twitch)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
