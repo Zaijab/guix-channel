@@ -2,6 +2,7 @@
   #:use-module (guix packages)
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
+  #:use-module (gnu packages emacs-build)
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix build-system)
