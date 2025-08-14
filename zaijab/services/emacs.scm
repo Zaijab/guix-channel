@@ -1121,7 +1121,7 @@ See `consult-grep' for details."
    (packages (list
 	      ffmpeg
 	      alsa-utils
-	      emacs-alsamixer
+	      emacs-alsamixer-el
 	      emacs-bluetooth
 	      emacs-emms
 					;python-tinytag
