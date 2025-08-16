@@ -852,7 +852,7 @@ queries are licensed under the GPL-compatible Mozilla Public License 2.0.")
              (commit "c2f517e35fbba07a9d6e6ab4091ee65ad773a32c")))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1vsrsnvz0ysd36a99zk7n2giv0gxznlnls8zq6lcc0hwqw78i5cq"))))
+        (base32 "09m9awp366z8gcxhd7ndlqv6xqkzvgp016hav9y28qinmcf1yg2h"))))
     (build-system emacs-build-system)
     (propagated-inputs (list emacs-elfeed emacs-aio emacs-mpv))
     (home-page "https://github.com/karthink/elfeed-tube/")
@@ -861,3 +861,5 @@ queries are licensed under the GPL-compatible Mozilla Public License 2.0.")
      "@code{elfeed-tube} is an extension for Elfeed that enhances Youtube RSS
 feed subscriptions.")
     (license license:unlicense)))
+
+emacs-elfeed-tube-current
