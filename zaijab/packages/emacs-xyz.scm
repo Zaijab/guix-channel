@@ -2,6 +2,7 @@
   #:use-module (guix packages)
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
+  #:use-module (gnu packages tree-sitter)
   #:use-module (gnu packages emacs-build)
   #:use-module (guix download)
   #:use-module (guix git-download)
@@ -201,178 +202,178 @@ https://github.com/minad/consult#multiple-sources -
 https://github.com/florommel/bufferlo")
     (license #f)))
 
-(define-public emacs-dynaring
-  (package
-    (name "emacs-dynaring")
-    (version "20210924.2026")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://github.com/countvajhula/dynaring.git")
-		    (commit "dc9013117bdcdc1b12feebcc58eaf129a6ad3a73")))
-	      (sha256
-	       (base32
-		"0z5r0wybpm74hlcbisavn90i31vh3jsalhk0frihfclfgbqd24d9"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/countvajhula/dynaring")
-    (synopsis "A dynamically sized ring structure")
-    (description "This package provides a dynamically sized ring structure.")
-    (license #f)))
+;; (define-public emacs-dynaring
+;;   (package
+;;     (name "emacs-dynaring")
+;;     (version "20210924.2026")
+;;     (source (origin
+;; 	      (method git-fetch)
+;; 	      (uri (git-reference
+;; 		    (url "https://github.com/countvajhula/dynaring.git")
+;; 		    (commit "dc9013117bdcdc1b12feebcc58eaf129a6ad3a73")))
+;; 	      (sha256
+;; 	       (base32
+;; 		"0z5r0wybpm74hlcbisavn90i31vh3jsalhk0frihfclfgbqd24d9"))))
+;;     (build-system emacs-build-system)
+;;     (home-page "https://github.com/countvajhula/dynaring")
+;;     (synopsis "A dynamically sized ring structure")
+;;     (description "This package provides a dynamically sized ring structure.")
+;;     (license #f)))
 
-(define-public emacs-buffer-ring
-  (package
-    (name "emacs-buffer-ring")
-    (version "20220120.124")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/countvajhula/buffer-ring.git")
-                    (commit "177d67238c4d126a0270585e21c0f03ae750ca2a")))
-              (sha256
-               (base32
-		"1li3fq5797hcd2wy5w2vp6hmgf779mrm0pw2nj4a19snwl9ak02j"))))
-    (build-system emacs-build-system)
-    (propagated-inputs (list emacs-dynaring emacs-s emacs-ht))
-    (home-page "https://github.com/countvajhula/buffer-ring")
-    (synopsis "Rings and tori for buffer navigation")
-    (description "Rings of buffers and tori of buffer rings.")
-    (license #f)))
+;; (define-public emacs-buffer-ring
+;;   (package
+;;     (name "emacs-buffer-ring")
+;;     (version "20220120.124")
+;;     (source (origin
+;;               (method git-fetch)
+;;               (uri (git-reference
+;;                     (url "https://github.com/countvajhula/buffer-ring.git")
+;;                     (commit "177d67238c4d126a0270585e21c0f03ae750ca2a")))
+;;               (sha256
+;;                (base32
+;; 		"1li3fq5797hcd2wy5w2vp6hmgf779mrm0pw2nj4a19snwl9ak02j"))))
+;;     (build-system emacs-build-system)
+;;     (propagated-inputs (list emacs-dynaring emacs-s emacs-ht))
+;;     (home-page "https://github.com/countvajhula/buffer-ring")
+;;     (synopsis "Rings and tori for buffer navigation")
+;;     (description "Rings of buffers and tori of buffer rings.")
+;;     (license #f)))
 
-(define-public emacs-centaur-tabs
-  (package
-    (name "emacs-centaur-tabs")
-    (version "20220926.1247")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/ema2159/centaur-tabs.git")
-                    (commit "7d9fad0daa44ffb2acecf6525759e46e08e35f2c")))
-              (sha256
-               (base32
-		"0la8fmwirspg7m453qhfb64sqryl59dxc1lfmjkh6mzf85nqbl1i"))))
-    (build-system emacs-build-system)
-    (propagated-inputs (list emacs-powerline))
-    (home-page "https://github.com/ema2159/centaur-tabs")
-    (synopsis "Aesthetic, modern looking customizable tabs plugin")
-    (description
-     "Emacs plugin aiming to become an aesthetic, modern looking tabs plugin.  This
-package offers tabs with a wide range of customization options, both aesthetical
-and functional, implementing them trying to follow the Emacs philosophy packing
-them with useful keybindings and a nice integration with the Emacs environment,
-without sacrificing customizability.  Some of the features Centaur tabs offers
-are: - Tab styles - Tab icons - Graying out icons - Selected tab bar (over,
-under and left bar) - Close button - Modified marker - Buffer grouping -
-Projectile integration - Ivy and Helm integration for group switching")
-    (license #f)))
+;; (define-public emacs-centaur-tabs
+;;   (package
+;;     (name "emacs-centaur-tabs")
+;;     (version "20220926.1247")
+;;     (source (origin
+;;               (method git-fetch)
+;;               (uri (git-reference
+;;                     (url "https://github.com/ema2159/centaur-tabs.git")
+;;                     (commit "7d9fad0daa44ffb2acecf6525759e46e08e35f2c")))
+;;               (sha256
+;;                (base32
+;; 		"0la8fmwirspg7m453qhfb64sqryl59dxc1lfmjkh6mzf85nqbl1i"))))
+;;     (build-system emacs-build-system)
+;;     (propagated-inputs (list emacs-powerline))
+;;     (home-page "https://github.com/ema2159/centaur-tabs")
+;;     (synopsis "Aesthetic, modern looking customizable tabs plugin")
+;;     (description
+;;      "Emacs plugin aiming to become an aesthetic, modern looking tabs plugin.  This
+;; package offers tabs with a wide range of customization options, both aesthetical
+;; and functional, implementing them trying to follow the Emacs philosophy packing
+;; them with useful keybindings and a nice integration with the Emacs environment,
+;; without sacrificing customizability.  Some of the features Centaur tabs offers
+;; are: - Tab styles - Tab icons - Graying out icons - Selected tab bar (over,
+;; under and left bar) - Close button - Modified marker - Buffer grouping -
+;; Projectile integration - Ivy and Helm integration for group switching")
+;;     (license #f)))
 
-(define-public emacs-elfeed-web
-  (package
-    (name "emacs-elfeed-web")
-    (version "20210226.258")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/skeeto/elfeed.git")
-                    (commit "162d7d545ed41c27967d108c04aa31f5a61c8e16")))
-              (sha256
-               (base32
-		"0v49l289wiral01pvgm30wyv79h5d3ly3i05dmcw1q93g4z4l56d"))))
-    (build-system emacs-build-system)
-    (propagated-inputs (list emacs-simple-httpd emacs-elfeed))
-    (arguments
-     '(#:include '("^web/[^/]+$")
-       #:exclude '()))
-    (home-page "https://github.com/skeeto/elfeed")
-    (synopsis "web interface to Elfeed")
-    (description
-     "This is a very early work in progress.  The long-term goal is to provide a web
-interface view of the database with optional remote tag updating.  An AngularJS
-client accesses the database over a few RESTful endpoints with JSON for
-serialization.  The IDs provided by RSS and Atom are completely arbitrary.  To
-avoid ugly encoding issues they're normalized into short, unique, alphanumeric
-codes called webids.  Both feeds and entries fall into the same webid namespace
-so they share a single endpoint.  Endpoints: /elfeed/<path> Serves the static
-HTML, JS, and CSS content. /elfeed/content/<ref-id> Serves content from the
-content database (`elfeed-deref'). /elfeed/things/<webid> Serve up an
-elfeed-feed or elfeed-entry in JSON format. /elfeed/search Accepts a q parameter
-which is an filter string to be parsed and handled by
-`elfeed-search-parse-filter'. /elfeed/tags Accepts a PUT request to modify the
-tags of zero or more entries based on a JSON entry passed as the content.
-/elfeed/update Accepts a time parameter.  If time < `elfeed-db-last-update',
-respond with time.  Otherwise don't respond until database updates (long poll).")
-    (license #f)))
+;; (define-public emacs-elfeed-web
+;;   (package
+;;     (name "emacs-elfeed-web")
+;;     (version "20210226.258")
+;;     (source (origin
+;;               (method git-fetch)
+;;               (uri (git-reference
+;;                     (url "https://github.com/skeeto/elfeed.git")
+;;                     (commit "162d7d545ed41c27967d108c04aa31f5a61c8e16")))
+;;               (sha256
+;;                (base32
+;; 		"0v49l289wiral01pvgm30wyv79h5d3ly3i05dmcw1q93g4z4l56d"))))
+;;     (build-system emacs-build-system)
+;;     (propagated-inputs (list emacs-simple-httpd emacs-elfeed))
+;;     (arguments
+;;      '(#:include '("^web/[^/]+$")
+;;        #:exclude '()))
+;;     (home-page "https://github.com/skeeto/elfeed")
+;;     (synopsis "web interface to Elfeed")
+;;     (description
+;;      "This is a very early work in progress.  The long-term goal is to provide a web
+;; interface view of the database with optional remote tag updating.  An AngularJS
+;; client accesses the database over a few RESTful endpoints with JSON for
+;; serialization.  The IDs provided by RSS and Atom are completely arbitrary.  To
+;; avoid ugly encoding issues they're normalized into short, unique, alphanumeric
+;; codes called webids.  Both feeds and entries fall into the same webid namespace
+;; so they share a single endpoint.  Endpoints: /elfeed/<path> Serves the static
+;; HTML, JS, and CSS content. /elfeed/content/<ref-id> Serves content from the
+;; content database (`elfeed-deref'). /elfeed/things/<webid> Serve up an
+;; elfeed-feed or elfeed-entry in JSON format. /elfeed/search Accepts a q parameter
+;; which is an filter string to be parsed and handled by
+;; `elfeed-search-parse-filter'. /elfeed/tags Accepts a PUT request to modify the
+;; tags of zero or more entries based on a JSON entry passed as the content.
+;; /elfeed/update Accepts a time parameter.  If time < `elfeed-db-last-update',
+;; respond with time.  Otherwise don't respond until database updates (long poll).")
+;;     (license #f)))
 
-(define-public emacs-symex
-  (package
-    (name "emacs-symex")
-    (version "20221008.1605")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/countvajhula/symex.el.git")
-                    (commit "b999c02284f6e72ff2061a98cbaa084954c44879")))
-              (sha256
-               (base32
-		"1m7m0zmzib8kz765ny1miy9ydp512jgxix7bhdbxg1gfidqndp32"))))
-    (build-system emacs-build-system)
-    (propagated-inputs (list emacs-lispy
-                             emacs-paredit
-                             emacs-evil-cleverparens
-                             emacs-evil
-                             emacs-evil-surround
-                             emacs-hydra
-                             emacs-undo-tree))
-    (home-page "https://github.com/countvajhula/symex.el")
-    (synopsis "An evil way to edit Lisp symbolic expressions as trees")
-    (description
-     "Symex mode (pronounced sym-ex, as in symbolic expression) is a vim- inspired way
-of editing Lisp code as trees.  Entering symex mode allows you to reason about
-your code in terms of its structure, similar to other tools like paredit and
-lispy.  But while in those packages the tree representation is implicit, symex
-mode models the tree structure explicitly so that tree navigations and
-operations can be described using an expressive DSL, and invoked in a vim- style
-modal interface implemented with a Hydra.  At the moment, symex mode uses
-paredit, lispy, and evil-cleverparens to provide much of its low level
-functionality.  In the future, this layer of primitives may be replaced with a
-layer that explicitly uses the abstract syntax tree, for greater precision.")
-    (license #f)))
+;; (define-public emacs-symex
+;;   (package
+;;     (name "emacs-symex")
+;;     (version "20221008.1605")
+;;     (source (origin
+;;               (method git-fetch)
+;;               (uri (git-reference
+;;                     (url "https://github.com/countvajhula/symex.el.git")
+;;                     (commit "b999c02284f6e72ff2061a98cbaa084954c44879")))
+;;               (sha256
+;;                (base32
+;; 		"1m7m0zmzib8kz765ny1miy9ydp512jgxix7bhdbxg1gfidqndp32"))))
+;;     (build-system emacs-build-system)
+;;     (propagated-inputs (list emacs-lispy
+;;                              emacs-paredit
+;;                              emacs-evil-cleverparens
+;;                              emacs-evil
+;;                              emacs-evil-surround
+;;                              emacs-hydra
+;;                              emacs-undo-tree))
+;;     (home-page "https://github.com/countvajhula/symex.el")
+;;     (synopsis "An evil way to edit Lisp symbolic expressions as trees")
+;;     (description
+;;      "Symex mode (pronounced sym-ex, as in symbolic expression) is a vim- inspired way
+;; of editing Lisp code as trees.  Entering symex mode allows you to reason about
+;; your code in terms of its structure, similar to other tools like paredit and
+;; lispy.  But while in those packages the tree representation is implicit, symex
+;; mode models the tree structure explicitly so that tree navigations and
+;; operations can be described using an expressive DSL, and invoked in a vim- style
+;; modal interface implemented with a Hydra.  At the moment, symex mode uses
+;; paredit, lispy, and evil-cleverparens to provide much of its low level
+;; functionality.  In the future, this layer of primitives may be replaced with a
+;; layer that explicitly uses the abstract syntax tree, for greater precision.")
+;;     (license #f)))
 
-(define-public emacs-rigpa
-  (package
-    (name "emacs-rigpa")
-    (version "0.5")
-    (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://github.com/countvajhula/rigpa.git")
-		    (commit version)))
-	      (file-name (git-file-name name version))
-	      (sha256
-	       (base32
-		"14nx15chy36l6gdd6m926v98j1g4znx5pw7x7k3bgrnaw1dvyi9a"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     (list 
-      `("emacs-evil" ,(specification->package "emacs-evil"))
-      `("emacs-hydra" ,(specification->package "emacs-hydra"))
-      `("emacs-ht" ,(specification->package "emacs-ht"))
-      `("emacs-symex" ,(specification->package "emacs-symex"))
-      `("emacs-ace-window" ,(specification->package "emacs-ace-window"))
-      `("emacs-dash" ,(specification->package "emacs-dash"))
-      `("emacs-git-timemachine" ,(specification->package "emacs-git-timemachine"))
-      `("emacs-transient" ,(specification->package "emacs-transient"))
-      `("emacs-beacon" ,(specification->package "emacs-beacon"))
-      `("emacs-s" ,(specification->package "emacs-s"))
-      `("emacs-centaur-tabs" ,(specification->package "emacs-centaur-tabs"))
-      `("emacs-counsel" ,(specification->package "emacs-counsel"))
-      `("emacs-dynaring" ,(specification->package "emacs-dynaring"))
-      `("emacs-buffer-ring" ,(specification->package "emacs-buffer-ring"))
-      `("emacs-parsec" ,(specification->package "emacs-parsec"))
-      `("emacs-transpose-frame" ,(specification->package "emacs-transpose-frame"))))
-    (home-page "")
-    (synopsis "")
-    (description "")
-    (license license:gpl3+)))
+;; (define-public emacs-rigpa
+;;   (package
+;;     (name "emacs-rigpa")
+;;     (version "0.5")
+;;     (source (origin
+;; 	      (method git-fetch)
+;; 	      (uri (git-reference
+;; 		    (url "https://github.com/countvajhula/rigpa.git")
+;; 		    (commit version)))
+;; 	      (file-name (git-file-name name version))
+;; 	      (sha256
+;; 	       (base32
+;; 		"14nx15chy36l6gdd6m926v98j1g4znx5pw7x7k3bgrnaw1dvyi9a"))))
+;;     (build-system emacs-build-system)
+;;     (propagated-inputs
+;;      (list 
+;;       `("emacs-evil" ,(specification->package "emacs-evil"))
+;;       `("emacs-hydra" ,(specification->package "emacs-hydra"))
+;;       `("emacs-ht" ,(specification->package "emacs-ht"))
+;;       `("emacs-symex" ,(specification->package "emacs-symex"))
+;;       `("emacs-ace-window" ,(specification->package "emacs-ace-window"))
+;;       `("emacs-dash" ,(specification->package "emacs-dash"))
+;;       `("emacs-git-timemachine" ,(specification->package "emacs-git-timemachine"))
+;;       `("emacs-transient" ,(specification->package "emacs-transient"))
+;;       `("emacs-beacon" ,(specification->package "emacs-beacon"))
+;;       `("emacs-s" ,(specification->package "emacs-s"))
+;;       `("emacs-centaur-tabs" ,(specification->package "emacs-centaur-tabs"))
+;;       `("emacs-counsel" ,(specification->package "emacs-counsel"))
+;;       `("emacs-dynaring" ,(specification->package "emacs-dynaring"))
+;;       `("emacs-buffer-ring" ,(specification->package "emacs-buffer-ring"))
+;;       `("emacs-parsec" ,(specification->package "emacs-parsec"))
+;;       `("emacs-transpose-frame" ,(specification->package "emacs-transpose-frame"))))
+;;     (home-page "")
+;;     (synopsis "")
+;;     (description "")
+;;     (license license:gpl3+)))
 
 ;; (define-public emacs-elfeed-tube
 ;;   (package
@@ -680,22 +681,6 @@ Mail User Agent Mode (Message, mu4e, or Notmuch) to compose and reply to
 emails in a Outlook HTML friendly style.")
       (license license:gpl3+))))
 
-;; (define-public emacs-org-parallel-latex
-;;   (package
-;;     (inherit emacs-org)
-;;     (name "emacs-org-parallel-latex")
-;;     (source
-;;      (origin
-;;        (method git-fetch)
-;;        (uri (git-reference
-;;              (url "https://code.tecosaur.net/tec/org-mode.git")
-;;              (commit "ce4a745b0aa746686376c5927b3165fe4cb4b4d7")))
-;;        ;; (file-name (git-file-name name version))
-;;        (sha256
-;;         (base32 "1f1647k67gpdcpamfcy2g1rjcwkg8xyzgk45pz86q0bnl6plv2wf"))))
-;;     ))
-
-
 (define-public emacs-org-parallel-latex
   (package
     ;; (name "emacs-org")
@@ -876,4 +861,3 @@ queries are licensed under the GPL-compatible Mozilla Public License 2.0.")
      "@code{elfeed-tube} is an extension for Elfeed that enhances Youtube RSS
 feed subscriptions.")
     (license license:unlicense)))
-

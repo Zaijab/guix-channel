@@ -429,8 +429,8 @@ See `consult-grep' for details."
 (define meow-configuration
   (home-emacs-configuration
    (packages (list
-	      emacs-symex
-	      emacs-rigpa
+	      ;; emacs-symex
+	      ;; emacs-rigpa
 	      emacs-meow
 	      emacs-meow-tree-sitter))
    (init '(
