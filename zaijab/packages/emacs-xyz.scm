@@ -842,7 +842,7 @@ queries are licensed under the GPL-compatible Mozilla Public License 2.0.")
 
 (define-public emacs-elfeed-tube-current
   (package
-    (name "emacs-elfeed-tube")
+    (name "emacs-elfeed-tube-current")
     (version "c2f517e35fbba07a9d6e6ab4091ee65ad773a32c")
     (source
      (origin
