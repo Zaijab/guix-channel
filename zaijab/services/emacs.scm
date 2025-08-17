@@ -1457,6 +1457,7 @@ See `consult-grep' for details."
 			(org-fc-flashcard-tag "FC")
 			(org-fc-suspended-tag "Suspended")
 			:config
+			(require 'org-fc-audio)
 			(org-fc-cache-mode)
 			;; Based on `org-log-beginning'
 			(defun org-fc-review-data-position (&optional create)
@@ -2122,6 +2123,7 @@ END is the start of the line with :END: on it."
 	      emacs-windsize
 	      emacs-eat
 	      xrandr
+	      xinput
 	      arandr))
    (init '((use-package exwm
 			:if (display-graphic-p)
