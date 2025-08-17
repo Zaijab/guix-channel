@@ -1935,6 +1935,7 @@ END is the start of the line with :END: on it."
 	      
 	      tree-sitter-python
 	      tree-sitter-css
+	      tree-sitter-html
 	      
 	      emacs-csv-mode
 	      emacs-combobulate
