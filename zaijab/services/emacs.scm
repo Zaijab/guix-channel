@@ -1008,6 +1008,7 @@ See `consult-grep' for details."
 
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkdmU8hGK4Fg3LghTVtKltQ" japanese cure-dolly)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC2_krAagEXVPftDXZCDiVZA" japanese kanamenaito)
+				;; ("https://www.youtube.com/@kanamenaito" japanese kanamenaito youtube)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCsXJuG5tSNRr9IwfjMbNvqQ" japanese game-gengo)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC5Kgc_HNzx4GJ-w4QMeeKiQ" japanese python)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCiX01KrL5XyKsxhjRhCC7oA" japanese takashi)

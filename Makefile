@@ -10,7 +10,7 @@ gc:
 git:
 	git add -A
 	git diff-index --quiet HEAD || git commit -am "Updating Config"
-	# git push -u github main
+	git push -u github main
 
 pull:
 	guix pull --channels=/home/zjabbar/code/guix-channel/zaijab/channel.scm --allow-downgrades -v 4
