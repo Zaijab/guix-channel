@@ -1458,6 +1458,16 @@ See `consult-grep' for details."
 			(org-fc-suspended-tag "Suspended")
 			:config
 			(require 'org-fc-audio)
+			(defun org-fc-audio-play-file (file speed)
+			  "Play the audio FILE at SPEED."
+			  (org-fc-audio-stop)
+			  (setq org-fc-audio-last-file file)
+			  (setq org-fc-audio--process
+				(start-process-shell-command
+				 "org-fc audio"
+				 nil
+				 (format "mpv %s --speed=%f --no-video" file speed))))
+
 			(org-fc-cache-mode)
 			;; Based on `org-log-beginning'
 			(defun org-fc-review-data-position (&optional create)
