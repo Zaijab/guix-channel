@@ -1550,7 +1550,9 @@ END is the start of the line with :END: on it."
 (define website-configuration
   (home-emacs-configuration
    (packages (list python-pygments emacs-engrave-faces))
-   (init '((require 'ucs-normalize)
+   (init '((setq org-export-global-macros
+		 '(("RUBY" . "@@html:<ruby>$1<rt>$2</rt></ruby>@@@@latex:\\ruby{$1}{$2}@@")))
+	   (require 'ucs-normalize)
 	   (defun commonplace/get-title (file)
 	     "For a given file, get its TITLE keyword."
 	     (with-current-buffer
