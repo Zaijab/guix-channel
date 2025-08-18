@@ -2123,11 +2123,11 @@ END is the start of the line with :END: on it."
   (home-emacs-configuration
    (packages (list emacs-eat
 		   emacs-bash-completion))
-   (init '(#;(use-package eat
-	   :demand t
-	   :hook
-	   (eshell-load . (function eat-eshell-mode))
-	   (eshell-load . (function eat-eshell-visual-command-mode)))))))
+   (init '((use-package eat
+			:demand t
+			:hook
+			(eshell-load . (function eat-eshell-mode))
+			(eshell-load . (function eat-eshell-visual-command-mode)))))))
 
 (define exwm-configuration
   (home-emacs-configuration
