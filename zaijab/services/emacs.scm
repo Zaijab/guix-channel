@@ -320,6 +320,14 @@ See `consult-grep' for details."
 			(defun consult-search-library () (interactive)
 			  (consult-ripgrep-all "~/library/"))
 
+			(defun pdf-consult-ripgrep-all (&optional dir initial)
+			  (interactive "P")
+			  (let* ((consult-ripgrep-args "rga --null --line-buffered --color=never --max-columns=1000 --smart-case --no-heading --with-filename --line-number")
+				 (result (consult-ripgrep dir initial)))
+			    (when (and result (string-match "\\([^:]+\\.pdf\\).*page \\([0-9]+\\)" result))
+			      (pdf-view-goto-page (string-to-number (match-string 2 result))))))
+
+
 
 			)
 	   ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/consult-2.5/consult.el")
