@@ -6,6 +6,7 @@
   #:use-module (guix packages)
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
+  #:use-module (gnu packages node)
   #:use-module (gnu packages education)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages bittorrent)
@@ -541,7 +542,8 @@ See `consult-grep' for details."
 
 (define llm-configuration
   (home-emacs-configuration
-   (packages (list emacs-gptel))
+   (packages (list emacs-gptel
+		   node))
    (init '())))
 
 (define lsp-configuration
