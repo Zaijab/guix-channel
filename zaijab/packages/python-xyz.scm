@@ -10,7 +10,7 @@
   #:use-module (gnu packages python-build)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages rust-apps)
-  #:use-module (gnu packages crates-io)
+  ;; #:use-module (gnu packages crates-io)
   #:use-module (gnu packages rust)  
   #:use-module (gnu packages password-utils)
   #:use-module (gnu packages haskell-xyz)  
