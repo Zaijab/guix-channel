@@ -7,7 +7,7 @@
    (name ruther)
    (url "https://git.ditigal.xyz/~ruther/guix-exprs")
    (branch "main")
-   (commit "d92cfecb9513f64fb8c30675cfc90f19026b09e4")) ; ripgrep-all
+   #;(commit "d92cfecb9513f64fb8c30675cfc90f19026b09e4")) ; ripgrep-all
   (channel
    (name nonguix)
    (url "https://gitlab.com/nonguix/nonguix")
