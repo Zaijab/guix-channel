@@ -20,7 +20,6 @@ pull_from_lock:
 
 update_lock:
 	cp /var/guix/profiles/system/channels.scm /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl
-	# guix system describe --format=channels > /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl
 
 system:
 	sudo guix system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades --no-grafts #--substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org https://substitutes.nonguix.org'
