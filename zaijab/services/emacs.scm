@@ -163,7 +163,7 @@
    (packages (list emacs-consult
 		   grep
 		   ripgrep
-		   ;; ripgrep-all
+		   ripgrep-all
 		   poppler
 		   poppler-data))
    (init '(;; Example configuration for Consult
@@ -1940,6 +1940,7 @@ END is the start of the line with :END: on it."
   (home-emacs-configuration
    (packages (list
 	      python
+	      python-cython
 	      jupyter
 	      guix-jupyter
 	      python-virtualenv
