@@ -1572,7 +1572,7 @@ END is the start of the line with :END: on it."
 
 (define website-configuration
   (home-emacs-configuration
-   (packages (list python-pygments emacs-engrave-faces))
+   (packages (list python-pypdf2 python-pygments emacs-engrave-faces))
    (init '((setq org-export-global-macros
 		 '(("RUBY" . "@@html:<ruby>$1<rt>$2</rt></ruby>@@@@latex:\\ruby{$1}{$2}@@")))
 	   (require 'ucs-normalize)
