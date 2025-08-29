@@ -163,7 +163,7 @@
    (packages (list emacs-consult
 		   grep
 		   ripgrep
-		   ripgrep-all
+		   ;; ripgrep-all
 		   poppler
 		   poppler-data))
    (init '(;; Example configuration for Consult
@@ -2139,8 +2139,8 @@ END is the start of the line with :END: on it."
    (init '((use-package eat
 			:demand t
 			:hook
-			(eshell-load . (function eat-eshell-mode))
-			(eshell-load . (function eat-eshell-visual-command-mode)))))))
+			#;(eshell-load . (function eat-eshell-mode))
+			#;(eshell-load . (function eat-eshell-visual-command-mode)))))))
 
 (define exwm-configuration
   (home-emacs-configuration
