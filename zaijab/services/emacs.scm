@@ -2099,8 +2099,9 @@ END is the start of the line with :END: on it."
 	   (defun arei-server-start () "Start Arei with Default Port" (interactive)
 	     (async-shell-command "guix shell guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'"))
 
+
 	   (defun arei-server-start-guix-repl () "Start Arei with Default Port" (interactive)
-	     (async-shell-command "guix shell guile-next guile-ares-rs -- echo '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))' | guix repl"))
+	     (async-shell-command "guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl -- shell guile-next guile-ares-rs -- echo '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))' | guix repl"))
 
 	   (defun auto-start-arei ()
 	     (if (string= "" (shell-command-to-string "sudo ss -tulpn | grep LISTEN.*7888"))
