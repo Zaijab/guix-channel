@@ -1393,7 +1393,7 @@ See `consult-grep' for details."
 	      emacs-consult-org-roam
 	      emacs-org-fc
 	      anki
-	      emacs-org-drill
+	      ;; emacs-org-drill
 	      emacs-kanji))
    (init '((use-package sqlite)
 	   
