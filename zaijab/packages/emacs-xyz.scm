@@ -695,7 +695,7 @@ emails in a Outlook HTML friendly style.")
     ;;    (sha256
     ;;     (base32 "1wi8kj0vhlnzslarjfbi1ljqh71jlsbi4krsx6cr1ch5cm9v78y9"))))
     (name "emacs-org-parallel-latex")
-    (version "9.7.25")
+    (version "f9f909681a051c73c64cc7b030aa54d70bb78f80")
     (source
      (origin
        (method git-fetch)
