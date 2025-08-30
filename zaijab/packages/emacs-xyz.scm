@@ -704,7 +704,7 @@ emails in a Outlook HTML friendly style.")
              (commit "f9f909681a051c73c64cc7b030aa54d70bb78f80"))) ; new - cd2269ddb64bda7203acf2ee2e26188237a578ea
        ;; (file-name (git-file-name name version))
        (sha256
-        (base32 "13mfs7nqqia9j2d27qfb14ag13niyw9azdhgirwc0j41glq23gkk"))))
+        (base32 "0d7g5q21g0720z2m3r2pixanj3wy8l7axc9cch95c9wgvrqc3d9i"))))
     (build-system emacs-build-system)
     (arguments
      (list
