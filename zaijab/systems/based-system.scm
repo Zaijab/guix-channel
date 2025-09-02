@@ -264,3 +264,4 @@
 	  ((string= hostname "euler") euler-operating-system))))
 
 my-operating-system
+

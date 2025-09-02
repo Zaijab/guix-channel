@@ -1,0 +1,2 @@
+# guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl -- shell guile-next guile-ares-rs -- guix repl -- /home/zjabbar/code/guix-channel/zaijab/files/arei.scm
+guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl -- shell guile-next guile-ares-rs -- guile -c '(begin (use-modules (guix gexp)) ((@ (ares server) run-nrepl-server) #:port 7888))'
