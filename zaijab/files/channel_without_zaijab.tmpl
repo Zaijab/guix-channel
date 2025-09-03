@@ -11,10 +11,4 @@
 (define current-system-without-zaijab
   (cdr raw-data))
 
-(define master-zaijab-channel-lock
-  `(,(channel (name 'zaijab)
-	      (url "/home/zjabbar/code/guix-channel/")
-	      (branch "main"))
-   ,@(cdr raw-data)))
-
-master-zaijab-channel-lock
+current-system-without-zaijab
