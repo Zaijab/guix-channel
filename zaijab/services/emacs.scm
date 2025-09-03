@@ -1941,6 +1941,7 @@ END is the start of the line with :END: on it."
    (packages (list
 	      python
 	      python-cython
+	      conda
 	      jupyter
 	      guix-jupyter
 	      python-virtualenv
