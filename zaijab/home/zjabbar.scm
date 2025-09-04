@@ -45,7 +45,7 @@
                   ("GIO_MODULE_DIR" . "/home/zjabbar/.guix-home/profile/lib/gio/modules/")
                   ("EDITOR" . "emacsclient -n")
 		  ("DICPATH" . "~/.guix-home/profile/share/hunspell/")
-                  ("PATH" . "$PATH:/home/zjabbar/.local/bin")
+                  ("PATH" . "$PATH:/home/zjabbar/.local/bin:/home/zjabbar/.nix-profile/bin")
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
                   ("TF_CPP_MIN_LOG_LEVEL" . "1")
 		  ("SWANCTL_DIR" . "/home/zjabbar/.config/swanctl/")
@@ -57,7 +57,9 @@
                  (mixed-text-file "profile.sh"
                                   "export HOSTNAME\n"
                                   "eval \"$(direnv hook bash)\"\n"
-
+				  "if [ -f ~/.nix-profile/etc/profile.d/nix.sh ]; then\n"
+				  "source ~/.nix-profile/etc/profile.d/nix.sh\n"
+				  "fi"
 				  )))
 	       (bashrc
 		(list
