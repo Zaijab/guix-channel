@@ -29,6 +29,7 @@
   #:use-module (gnu packages jami)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
+  #:use-module (gnu packages commencement)
   #:use-module (gnu packages scheme)
   #:use-module (gnu packages guile)
   #:use-module (gnu packages guile-xyz)
@@ -1940,6 +1941,7 @@ END is the start of the line with :END: on it."
   (home-emacs-configuration
    (packages (list
 	      python
+	      gcc-toolchain
 	      python-cython
 	      conda
 	      jupyter
