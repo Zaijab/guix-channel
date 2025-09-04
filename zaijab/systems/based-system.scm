@@ -31,6 +31,7 @@
   #:use-module (gnu services admin)
   #:use-module (gnu services desktop)
   #:use-module (gnu services xorg)
+  #:use-module (gnu services nix)
   #:use-module (gnu services audio)
   #:use-module (gnu services sound)
   #:use-module (gnu services sddm)
@@ -44,6 +45,7 @@
   #:use-module (gnu services syncthing)
   #:use-module (gnu services ssh)
   #:use-module (gnu packages networking)
+  #:use-module (gnu packages package-management)
   #:use-module (gnu packages gnome)
   #:use-module (gnu services base)
   #:use-module (gnu services desktop)
@@ -111,6 +113,7 @@
 		    
 		    epson-inkjet-printer-escpr
 		    foo2zjs hplip-minimal hplip hplip-plugin))))
+   (service nix-service-type)
 
    (extra-special-file "/etc/nsswitch.conf"
 		       (plain-file "nsswitch.conf"
@@ -183,6 +186,7 @@
 	       cups
 	       htop
 	       nss-mdns
+	       nix
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
