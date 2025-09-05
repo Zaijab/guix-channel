@@ -78,9 +78,9 @@
    ;; (service nscd-service-type)
    (service docker-service-type)
    (service containerd-service-type)
-   (service oci-service-type
+   (service oci-container-service-type
 	    (list
-	     (oci-configuration
+	     (oci-container-configuration
 	      (image "docker.io/library/caddy:2-alpine")
 	      (network "host")
 	      (volumes '("/home/zjabbar/code/guix-channel/zaijab/files/Caddyfile:/etc/caddy/Caddyfile:ro"
@@ -113,7 +113,7 @@
 		    
 		    epson-inkjet-printer-escpr
 		    foo2zjs hplip-minimal hplip hplip-plugin))))
-   (service nix-service-type)
+   ;; (service nix-service-type)
 
    (extra-special-file "/etc/nsswitch.conf"
 		       (plain-file "nsswitch.conf"
@@ -186,7 +186,7 @@
 	       cups
 	       htop
 	       nss-mdns
-	       nix
+	       ;; nix
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
