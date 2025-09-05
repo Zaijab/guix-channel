@@ -1,4 +1,4 @@
-(define-module (zaijab packages mathematics)
+(define-module (zaijab packages macaulay2)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
@@ -26,7 +26,7 @@
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages version-control)
   #:use-module ((guix licenses) #:prefix license:)
-  #:export (macaulay2 macaulay2-source-cmake))
+  )
 
 (use-modules (guix packages)
              (guix download)
