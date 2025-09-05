@@ -78,9 +78,9 @@
    ;; (service nscd-service-type)
    (service docker-service-type)
    (service containerd-service-type)
-   (service oci-container-service-type
+   (service oci-service-type
 	    (list
-	     (oci-container-configuration
+	     (oci-configuration
 	      (image "docker.io/library/caddy:2-alpine")
 	      (network "host")
 	      (volumes '("/home/zjabbar/code/guix-channel/zaijab/files/Caddyfile:/etc/caddy/Caddyfile:ro"
