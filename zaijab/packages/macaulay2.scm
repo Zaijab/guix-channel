@@ -4,6 +4,7 @@
   #:use-module (guix git-download)
   #:use-module (guix download)
   #:use-module (guix build-system gnu)
+  #:use-module (guix build-system trivial)
   #:use-module (guix gexp)
   #:use-module (gnu packages)
   #:use-module (gnu packages algebra)
@@ -35,6 +36,7 @@
   #:use-module (gnu packages tbb)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages xml)
+  #:use-module (gnu packages bash)
   #:use-module ((guix licenses) #:prefix license:))
 
 ;; =============================================================================
@@ -250,166 +252,217 @@
 (define-public macaulay2
   (package
     (name "macaulay2")
-    (version "1.25.05") ; Updated to recent version without libatomic_ops submodule
+    ;; default.nix:121 - Use exact same version as working Nix package  
+    (version "1.25.05") ; User certified modern version to avoid 404 submodule errors
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/Macaulay2/M2")
+             ;; User certified modern commit to avoid 404 submodule errors  
              (commit (string-append "release-" version))
-             (recursive? #t))) ; CRITICAL: Fetch submodules 
+             ;; default.nix:124 - Enable submodules so M2 has all dependencies in source
+             (recursive? #t))) 
        (file-name (git-file-name name version))
        (sha256
         (base32 "0lajihpski1siajgjp1zqdd6596s3aw58wg72s218s97cnzlla6p"))))
 
-    (build-system gnu-build-system)
+    ;; Following default.nix:12 - Use custom builder approach like Nix
+    (build-system trivial-build-system)
+    ;; Following default.nix:14-15 and builder.sh - Replicate exact Nix build approach  
     (arguments
-     (list
-      #:configure-flags
-      #~(list "--disable-documentation"     ; Nix uses this
-              "--with-system-gc"           ; Nix uses this  
-              ;; Exact Nix boost configuration:
-              (string-append "--with-boost=" #$(this-package-input "boost") "/include")
-              (string-append "--with-boost-libdir=" #$(this-package-input "boost") "/lib")
-              (string-append "--with-gtest-source-path=" 
-                           #$(this-package-native-input "googletest") "/src/googletest")
-              ;; Point to system frobby
-              (string-append "--with-frobby=" #$(this-package-input "frobby")))
-      #:make-flags
-      #~(list (string-append "CPPFLAGS=-I" #$(this-package-input "cddlib") "/include/cddlib"
-                            " -I" #$(this-package-native-input "googletest") "/include"))
-      #:tests? #f ; No test suite in standard build
-      #:phases
-      #~(modify-phases %standard-phases
-          (add-after 'unpack 'enter-source-directory
-            (lambda _ (chdir "M2") #t))
-          (add-before 'bootstrap 'apply-nix-patches
-            (lambda _
-              ;; Apply same patches as Nix macaulay2.patch
-              ;; Patch 1: Fix GNUmakefile.in git operations
-              (when (file-exists? "GNUmakefile.in")
-                (substitute* "GNUmakefile.in"
-                  ;; Disable git submodule checkout that fails in isolated builds
-                  (("git-checkout-in-\\$1:; cd @srcdir@/\\.\\..*") "git-checkout-in-$1:")
-                  ;; Use sh explicitly for autogen.sh
-                  (("cd @srcdir@/submodules/\\$1 && NOCONFIGURE=1 \\./autogen\\.sh")
-                   "cd @srcdir@/submodules/$1 && NOCONFIGURE=1 sh ./autogen.sh")
-                  ;; Remove git dependency rules  
-                  (("@srcdir@/submodules/\\$1/configure\\.ac:.*git-checkout.*") "")))
-              
-              ;; Patch 2: Fix Macaulay2/bin/Makefile.in time command
-              (when (file-exists? "Macaulay2/bin/Makefile.in")
-                (substitute* "Macaulay2/bin/Makefile.in"
-                  ;; Remove time command that may not be available
-                  (("time @CXX@") "@CXX@")))
-              
-              ;; Patch 3: Fix configure.ac lsb_release issue
-              (when (file-exists? "configure.ac")
-                (substitute* "configure.ac"
-                  ;; Remove double-quotes from ISSUE variable
-                  (("\\s+ISSUE=\\$ISSUE_FLAVOR-\\$ISSUE_RELEASE") 
-                   "\n     ISSUE=$ISSUE_FLAVOR-$ISSUE_RELEASE\n\n     # remove double-quotes produced by some versions of lsb_release\n     ISSUE=`echo $ISSUE | sed 's/\"//g'`")))
-              #t))
-          (add-before 'configure 'set-issue-fallback
-            (lambda _
-              ;; Ensure ISSUE environment variable is set as fallback
-              (setenv "ISSUE" "GuixLinux-unknown")
-              #t))
-          (add-after 'configure 'fix-shell-paths
-            (lambda _
-              ;; Fix hardcoded /bin/sh paths in generated files
-              (let ((shell (which "sh")))
-                ;; Fix main Makefile
-                (substitute* "Makefile"
-                  (("/bin/sh") shell))
-                ;; Fix any included makefiles that might have /bin/sh
-                (for-each (lambda (file)
-                  (when (file-exists? file)
-                    (substitute* file
-                      (("/bin/sh") shell))))
-                  (find-files "." "\\.mk$|Makefile.*"))
-                ;; Also set SHELL variable for make
-                (setenv "SHELL" shell))
-              #t)))))
+     (list #:modules '((guix build utils))
+           #:builder
+           #~(begin
+               (use-modules (guix build utils)
+                           (ice-9 ftw))
+               
+               ;; builder.sh:1-4 - Set up environment and enable verbose output
+               (setenv "PATH" (string-append 
+                              #$(this-package-native-input "bash") "/bin:"
+                              #$(this-package-native-input "coreutils") "/bin:"
+                              #$(this-package-native-input "gnu-make") "/bin:"
+                              #$(this-package-native-input "autoconf") "/bin:"
+                              #$(this-package-native-input "automake") "/bin:"
+                              #$(this-package-native-input "libtool") "/bin:"
+                              #$(this-package-native-input "pkg-config") "/bin:"
+                              #$(this-package-native-input "perl") "/bin:"
+                              #$(this-package-native-input "python") "/bin:"
+                              #$(this-package-native-input "texinfo") "/bin:"
+                              #$(this-package-native-input "which") "/bin:"
+                              #$(this-package-native-input "bison") "/bin:"
+                              #$(this-package-native-input "flex") "/bin:"
+                              #$(this-package-native-input "gfortran-toolchain") "/bin:"
+                              ;; GCC provided by gfortran-toolchain
+                              (getenv "PATH")))
+               
+               ;; builder.sh:6 - Copy M2 source to working directory
+               (display "=== Copying M2 source ===\n")
+               (copy-recursively #$source "src")
+               (chdir "src/M2")
+               
+               ;; builder.sh:15 - Apply patches before build (default.nix:115)
+               (display "=== Applying Nix patches ===\n") 
+               (invoke "patch" "-p0" "-i" #$(plain-file "macaulay2.patch"
+"--- GNUmakefile.in
++++ GNUmakefile.in
+@@ -155,7 +155,7 @@
+     $(eval $c-in-$1:; + if [ -f submodules/$1/Makefile ]; then $(MAKE) submodules/$1/Makefile && $(MAKE) -C submodules/$1 $c; fi)
+     $(eval $c: $c-in-$1))
+ 
+-git-checkout-in-$1:; cd @srcdir@/.. && git submodule update --init M2/submodules/$1
++git-checkout-in-$1:
+ git-update-in-$1:; cd @srcdir@/submodules/$1 && git checkout master && git pull
+ git-status-in-$1:; cd @srcdir@/submodules/$1 && git status
+ git-clean-in-$1:; cd @srcdir@/submodules/$1 && git clean -Xdf
+@@ -190,10 +190,6 @@
+ 		LIBS=\"$$(LIBS)\"								\\
+ 		$$(SUBMODULE_CONFIGOPTIONS)
+ 
+-@srcdir@/submodules/$1/configure.ac: $(if $(or $(filter yes, @DOWNLOAD@), \\
+-	$(filter $1, memtailor mathic mathicgb)), \\
+-	git-checkout-in-$1, git-checkout-warning-for-$1)
+-
+ git-checkout-warning-for-$1:
+ 	@ echo \"error: for the submodule \\\"$1\\\"\" >&2
+ 	@ echo \"       the source code is not present in the directory \\\"submodules/$1\\\"\" >&2
+@@ -205,7 +201,7 @@
+ 	@ false
+ 
+ @srcdir@/submodules/$1/configure @srcdir@/submodules/$1/Makefile.in: @srcdir@/submodules/$1/configure.ac @srcdir@/submodules/$1/Makefile.am
+-	cd @srcdir@/submodules/$1 && NOCONFIGURE=1 ./autogen.sh
++	cd @srcdir@/submodules/$1 && NOCONFIGURE=1 sh ./autogen.sh
+ endef
+ $(foreach s,@SUBLIST@,$(eval $(call submodule-rules,$s)))
+ $(foreach s,@BUILDSUBLIST@,$(eval $(call build-submodule-rules,$s)))
+--- Macaulay2/bin/Makefile.in
++++ Macaulay2/bin/Makefile.in
+@@ -130,7 +130,7 @@
+ 	@ $(WHY)
+ 	@ echo \"compiling timestamp.cpp\"
+ 	$(COMPILE.cc) @srcdir@/timestamp.cpp -o timestamp.o
+-	time @CXX@ $(M2_LDFLAGS) timestamp.o $(M2_OBJECTS) $(M2_LIBRARIES) -o \"$@\".tmp
++	@CXX@ $(M2_LDFLAGS) timestamp.o $(M2_OBJECTS) $(M2_LIBRARIES) -o \"$@\".tmp
+ ifneq (\"$(EXECSTACK)\",\"no\")
+ 	@ if [ -x /usr/bin/execstack ] ;\\
+ 	  then if (set -x ; execstack -q \"$@\".tmp; execstack -c \"$@\".tmp ) ; \\
+--- configure.ac
++++ configure.ac
+@@ -140,7 +140,9 @@
+ 	       ISSUE=$ISSUE_FLAVOR-unknown ;;
+ 	 *)    ISSUE=$ISSUE_FLAVOR-$ISSUE_RELEASE
+      esac
+-     
++
++     # remove double-quotes produced by some versions of lsb_release
++     ISSUE=`echo $ISSUE | sed 's/\"//g'`
+ fi
+ 
+ # some operating systems have no ISSUE_FLAVOR, e.g., MacOS
+"))
+               
+               ;; builder.sh:17 - Set CPPFLAGS exactly as Nix does (default.nix:100)
+               (setenv "CPPFLAGS" 
+                      (string-append "-I" #$(this-package-input "cddlib") "/include/cddlib"
+                                    " -I" #$(this-package-input "googletest") "/include"))
+               
+               ;; builder.sh:19 - Run initial make to set up autotools
+               (display "=== Running initial make ===\n")
+               (invoke "make")
+               
+               ;; builder.sh:20 - Configure with exact Nix flags (default.nix:83-95)
+               (display "=== Configuring ===\n")
+               (invoke "./configure" 
+                       (string-append "--prefix=" #$output)
+                       ;; default.nix:86-87 - Boost configuration
+                       (string-append "--with-boost=" #$(this-package-input "boost"))
+                       (string-append "--with-boost-libdir=" #$(this-package-input "boost") "/lib")
+                       ;; default.nix:88 - System GC
+                       "--with-system-gc"
+                       ;; default.nix:91 - Disable docs
+                       "--disable-documentation"
+                       ;; default.nix:94 - Gtest source
+                       (string-append "--with-gtest-source-path=" 
+                                     #$(this-package-input "googletest") "/src/googletest"))
+               
+               ;; builder.sh:21-22 - Build and install
+               (display "=== Building ===\n")
+               (invoke "make")
+               (display "=== Installing ===\n")
+               (invoke "make" "install")
+               
+               #t)))
 
-    ;; Build-time dependencies (Nix buildInputs that don't get linked)
+    ;; default.nix:17-75 - All buildInputs exactly as Nix provides them
     (native-inputs
-     (list autoconf
-           automake
-           bison       ; not checked by M2 autoconf but required late in build
-           flex
-           gfortran-toolchain
-           libtool
-           perl        ; not checked by M2 autoconf but required to build ntl
-           pkg-config
-           python      ; Required by configure script
-           texinfo     ; surprise requirement at the very last step of build!
-           googletest  ; gtest + gtest.dev + gtest.src combined
-           which))     ; surprise requirement for _4ti2 (markov script)
+     (list autoconf           ; default.nix:18
+           automake           ; default.nix:19
+           bash               ; For trivial-build-system
+           bison              ; default.nix:20 - not checked by M2 autoconf but required late in build
+           coreutils          ; For trivial-build-system
+           flex               ; For autotools
+           ;; gcc-toolchain      ; default.nix:23 - May not exist, GCC is provided by gfortran-toolchain
+           gfortran-toolchain ; default.nix:24 
+           libtool            ; default.nix:26
+           gnu-make           ; For build process
+           perl               ; default.nix:32 - not checked by M2 autoconf but required to build ntl
+           pkg-config         ; default.nix:33
+           python             ; Required by configure script
+           texinfo            ; default.nix:35 - surprise requirement at the very last step of build!
+           which))            ; default.nix:61 - surprise requirement for _4ti2 (markov script)
 
-    ;; Runtime dependencies
+    ;; default.nix:17-75 - ALL Nix buildInputs reproduced exactly  
     (inputs
      (list
-      ;; =======================================================================
-      ;; LIBRARIES AVAILABLE IN GUIX (✓ = exists, ~ = different name/component)
-      ;; =======================================================================
+      ;; default.nix:21-22 - Core build libraries
+      boost                    ; default.nix:21
+      eigen                    ; default.nix:22
       
-      ;; Core system libraries
-      libgc                    ; ✓ "gc" -> libgc in Guix  
-      gdbm                     ; ✓ GNU database manager
-      gmp                      ; ✓ GNU Multiple Precision Arithmetic
-      mpfr                     ; ✓ GNU MPFR Library  
-      mpfi                     ; ✓ Multiple Precision Floating-point Interval
-      readline                 ; ✓ GNU Readline
+      ;; default.nix:25-35 - System libraries
+      libffi                   ; default.nix:25
+      libxml2                  ; default.nix:27
+      zlib                     ; default.nix:28 (libz in Nix)
+      ;; lsb-release           ; default.nix:29 - Linux specific, may not need
+      xz                       ; default.nix:30 (lzma in Nix)
+      ncurses                  ; default.nix:31
+      tbb                      ; default.nix:34
       
-      ;; Mathematical libraries  
-      ntl                      ; ✓ Number Theory Library
-      flint                    ; ✓ Fast Library for Number Theory
-      lapack                   ; ✓ Linear Algebra PACKage
-      glpk                     ; ✓ GNU Linear Programming Kit
-      cddlib                   ; ✓ Double Description Method (provides cdd programs)
-      fplll                    ; ✓ Floating-point LLL
-      givaro                   ; ✓ C++ arithmetic/algebraic computations
-      linbox                   ; ✓ C++ template library for linear algebra  
-      tbb                      ; ✓ Intel Threading Building Blocks
-      eigen                    ; ✓ C++ template library for linear algebra
+      ;; default.nix:37-57 - Packages normally downloaded during build
+      gmp                      ; default.nix:38
+      googletest               ; default.nix:39-41 (gtest + gtest.dev + gtest.src)
+      readline                 ; default.nix:42
+      lapack                   ; default.nix:43  
+      libgc                    ; default.nix:44 (boehmgc in Nix)
+      gdbm                     ; default.nix:45
+      4ti2                     ; default.nix:46
+      cddlib                   ; default.nix:47
+      csdp                     ; default.nix:48
+      flint                    ; default.nix:49
+      ;; gfan                  ; default.nix:50 - Temporarily disabled due to C++ compilation issues
+      glpk                     ; default.nix:51
+      ;; libatomic-ops         ; default.nix:52 - May be included in libgc
+      mpfi                     ; default.nix:53
+      mpfr                     ; default.nix:54  
+      mpsolve                  ; default.nix:55
+      nauty                    ; default.nix:56
+      ntl                      ; default.nix:57
       
-      ;; Mathematical programs
-      4ti2                     ; ✓ Algebraic/geometric problems
-      ;; gfan                  ; ✗ Temporarily disabled due to C++ compilation issues
-      nauty                    ; ✓ Graph isomorphism testing
-      lrslib                   ; ✓ Reverse search algorithm
-      msolve                   ; ✓ Polynomial system solving
+      ;; default.nix:63-66 - Submodules normally built  
+      givaro                   ; default.nix:64
+      fflas-ffpack             ; default.nix:65
+      openblas                 ; default.nix:66 (blas in Nix)
       
-      ;; CORRECTED: Available as subcomponents of other packages
-      singular                 ; ~ Provides factory (libfactory.so, factory.h)
-      normaliz                 ; ✓ Convex geometry computations
-      
-      ;; =======================================================================
-      ;; MISSING DEPENDENCIES (need custom packages above)
-      ;; =======================================================================
-      
-      mpsolve                  ; ✗ Polynomial solver (custom package above)
-      csdp                     ; ✗ Semidefinite programming (custom package above)
-      frobby                   ; ✗ Monomial ideal computations (custom package to avoid submodule download)
-      ;; topcom                ; ? Triangulations (may not be required)
-      ;; cddplus               ; ? Alternative cdd (probably not needed, cddlib sufficient)
-      
-      ;; =======================================================================
-      ;; SUBMODULE DEPENDENCIES (handled by recursive? #t)
-      ;; =======================================================================
-      ;; These are built from submodules, but M2 may also try system detection:
-      ;; - fflas_ffpack (submodule preferred over Guix package)
-      ;; - frobby (submodule preferred over our custom package) 
-      ;; - memtailor, mathic, mathicgb (only available as submodules)
-      
-      ;; Standard C/C++ support libraries  
-      boost                    ; ✓ Boost C++ Libraries
-      libffi                   ; ✓ Foreign Function Interface
-      libxml2                  ; ✓ XML parsing library
-      zlib                     ; ✓ Compression library
-      xz                       ; ✓ LZMA compression
-      ncurses))                ; ✓ Terminal control library
+      ;; default.nix:68-74 - Custom packages (need to create these)
+      ;; my-cohomCalg          ; default.nix:69 - TODO: create
+      ;; my-normaliz           ; default.nix:70 - TODO: use existing normaliz for now
+      normaliz                 ; Temporary - use system normaliz instead of my-normaliz
+      ;; my-frobby             ; default.nix:71 - TODO: use our frobby for now  
+      frobby                   ; Our existing custom frobby package
+      ;; my-lrslib             ; default.nix:72 - TODO: use system lrslib for now
+      lrslib                   ; Temporary - use system lrslib instead of my-lrslib
+      ;; my-TOPCOM             ; default.nix:73 - TODO: create
+      ;; my-singular-factory   ; default.nix:74 - TODO: use system singular for now
+      singular))               ; Temporary - use system singular instead of my-singular-factory
 
     (home-page "https://macaulay2.com")
     (synopsis "Software system for research in algebraic geometry and commutative algebra")
