@@ -113,7 +113,7 @@
 		    
 		    epson-inkjet-printer-escpr
 		    foo2zjs hplip-minimal hplip hplip-plugin))))
-   ;; (service nix-service-type)
+   (service nix-service-type)
 
    (extra-special-file "/etc/nsswitch.conf"
 		       (plain-file "nsswitch.conf"
@@ -186,7 +186,7 @@
 	       cups
 	       htop
 	       nss-mdns
-	       ;; nix
+	       nix
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
