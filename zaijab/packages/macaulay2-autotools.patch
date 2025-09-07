@@ -1,0 +1,55 @@
+--- GNUmakefile.in
++++ GNUmakefile.in
+@@ -155,7 +155,7 @@
+     $(eval $c-in-$1:; + if [ -f submodules/$1/Makefile ]; then $(MAKE) submodules/$1/Makefile && $(MAKE) -C submodules/$1 $c; fi)
+     $(eval $c: $c-in-$1))
+ 
+-git-checkout-in-$1:; cd @srcdir@/.. && git submodule update --init M2/submodules/$1
++git-checkout-in-$1:
+ git-update-in-$1:; cd @srcdir@/submodules/$1 && git checkout master && git pull
+ git-status-in-$1:; cd @srcdir@/submodules/$1 && git status
+ git-clean-in-$1:; cd @srcdir@/submodules/$1 && git clean -Xdf
+@@ -190,10 +190,6 @@
+ 		LIBS="$$(LIBS)"								\
+ 		$$(SUBMODULE_CONFIGOPTIONS)
+ 
+-@srcdir@/submodules/$1/configure.ac: $(if $(or $(filter yes, @DOWNLOAD@), \
+-	$(filter $1, memtailor mathic mathicgb)), \
+-	git-checkout-in-$1, git-checkout-warning-for-$1)
+-
+ git-checkout-warning-for-$1:
+ 	@ echo "error: for the submodule \"$1\"" >&2
+ 	@ echo "       the source code is not present in the directory \"submodules/$1\"" >&2
+@@ -205,7 +201,7 @@
+ 	@ false
+ 
+ @srcdir@/submodules/$1/configure @srcdir@/submodules/$1/Makefile.in: @srcdir@/submodules/$1/configure.ac @srcdir@/submodules/$1/Makefile.am
+-	cd @srcdir@/submodules/$1 && NOCONFIGURE=1 ./autogen.sh
++	cd @srcdir@/submodules/$1 && NOCONFIGURE=1 sh ./autogen.sh
+ endef
+ $(foreach s,@SUBLIST@,$(eval $(call submodule-rules,$s)))
+ $(foreach s,@BUILDSUBLIST@,$(eval $(call build-submodule-rules,$s)))
+--- Macaulay2/bin/Makefile.in
++++ Macaulay2/bin/Makefile.in
+@@ -130,7 +130,7 @@
+ 	@ $(WHY)
+ 	@ echo "compiling timestamp.cpp"
+ 	$(COMPILE.cc) @srcdir@/timestamp.cpp -o timestamp.o
+-	time @CXX@ $(M2_LDFLAGS) timestamp.o $(M2_OBJECTS) $(M2_LIBRARIES) -o "$@".tmp
++	@CXX@ $(M2_LDFLAGS) timestamp.o $(M2_OBJECTS) $(M2_LIBRARIES) -o "$@".tmp
+ ifneq ("$(EXECSTACK)","no")
+ 	@ if [ -x /usr/bin/execstack ] ;\
+ 	  then if (set -x ; execstack -q "$@".tmp; execstack -c "$@".tmp ) ; \
+--- configure.ac
++++ configure.ac
+@@ -140,7 +140,9 @@
+ 	       ISSUE=$ISSUE_FLAVOR-unknown ;;
+ 	 *)    ISSUE=$ISSUE_FLAVOR-$ISSUE_RELEASE
+      esac
+-     
++
++     # remove double-quotes produced by some versions of lsb_release
++     ISSUE=`echo $ISSUE | sed 's/"//g'`
+ fi
+ 
+ # some operating systems have no ISSUE_FLAVOR, e.g., MacOS
