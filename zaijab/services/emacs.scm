@@ -726,13 +726,9 @@ See `consult-grep' for details."
 			(tab-bar-new-tab-choice "*scratch*")
 			:config
 			(dolist (name '(
-					"State Estimation" ; State Estimation Learning
 					"Foundations" ; Pure Math / Flashcards
-					"Fair Active Learning" ; Finalizing Peter's Work
 					"Geometric Sensor Tasking"
 					"Normalizing Flows"
-					"Multi-Object Tracking"
-					"Higher Order EnGMF"
 					"Japanese" ; Japanese Learning / Coursework
 					"Communications" ; Google Voice / Email / Discord
 					"System" ; Emacs / Guix Sysadmin
