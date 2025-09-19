@@ -1,3 +1,15 @@
+(use-modules (guix ci)
+	     (ice-9 popen)
+	     (guix channels))
+
+(define filename "/home/zjabbar/code/guix-channel/zaijab/files/channel_lock.tmpl")
+(define in (open-input-file filename))
+(define raw-data (eval (read in) (interaction-environment)))
+(close-input-port in)
+
+(define current-system-without-zaijab
+  (cdr raw-data))
+
 (cons* (channel
         (name 'guix-gaming-games)
         (url "https://gitlab.com/guix-gaming-channels/games.git")
@@ -7,4 +19,4 @@
           "c23d64f1b8cc086659f8781b27ab6c7314c5cca5"
           (openpgp-fingerprint
            "50F3 3E2E 5B0C 3D90 0424  ABE8 9BDC F497 A4BB CC7F"))))
-       %default-channels)
+       current-system-without-zaijab)
