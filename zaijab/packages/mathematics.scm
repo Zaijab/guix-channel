@@ -8,6 +8,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages algebra)
   #:use-module (gnu packages autotools)
+  #:use-module (gnu packages m4)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bdw-gc)
   #:use-module (gnu packages bison)
@@ -57,6 +58,7 @@
 ;; "seems working with significantly shorter build time"
 
 ;; mpsolve dependency - not available in Guix, create custom package
+;; Good so far
 (define-public mpsolve
   (package
     (name "mpsolve")
@@ -71,15 +73,15 @@
     (build-system gnu-build-system)
     (arguments
      (list
-      #:configure-flags
-      #~(list "--disable-shared"
-              "--disable-dependency-tracking"
-              "--disable-examples"
-              "--disable-debug"
-              "--disable-silent-rules"
-              "--disable-ui"
-              "--disable-graphical-debugger"
-              "--disable-documentation")
+      ;; #:configure-flags
+      ;; #~(list "--disable-shared"
+      ;;         "--disable-dependency-tracking"
+      ;;         "--disable-examples"
+      ;;         "--disable-debug"
+      ;;         "--disable-silent-rules"
+      ;;         "--disable-ui"
+      ;;         "--disable-graphical-debugger"
+      ;;         "--disable-documentation")
       #:phases
       #~(modify-phases %standard-phases
           (replace 'bootstrap
@@ -166,36 +168,45 @@
 (define-public topcom
   (package
     (name "topcom")
-    (version "0.17.8")
+    (version "1.1.2")
     (source
      (origin
        (method url-fetch)
-       (uri "https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM-Downloads/TOPCOM-1_1_2.tgz")
+       (uri (string-append
+	     "https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM-Downloads/TOPCOM-1_1_2.tgz"))
        (sha256
         (base32 "1dla6za9l8s97cl1932dk3rbcpgfiln8zagy85j0axjvxra0gcag"))))
-    
     (build-system gnu-build-system)
     (arguments
      (list
-      #:tests? #f ; No test suite
-      #:phases
-      #~(modify-phases %standard-phases
-          (replace 'configure
-            (lambda _
-              (invoke "sh" "./configure" 
-                      (string-append "--prefix=" #$output))))
-          (replace 'build
-            (lambda _
-              (invoke "make" "-j" (number->string (parallel-job-count)))))
-          (replace 'install
-            (lambda _
-              (invoke "make" "install"))))))
-    
-    (native-inputs (list autoconf automake))
-    (inputs (list cddlib gmp))
+        #:phases
+	#~(modify-phases %standard-phases
+	          (add-after 'unpack 'patch-cddlib-makefiles
+		    (lambda _
+		      ;; Patch source Makefile.am files to use system cddlib
+		      (substitute* '("src-reg/Makefile.am" "src/Makefile.am")
+			(("\\.\\./external/lib/libcddgmp\\.a") "-lcddgmp"))))
+      
+		  (add-after 'patch-cddlib-makefiles 'regenerate-build-system
+		    (lambda _
+		      ;; Regenerate autotools files to fix version mismatch
+		      (invoke "autoreconf" "-fiv")))
+		  
+	    (add-before 'configure 'add-cddlib-include
+	      (lambda* (#:key inputs #:allow-other-keys)
+		(let ((cddlib-inc (assoc-ref inputs "cddlib")))
+		  (setenv "CPPFLAGS"
+			  (string-append "-I" cddlib-inc "/include/cddlib "
+					 "-I" cddlib-inc "/include "
+					 (or (getenv "CPPFLAGS") ""))))))
+	    )
+      ))
+    (native-inputs (list autoconf automake m4 cddlib))
+    (inputs (list gmp))
     (home-page "https://www.wm.uni-bayreuth.de/de/team/rambau_joerg/TOPCOM")
     (synopsis "Triangulations of point configurations and oriented matroids")
-    (description "TOPCOM computes triangulations of point configurations and oriented matroids.")
+    (description
+     "TOPCOM computes triangulations of point configurations and oriented matroids.")
     (license license:gpl2+)))
 
 ;; Macaulay2 main package - modern CMake approach
@@ -307,7 +318,7 @@
       
       ;; M2-specific dependencies
       cohomcalg
-      ;; topcom ; Skip for now due to build issues with bundled cddlib
+      topcom ; Skip for now due to build issues with bundled cddlib
       
       ;; External sources that M2 tries to download during build
       (origin
@@ -367,3 +378,6 @@ build times while maintaining full mathematical functionality.  Features
 include Groebner bases and free resolutions of modules over polynomial rings,
 Ext, Tor, and local cohomology.")
     (license license:gpl2+)))
+
+
+macaulay2
