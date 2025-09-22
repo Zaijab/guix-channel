@@ -326,26 +326,34 @@
 	      (invoke "ninja" "M2-binary" "M2-core")
 	      (invoke "ninja" "build-programs")))
           
-          ;; Skip install-packages per maintainer recommendation
-          ;; "you don't need to run the 'install-packages' target at all"
-          ;; (replace 'install
-          ;;   (lambda _
-          ;;     ;; Selective package install as per newer Nix approach
-          ;;     ;; Install core M2 without the problematic packages
-          ;;     (invoke "ninja" "install")))
-
-  ;; 	  (replace 'install
-  ;; (lambda _
-  ;;   ;; Use install/local to avoid package processing
-  ;;   (invoke "ninja" "install/strip")))
+	  ;; WORKING DO NOT KILL
+	  ;; 	  (replace 'install
+	  ;; (lambda* (#:key outputs #:allow-other-keys)
+	  ;;   (let ((out (assoc-ref outputs "out")))
+	  ;;     ;; Bypass ninja install entirely - just copy built artifacts
+	  ;;     ;; Everything is already built in usr-dist/ directory
+	  ;;     (copy-recursively "usr-dist" out))))
+	  ;;
 
 	  (replace 'install
   (lambda* (#:key outputs #:allow-other-keys)
     (let ((out (assoc-ref outputs "out")))
-      ;; Bypass ninja install entirely - just copy built artifacts
-      ;; Everything is already built in usr-dist/ directory
-      (copy-recursively "usr-dist" out))))
-
+      ;; Copy entire bin directory to preserve M2 + M2-binary relationship
+      (when (file-exists? "usr-dist/x86_64-Linux-Linux-6.16.7/bin")
+        (copy-recursively "usr-dist/x86_64-Linux-Linux-6.16.7/bin"
+                          (string-append out "/bin")))
+      
+      ;; Copy libraries 
+      (when (file-exists? "usr-dist/x86_64-Linux-Linux-6.16.7/lib")
+        (copy-recursively "usr-dist/x86_64-Linux-Linux-6.16.7/lib"
+                          (string-append out "/lib")))
+      
+      ;; Copy Emacs files
+      (when (file-exists? "usr-dist/common/share/emacs/site-lisp/macaulay2")
+        (mkdir-p (string-append out "/share/emacs/site-lisp"))
+        (copy-recursively "usr-dist/common/share/emacs/site-lisp/macaulay2"
+                          (string-append out "/share/emacs/site-lisp"))))))
+	  
 	  )))
 
     ;; Dependencies from newer Nix nativeBuildInputs
