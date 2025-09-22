@@ -233,24 +233,50 @@
     (arguments
      (list
       #:tests? #f ; Skip tests for speed
-      
       #:configure-flags
       #~(list 
-         ;; Use Ninja generator like newer Nix
-         "-GNinja"
-         ;; CMake flags exactly matching newer Nix version
-         (string-append "-DPARALLEL_JOBS=" (number->string (parallel-job-count)))
-         "-DCMAKE_BUILD_TYPE=Release"
-         (string-append "-DREADLINE_INCLUDE_DIR=" #$(this-package-input "readline") "/include")
-         ;; Point to system nauty installation (lib output)  
-         (string-append "-DNAUTY_INCLUDE_DIR=" #$nauty:lib "/include")
-         (string-append "-DNAUTY_LIBRARIES=" #$nauty:lib "/lib/libnauty.a")
-         ;; Disable documentation like working Nix - this is key for fast builds
-         "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
+	 "-GNinja"
+	 (string-append "-DPARALLEL_JOBS=" (number->string (parallel-job-count)))
+	 "-DCMAKE_BUILD_TYPE=Release"
+	 (string-append "-DREADLINE_INCLUDE_DIR=" #$(this-package-input "readline") "/include")
+	 "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
+
       
       #:phases
       #~(modify-phases %standard-phases
           ;; Enter M2 directory like both Nix versions
+
+	  ;; (add-before 'build 'fix-nauty-shebang
+	  ;;   (lambda _
+	  ;;     (substitute* "build.ninja"
+	  ;; 	(("autoreconf -vif &&")
+	  ;; 	 (string-append "autoreconf -vif && "
+	  ;; 			"sed -i '1s|^#!.*|#!" #$(file-append bash-minimal "/bin/bash") "|' configure && "
+	  ;; 			"sed -i 's|/bin/sh|" #$(file-append bash-minimal "/bin/bash") "|g' configure &&")))))
+	  
+	  ;; (add-before 'build 'set-shell
+	  ;;   (lambda _
+	  ;;     (setenv "SHELL" (string-append #$bash-minimal "/bin/bash"))))
+
+	  (add-before 'build 'fix-shebangs-and-shell
+	    (lambda _
+	      ;; gfan: make sure make uses bash
+	      (setenv "SHELL" (string-append #$bash-minimal "/bin/bash"))
+
+	      ;; nauty: fix configure shebangs and /bin/sh references
+	      (substitute* "build.ninja"
+		(("autoreconf -vif &&")
+		 (string-append
+		  "autoreconf -vif && "
+		  "sed -i '1s|^#!.*|#!" #$(file-append bash-minimal "/bin/bash") "|' configure && "
+		  "sed -i 's|/bin/sh|" #$(file-append bash-minimal "/bin/bash") "|g' configure &&")))))
+
+	  (add-before 'build 'force-make-shell
+	    (lambda _
+	      (setenv "MAKEFLAGS"
+		      (string-append "SHELL=" #$bash-minimal "/bin/bash"))))
+
+
           (add-after 'unpack 'enter-m2-directory
             (lambda _
               (chdir "M2")))
@@ -262,19 +288,16 @@
               (mkdir-p "BUILD/build")
               (chdir "BUILD/build")))
           
-          ;; Provide external sources to avoid network downloads during build
-          (add-after 'setup-build-directory 'setup-external-sources
-            (lambda* (#:key native-inputs #:allow-other-keys)
-              ;; Create tarfiles directory where M2 expects external sources
-              (mkdir-p "../tarfiles")
-              ;; Copy external source tarballs to expected location
-              (for-each
-               (lambda (input)
-                 (let ((file (cdr input)))
-                   (when (and (string? file) (string-suffix? ".tar.gz" file))
-                     (copy-file file (string-append "../tarfiles/" (basename file))))))
-               native-inputs)))
-          
+	  (add-after 'setup-build-directory 'setup-external-sources
+	    (lambda* (#:key inputs #:allow-other-keys)
+	      (mkdir-p "../tarfiles")
+	      (let ((nauty-source (assoc-ref inputs "nauty-source"))
+		    (gfan-source (assoc-ref inputs "gfan-source")))
+		(when nauty-source
+		  (copy-file nauty-source "../tarfiles/nauty2_8_9.tar.gz"))
+		(when gfan-source
+		  (copy-file gfan-source "../tarfiles/gfan0.6.2.tar.gz")))))
+	  
           ;; Replicate exact Nix cmake call
           (replace 'configure
             (lambda* (#:key configure-flags #:allow-other-keys)
@@ -282,51 +305,79 @@
               (apply invoke "cmake" "-S../.." "-B." configure-flags)))
           
           ;; Replace default build with selective build from newer Nix
-          (replace 'build
-            (lambda _
-              ;; Follow exact newer Nix sequence:
-              ;; ninja build-libraries (build submodules first)
-              (invoke "ninja" "build-libraries")
-              ;; ninja M2-binary M2-core (core components)
-              (invoke "ninja" "M2-binary" "M2-core")
-              ;; ninja build-programs (supporting programs)
-              (invoke "ninja" "build-programs")))
+          ;; (replace 'build
+          ;;   (lambda _
+          ;;     ;; Follow exact newer Nix sequence:
+          ;;     ;; ninja build-libraries (build submodules first)
+          ;;     (invoke "ninja" "build-libraries")
+          ;;     ;; ninja M2-binary M2-core (core components)
+          ;;     (invoke "ninja" "M2-binary" "M2-core")
+          ;;     ;; ninja build-programs (supporting programs)
+          ;;     (invoke "ninja" "build-programs")))
+
+	  (replace 'build
+	    (lambda _
+	      (setenv "CheckDocumentation" "false")
+	      (setenv "IgnoreExampleErrors" "true")
+	      (setenv "RemakeAllDocumentation" "false")
+	      (setenv "RerunExamples" "false")
+	      
+	      (invoke "ninja" "build-libraries")
+	      (invoke "ninja" "M2-binary" "M2-core")
+	      (invoke "ninja" "build-programs")))
           
           ;; Skip install-packages per maintainer recommendation
           ;; "you don't need to run the 'install-packages' target at all"
-          (replace 'install
-            (lambda _
-              ;; Selective package install as per newer Nix approach
-              ;; Install core M2 without the problematic packages
-              (invoke "ninja" "install"))))))
+          ;; (replace 'install
+          ;;   (lambda _
+          ;;     ;; Selective package install as per newer Nix approach
+          ;;     ;; Install core M2 without the problematic packages
+          ;;     (invoke "ninja" "install")))
+
+  ;; 	  (replace 'install
+  ;; (lambda _
+  ;;   ;; Use install/local to avoid package processing
+  ;;   (invoke "ninja" "install/strip")))
+
+	  (replace 'install
+  (lambda* (#:key outputs #:allow-other-keys)
+    (let ((out (assoc-ref outputs "out")))
+      ;; Bypass ninja install entirely - just copy built artifacts
+      ;; Everything is already built in usr-dist/ directory
+      (copy-recursively "usr-dist" out))))
+
+	  )))
 
     ;; Dependencies from newer Nix nativeBuildInputs
+
     (native-inputs
-     (list
-      ;; Core build tools
-      cmake
-      ninja
-      autoconf
-      automake
-      gcc-toolchain
-      gnu-make
-      libtool
-      pkg-config
-      bison
-      python
-      texlive-bin
-      
-      ;; M2-specific dependencies
-      cohomcalg
-      topcom ; Skip for now due to build issues with bundled cddlib
-      
-      ;; External sources that M2 tries to download during build
-      (origin
-        (method url-fetch)
-        (uri "https://pallini.di.uniroma1.it/nauty2_8_9.tar.gz")
-        (sha256
-         (base32 "1vn4abz498h8fbh27z0l5jrs4z04d693xklbb5mai5l7yhmv8yn9"))
-        (file-name "nauty2_8_9.tar.gz"))))
+     `(("bash-minimal" ,bash-minimal)
+       ("cmake" ,cmake)
+       ("ninja" ,ninja)
+       ("autoconf" ,autoconf)
+       ("automake" ,automake)
+       ("gcc-toolchain" ,gcc-toolchain)
+       ("gnu-make" ,gnu-make)
+       ("libtool" ,libtool)
+       ("pkg-config" ,pkg-config)
+       ("bison" ,bison)
+       ("python" ,python)
+       ("texlive-bin" ,texlive-bin)
+       ("cohomcalg" ,cohomcalg)
+       ("topcom" ,topcom)
+       ("nauty-source"
+	,(origin
+	   (method url-fetch)
+	   (uri "https://pallini.di.uniroma1.it/nauty2_8_9.tar.gz")
+	   (sha256
+            (base32 "1vn4abz498h8fbh27z0l5jrs4z04d693xklbb5mai5l7yhmv8yn9"))))
+       ("gfan-source"
+	,(origin
+	   (method url-fetch)
+	   (uri "https://users-math.au.dk/jensen/software/gfan/gfan0.6.2.tar.gz")
+	   (sha256
+	    (base32 "02pihqb1lb76a0xbfwjzs1cd6ay3ldfxsm8dvsbl6qs3vkjxax56"))))
+       ))
     
     ;; Runtime dependencies from newer Nix buildInputs
     (inputs
@@ -343,7 +394,7 @@
       eigen
       googletest
       mpfr
-      `(,nauty "lib")
+      ;; `(,nauty "lib")
       ntl
       glpk
       mpfi
