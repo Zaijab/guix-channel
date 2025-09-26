@@ -78,9 +78,9 @@
    ;; (service nscd-service-type)
    (service docker-service-type)
    (service containerd-service-type)
-   (service oci-service-type
+   (service oci-container-service-type
 	    (list
-	     (oci-configuration
+	     (oci-container-configuration
 	      (image "docker.io/library/caddy:2-alpine")
 	      (network "host")
 	      (volumes '("/home/zjabbar/code/guix-channel/zaijab/files/Caddyfile:/etc/caddy/Caddyfile:ro"
@@ -90,12 +90,12 @@
 			     "SEARXNG_HOSTNAME=http://localhost:8080"
 			     "SEARXNG_TLS=zaijab2000@gmail.com"))
 	      (respawn? #t))
-	     (oci-configuration
+	     (oci-container-configuration
 	      (image "docker.io/valkey/valkey:7-alpine")
 	      (network "host")
 	      (volumes '("/var/run/valkey-data2:/data"))
 	      (respawn? #t))
-	     (oci-configuration
+	     (oci-container-configuration
 	      (image "docker.io/searxng/searxng")
 	      (network "host")
 	      (ports '(("8080" . "8080")))

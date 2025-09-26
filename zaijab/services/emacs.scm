@@ -54,7 +54,6 @@
   #:use-module (gnu packages base)
   #:use-module (gnu services)
   #:use-module (gnu home services)
-  #:use-module (gnu services)
   #:use-module (gnu services configuration)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 pretty-print)
