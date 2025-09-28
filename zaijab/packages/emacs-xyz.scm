@@ -843,13 +843,13 @@ queries are licensed under the GPL-compatible Mozilla Public License 2.0.")
 (define-public emacs-elfeed-tube-current
   (package
     (name "emacs-elfeed-tube-current")
-    (version "c2f517e35fbba07a9d6e6ab4091ee65ad773a32c")
+    (version "99e55ac428dc50bff271575cffddc5060f22087d")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/karthink/elfeed-tube")
-             (commit "c2f517e35fbba07a9d6e6ab4091ee65ad773a32c")))
+             (commit "99e55ac428dc50bff271575cffddc5060f22087d")))
        (file-name (git-file-name name version))
        (sha256
         (base32 "09m9awp366z8gcxhd7ndlqv6xqkzvgp016hav9y28qinmcf1yg2h"))))

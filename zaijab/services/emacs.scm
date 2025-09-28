@@ -1052,6 +1052,7 @@ See `consult-grep' for details."
 				;; ("https://www.youtube.com/feeds/videos.xml?playlist_id=PLUl4u3cNGP60uVBMaoNERc6knT_MgPKS0" lecture mit stats)
 				;; ("https://www.youtube.com/feeds/videos.xml?playlist_id=PLUl4u3cNGP61MdtwGTqZA0MreSaDybji8" lecture mit prob)
 				;; ("https://www.youtube.com/feeds/videos.xml?playlist_id=PLEC88901EBADDD980" lecture mit odes)
+				
 				;; ("https://www.youtube.com/feeds/videos.xml?playlist_id=PL221E2BBF13BECF6C" lecture mit linear)
 				;; ("https://www.youtube.com/feeds/videos.xml?playlist_id=PLNfNKbfMcu1GohKHv_u7Kf0AQwD2uyFew" lecture arnold feec)
 				;; ("https://www.youtube.com/feeds/videos.xml?playlist_id=PL1ysOEBe5977vlocXuRt6KBCYu_sdu1Ru" lecture cuda)
