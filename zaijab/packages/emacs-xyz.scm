@@ -852,7 +852,7 @@ queries are licensed under the GPL-compatible Mozilla Public License 2.0.")
              (commit "99e55ac428dc50bff271575cffddc5060f22087d")))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "09m9awp366z8gcxhd7ndlqv6xqkzvgp016hav9y28qinmcf1yg2h"))))
+        (base32 "1ml7inrj6bk3f4l08a4yhj8cvi7ywbqh96qjgw9rmksa8dsdfc99"))))
     (build-system emacs-build-system)
     (propagated-inputs (list emacs-elfeed emacs-aio emacs-mpv))
     (home-page "https://github.com/karthink/elfeed-tube/")
