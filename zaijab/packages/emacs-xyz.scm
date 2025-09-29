@@ -508,29 +508,29 @@ https://github.com/florommel/bufferlo")
     (description "")
     (license #f)))
 
-(define-public emacs-py-autopep8
-  (package
-    (name "emacs-py-autopep8")
-    (version "20230115.633")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "https://melpa.org/packages/py-autopep8-"
-                                  version ".el"))
-              (sha256
-               (base32
-		"14vhk4km6ga24nfniwrzpax1xclq7k198q7xng37iir2hmbp6i5v"))))
-    (build-system emacs-build-system)
-    (home-page "https://codeberg.org/ideasman42/emacs-py-autopep8")
-    (synopsis "Use autopep8 to beautify a Python buffer")
-    (propagated-inputs (list python-autopep8))
-    (description
-     "This package provides the `py-autopep8-buffer command, which uses the external
-\"autopep8\" tool to tidy up the current buffer according to Python's PEP8. ;
-Usage To automatically apply when saving a python file, use the following code:
-(add-hook python-mode-hook py-autopep8-mode) To customize the behavior of
-\"autopep8\" you can set the `py-autopep8-options e.g. (setq py-autopep8-options
-(\"--max-line-length=100\" \"--aggressive\"))")
-    (license #f)))
+;; (define-public emacs-py-autopep8
+;;   (package
+;;     (name "emacs-py-autopep8")
+;;     (version "20230115.633")
+;;     (source (origin
+;;               (method url-fetch)
+;;               (uri (string-append "https://melpa.org/packages/py-autopep8-"
+;;                                   version ".el"))
+;;               (sha256
+;;                (base32
+;; 		"14vhk4km6ga24nfniwrzpax1xclq7k198q7xng37iir2hmbp6i5v"))))
+;;     (build-system emacs-build-system)
+;;     (home-page "https://codeberg.org/ideasman42/emacs-py-autopep8")
+;;     (synopsis "Use autopep8 to beautify a Python buffer")
+;;     (propagated-inputs (list python-autopep8))
+;;     (description
+;;      "This package provides the `py-autopep8-buffer command, which uses the external
+;; \"autopep8\" tool to tidy up the current buffer according to Python's PEP8. ;
+;; Usage To automatically apply when saving a python file, use the following code:
+;; (add-hook python-mode-hook py-autopep8-mode) To customize the behavior of
+;; \"autopep8\" you can set the `py-autopep8-options e.g. (setq py-autopep8-options
+;; (\"--max-line-length=100\" \"--aggressive\"))")
+;;     (license #f)))
 
 (define-public emacs-calfw-blocks
   (package
