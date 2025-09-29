@@ -1388,7 +1388,7 @@ See `consult-grep' for details."
 	      emacs-org-roam-bibtex
 	      emacs-consult-org-roam
 	      emacs-org-fc
-	      anki
+	      ;; anki
 	      ;; emacs-org-drill
 	      emacs-kanji))
    (init '((use-package sqlite)
