@@ -21,7 +21,7 @@
   #:use-module (gnu services cups)
   #:use-module (gnu services pm)  
   #:use-module (gnu packages)
-  #:use-module (guix-science-nonfree packages cuda)
+  ;; #:use-module (guix-science-nonfree packages cuda)
   #:use-module (gnu packages linux)
   #:use-module (gnu services linux)
   #:use-module (gnu packages search)

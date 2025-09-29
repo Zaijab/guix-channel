@@ -6,7 +6,7 @@
   #:use-module (gnu packages machine-learning)
   #:use-module (gnu packages libusb)
   #:use-module (gnu packages security-token)
-  #:use-module (guix-science packages python)
+  ;; #:use-module (guix-science packages python)
   #:use-module (gnu packages python-build)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages rust-apps)
