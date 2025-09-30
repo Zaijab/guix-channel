@@ -1938,7 +1938,7 @@ END is the start of the line with :END: on it."
 	      python
 	      gcc-toolchain
 	      python-cython
-	      conda
+	      ;; conda
 	      jupyter
 	      guix-jupyter
 	      python-virtualenv
