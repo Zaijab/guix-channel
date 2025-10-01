@@ -13,7 +13,8 @@ search:
 ui:
   static_use_hash: true
 redis:
-  url: redis://redis:6379/0
+  # url: redis://redis:6379/0
+  url: null
 enabled_plugins:
   - 'Hostnames plugin'
 hostnames:
