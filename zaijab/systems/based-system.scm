@@ -264,7 +264,7 @@
 	       htop
 	       nss-mdns
 	       cuda
-	       ;; cudnn-8.9.1.23
+	       cudnn-8.9.1.23
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
