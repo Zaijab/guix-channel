@@ -30,6 +30,7 @@
   #:use-module (gnu services file-sharing)
   #:use-module (gnu services admin)
   #:use-module (gnu services desktop)
+  #:use-module (gnu services containers)
   #:use-module (gnu services xorg)
   #:use-module (gnu services nix)
   #:use-module (gnu services audio)
