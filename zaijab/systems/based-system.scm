@@ -78,7 +78,40 @@
    ;; (service nscd-service-type)
    (service docker-service-type)
    (service containerd-service-type)
-   (service oci-container-service-type
+
+   (simple-service 'oci-provisioning
+		   oci-service-type
+		   (oci-extension
+		    (containers
+		     (list
+		      (oci-container-configuration
+		       (image "docker.io/library/caddy:2-alpine")
+		       (network "host")
+		       (volumes '("/home/zjabbar/code/guix-channel/zaijab/files/Caddyfile:/etc/caddy/Caddyfile:ro"
+				  "/var/run/caddy-data:/data:rw"
+				  "/var/run/caddy-config:/config:rw"))
+		       (environment '("LETSENCRYPT_EMAIL=zaijab2000@gmail.com"
+				      "SEARXNG_HOSTNAME=http://localhost:8080"
+				      "SEARXNG_TLS=zaijab2000@gmail.com"))
+		       (respawn? #t))
+
+		      (oci-container-configuration
+		       (image "docker.io/valkey/valkey:7-alpine")
+		       (network "host")
+		       (volumes '("/var/run/valkey-data2:/data"))
+		       (respawn? #t))
+
+		      (oci-container-configuration
+		       (image "docker.io/searxng/searxng")
+		       (network "host")
+		       (ports '(("8080" . "8080")))
+		       (volumes '("/var/run/searxng:/etc/searxng:rw"
+				  "/home/zjabbar/code/guix-channel/zaijab/files/limiter.toml:/etc/searxng/limiter.toml"
+				  "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"))
+		       (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080")))
+		       (respawn? #t))))))
+
+   #;(service oci-container-service-type
 	    (list
 	     (oci-container-configuration
 	      (image "docker.io/library/caddy:2-alpine")
