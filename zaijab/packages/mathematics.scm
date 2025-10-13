@@ -209,20 +209,17 @@
      "TOPCOM computes triangulations of point configurations and oriented matroids.")
     (license license:gpl2+)))
 
-;; Macaulay2 main package - modern CMake approach
+;; Macaulay2 main package
 (define-public macaulay2
   (package
     (name "macaulay2")
-    ;; Using version from newer working Nix
     (version "1.25.06")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/Macaulay2/M2.git")
-             ;; Commit from newer Nix version that works
              (commit "6fe351dcfe733f2a525d361d8585f9f2375e264d")
-             ;; CRITICAL: get submodules like working Nix
              (recursive? #t)))
        (file-name (git-file-name name version))
        (sha256
@@ -233,15 +230,45 @@
     (arguments
      (list
       #:tests? #f ; Skip tests for speed
+      ;; #:configure-flags
+      ;; #~(list 
+      ;; 	 "-GNinja"
+      ;; 	 (string-append "-DPARALLEL_JOBS=" (number->string (parallel-job-count)))
+      ;; 	 "-DCMAKE_BUILD_TYPE=Release"
+      ;; 	 (string-append "-DREADLINE_INCLUDE_DIR=" #$(this-package-input "readline") "/include")
+      ;; 	 "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
+
+      ;; #:configure-flags
+      ;; #~(list 
+      ;; 	 "-GNinja"
+      ;; 	 (string-append "-DPARALLEL_JOBS=" 
+      ;; 			(number->string (min 2 (parallel-job-count))))
+      ;; 	 "-DCMAKE_BUILD_TYPE=Release"
+      ;; 	 "-DCMAKE_CXX_FLAGS=-O2"
+      ;; 	 (string-append "-DREADLINE_INCLUDE_DIR=" 
+      ;; 			#$(this-package-input "readline") "/include")
+      ;; 	 "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
+
+      ;; #:configure-flags
+      ;; #~(list 
+      ;; 	 "-GNinja"
+      ;; 	 "-DPARALLEL_JOBS=1"
+      ;; 	 "-DCMAKE_BUILD_TYPE=Release"
+      ;; 	 "-DCMAKE_CXX_FLAGS_RELEASE=-O2 -g0 -DNDEBUG"
+      ;; 	 (string-append "-DREADLINE_INCLUDE_DIR=" 
+      ;; 			#$(this-package-input "readline") "/include")
+      ;; 	 "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
+
       #:configure-flags
       #~(list 
 	 "-GNinja"
-	 (string-append "-DPARALLEL_JOBS=" (number->string (parallel-job-count)))
+	 "-DPARALLEL_JOBS=1"
 	 "-DCMAKE_BUILD_TYPE=Release"
-	 (string-append "-DREADLINE_INCLUDE_DIR=" #$(this-package-input "readline") "/include")
+	 "-DCMAKE_CXX_FLAGS=-O1 -g0 -DNDEBUG"
+	 (string-append "-DREADLINE_INCLUDE_DIR=" 
+			#$(this-package-input "readline") "/include")
 	 "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
 
-      
       #:phases
       #~(modify-phases %standard-phases
           ;; Enter M2 directory like both Nix versions
@@ -327,12 +354,12 @@
 	      (invoke "ninja" "build-programs")))
           
 	  ;; WORKING DO NOT KILL
-		  (replace 'install
-	  (lambda* (#:key outputs #:allow-other-keys)
-	    (let ((out (assoc-ref outputs "out")))
-	      ;; Bypass ninja install entirely - just copy built artifacts
-	      ;; Everything is already built in usr-dist/ directory
-	      (copy-recursively "usr-dist" out))))
+	  (replace 'install
+	    (lambda* (#:key outputs #:allow-other-keys)
+	      (let ((out (assoc-ref outputs "out")))
+		;; Bypass ninja install entirely - just copy built artifacts
+		;; Everything is already built in usr-dist/ directory
+		(copy-recursively "usr-dist" out))))
 	  
 
   ;; 	  (replace 'install
@@ -365,6 +392,8 @@
        ("autoconf" ,autoconf)
        ("automake" ,automake)
        ("gcc-toolchain" ,gcc-toolchain)
+       ("gcc-toolchain" ,gcc-toolchain)
+
        ("gnu-make" ,gnu-make)
        ("libtool" ,libtool)
        ("pkg-config" ,pkg-config)
