@@ -64,6 +64,7 @@
   #:use-module (guix gexp)
   #:use-module (zaijab packages emacs-xyz)
   #:use-module (zaijab packages python-xyz)
+  #:use-module (zaijab packages mathematics)
   #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages fonts)
   #:use-module (nongnu packages nvidia)
@@ -784,6 +785,10 @@ See `consult-grep' for details."
 ;; (define emoji-configuration
 ;;   (home-emacs-configuration
 ;;    (packages (list font-gnu-unifont))))
+
+(define m2-configuration
+  (home-emacs-configuration
+   (packages (list macaulay2))))
 
 (define hindi-configuration
   (home-emacs-configuration

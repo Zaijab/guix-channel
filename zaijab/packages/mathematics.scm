@@ -209,8 +209,7 @@
      "TOPCOM computes triangulations of point configurations and oriented matroids.")
     (license license:gpl2+)))
 
-;; Macaulay2 main package
-(define-public macaulay2
+(define-public macaulay2-old-kinda-working
   (package
     (name "macaulay2")
     (version "1.25.06")
@@ -238,27 +237,6 @@
       ;; 	 (string-append "-DREADLINE_INCLUDE_DIR=" #$(this-package-input "readline") "/include")
       ;; 	 "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
 
-      ;; #:configure-flags
-      ;; #~(list 
-      ;; 	 "-GNinja"
-      ;; 	 (string-append "-DPARALLEL_JOBS=" 
-      ;; 			(number->string (min 2 (parallel-job-count))))
-      ;; 	 "-DCMAKE_BUILD_TYPE=Release"
-      ;; 	 "-DCMAKE_CXX_FLAGS=-O2"
-      ;; 	 (string-append "-DREADLINE_INCLUDE_DIR=" 
-      ;; 			#$(this-package-input "readline") "/include")
-      ;; 	 "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
-
-      ;; #:configure-flags
-      ;; #~(list 
-      ;; 	 "-GNinja"
-      ;; 	 "-DPARALLEL_JOBS=1"
-      ;; 	 "-DCMAKE_BUILD_TYPE=Release"
-      ;; 	 "-DCMAKE_CXX_FLAGS_RELEASE=-O2 -g0 -DNDEBUG"
-      ;; 	 (string-append "-DREADLINE_INCLUDE_DIR=" 
-      ;; 			#$(this-package-input "readline") "/include")
-      ;; 	 "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
-
       #:configure-flags
       #~(list 
 	 "-GNinja"
@@ -271,26 +249,11 @@
 
       #:phases
       #~(modify-phases %standard-phases
-          ;; Enter M2 directory like both Nix versions
-
-	  ;; (add-before 'build 'fix-nauty-shebang
-	  ;;   (lambda _
-	  ;;     (substitute* "build.ninja"
-	  ;; 	(("autoreconf -vif &&")
-	  ;; 	 (string-append "autoreconf -vif && "
-	  ;; 			"sed -i '1s|^#!.*|#!" #$(file-append bash-minimal "/bin/bash") "|' configure && "
-	  ;; 			"sed -i 's|/bin/sh|" #$(file-append bash-minimal "/bin/bash") "|g' configure &&")))))
-	  
-	  ;; (add-before 'build 'set-shell
-	  ;;   (lambda _
-	  ;;     (setenv "SHELL" (string-append #$bash-minimal "/bin/bash"))))
 
 	  (add-before 'build 'fix-shebangs-and-shell
 	    (lambda _
-	      ;; gfan: make sure make uses bash
 	      (setenv "SHELL" (string-append #$bash-minimal "/bin/bash"))
 
-	      ;; nauty: fix configure shebangs and /bin/sh references
 	      (substitute* "build.ninja"
 		(("autoreconf -vif &&")
 		 (string-append
@@ -303,15 +266,12 @@
 	      (setenv "MAKEFLAGS"
 		      (string-append "SHELL=" #$bash-minimal "/bin/bash"))))
 
-
           (add-after 'unpack 'enter-m2-directory
             (lambda _
               (chdir "M2")))
           
-          ;; Set up build directory following newer Nix approach
           (add-after 'enter-m2-directory 'setup-build-directory
             (lambda _
-              ;; cd M2/BUILD/build from newer Nix
               (mkdir-p "BUILD/build")
               (chdir "BUILD/build")))
           
@@ -325,22 +285,9 @@
 		(when gfan-source
 		  (copy-file gfan-source "../tarfiles/gfan0.6.2.tar.gz")))))
 	  
-          ;; Replicate exact Nix cmake call
           (replace 'configure
             (lambda* (#:key configure-flags #:allow-other-keys)
-              ;; Nix: cmake -GNinja -S../.. -B. [flags]
               (apply invoke "cmake" "-S../.." "-B." configure-flags)))
-          
-          ;; Replace default build with selective build from newer Nix
-          ;; (replace 'build
-          ;;   (lambda _
-          ;;     ;; Follow exact newer Nix sequence:
-          ;;     ;; ninja build-libraries (build submodules first)
-          ;;     (invoke "ninja" "build-libraries")
-          ;;     ;; ninja M2-binary M2-core (core components)
-          ;;     (invoke "ninja" "M2-binary" "M2-core")
-          ;;     ;; ninja build-programs (supporting programs)
-          ;;     (invoke "ninja" "build-programs")))
 
 	  (replace 'build
 	    (lambda _
@@ -353,37 +300,11 @@
 	      (invoke "ninja" "M2-binary" "M2-core")
 	      (invoke "ninja" "build-programs")))
           
-	  ;; WORKING DO NOT KILL
 	  (replace 'install
 	    (lambda* (#:key outputs #:allow-other-keys)
 	      (let ((out (assoc-ref outputs "out")))
-		;; Bypass ninja install entirely - just copy built artifacts
-		;; Everything is already built in usr-dist/ directory
 		(copy-recursively "usr-dist" out))))
-	  
-
-  ;; 	  (replace 'install
-  ;; (lambda* (#:key outputs #:allow-other-keys)
-  ;;   (let ((out (assoc-ref outputs "out")))
-  ;;     ;; Copy entire bin directory to preserve M2 + M2-binary relationship
-  ;;     (when (file-exists? "usr-dist/x86_64-Linux-Linux-6.16.7/bin")
-  ;;       (copy-recursively "usr-dist/x86_64-Linux-Linux-6.16.7/bin"
-  ;;                         (string-append out "/bin")))
-      
-  ;;     ;; Copy libraries 
-  ;;     (when (file-exists? "usr-dist/x86_64-Linux-Linux-6.16.7/lib")
-  ;;       (copy-recursively "usr-dist/x86_64-Linux-Linux-6.16.7/lib"
-  ;;                         (string-append out "/lib")))
-      
-  ;;     ;; Copy Emacs files
-  ;;     (when (file-exists? "usr-dist/common/share/emacs/site-lisp/macaulay2")
-  ;;       (mkdir-p (string-append out "/share/emacs/site-lisp"))
-  ;;       (copy-recursively "usr-dist/common/share/emacs/site-lisp/macaulay2"
-  ;;                         (string-append out "/share/emacs/site-lisp"))))))
-	  
 	  )))
-
-    ;; Dependencies from newer Nix nativeBuildInputs
 
     (native-inputs
      `(("bash-minimal" ,bash-minimal)
@@ -416,10 +337,8 @@
 	    (base32 "02pihqb1lb76a0xbfwjzs1cd6ay3ldfxsm8dvsbl6qs3vkjxax56"))))
        ))
     
-    ;; Runtime dependencies from newer Nix buildInputs
     (inputs
      (list
-      ;; Mathematical libraries (order from newer Nix)
       singular
       boost
       gdbm
@@ -431,31 +350,221 @@
       eigen
       googletest
       mpfr
-      ;; `(,nauty "lib")
       ntl
       glpk
       mpfi
       normaliz
-      libgc    ; boehmgc in Nix
-      lrslib   ; lrs in Nix
+      libgc
+      lrslib
       cddlib
-      4ti2     ; _4ti2 in Nix
+      4ti2
       flint
       fflas-ffpack
       givaro
-      
-      ;; Custom packages we created
       mpsolve
       csdp
-      
-      ;; Available in Guix (was missing in some versions)  
-      ;; gfan ; Built by M2's build system, not needed as system dependency
-      msolve   ; Available as msolve in Guix
-      
-      ;; Linear algebra
+      msolve
       lapack
-      openblas)) ; blas in Nix
+      openblas))
+    (home-page "https://macaulay2.com")
+    (synopsis "Software system for research in algebraic geometry and commutative algebra")
+    (description
+     "Macaulay2 is a software system devoted to supporting research in
+algebraic geometry and commutative algebra.  This version uses the modern
+CMake build system and skips package installation for significantly faster
+build times while maintaining full mathematical functionality.  Features
+include Groebner bases and free resolutions of modules over polynomial rings,
+Ext, Tor, and local cohomology.")
+    (license license:gpl2+)))
+
+(define-public macaulay2
+  (package
+    (name "macaulay2")
+    (version "1.25.06")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/Macaulay2/M2.git")
+             (commit "6fe351dcfe733f2a525d361d8585f9f2375e264d")
+             (recursive? #t)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1960sa9936s37nassa7cz004ailx24iw9ckbn583i45xi6hl73pr"))))
+
+    (build-system cmake-build-system)
     
+    (arguments
+     (list
+      #:tests? #f
+      
+      #:configure-flags
+      #~(list 
+	 "-GNinja"
+	 "-DPARALLEL_JOBS=1"
+	 "-DCMAKE_BUILD_TYPE=Release"
+	 "-DCMAKE_CXX_FLAGS=-O1 -g0 -DNDEBUG"
+	 (string-append "-DREADLINE_INCLUDE_DIR=" 
+			#$(this-package-input "readline") "/include")
+	 "-DCONFIGURE_COMMAND=${CONFIGURE_COMMAND};--disable-documentation")
+
+      #:phases
+      #~(modify-phases %standard-phases
+
+	  (add-before 'build 'fix-shebangs-and-shell
+	    (lambda _
+	      (setenv "SHELL" (string-append #$bash-minimal "/bin/bash"))
+
+	      (substitute* "build.ninja"
+		(("autoreconf -vif &&")
+		 (string-append
+		  "autoreconf -vif && "
+		  "sed -i '1s|^#!.*|#!" #$(file-append bash-minimal "/bin/bash") "|' configure && "
+		  "sed -i 's|/bin/sh|" #$(file-append bash-minimal "/bin/bash") "|g' configure &&")))))
+
+	  (add-before 'build 'force-make-shell
+	    (lambda _
+	      (setenv "MAKEFLAGS"
+		      (string-append "SHELL=" #$bash-minimal "/bin/bash"))))
+
+          (add-after 'unpack 'enter-m2-directory
+            (lambda _
+              (chdir "M2")))
+          
+          (add-after 'enter-m2-directory 'setup-build-directory
+            (lambda _
+              (mkdir-p "BUILD/build")
+              (chdir "BUILD/build")))
+          
+	  (add-after 'setup-build-directory 'setup-external-sources
+	    (lambda* (#:key inputs #:allow-other-keys)
+	      (mkdir-p "../tarfiles")
+	      (let ((nauty-source (assoc-ref inputs "nauty-source"))
+		    (gfan-source (assoc-ref inputs "gfan-source")))
+		(when nauty-source
+		  (copy-file nauty-source "../tarfiles/nauty2_8_9.tar.gz"))
+		(when gfan-source
+		  (copy-file gfan-source "../tarfiles/gfan0.6.2.tar.gz")))))
+	  
+          (replace 'configure
+            (lambda* (#:key configure-flags #:allow-other-keys)
+              (apply invoke "cmake" "-S../.." "-B." configure-flags)))
+
+	  (replace 'build
+	    (lambda _
+	      (setenv "CheckDocumentation" "false")
+	      (setenv "IgnoreExampleErrors" "true")
+	      (setenv "RemakeAllDocumentation" "false")
+	      (setenv "RerunExamples" "false")
+	      
+	      (invoke "ninja" "build-libraries")
+	      (invoke "ninja" "M2-binary" "M2-core")
+	      (invoke "ninja" "build-programs")))
+          
+	  ;; (replace 'install
+	  ;;   (lambda* (#:key outputs #:allow-other-keys)
+	  ;;     (let ((out (assoc-ref outputs "out")))
+	  ;; 	(copy-recursively "usr-dist" out))))
+
+	  ;; (replace 'install
+	  ;;   (lambda* (#:key outputs #:allow-other-keys)
+	  ;;     (let* ((out (assoc-ref outputs "out"))
+	  ;; 	     (bin (string-append out "/bin"))
+	  ;; 	     (emacs (string-append out "/share/emacs/site-lisp")))
+	  ;; 	(copy-recursively "usr-dist" out)
+		
+	  ;; 	;; Symlink M2 binary to standard bin location
+	  ;; 	(mkdir-p bin)
+	  ;; 	(symlink (string-append out "/x86_64-Linux-Linux-6.16.9/bin/M2")
+	  ;; 		 (string-append bin "/M2"))
+		
+	  ;; 	;; Symlink emacs files to standard location
+	  ;; 	(mkdir-p emacs)
+	  ;; 	(symlink (string-append out "/common/share/emacs/site-lisp/macaulay2")
+	  ;; 		 (string-append emacs "/macaulay2")))))
+
+
+	  (replace 'install
+	    (lambda* (#:key outputs #:allow-other-keys)
+	      (let* ((out (assoc-ref outputs "out"))
+		     (bin (string-append out "/bin"))
+		     (emacs (string-append out "/share/emacs/site-lisp"))
+		     (m2-bin (string-append out "/x86_64-Linux-Linux-6.16.9/bin")))
+		(copy-recursively "usr-dist" out)
+		
+		(mkdir-p bin)
+		(for-each
+		 (lambda (file)
+		   (let ((basename (basename file)))
+		     (symlink file (string-append bin "/" basename))))
+		 (find-files m2-bin))
+		
+		(mkdir-p emacs)
+		(symlink (string-append out "/common/share/emacs/site-lisp/macaulay2")
+			 (string-append emacs "/macaulay2")))))
+	  
+	  )))
+
+    (native-inputs
+     `(("bash-minimal" ,bash-minimal)
+       ("cmake" ,cmake)
+       ("ninja" ,ninja)
+       ("autoconf" ,autoconf)
+       ("automake" ,automake)
+       ("gcc-toolchain" ,gcc-toolchain)
+       ("gcc-toolchain" ,gcc-toolchain)
+
+       ("gnu-make" ,gnu-make)
+       ("libtool" ,libtool)
+       ("pkg-config" ,pkg-config)
+       ("bison" ,bison)
+       ("python" ,python)
+       ("texlive-bin" ,texlive-bin)
+       ("cohomcalg" ,cohomcalg)
+       ("topcom" ,topcom)
+       ("nauty-source"
+	,(origin
+	   (method url-fetch)
+	   (uri "https://pallini.di.uniroma1.it/nauty2_8_9.tar.gz")
+	   (sha256
+            (base32 "1vn4abz498h8fbh27z0l5jrs4z04d693xklbb5mai5l7yhmv8yn9"))))
+       ("gfan-source"
+	,(origin
+	   (method url-fetch)
+	   (uri "https://users-math.au.dk/jensen/software/gfan/gfan0.6.2.tar.gz")
+	   (sha256
+	    (base32 "02pihqb1lb76a0xbfwjzs1cd6ay3ldfxsm8dvsbl6qs3vkjxax56"))))
+       ))
+    
+    (inputs
+     (list
+      singular
+      boost
+      gdbm
+      tbb
+      libffi
+      readline
+      gmp
+      libxml2
+      eigen
+      googletest
+      mpfr
+      ntl
+      glpk
+      mpfi
+      normaliz
+      libgc
+      lrslib
+      cddlib
+      4ti2
+      flint
+      fflas-ffpack
+      givaro
+      mpsolve
+      csdp
+      msolve
+      lapack
+      openblas))
     (home-page "https://macaulay2.com")
     (synopsis "Software system for research in algebraic geometry and commutative algebra")
     (description
