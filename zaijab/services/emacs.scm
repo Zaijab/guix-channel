@@ -788,7 +788,8 @@ See `consult-grep' for details."
 
 (define m2-configuration
   (home-emacs-configuration
-   (packages (list macaulay2))))
+   (packages (list macaulay2))
+   (init '((use-package M2)))))
 
 (define hindi-configuration
   (home-emacs-configuration

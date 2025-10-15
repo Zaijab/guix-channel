@@ -1,5 +1,4 @@
 -- Macaulay2 script for computing Gröbner bases
--- Example for your algebraist friend
 
 -- Create a polynomial ring over the rationals with variables x, y, z
 R = QQ[x,y,z]

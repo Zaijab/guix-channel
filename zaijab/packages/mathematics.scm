@@ -179,27 +179,27 @@
     (build-system gnu-build-system)
     (arguments
      (list
-        #:phases
-	#~(modify-phases %standard-phases
-	          (add-after 'unpack 'patch-cddlib-makefiles
-		    (lambda _
-		      ;; Patch source Makefile.am files to use system cddlib
-		      (substitute* '("src-reg/Makefile.am" "src/Makefile.am")
-			(("\\.\\./external/lib/libcddgmp\\.a") "-lcddgmp"))))
-      
-		  (add-after 'patch-cddlib-makefiles 'regenerate-build-system
-		    (lambda _
-		      ;; Regenerate autotools files to fix version mismatch
-		      (invoke "autoreconf" "-fiv")))
-		  
-	    (add-before 'configure 'add-cddlib-include
-	      (lambda* (#:key inputs #:allow-other-keys)
-		(let ((cddlib-inc (assoc-ref inputs "cddlib")))
-		  (setenv "CPPFLAGS"
-			  (string-append "-I" cddlib-inc "/include/cddlib "
-					 "-I" cddlib-inc "/include "
-					 (or (getenv "CPPFLAGS") ""))))))
-	    )
+      #:phases
+      #~(modify-phases %standard-phases
+	  (add-after 'unpack 'patch-cddlib-makefiles
+	    (lambda _
+	      ;; Patch source Makefile.am files to use system cddlib
+	      (substitute* '("src-reg/Makefile.am" "src/Makefile.am")
+		(("\\.\\./external/lib/libcddgmp\\.a") "-lcddgmp"))))
+	  
+	  (add-after 'patch-cddlib-makefiles 'regenerate-build-system
+	    (lambda _
+	      ;; Regenerate autotools files to fix version mismatch
+	      (invoke "autoreconf" "-fiv")))
+	  
+	  (add-before 'configure 'add-cddlib-include
+	    (lambda* (#:key inputs #:allow-other-keys)
+	      (let ((cddlib-inc (assoc-ref inputs "cddlib")))
+		(setenv "CPPFLAGS"
+			(string-append "-I" cddlib-inc "/include/cddlib "
+				       "-I" cddlib-inc "/include "
+				       (or (getenv "CPPFLAGS") ""))))))
+	  )
       ))
     (native-inputs (list autoconf automake m4 cddlib))
     (inputs (list gmp))
@@ -217,9 +217,9 @@
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://github.com/Macaulay2/M2.git")
-             (commit "6fe351dcfe733f2a525d361d8585f9f2375e264d")
-             (recursive? #t)))
+              (url "https://github.com/Macaulay2/M2.git")
+              (commit "6fe351dcfe733f2a525d361d8585f9f2375e264d")
+              (recursive? #t)))
        (file-name (git-file-name name version))
        (sha256
         (base32 "1960sa9936s37nassa7cz004ailx24iw9ckbn583i45xi6hl73pr"))))
@@ -385,9 +385,9 @@ Ext, Tor, and local cohomology.")
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://github.com/Macaulay2/M2.git")
-             (commit "6fe351dcfe733f2a525d361d8585f9f2375e264d")
-             (recursive? #t)))
+              (url "https://github.com/Macaulay2/M2.git")
+              (commit "6fe351dcfe733f2a525d361d8585f9f2375e264d")
+              (recursive? #t)))
        (file-name (git-file-name name version))
        (sha256
         (base32 "1960sa9936s37nassa7cz004ailx24iw9ckbn583i45xi6hl73pr"))))
@@ -472,12 +472,12 @@ Ext, Tor, and local cohomology.")
 	  ;; 	     (bin (string-append out "/bin"))
 	  ;; 	     (emacs (string-append out "/share/emacs/site-lisp")))
 	  ;; 	(copy-recursively "usr-dist" out)
-		
+	  
 	  ;; 	;; Symlink M2 binary to standard bin location
 	  ;; 	(mkdir-p bin)
 	  ;; 	(symlink (string-append out "/x86_64-Linux-Linux-6.16.9/bin/M2")
 	  ;; 		 (string-append bin "/M2"))
-		
+	  
 	  ;; 	;; Symlink emacs files to standard location
 	  ;; 	(mkdir-p emacs)
 	  ;; 	(symlink (string-append out "/common/share/emacs/site-lisp/macaulay2")
@@ -585,9 +585,9 @@ Ext, Tor, and local cohomology.")
      (origin
        (method git-fetch)
        (uri (git-reference
-             (url "https://github.com/Macaulay2/M2.git")
-             (commit "6fe351dcfe733f2a525d361d8585f9f2375e264d")
-             (recursive? #t)))
+              (url "https://github.com/Macaulay2/M2.git")
+              (commit "6fe351dcfe733f2a525d361d8585f9f2375e264d")
+              (recursive? #t)))
        (file-name (git-file-name name version))
        (sha256
         (base32 "1960sa9936s37nassa7cz004ailx24iw9ckbn583i45xi6hl73pr"))))
@@ -662,24 +662,24 @@ Ext, Tor, and local cohomology.")
 	      (invoke "ninja" "build-programs")))
 
 	  (replace 'install
-  (lambda* (#:key outputs #:allow-other-keys)
-    (let* ((out (assoc-ref outputs "out"))
-           (bin (string-append out "/bin"))
-           (share (string-append out "/share"))
-           (m2-root (string-append out "/x86_64-Linux-Linux-6.16.9"))
-           (m2-bin (string-append m2-root "/bin/M2")))
-      (copy-recursively "usr-dist" out)
-      
-      (mkdir-p bin)
-      (call-with-output-file (string-append bin "/M2")
-        (lambda (port)
-          (format port "#!~a/bin/bash~%exec ~a \"$@\"~%"
-                  #$bash-minimal m2-bin)))
-      (chmod (string-append bin "/M2") #o555)
-      
-      (mkdir-p (string-append share "/emacs/site-lisp"))
-      (symlink (string-append out "/common/share/emacs/site-lisp/macaulay2")
-               (string-append share "/emacs/site-lisp/macaulay2")))))
+	    (lambda* (#:key outputs #:allow-other-keys)
+	      (let* ((out (assoc-ref outputs "out"))
+		     (bin (string-append out "/bin"))
+		     (share (string-append out "/share"))
+		     (m2-root (string-append out "/x86_64-Linux-Linux-6.16.9"))
+		     (m2-bin (string-append m2-root "/bin/M2")))
+		(copy-recursively "usr-dist" out)
+		
+		(mkdir-p bin)
+		(call-with-output-file (string-append bin "/M2")
+		  (lambda (port)
+		    (format port "#!~a/bin/bash~%exec ~a \"$@\"~%"
+			    #$bash-minimal m2-bin)))
+		(chmod (string-append bin "/M2") #o555)
+		
+		(mkdir-p (string-append share "/emacs/site-lisp"))
+		(symlink (string-append out "/common/share/emacs/site-lisp/macaulay2")
+			 (string-append share "/emacs/site-lisp/macaulay2")))))
 	  
 	  )))
 
