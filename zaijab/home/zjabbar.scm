@@ -22,7 +22,7 @@
 (define-public zains-home
   (home-environment
    (packages (list
-	      strongswan
+	      ;; strongswan
 	      (specification->package "xmodmap")
 	      (specification->package "unzip")
               (specification->package "xset")
