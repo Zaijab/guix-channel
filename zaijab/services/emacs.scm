@@ -1737,6 +1737,7 @@ END is the start of the line with :END: on it."
 	      texlive-collection-fontsrecommended
 	      texlive-collection-mathscience
 	      texlive-bbm
+	      texlive-doublestroke
 	      imagemagick))
    (init '(
 	   (use-package consult-org-roam
