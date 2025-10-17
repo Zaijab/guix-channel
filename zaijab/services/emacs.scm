@@ -1942,7 +1942,7 @@ END is the start of the line with :END: on it."
 (define python-configuration
   (home-emacs-configuration
    (packages (list
-	      python
+	      python-next
 	      gcc-toolchain
 	      python-cython
 	      ;; conda
