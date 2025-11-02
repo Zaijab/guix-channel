@@ -786,10 +786,10 @@ See `consult-grep' for details."
 ;;   (home-emacs-configuration
 ;;    (packages (list font-gnu-unifont))))
 
-(define m2-configuration
-  (home-emacs-configuration
-   (packages (list macaulay2))
-   (init '((use-package M2)))))
+;; (define m2-configuration
+;;   (home-emacs-configuration
+;;    (packages (list macaulay2))
+;;    (init '((use-package M2)))))
 
 (define hindi-configuration
   (home-emacs-configuration
@@ -1725,7 +1725,7 @@ END is the start of the line with :END: on it."
 	      emacs-org-tree-slide
 
 	      emacs-calfw
-	      emacs-calfw-blocks
+	      ;; emacs-calfw-blocks
 	      dvisvgm
 	      texlive-scheme-basic
 	      texlive-collection-latexrecommended
@@ -1754,7 +1754,7 @@ END is the start of the line with :END: on it."
 			(require 'ox)
 			(require 'calfw)
 			(require 'calfw-org)
-			(require 'calfw-blocks)
+			;; (require 'calfw-blocks)
 			(setq org-startup-folded t)
 
 			(setq org-list-allow-alphabetical t)
@@ -1769,11 +1769,11 @@ END is the start of the line with :END: on it."
 			  (calendar-gregorian-from-absolute
 			   (- (calendar-absolute-from-gregorian date) num)))
 
-			(setq calfw-blocks-lines-per-hour 3
-			      calfw-blocks-min-block-width 1
-			      calfw-blocks-earliest-visible-time '(6 0))
-			(define-key cfw:calendar-mode-map (kbd "W") (function calfw-blocks-change-view-block-week))
-			(define-key cfw:calendar-mode-map (kbd "D") (lambda () (interactive) (calfw-blocks-change-view-block-nday 3)))
+			;; (setq calfw-blocks-lines-per-hour 3
+			      ;; calfw-blocks-min-block-width 1
+			      ;; calfw-blocks-earliest-visible-time '(6 0))
+			;; (define-key cfw:calendar-mode-map (kbd "W") (function calfw-blocks-change-view-block-week))
+			;; (define-key cfw:calendar-mode-map (kbd "D") (lambda () (interactive) (calfw-blocks-change-view-block-nday 3)))
 			(setq org-cycle-separator-lines 1)
 			(setq org-agenda-show-log-scoped t)
 			(setq org-agenda-prefix-format '((agenda  . "  • %?-12t% s")
