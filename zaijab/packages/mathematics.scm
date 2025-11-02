@@ -268,7 +268,7 @@
 	      (let* ((out (assoc-ref outputs "out"))
 		     (bin (string-append out "/bin"))
 		     (share (string-append out "/share"))
-		     (m2-root (string-append out "/x86_64-Linux-Linux-6.16.9"))
+		     (m2-root (string-append out "/x86_64-Linux-Linux-6.16.11"))
 		     (m2-bin (string-append m2-root "/bin/M2")))
 		(copy-recursively "usr-dist" out)
 		
