@@ -2074,7 +2074,7 @@ END is the start of the line with :END: on it."
 (define lisp-configuration
   (home-emacs-configuration
    (packages (list
-	      sicp
+	      
 	      xdot
 	      emacs-guix
 	      emacs-daemons
