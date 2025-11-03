@@ -1725,7 +1725,7 @@ END is the start of the line with :END: on it."
 	      emacs-org-tree-slide
 
 	      emacs-calfw
-	      ;; emacs-calfw-blocks
+	      emacs-calfw-blocks
 	      dvisvgm
 	      texlive-scheme-basic
 	      texlive-collection-latexrecommended
