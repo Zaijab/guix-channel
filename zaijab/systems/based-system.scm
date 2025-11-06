@@ -104,7 +104,7 @@
 
 		      (oci-container-configuration
 		       (image "docker.io/searxng/searxng")
-		       (network "host")
+		       (network "bridge")
 		       (ports '(("8080" . "8080")))
 		       (volumes '("/var/run/searxng:/etc/searxng:rw"
 				  "/home/zjabbar/code/guix-channel/zaijab/files/limiter.toml:/etc/searxng/limiter.toml"
