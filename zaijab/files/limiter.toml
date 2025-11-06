@@ -2,5 +2,6 @@
 # See https://github.com/searxng/searxng/blob/master/searx/botdetection/limiter.toml
 
 [botdetection.ip_limit]
+filter_link_local = false
 # activate link_token method in the ip_limit method
 link_token = true
