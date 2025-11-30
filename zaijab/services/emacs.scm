@@ -1941,11 +1941,11 @@ END is the start of the line with :END: on it."
    (packages (list
 	      python-next
 	      gcc-toolchain
-	      python-cython
+	      ;; python-cython
 	      ;; conda
 	      jupyter
 	      ;; guix-jupyter
-	      python-virtualenv
+	      ;; python-virtualenv
 
 	      expect
 	      sshpass
