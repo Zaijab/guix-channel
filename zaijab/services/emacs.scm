@@ -1982,12 +1982,13 @@ END is the start of the line with :END: on it."
 			      python-shell-interpreter "python3"
 			      treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
 
-			(org-babel-do-load-languages 'org-babel-load-languages '((scheme .t)
+			(org-babel-do-load-languages 'org-babel-load-languages '(
+										 (scheme .t)
 										 (python . t)
 										 (sql . t)
 										 (eshell . t)
 										 (shell . t)
-										 ;(jupyter . t)
+										 (jupyter . t)
 										 ))
 
 			(add-to-list 'org-src-lang-modes (cons "python3" 'python))
