@@ -1,11 +1,11 @@
 # # see https://docs.searxng.org/admin/settings/settings.html#settings-use-default-settings
 use_default_settings: true
 outgoing:
-  request_timeout: 200.0       # default timeout in seconds, can be override by engine
+  request_timeout: 20.0       # default timeout in seconds, can be override by engine
   max_request_timeout: 200.0  # the maximum timeout in seconds
 server:
   # base_url is defined in the SEARXNG_BASE_URL environment variable, see .env and docker-compose.yml
-  secret_key: "megasecretkey"  # change this!
+  secret_key: "lmaokey"  # change this!
   limiter: false  # can be disabled for a private instance
   image_proxy: true
 search:
