@@ -726,7 +726,8 @@ See `consult-grep' for details."
 			:config
 			(dolist (name '(
 					"Foundations" ; Pure Math / Flashcards
-					"Geometric Sensor Tasking"
+					;; "Geometric Sensor Tasking"
+					"Directional Statistics"
 					"Normalizing Flows"
 					"Japanese" ; Japanese Learning / Coursework
 					"Communications" ; Google Voice / Email / Discord
