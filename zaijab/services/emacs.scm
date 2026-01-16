@@ -905,6 +905,7 @@ See `consult-grep' for details."
 		   emacs-nov-el))
    (init '((add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 	   (pdf-tools-install)
+	   (add-hook 'pdf-view-mode-hook #'pdf-view-roll-minor-mode)
 	   (defvar *current-mode* 'light)
 	   #;(defun pdf-view-redisplay (&optional window)
 	   "Redisplay page in WINDOW.
