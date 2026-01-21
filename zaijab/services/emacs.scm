@@ -905,29 +905,8 @@ See `consult-grep' for details."
 		   emacs-nov-el))
    (init '((add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 	   (pdf-tools-install)
-	   (add-hook 'pdf-view-mode-hook #'pdf-view-roll-minor-mode)
+	   (add-hook 'pdf-view-mode-hook (function pdf-view-roll-minor-mode))
 	   (defvar *current-mode* 'light)
-	   #;(defun pdf-view-redisplay (&optional window)
-	   "Redisplay page in WINDOW.
-
-	   If WINDOW is t, redisplay pages in all windows."
-	   (setq window nil)
-	   (unless pdf-view-inhibit-redisplay
-	   (if (not (eq t window))
-	   (pdf-view-display-page
-	   (pdf-view-current-page window)
-	   window)
-	   (dolist (win (get-buffer-window-list nil nil t))
-	   (pdf-view-display-page
-	   (pdf-view-current-page win)
-	   win))
-	   (when (consp image-mode-winprops-alist)
-	   (dolist (window (mapcar (function car image-mode-winprops-alist)))
-	   (unless (or (not (window-live-p window))
-	   (eq (current-buffer)
-	   (window-buffer window)))
-	   (setf (pdf-view-window-needs-redisplay window) t)))))
-	   (force-mode-line-update)))
 
 	   (defun my/dark-mode ()
 	     (interactive)
@@ -937,9 +916,7 @@ See `consult-grep' for details."
 		   (t
 		    (modus-themes-toggle)
 		    (remove-hook 'pdf-view-mode-hook (function pdf-view-midnight-minor-mode)))
-		   ))
-
-	   ))))
+		   ))))))
 
 (define cryptography-configuration
   (home-emacs-configuration
