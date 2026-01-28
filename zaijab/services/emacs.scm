@@ -2223,7 +2223,7 @@ END is the start of the line with :END: on it."
 			(global-set-key (kbd "s-b") (function consult-search-library))
 			(global-set-key (kbd "s-n") 'org-roam-node-find)
 			(global-set-key (kbd "s-i") 'org-roam-node-insert)
-			(global-set-key (kbd "s-a") 'cfw:open-org-calendar)
+			(global-set-key (kbd "s-a") 'calfw-org-open-calendar)
 			(global-set-key (kbd "s-s") (function jisho->fc))
 			(global-set-key (kbd "s-m") 'mu4e)
 			(global-set-key (kbd "s-z") (function elfeed))
