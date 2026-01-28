@@ -2494,6 +2494,7 @@ END is the start of the line with :END: on it."
 	   (defun quick-restart ()
 	     (interactive)
 	     (shell-command "sudo reboot --kexec"))
+	   (setq truncate-string-ellipsis "-")
 
 	   (defun restart-searxng ()
 	     (interactive)
