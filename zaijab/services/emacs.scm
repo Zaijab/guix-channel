@@ -1967,7 +1967,7 @@ END is the start of the line with :END: on it."
 										 (sql . t)
 										 (eshell . t)
 										 (shell . t)
-										 ;(jupyter . t)
+										 (jupyter . t)
 										 ))
 
 			(add-to-list 'org-src-lang-modes (cons "python3" 'python))
