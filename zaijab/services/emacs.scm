@@ -1371,7 +1371,7 @@ See `consult-grep' for details."
 	      emacs-org-roam
 	      emacs-org-roam-ui
 	      emacs-org-roam-bibtex
-	      emacs-consult-org-roam
+	      ;; emacs-consult-org-roam
 	      emacs-org-fc
 	      emacs-kanji))
    (init '((use-package sqlite)
@@ -1716,7 +1716,7 @@ END is the start of the line with :END: on it."
 	      texlive-doublestroke
 	      imagemagick))
    (init '(
-	   (use-package consult-org-roam
+	   #;(use-package consult-org-roam
 			:after (org-roam org consult)
 			:config (consult-org-roam-mode))
 
