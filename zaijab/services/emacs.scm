@@ -263,8 +263,8 @@
 			 consult-theme :preview-key '(:debounce 0.2 any)
 			 consult-ripgrep consult-git-grep consult-grep
 			 consult-bookmark consult-recent-file consult-xref
-			 consult--source-bookmark consult--source-file-register
-			 consult--source-recent-file consult--source-project-recent-file
+			 consult-source-bookmark consult-source-file-register
+			 consult-source-recent-file consult-source-project-recent-file
 			 ;; :preview-key "M-."
 			 :preview-key '(:debounce 0.4 any))
 
@@ -738,9 +738,9 @@ See `consult-grep' for details."
 			(tab-bar-close-tab-by-name "*scratch*")
 
 			(with-eval-after-load 'consult
-					      (consult-customize consult--source-buffer :hidden t :default nil)
+					      (consult-customize consult-source-buffer :hidden t :default nil)
 					      ;; set consult-workspace buffer list
-					      (defvar consult--source-workspace
+					      (defvar consult-source-workspace
 						(list :name     "Workspace Buffers"
 						      :narrow   ?w
 						      :history  'buffer-name-history
@@ -753,7 +753,7 @@ See `consult-grep' for details."
 									    :as (function buffer-name))))
 
 						"Set workspace buffer list for consult-buffer.")
-					      (add-to-list 'consult-buffer-sources 'consult--source-workspace)))))
+					      (add-to-list 'consult-buffer-sources 'consult-source-workspace)))))
    (early-init '((setq desktop-restore-frames nil
 		       desktop-restore-in-current-display nil)
 		 (setq switch-to-buffer-obey-display-actions t)
