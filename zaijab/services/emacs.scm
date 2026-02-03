@@ -1923,6 +1923,7 @@ END is the start of the line with :END: on it."
 	      python-cython
 	      ;; conda
 	      jupyter
+	      python-jupyter-client
 	      ;; guix-jupyter
 	      python-virtualenv
 
