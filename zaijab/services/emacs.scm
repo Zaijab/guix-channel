@@ -1922,8 +1922,9 @@ END is the start of the line with :END: on it."
 	      gcc-toolchain
 	      python-cython
 	      ;; conda
+	      ;; TODO: Use options->transformation to use python-jupyter-client
 	      jupyter
-	      python-jupyter-client
+
 	      ;; guix-jupyter
 	      python-virtualenv
 
