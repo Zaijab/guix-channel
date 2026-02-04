@@ -1923,7 +1923,9 @@ END is the start of the line with :END: on it."
 	      python-cython
 	      ;; conda
 	      ;; TODO: Use options->transformation to use python-jupyter-client
-	      jupyter
+	      ((package-input-rewriting
+		`((,python-jupyter-client@7.4.9 . ,python-jupyter-client@8.7.0)))
+	       jupyter)
 
 	      ;; guix-jupyter
 	      python-virtualenv
