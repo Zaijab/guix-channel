@@ -535,11 +535,11 @@ https://github.com/florommel/bufferlo")
 (define-public emacs-calfw-blocks
   (package
     (name "emacs-calfw-blocks")
-    (version "0fe829035ffa491c3f2610f05a7f1ec936a4497e")
+    (version "87937b7c7523b6d314bf9e21310924c94f182954")
     (source (origin
 	      (method git-fetch)
 	      (uri (git-reference
-		    (url "https://github.com/ml729/calfw-blocks.git")
+		    (url "https://github.com/haji-ali/calfw-blocks.git")
 		    (commit version)))
 	      (file-name (git-file-name name version))
 	      (sha256
