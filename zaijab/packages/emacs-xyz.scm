@@ -570,7 +570,8 @@ Emacs buffer.")
 	       (base32
 		"15ip8xy3knljzpyhc3njpc4488giz1c13j6zvly6wvazc7xkjsri"))))
     (build-system emacs-build-system)
-    (propagated-inputs (list (specification->package "emacs-calfw")))
+    (propagated-inputs (list emacs-howm
+			     emacs-calfw-blocks-compatible))
     (home-page "https://github.com/ml729/calfw-blocks")
     (synopsis "Visual time blocks for the Emacs Calendar Framework (calfw).")
     (description "Visual time blocks for the Emacs Calendar Framework (calfw).")
