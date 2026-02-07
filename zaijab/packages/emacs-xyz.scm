@@ -541,7 +541,7 @@ https://github.com/florommel/bufferlo")
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/kiwanami/emacs-calfw")
-             (commit (string-append "v" version))))
+             (commit (string-append "36846cdca91794cf38fa171d5a3ac291d3ebc060"))))
        (file-name (git-file-name name version))
        (sha256
         (base32

@@ -1734,7 +1734,7 @@ END is the start of the line with :END: on it."
 			(require 'ox)
 			(require 'calfw)
 			(require 'calfw-org)
-			;; (require 'calfw-blocks)
+			(require 'calfw-blocks)
 			(setq org-startup-folded t)
 
 			(setq org-list-allow-alphabetical t)
@@ -1829,12 +1829,12 @@ END is the start of the line with :END: on it."
 			(add-hook 'org-mode-hook (function visual-line-mode))
 			(add-hook 'org-mode-hook (function org-toggle-pretty-entities))
 			(add-hook 'org-mode-hook (function org-cdlatex-mode))
-			(setq cfw:org-agenda-schedule-args '(:scheduled
-							     :sexp
-							     :closed
-							     :deadline
-							     :todo
-							     :timestamp))
+			;; (setq cfw:org-agenda-schedule-args '(:scheduled
+			;; 				     :sexp
+			;; 				     :closed
+			;; 				     :deadline
+			;; 				     :todo
+			;; 				     :timestamp))
 
 			(setq org-agenda-files '("/home/zjabbar/notes/20211224040925-todo.org"
 						 "/home/zjabbar/notes/20240815234918-calendar.org"
