@@ -532,6 +532,30 @@ https://github.com/florommel/bufferlo")
 ;; (\"--max-line-length=100\" \"--aggressive\"))")
 ;;     (license #f)))
 
+(define-public emacs-calfw-blocks-compatible
+  (package
+    (name "emacs-calfw")
+    (version "36846cdca91794cf38fa171d5a3ac291d3ebc060")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/kiwanami/emacs-calfw")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0r42cagvmvvib76kd15nd9ix55ys6i549vxnls4z16s864695zpa"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     (list emacs-howm))
+    (home-page "https://github.com/kiwanami/emacs-calfw/")
+    (synopsis "Calendar framework for Emacs")
+    (description
+     "This package displays a calendar view with various schedule data in the
+Emacs buffer.")
+    (license license:gpl3+)))
+
 (define-public emacs-calfw-blocks
   (package
     (name "emacs-calfw-blocks")
@@ -861,7 +885,5 @@ queries are licensed under the GPL-compatible Mozilla Public License 2.0.")
      "@code{elfeed-tube} is an extension for Elfeed that enhances Youtube RSS
 feed subscriptions.")
     (license license:unlicense)))
-
-
 
 emacs-elfeed-tube-current
