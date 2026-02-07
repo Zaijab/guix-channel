@@ -544,7 +544,7 @@ https://github.com/florommel/bufferlo")
 	      (file-name (git-file-name name version))
 	      (sha256
 	       (base32
-		"1v8m1i7jci56c8k2zcd0gghn7qk9k2nn0rr311y0pzwsgwbqcif3"))))
+		"15ip8xy3knljzpyhc3njpc4488giz1c13j6zvly6wvazc7xkjsri"))))
     (build-system emacs-build-system)
     (propagated-inputs (list (specification->package "emacs-calfw")))
     (home-page "https://github.com/ml729/calfw-blocks")
