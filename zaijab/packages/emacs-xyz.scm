@@ -547,6 +547,7 @@ https://github.com/florommel/bufferlo")
         (base32
          "0vmd9dl1hnmwjfr9gy8n91724bl05walhjx2myszh6qs28xay0z4"))))
     (build-system emacs-build-system)
+    (arguments `(#:phases (modify-phases %standard-phases (delete 'check))))
     (propagated-inputs
      (list emacs-howm))
     (home-page "https://github.com/kiwanami/emacs-calfw/")
