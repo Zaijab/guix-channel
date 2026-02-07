@@ -1743,7 +1743,15 @@ END is the start of the line with :END: on it."
 				("e" . "example") ("E" . "export") ("h" . "export html")
 				("l" . "export latex") ("q" . "quote") ("s" . "src") ("v" . "verse")
 				("p" . "PROOF") ("t" . "THEOREM")))
-
+			(defun calfw-org-create-source (&optional color)
+			  (make-calfw-source
+			   :name "org-agenda"
+			   :color (or color calfw-org-face-agenda-item-foreground-color)
+			   :data (lambda (begin end)
+				   (apply #'nconc
+					  (mapcar (lambda (file)
+						    (calfw-org-to-calendar file begin end))
+						  (org-agenda-files nil 'ifmode))))))
 			;; (defun cfw:date-before (date num)
 			;;   "Return the date before NUM days from DATE."
 			;;   (calendar-gregorian-from-absolute
