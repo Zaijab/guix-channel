@@ -535,7 +535,7 @@ https://github.com/florommel/bufferlo")
 (define-public emacs-calfw-blocks-compatible
   (package
     (name "emacs-calfw")
-    (version "36846cdca91794cf38fa171d5a3ac291d3ebc060")
+    (version "2.0")
     (source
      (origin
        (method git-fetch)
