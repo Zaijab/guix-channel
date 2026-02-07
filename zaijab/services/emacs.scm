@@ -1744,10 +1744,10 @@ END is the start of the line with :END: on it."
 				("l" . "export latex") ("q" . "quote") ("s" . "src") ("v" . "verse")
 				("p" . "PROOF") ("t" . "THEOREM")))
 
-			(defun cfw:date-before (date num)
-			  "Return the date before NUM days from DATE."
-			  (calendar-gregorian-from-absolute
-			   (- (calendar-absolute-from-gregorian date) num)))
+			;; (defun cfw:date-before (date num)
+			;;   "Return the date before NUM days from DATE."
+			;;   (calendar-gregorian-from-absolute
+			;;    (- (calendar-absolute-from-gregorian date) num)))
 
 			;; (setq calfw-blocks-lines-per-hour 3
 			      ;; calfw-blocks-min-block-width 1
@@ -1762,33 +1762,33 @@ END is the start of the line with :END: on it."
 							 (tags  . " %i %-12:c")
 							 (search . " %i %-12:c")))
 
-			(defun cfw:render-truncate (org limit-width &optional ellipsis)
-			  "[internal] Truncate a string ORG with LIMIT-WIDTH, like `truncate-string-to-width'."
-			  (setq org (replace-regexp-in-string "\n" " " org))
-			  (if (< limit-width (string-width org))
-			      (let ((str (truncate-string-to-width
-					  (substring org 0) limit-width 0 nil nil)))
-				(cfw:tp str 'mouse-face 'highlight)
-				(unless (get-text-property 0 'help-echo str)
-				  (cfw:tp str 'help-echo org))
-				str)
-			      org))
+			;; (defun cfw:render-truncate (org limit-width &optional ellipsis)
+			;;   "[internal] Truncate a string ORG with LIMIT-WIDTH, like `truncate-string-to-width'."
+			;;   (setq org (replace-regexp-in-string "\n" " " org))
+			;;   (if (< limit-width (string-width org))
+			;;       (let ((str (truncate-string-to-width
+			;; 		  (substring org 0) limit-width 0 nil nil)))
+			;; 	(cfw:tp str 'mouse-face 'highlight)
+			;; 	(unless (get-text-property 0 'help-echo str)
+			;; 	  (cfw:tp str 'help-echo org))
+			;; 	str)
+			;;       org))
 
-			(defun cfw:org-get-timerange (text)
-			  "Return a range object (begin end text). If TEXT does not have a range, return nil."
-			  (let* ((dotime (cfw:org-tp text 'dotime)))
-			    (and (stringp dotime) (string-match org-ts-regexp dotime)
-				 (let* ((matches  (s-match-strings-all org-ts-regexp dotime))
-					(start-date (nth 1 (car matches)))
-					(end-date (nth 1 (nth 1 matches)))
-					(extra (cfw:org-tp text 'extra)))
-				   (if (string-match "(\\([0-9]+\\)/\\([0-9]+\\)): " extra)
-				       (list( calendar-gregorian-from-absolute
-					      (time-to-days
-					       (org-read-date nil t start-date)))
-					    (calendar-gregorian-from-absolute
-					     (time-to-days
-					      (org-read-date nil t end-date))) text))))))
+			;; (defun cfw:org-get-timerange (text)
+			;;   "Return a range object (begin end text). If TEXT does not have a range, return nil."
+			;;   (let* ((dotime (cfw:org-tp text 'dotime)))
+			;;     (and (stringp dotime) (string-match org-ts-regexp dotime)
+			;; 	 (let* ((matches  (s-match-strings-all org-ts-regexp dotime))
+			;; 		(start-date (nth 1 (car matches)))
+			;; 		(end-date (nth 1 (nth 1 matches)))
+			;; 		(extra (cfw:org-tp text 'extra)))
+			;; 	   (if (string-match "(\\([0-9]+\\)/\\([0-9]+\\)): " extra)
+			;; 	       (list( calendar-gregorian-from-absolute
+			;; 		      (time-to-days
+			;; 		       (org-read-date nil t start-date)))
+			;; 		    (calendar-gregorian-from-absolute
+			;; 		     (time-to-days
+			;; 		      (org-read-date nil t end-date))) text))))))
 
 			(setq org-tags-column 0
 			      org-image-actual-width nil)
