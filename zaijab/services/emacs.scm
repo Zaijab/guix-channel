@@ -796,7 +796,7 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list font-lohit))))
 
-#;(define urdu-configuration
+(define urdu-configuration
   (home-emacs-configuration
    (packages (list font-vazir
 		   font-amiri))))
