@@ -48,7 +48,7 @@ system_from_main:
 system_from_lock:
 	sudo guix time-machine \
 	-C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl \
-	--substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org' \
+	# --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org' \
 	-- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' \
 	--allow-downgrades #--substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org'
 
