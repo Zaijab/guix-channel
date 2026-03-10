@@ -3,11 +3,6 @@
 (channel
  (version 0)
  (dependencies
-  #;(channel
-   (name ruther)
-   (url "https://git.ditigal.xyz/~ruther/guix-exprs")
-   (branch "main")
-   #;(commit "d92cfecb9513f64fb8c30675cfc90f19026b09e4")) ; ripgrep-all
   (channel
    (name nonguix)
    (url "https://gitlab.com/nonguix/nonguix")
@@ -32,9 +27,21 @@
      (version 0)
      (commit "58661b110325fd5d9b40e6f0177cc486a615817e")
      (signer "CA4F 8CF4 37D7 478F DA05  5FD4 4213 7701 1A37 8446"))))
+  (channel
+   (name 'guix-past)
+   (url "https://codeberg.org/guix-science/guix-past")
+
+   ;; The following lines allow 'guix pull' to authenticate
+   ;; this channel.  It requires a recent Guix (July 2020)
+   ;; and can be omitted with older versions.
+   (introduction
+    (make-channel-introduction
+     "0c119db2ea86a389769f4d2b9c6f5c41c027e336"
+     (openpgp-fingerprint
+      "3CE4 6455 8A84 FDC6 9DB4  0CFB 090B 1199 3D9A EBB5"))))
   #;(channel
-   (name guix-hpc)
-   (url "https://gitlab.inria.fr/guix-hpc/guix-hpc.git"))
+  (name guix-hpc)
+  (url "https://gitlab.inria.fr/guix-hpc/guix-hpc.git"))
   (channel
    (name guix)
    ;; (url "https://git.savannah.gnu.org/git/guix.git")
