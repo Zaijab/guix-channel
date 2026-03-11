@@ -964,7 +964,7 @@ See `consult-grep' for details."
 				;; ("https://www.youtube.com/feeds/videos.xml?playlist_id=UULFe0TLA0EsQbE-MjuHXevj2A" health jeff)
 				("https://www.youtube.com/feeds/videos.xml?playlist_id=UULFlHVl2N3jPEbkNJVx-ItQIQ" health alok)
 
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
 				;; ("https://twitchrss.appspot.com/vod/nicob" fun nicob twitch)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
@@ -1005,7 +1005,7 @@ See `consult-grep' for details."
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCsXJuG5tSNRr9IwfjMbNvqQ" japanese game-gengo)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UC5Kgc_HNzx4GJ-w4QMeeKiQ" japanese python)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCiX01KrL5XyKsxhjRhCC7oA" japanese takashi)
-				("https://www.youtube.com/feeds/videos.xml?channel_id=UCpGJxlhKXfdOKkBhuDH6ujA" japanese ikechan)
+				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCpGJxlhKXfdOKkBhuDH6ujA" japanese ikechan)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCkex1wLTvYFnF0hfLXGE1kQ" japanese yuka)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCmjzC93AhDkSNj3oWK0vxdg" japanese interviewing)
 				("https://www.youtube.com/feeds/videos.xml?channel_id=UCFVzAd9JKNLikLRuWOVB1YA" japanese unfiltered)
