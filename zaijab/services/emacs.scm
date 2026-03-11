@@ -2077,7 +2077,8 @@ END is the start of the line with :END: on it."
 	      emacs-srfi
 	      emacs-arei
 	      guile-ares-rs
-	      guile-next))
+	      ;guile-next
+	      ))
    (init '(#;(with-eval-after-load 'guix-repl
 	   (setq guix-guile-program  '("guix" "repl")
 	   guix-config-scheme-compiled-directory  nil
