@@ -1707,7 +1707,7 @@ END is the start of the line with :END: on it."
 	      emacs-calfw-blocks-compatible
 	      emacs-calfw-blocks
 	      dvisvgm
-	      texlive-scheme-full
+	      texlive
 	      ;; texlive-collection-latexrecommended
 	      ;; texlive-collection-latexextra
 	      ;; texlive-collection-fontsrecommended
