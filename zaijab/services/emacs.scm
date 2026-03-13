@@ -1707,14 +1707,14 @@ END is the start of the line with :END: on it."
 	      emacs-calfw-blocks-compatible
 	      emacs-calfw-blocks
 	      dvisvgm
-	      texlive-scheme-basic
-	      texlive-collection-latexrecommended
-	      texlive-collection-latexextra
-	      texlive-collection-fontsrecommended
-	      texlive-collection-mathscience
-	      texlive-bbm
-	      texlive-bbm-macros
-	      texlive-doublestroke
+	      texlive-scheme-full
+	      ;; texlive-collection-latexrecommended
+	      ;; texlive-collection-latexextra
+	      ;; texlive-collection-fontsrecommended
+	      ;; texlive-collection-mathscience
+	      ;; texlive-bbm
+	      ;; texlive-bbm-macros
+	      ;; texlive-doublestroke
 	      imagemagick))
    (init '(
 	   #;(use-package consult-org-roam
@@ -2077,7 +2077,7 @@ END is the start of the line with :END: on it."
 	      emacs-srfi
 	      emacs-arei
 	      guile-ares-rs
-	      ;guile-next
+	      guile-next
 	      ))
    (init '(#;(with-eval-after-load 'guix-repl
 	   (setq guix-guile-program  '("guix" "repl")
