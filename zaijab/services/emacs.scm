@@ -562,9 +562,14 @@ See `consult-grep' for details."
 
 (define llm-configuration
   (home-emacs-configuration
-   (packages (list emacs-gptel
+   (packages (list emacs-claude-code-ide
 		   node))
-   (init '())))
+   (init '(
+	   (use-package claude-code-ide
+			:bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
+			:config
+			(claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
+	   ))))
 
 (define lsp-configuration
   (home-emacs-configuration
