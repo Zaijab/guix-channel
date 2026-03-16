@@ -107,17 +107,33 @@
 			home-xdg-configuration-files-service-type
 			(lambda (config)
                           `(("emacs/early-init.el"
-			     ,(mixed-text-file "early-init.el"
-					       ";;; -*- lexical-binding: t; -*-\n"
-					       (scheme-file "early-init-content.el"
-							    (home-emacs-configuration-early-init config)
-							    #:splice? #t)))
+			     ,(computed-file "early-init.el"
+					     #~(begin
+						 (use-modules (ice-9 textual-ports))
+						 (call-with-output-file #$output
+						   (lambda (out)
+						     (display ";;; -*- lexical-binding: t; -*-\n" out)
+						     (display
+						      (call-with-input-file
+							  #$(scheme-file "early-init-content.el"
+									 (home-emacs-configuration-early-init config)
+									 #:splice? #t)
+							get-string-all)
+						      out))))))
 			    ("emacs/init.el"
-			     ,(mixed-text-file "init.el"
-					       ";;; -*- lexical-binding: t; -*-\n"
-					       (scheme-file "init-content.el"
-							    (home-emacs-configuration-init config)
-							    #:splice? #t)))
+			     ,(computed-file "init.el"
+					     #~(begin
+						 (use-modules (ice-9 textual-ports))
+						 (call-with-output-file #$output
+						   (lambda (out)
+						     (display ";;; -*- lexical-binding: t; -*-\n" out)
+						     (display
+						      (call-with-input-file
+							  #$(scheme-file "init-content.el"
+									 (home-emacs-configuration-init config)
+									 #:splice? #t)
+							get-string-all)
+						      out))))))
                             ,@(map (lambda (file) (list (string-append "emacs/" (scheme-file-name file))
                                                         file))
                                    (home-emacs-configuration-extra-files config)))))))
