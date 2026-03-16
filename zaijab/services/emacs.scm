@@ -1931,10 +1931,6 @@ END is the start of the line with :END: on it."
 	      gcc-toolchain
 	      python-cython
 	      ;; conda
-	      ;; TODO: Use options->transformation to use python-jupyter-client
-	      #;((package-input-rewriting
-		`((,python-jupyter-client-7 . ,python-jupyter-client)))
-	       jupyter)
 	      jupyter
 	      ;; guix-jupyter
 	      python-virtualenv
@@ -1980,7 +1976,7 @@ END is the start of the line with :END: on it."
 										 (sql . t)
 										 (eshell . t)
 										 (shell . t)
-										 ;; (jupyter . t)
+										 (jupyter . t)
 										 ))
 
 			(add-to-list 'org-src-lang-modes (cons "python3" 'python))
@@ -2382,7 +2378,7 @@ END is the start of the line with :END: on it."
 		   :version "30.1"
 		   :group 'processes)
 		 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
-		 (setq org-src-fontify-natively t)
+		 (setq org-src-fontify-natively nil)
 		 (setq org-src-tab-acts-natively t)
 		 (setq org-src-preserve-indentation nil
 		       org-edit-src-content-indentation 0)
