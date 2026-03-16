@@ -80,7 +80,7 @@
 
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like emacs-next)
+   (file-like emacs)
    "The Emacs package to use.")
   (packages
    (file-likes '())
@@ -562,13 +562,9 @@ See `consult-grep' for details."
 
 (define llm-configuration
   (home-emacs-configuration
-   (packages (list emacs-claude-code-ide
+   (packages (list emacs-agent-shell
 		   node))
    (init '(
-	   (use-package claude-code-ide
-			:bind ("C-c C-'" . claude-code-ide-menu) ; Set your favorite keybinding
-			:config
-			(claude-code-ide-emacs-tools-setup)) ; Optionally enable Emacs MCP tools
 	   ))))
 
 (define lsp-configuration
