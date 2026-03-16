@@ -107,13 +107,17 @@
 			home-xdg-configuration-files-service-type
 			(lambda (config)
                           `(("emacs/early-init.el"
-			     ,(scheme-file "early-init.el"
-					   (home-emacs-configuration-early-init config)
-					   #:splice? #:t))
+			     ,(mixed-text-file "early-init.el"
+					       ";;; -*- lexical-binding: t; -*-\n"
+					       (scheme-file "early-init-content.el"
+							    (home-emacs-configuration-early-init config)
+							    #:splice? #t)))
 			    ("emacs/init.el"
-			     ,(scheme-file "init.el"
-					   (home-emacs-configuration-init config)
-					   #:splice? #:t))
+			     ,(mixed-text-file "init.el"
+					       ";;; -*- lexical-binding: t; -*-\n"
+					       (scheme-file "init-content.el"
+							    (home-emacs-configuration-init config)
+							    #:splice? #t)))
                             ,@(map (lambda (file) (list (string-append "emacs/" (scheme-file-name file))
                                                         file))
                                    (home-emacs-configuration-extra-files config)))))))
