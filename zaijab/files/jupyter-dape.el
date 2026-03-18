@@ -274,6 +274,9 @@ The reply flows through jupyter-handle-message → advice → send-to-dape.
 Special case: if the command is \"initialize\" and we already cached
 capabilities from the configure step, synthesize a success response
 instead of forwarding (the kernel rejects duplicate initialize)."
+  (unless jupyter-dape--bridge-active
+    (jdape--log "forward-to-kernel: bridge not active, dropping message")
+    (cl-return-from jupyter-dape--forward-to-kernel nil))
   (jdape--log "forward-to-kernel: json-length=%d json-prefix=%.100s"
               (length json-string) json-string)
   (condition-case err
@@ -282,34 +285,55 @@ instead of forwarding (the kernel rejects duplicate initialize)."
              (seq (plist-get dap-plist :seq)))
         (jdape--log "forward-to-kernel: command=%S type=%S caps-cached=%S"
                     command (type-of command) (not (null jupyter-dape--init-capabilities)))
-        (if (member command '("disconnect" "terminate"))
-            ;; Intercept terminate/disconnect: send synthetic success to DAPE
-            ;; so it doesn't hang, then send disconnect to ipykernel so debugpy
-            ;; resets its DAP session state for the next connection.
-            ;;
-            ;; For terminate specifically, also interrupt the kernel so any
-            ;; execution paused at a breakpoint is unblocked.
-            (progn
-              (jdape--log "forward-to-kernel: intercepting %s, synthetic response" command)
-              (when (equal command "terminate")
-                (jdape--log "forward-to-kernel: interrupting kernel to unblock paused execution")
-                (ignore-errors
-                  (jupyter-interrupt-kernel jupyter-dape--jupyter-client)))
-              (let* ((response `(:seq ,(jupyter-dape--next-seq)
-                                 :type "response"
-                                 :request_seq ,seq
-                                 :success t
-                                 :command ,command))
-                     (json-str (json-encode response)))
-                (jupyter-dape--send-to-dape json-str))
-              (setq jupyter-dape--bridge-active nil)
-              ;; Send disconnect to ipykernel so it tears down the debugpy TCP
-              ;; connection, resetting debugpy's DAP session for the next run.
-              (jdape--log "forward-to-kernel: sending disconnect to kernel to reset debugpy state")
-              (ignore-errors
-                (jupyter-dape--debug-send-sync
-                 jupyter-dape--jupyter-client "disconnect"
-                 (list :restart :json-false :terminateDebuggee :json-false))))
+        (cond
+          ((equal command "terminate")
+           ;; dape-quit semantics: the kernel IS the debuggee, so kill it.
+           ;; Synthesize success so DAPE doesn't hang waiting for a response.
+           (jdape--log "forward-to-kernel: intercepting terminate, killing kernel")
+           (let* ((response `(:seq ,(jupyter-dape--next-seq)
+                              :type "response"
+                              :request_seq ,seq
+                              :success t
+                              :command ,command))
+                  (json-str (json-encode response)))
+             (jupyter-dape--send-to-dape json-str))
+           ;; Close the socket so dape can't send follow-up messages
+           ;; (e.g. a disconnect) that would hit the dead kernel's I/O.
+           (jupyter-dape--stop-bridge)
+           (let ((client jupyter-dape--jupyter-client))
+             (ignore-errors (jupyter-shutdown-kernel client))
+             ;; Deactivate interaction mode in all associated source buffers,
+             ;; then kill the REPL buffer so it doesn't linger with stale state.
+             (ignore-errors
+               (cl-loop for buf in (buffer-list)
+                        do (with-current-buffer buf
+                             (when (and jupyter-repl-interaction-mode
+                                        (eq jupyter-current-client client))
+                               (jupyter-repl-interaction-mode -1)))))
+             (ignore-errors
+               (cl-loop for buf in (buffer-list)
+                        do (with-current-buffer buf
+                             (when (and (eq major-mode 'jupyter-repl-mode)
+                                        (eq jupyter-current-client client))
+                               (let ((kill-buffer-query-functions nil))
+                                 (kill-buffer buf))))))))
+          ((equal command "disconnect")
+           ;; dape-disconnect-quit semantics: detach, keep kernel alive.
+           ;; Synthesize success, then reset debugpy state for next session.
+           (jdape--log "forward-to-kernel: intercepting disconnect, resetting debugpy state")
+           (let* ((response `(:seq ,(jupyter-dape--next-seq)
+                              :type "response"
+                              :request_seq ,seq
+                              :success t
+                              :command ,command))
+                  (json-str (json-encode response)))
+             (jupyter-dape--send-to-dape json-str))
+           (setq jupyter-dape--bridge-active nil)
+           (ignore-errors
+             (jupyter-dape--debug-send-sync
+              jupyter-dape--jupyter-client "disconnect"
+              (list :restart :json-false :terminateDebuggee :json-false))))
+          (t
           (if (and (equal command "initialize")
                  jupyter-dape--init-capabilities)
             ;; Synthesize a success response from cached capabilities
@@ -345,7 +369,7 @@ instead of forwarding (the kernel rejects duplicate initialize)."
                 (jdape--log "forward-to-kernel: req created id=%S type=%S"
                             (jupyter-request-id req)
                             (jupyter-request-type req))
-                (jupyter-sent (jupyter-return req))))))))
+                (jupyter-sent (jupyter-return req)))))))))
     (error
      (message "[jdape] forward-to-kernel ERROR: %S" err))))
 
@@ -355,23 +379,24 @@ instead of forwarding (the kernel rejects duplicate initialize)."
 
 (defun jupyter-dape--bridge-filter (_proc data)
   "Process filter for the bridge client socket."
-  (jdape--log "bridge-filter: received %d bytes" (length data))
-  (setq jupyter-dape--recv-buffer
-        (concat jupyter-dape--recv-buffer
-                (if (multibyte-string-p data)
-                    (encode-coding-string data 'utf-8 t)
-                  data)))
-  (condition-case err
-      (pcase-let ((`(,frames . ,rest)
-                   (jupyter-dape--extract-frames
-                    jupyter-dape--recv-buffer)))
-        (setq jupyter-dape--recv-buffer rest)
-        (jdape--log "bridge-filter: extracted %d frames, %d bytes remaining"
-                    (length frames) (length rest))
-        (dolist (json-str frames)
-          (jupyter-dape--forward-to-kernel json-str)))
-    (error
-     (message "[jdape] bridge-filter ERROR: %S" err))))
+  (when jupyter-dape--bridge-active
+    (jdape--log "bridge-filter: received %d bytes" (length data))
+    (setq jupyter-dape--recv-buffer
+          (concat jupyter-dape--recv-buffer
+                  (if (multibyte-string-p data)
+                      (encode-coding-string data 'utf-8 t)
+                    data)))
+    (condition-case err
+        (pcase-let ((`(,frames . ,rest)
+                     (jupyter-dape--extract-frames
+                      jupyter-dape--recv-buffer)))
+          (setq jupyter-dape--recv-buffer rest)
+          (jdape--log "bridge-filter: extracted %d frames, %d bytes remaining"
+                      (length frames) (length rest))
+          (dolist (json-str frames)
+            (jupyter-dape--forward-to-kernel json-str)))
+      (error
+       (message "[jdape] bridge-filter ERROR: %S" err)))))
 
 (defun jupyter-dape--bridge-sentinel (proc event)
   "Sentinel for the bridge client socket."

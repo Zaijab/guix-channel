@@ -169,25 +169,53 @@ echo "=== Test 6: Continue re-hits breakpoint ==="
 e "(dape-continue (car (dape--live-connections)))"
 wait_for "(dape--stopped-threads (car (dape--live-connections)))" 8 "breakpoint re-hit"
 
-# ── Test 7: Regression — normal eval without dape active ─────────────────────
+# ── Test 7: dape-quit (terminate) kills kernel and REPL buffer ────────────────
 echo ""
-echo "=== Test 7: Regression — eval without dape ==="
+echo "=== Test 7: dape-quit kills kernel and REPL buffer ==="
+# Save client and *Messages* position before quitting.
+eload <<'EOF'
+(setq jt/client
+      (let ((rb (cl-find-if (lambda (b) (string-match-p "jupyter-repl" (buffer-name b)))
+                            (buffer-list))))
+        (and rb (with-current-buffer rb jupyter-current-client))))
+(setq jt/msgs-pos (with-current-buffer "*Messages*" (point-max)))
+EOF
 e "(dape-quit (car (dape--live-connections)))"
 wait_for "(null (dape--live-connections))" 8 "dape session quit"
+# Simulate the follow-up "disconnect" dape sends after receiving a terminate
+# response — this is what triggers "Kernel I/O no longer available" in a real
+# session if the bridge socket is still open and the kernel is already dead.
 eload <<'EOF'
-(setq jt/regression-result "pending")
-(with-current-buffer "test.py"
-  (jupyter-eval-string "1 + 1"))
-(run-at-time 2 nil (lambda () (setq jt/regression-result "done")))
+(let ((disconnect-json
+       (let ((json-object-type 'plist))
+         (json-encode '(:seq 99 :type "request" :command "disconnect"
+                        :arguments (:restart :json-false
+                                    :terminateDebuggee :json-false))))))
+  (jupyter-dape--forward-to-kernel disconnect-json))
 EOF
-wait_for "(not (equal jt/regression-result \"pending\"))" 8 "regression eval"
-check "normal eval works without dape" "(equal jt/regression-result \"done\")"
+sleep 1  # let any async error land in *Messages*
+check "kernel is dead after terminate" \
+      "(and jt/client (not (jupyter-kernel-alive-p jt/client)))"
+check "REPL buffer is gone after terminate" \
+      "(null (cl-find-if (lambda (b) (eq (with-current-buffer b major-mode) 'jupyter-repl-mode)) (buffer-list)))"
+check "no 'Kernel I/O no longer available' after post-terminate disconnect" \
+      "(not (with-current-buffer \"*Messages*\" (save-excursion (goto-char jt/msgs-pos) (search-forward \"Kernel I/O no longer available\" nil t))))"
 
-# ── Test 8: Session restart (main bug) ────────────────────────────────────────
-# After dape-quit, a second dape session must connect without
-# "Kernel debugger failed to start" error.
+# ── Test 8: Session restart with a fresh kernel ───────────────────────────────
+# terminate killed the kernel, so start a new one before connecting dape.
 echo ""
-echo "=== Test 8: Session restart ==="
+echo "=== Test 8: Session restart (fresh kernel) ==="
+e "(jupyter-run-repl \"python3\")"
+wait_for "(cl-find-if (lambda (b) (string-match-p \"\\\\*jupyter-repl\\\\[\" (buffer-name b))) (buffer-list))" \
+         10 "fresh jupyter-repl buffer"
+sleep 3
+eload <<'EOF'
+(let* ((rb (cl-find-if (lambda (b) (string-match-p "\\*jupyter-repl\\[" (buffer-name b)))
+                       (buffer-list)))
+       (c (when rb (with-current-buffer rb jupyter-current-client))))
+  (if c (progn (with-current-buffer "test.py" (jupyter-repl-associate-buffer c)) t)
+    (error "No jupyter client found for restart")))
+EOF
 eload <<'EOF'
 (with-current-buffer "test.py"
   (let ((cfg (assoc 'jupyter-dape dape-configs)))
@@ -197,19 +225,12 @@ EOF
 wait_for "(not (null (dape--live-connections)))" 12 "session 2 connection"
 check "session 2 connects without error" "(not (null (dape--live-connections)))"
 
-echo "  [diag] session 2 bridge-active: $($EC -e 'jupyter-dape--bridge-active' 2>/dev/null)"
-echo "  [diag] session 2 init-caps cached: $($EC -e '(not (null jupyter-dape--init-capabilities))' 2>/dev/null)"
-echo "  [diag] session 2 breakpoints: $($EC -e '(length dape--breakpoints)' 2>/dev/null)"
-echo "  [diag] session 2 conn state: $($EC -e '(dape--state (car (dape--live-connections)))' 2>/dev/null)"
-
 eload <<'EOF'
 (with-current-buffer "test.py"
   (jupyter-eval-string
    (buffer-substring-no-properties (point-min) (point-max))))
 EOF
 wait_for "(dape--stopped-threads (car (dape--live-connections)))" 15 "session 2 breakpoint hit"
-echo "  [diag] after wait — conn state: $($EC -e '(dape--state (car (dape--live-connections)))' 2>/dev/null)"
-echo "  [diag] after wait — threads: $($EC -e '(length (dape--threads (car (dape--live-connections))))' 2>/dev/null)"
 $EC -e "(with-temp-file \"/tmp/jdape-session2-messages.log\" (insert-buffer-substring \"*Messages*\"))" 2>/dev/null
 echo "  [diag] *Messages* saved to /tmp/jdape-session2-messages.log"
 check "session 2 stopped at breakpoint" "(dape--stopped-threads (car (dape--live-connections)))"
