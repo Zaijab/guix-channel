@@ -619,6 +619,10 @@ See `consult-grep' for details."
 					   ':justMyCode 'nil
 					   ':showReturnValue 't))
 
+			;; Robust testing + removing messages
+			(load "/home/zjabbar/code/guix-channel/zaijab/files/jupyter-dape.el")
+			(jupyter-dape-mode 1)
+
 
 			;; Kill compile buffer on build success
 			(add-hook 'dape-compile-hook 'kill-buffer))
