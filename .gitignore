@@ -1,5 +1,6 @@
 zaijab/files/secrets/*
 zaijab/files/damn/*
+.agent-shell/*
 .claude/*
 CLAUDE.md
 cache
