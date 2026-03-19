@@ -565,6 +565,8 @@ See `consult-grep' for details."
    (packages (list emacs-agent-shell
 		   node))
    (init '(
+	   (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
+	   (setq agent-shell-anthropic-claude-command '("claude-agent-acp"))
 	   ))))
 
 (define lsp-configuration
