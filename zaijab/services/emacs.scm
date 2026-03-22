@@ -1960,6 +1960,7 @@ END is the start of the line with :END: on it."
 	      python-cython
 	      ;; sage
 	      ;; conda
+	      uv
 	      jupyter
 	      ;; guix-jupyter
 	      python-virtualenv
