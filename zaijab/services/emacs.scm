@@ -7,6 +7,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages node)
+  #:use-module (gnu packages sagemath)
   #:use-module (gnu packages education)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages bittorrent)
@@ -1957,6 +1958,7 @@ END is the start of the line with :END: on it."
 	      python
 	      gcc-toolchain
 	      python-cython
+	      sage
 	      ;; conda
 	      jupyter
 	      ;; guix-jupyter
