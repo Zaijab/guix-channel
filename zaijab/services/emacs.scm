@@ -2103,7 +2103,8 @@ END is the start of the line with :END: on it."
 	      emacs-srfi
 	      emacs-arei
 	      guile-ares-rs
-	      guile-next
+	      guile
+	      ;; guile-next
 	      guile-hoot
 	      ))
    (init '(#;(with-eval-after-load 'guix-repl
