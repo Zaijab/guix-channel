@@ -995,7 +995,7 @@ See `consult-grep' for details."
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkFJBuwX2iPKCgCITXt2Bnw" fun fatguy)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCrTW8WZTlOZMvvn_pl1Lpsg" fun nicob)
 				;; ("https://twitchrss.appspot.com/vod/nicob" fun nicob twitch)
-				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
+				("https://www.youtube.com/feeds/videos.xml?channel_id=UCP9q8DRbsTDPhU4E0R3-1rA" fun league pekin)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCT0fBcIYwMsp6IRCm5E3eTA" fun league pekin)
 				;; ("https://twitchrss.appspot.com/vodonly/pekinwoof" fun league pekin twitch)
 				;; ("https://www.youtube.com/feeds/videos.xml?channel_id=UCIkcvRgwGlzEtfGf7k2oL3g" fun league virkayu)
@@ -2104,6 +2104,7 @@ END is the start of the line with :END: on it."
 	      emacs-arei
 	      guile-ares-rs
 	      guile-next
+	      guile-hoot
 	      ))
    (init '(#;(with-eval-after-load 'guix-repl
 	   (setq guix-guile-program  '("guix" "repl")
