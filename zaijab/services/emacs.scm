@@ -2189,13 +2189,13 @@ END is the start of the line with :END: on it."
 			(exwm-randr-mode)
 			(require 'xelb)
 
-			(advice-add (function exwm-layout--hide)
-				    :after (lambda (id)
-					     (with-current-buffer (exwm--id->buffer id)
-								  (setq exwm--ewmh-state
-									(delq xcb:Atom:_NET_WM_STATE_HIDDEN exwm--ewmh-state))
-								  (exwm-layout--set-ewmh-state id)
-								  (xcb:flush exwm--connection))))
+			;; (advice-add (function exwm-layout--hide)
+			;; 	    :after (lambda (id)
+			;; 		     (with-current-buffer (exwm--id->buffer id)
+			;; 					  (setq exwm--ewmh-state
+			;; 						(delq xcb:Atom:_NET_WM_STATE_HIDDEN exwm--ewmh-state))
+			;; 					  (exwm-layout--set-ewmh-state id)
+			;; 					  (xcb:flush exwm--connection))))
 			(unbind-key (kbd "C-x C-z") 'global-map)
 			(unbind-key (kbd "C-z") 'global-map)
 			(global-set-key (kbd "<f7>") (function
