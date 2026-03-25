@@ -451,12 +451,12 @@ See `consult-grep' for details."
 			'(file))
 		  ))))))
 
-(define garbage-collection-configuration
-  (home-emacs-configuration
-   (packages (list emacs-gcmh))
-   (init '((use-package gcmh
-			:config
-			(gcmh-mode 1))))))
+;; (define garbage-collection-configuration
+;;   (home-emacs-configuration
+;;    (packages (list emacs-gcmh))
+;;    (init '((use-package gcmh
+;; 			:config
+;; 			(gcmh-mode 1))))))
 
 
 (define meow-configuration
@@ -1652,7 +1652,7 @@ END is the start of the line with :END: on it."
 	       (advice-add 'org-export-output-file-name :filter-return (function commonplace/slugify-export-output-file-name))
 	       (call-interactively 'org-publish-all)
 	       (advice-remove 'org-export-output-file-name (function commonplace/slugify-export-output-file-name))
-	       (call-process-shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam" nil 0)))
+	       (start-process-shell-command "git add -A;git commit -am \"Updating Website\";git push -fu origin roam" nil 0)))
 	   (global-set-key (kbd "s-p") 'zain-publish)
 
 	   (defun org-export-output-file-name-modified (orig-fun extension &optional subtreep pub-dir)
@@ -2200,10 +2200,10 @@ END is the start of the line with :END: on it."
 			(unbind-key (kbd "C-z") 'global-map)
 			(global-set-key (kbd "<f7>") (function
 						      (lambda () (interactive)
-							      (call-process-shell-command "loginctl suspend"))))
+							      (start-process-shell-command "" nil "loginctl suspend"))))
 			(global-set-key (kbd "<f4>") (function
 						      (lambda () (interactive)
-							      (call-process-shell-command "xset dpms force off"))))
+							      (start-process-shell-command "" nil "xset dpms force off"))))
 			(setq exwm-manage-force-tiling t)
 			(defun my/tabspace-kill-current-buffer () (interactive)
 			  (let ((buffer-list (cl-remove-if (lambda (buf) (string-match-p (regexp-quote "*Minibuf-") (buffer-name buf))) (tabspaces--buffer-list))))
@@ -2289,6 +2289,8 @@ END is the start of the line with :END: on it."
 			(setq exwm-input-simulation-keys
 			      (list (cons (kbd "C-s") (kbd "C-f"))
 				    (cons (kbd "M-w") (kbd "C-c"))))
+			(setq exwm-replace nil)
+			
 			(defun exwm-rename-buffer-to-title () (exwm-workspace-rename-buffer exwm-class-name))
 			(defun exwm-rename-buffer ()
 			  (interactive)
