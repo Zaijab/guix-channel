@@ -2414,7 +2414,7 @@ END is the start of the line with :END: on it."
 		   :version "30.1"
 		   :group 'processes)
 		 (setq-default mode-line-format (remove 'mode-line-modes mode-line-format))
-		 (setq org-src-fontify-natively nil)
+		 (setq org-src-fontify-natively t)
 		 (setq org-src-tab-acts-natively t)
 		 (setq org-src-preserve-indentation nil
 		       org-edit-src-content-indentation 0)
