@@ -1752,8 +1752,8 @@ END is the start of the line with :END: on it."
 
 	   (use-package org
 			:config
-			(setq org-element-cache-persistent nil
-			      org-element-use-cache nil)
+			(setq org-element-cache-persistent t
+			      org-element-use-cache t)
 
 			(require 'org-tree-slide)
 			(setq org-tree-slide-activate-message ""
@@ -2396,7 +2396,7 @@ END is the start of the line with :END: on it."
 		       max-mini-window-height 10
 	    	       initial-scratch-message nil
 		       inhibit-compacting-font-caches t
-		       native-comp-speed 0
+		       ;; native-comp-speed 0
 	    	       large-file-warning-threshold 1000000000)
 		 (setq-default abbrev-mode t)
 		 (set-face-attribute 'mode-line nil :box nil)
