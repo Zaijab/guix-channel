@@ -1777,7 +1777,7 @@ END is the start of the line with :END: on it."
 			   :name "org-agenda"
 			   :color (or color calfw-org-face-agenda-item-foreground-color)
 			   :data (lambda (begin end)
-				   (apply #'nconc
+				   (apply (function nconc)
 					  (mapcar (lambda (file)
 						    (calfw-org-to-calendar file begin end))
 						  (org-agenda-files nil 'ifmode))))))
@@ -2468,7 +2468,7 @@ END is the start of the line with :END: on it."
 	   (customize-set-variable 'display-time-day-and-date t)
 	   (set-default 'truncate-lines t)
 	   (require 'rainbow-delimiters)
-	   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+	   (add-hook 'prog-mode-hook (function rainbow-delimiters-mode))
 	   (setq minibuffer-prompt-properties '(read-only t cursor-intangible t face minibuffer-prompt))
 	   (add-hook 'minibuffer-setup-hook (function cursor-intangible-mode))
 	   (defun crm-indicator (args)
