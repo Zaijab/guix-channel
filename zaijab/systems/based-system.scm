@@ -148,7 +148,6 @@
 		    
 		    epson-inkjet-printer-escpr
 		    foo2zjs hplip-minimal hplip hplip-plugin))))
-   ;; (service nix-service-type)
 
    (extra-special-file "/etc/nsswitch.conf"
 		       (plain-file "nsswitch.conf"
