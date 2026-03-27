@@ -109,7 +109,7 @@
 		       (volumes '("/var/run/searxng:/etc/searxng:rw"
 				  "/home/zjabbar/code/guix-channel/zaijab/files/limiter.toml:/etc/searxng/limiter.toml"
 				  "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"
-				  "/etc/resolv.conf:/etc/resolv.conf:ro"))
+				  #;"/etc/resolv.conf:/etc/resolv.conf:ro"))
 		       (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080")))
 		       (respawn? #t))))))
 
