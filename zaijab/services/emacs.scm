@@ -568,7 +568,8 @@ See `consult-grep' for details."
    (init '(
 	   (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
 	   (setq agent-shell-anthropic-claude-command '("claude-agent-acp"))
-
+	   (setq agent-shell-preferred-agent-config 'claude-code)
+	   
 	   ;; Remove LLM branding
 	   (setq agent-shell-header-style nil)
 	   (setq agent-shell-show-welcome-message nil)
