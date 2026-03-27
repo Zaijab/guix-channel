@@ -185,7 +185,7 @@
 		 (substitute-urls
 		  (cons*
 		   "https://nonguix-proxy.ditigal.xyz"
-		   "https://substitutes.nonguix.org"
+		   ;; "https://substitutes.nonguix.org"
 		   "https://guix.bordeaux.inria.fr"
 		   %default-substitute-urls))
 		 (authorized-keys
