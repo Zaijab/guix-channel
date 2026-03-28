@@ -7,7 +7,6 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages node)
-  ;; #:use-module (gnu packages sagemath)
   #:use-module (gnu packages education)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages bittorrent)
