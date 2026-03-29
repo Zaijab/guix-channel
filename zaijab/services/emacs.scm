@@ -933,8 +933,10 @@ See `consult-grep' for details."
 
 (define pdf-tools-configuration
   (home-emacs-configuration
-   (packages (list emacs-pdf-tools
-		   emacs-nov-el))
+   (packages (list
+	      emacs-djvu3
+	      emacs-pdf-tools
+	      emacs-nov-el))
    (init '((add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 	   (pdf-tools-install)
 	   (add-hook 'pdf-view-mode-hook (function pdf-view-roll-minor-mode))
