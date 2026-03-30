@@ -254,9 +254,17 @@
 	       main-services))
     ))
 
+(define-public linux-euler
+  (customize-linux
+   #:name "linux-euler"
+   #:linux linux
+   #:defconfig (local-file "./euler_defconfig")
+   #:extra-version "euler"))
+
 (define-public euler-operating-system
   (operating-system
     (inherit based-operating-system)
+    (kernel linux-euler)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
 			     %default-kernel-arguments))
     (host-name "euler")))
