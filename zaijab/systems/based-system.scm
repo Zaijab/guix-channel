@@ -264,7 +264,7 @@
 (define-public euler-operating-system
   (operating-system
     (inherit based-operating-system)
-    (kernel linux-euler)
+    (kernel linux)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
 			     %default-kernel-arguments))
     (host-name "euler")))
