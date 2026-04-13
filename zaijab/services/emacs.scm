@@ -1744,7 +1744,7 @@ END is the start of the line with :END: on it."
 	      texlive-scheme-medium
 	      ;; texlive-bin
 	      ;; texlive-collection-latexrecommended
-	      ;; texlive-collection-latexextra
+	      texlive-collection-latexextra
 	      ;; texlive-collection-fontsrecommended
 	      ;; texlive-collection-mathscience
 	      ;; texlive-bbm
