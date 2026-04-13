@@ -73,6 +73,7 @@
   #:use-module (gnu packages glib)
   #:use-module (gnu packages guile)
   #:use-module (gnu packages gnome)
+  #:use-module (gnu packages gnome-xyz)
   #:use-module (gnu packages gnunet)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages gstreamer)
@@ -889,3 +890,24 @@ feed subscriptions.")
     (license license:unlicense)))
 
 emacs-elfeed-tube-current
+
+(define-public emacs-gpastel
+  (package
+    (name "emacs-gpastel")
+    (version "d35505abb1e38ddda61440b033ebd4decac7a25c")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/DamienCassou/gpastel.git")
+             (commit "d35505abb1e38ddda61440b033ebd4decac7a25c")))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "0h4g3fjvxn7r7zikxf62znabspnkr9a1wfrs4ij20vb6pzs95lkj"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list gpaste curl))
+    (home-page "https://github.com/DamienCassou/gpastel.git")
+    (synopsis "")
+    (description "")
+    (license license:unlicense)))
+emacs-gpastel

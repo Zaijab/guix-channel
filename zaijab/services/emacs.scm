@@ -1741,7 +1741,7 @@ END is the start of the line with :END: on it."
 	      emacs-calfw-blocks-compatible
 	      emacs-calfw-blocks
 	      dvisvgm
-	      texlive-scheme-small
+	      texlive-scheme-medium
 	      ;; texlive-bin
 	      ;; texlive-collection-latexrecommended
 	      ;; texlive-collection-latexextra
@@ -2179,6 +2179,8 @@ END is the start of the line with :END: on it."
 			#;(eshell-load . (function eat-eshell-mode))
 			#;(eshell-load . (function eat-eshell-visual-command-mode)))))))
 
+					; TODO - Add GPASTE.el to make this work better with copy and paste in Librewolf
+					; TODO - Use simulation keys for copy and paste
 (define exwm-configuration
   (home-emacs-configuration
    (packages (list
