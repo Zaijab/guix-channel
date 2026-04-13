@@ -562,7 +562,10 @@ See `consult-grep' for details."
 
 (define llm-configuration
   (home-emacs-configuration
-   (packages (list ((options->transformation '((with-commit . "emacs-agent-shell=eb5a379c1db4e395a04acd1f16a6dfb92e803d60"))) emacs-agent-shell)
+   (packages (list ((options->transformation
+		     '((with-commit . "emacs-agent-shell=eb5a379c1db4e395a04acd1f16a6dfb92e803d60")
+		       (with-commit . "emacs-shell-maker=6377cbdb49248d670170f1c8dbe045648063583e")))
+		    emacs-agent-shell)
 		   node))
    (init '(
 	   (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
