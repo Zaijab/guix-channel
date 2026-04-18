@@ -70,6 +70,14 @@
    (service openssh-service-type)
    (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
    (service guix-home-service-type `(("zjabbar" ,zains-home)))
+   (service zram-device-service-type
+	    (zram-device-configuration
+	     (size "8G")
+	     (compression-algorithm "zstd")))
+   (service earlyoom-service-type
+	    (earlyoom-configuration
+	     (minimum-available-memory 5)
+	     (minimum-free-swap 5)))
    (service tlp-service-type)
    (service opendht-service-type)
    (service docker-service-type)
@@ -199,7 +207,8 @@
 		   (file-system
 		     (device (file-system-label "root"))
 		     (mount-point "/")
-		     (type "btrfs"))
+		     (type "btrfs")
+		     (options "compress=zstd:1,noatime"))
 		   (file-system
 		     (device (file-system-label "boot"))
 		     (mount-point "/boot/efi")
