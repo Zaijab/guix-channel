@@ -208,7 +208,8 @@
 		     (device (file-system-label "root"))
 		     (mount-point "/")
 		     (type "btrfs")
-		     (options "compress=zstd:1,noatime"))
+		     (options "compress=zstd:1")
+		     (flags '(no-atime)))
 		   (file-system
 		     (device (file-system-label "boot"))
 		     (mount-point "/boot/efi")
