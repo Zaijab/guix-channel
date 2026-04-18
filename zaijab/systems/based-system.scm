@@ -73,7 +73,7 @@
    (service zram-device-service-type
 	    (zram-device-configuration
 	     (size "8G")
-	     (compression-algorithm "zstd")))
+	     (compression-algorithm 'zstd)))
    (service earlyoom-service-type
 	    (earlyoom-configuration
 	     (minimum-available-memory 5)
