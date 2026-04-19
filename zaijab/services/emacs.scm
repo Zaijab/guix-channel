@@ -852,6 +852,11 @@ See `consult-grep' for details."
 	   (use-package facemenu
 			:after skk)
 
+	   (advice-add 'ccc-update-buffer-local-frame-params :around
+		       (lambda (orig &rest args)
+			 (unless (derived-mode-p 'exwm-mode)
+			   (apply orig args))))
+
 	   (defun jisho-word->japanese-part (jisho-word)
 	     (list (gethash "word" (elt (gethash "japanese" jisho-word) 0))
 		   (gethash "reading" (elt (gethash "japanese" jisho-word) 0))))

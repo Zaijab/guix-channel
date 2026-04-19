@@ -3,7 +3,7 @@
 # Memory: 4G hard cap | CPU: 1.5 cores max
 
 CGROUP_PATH="/sys/fs/cgroup/chrome"
-MEMORY_MAX="4G"
+MEMORY_MAX="8G"
 CPU_MAX="150000 100000"
 
 # Create and configure the cgroup if needed
