@@ -2415,6 +2415,7 @@ END is the start of the line with :END: on it."
 	    	       initial-scratch-message nil
 		       inhibit-compacting-font-caches t
 		       ;; native-comp-speed 0
+		       native-comp-jit-compilation t
 	    	       large-file-warning-threshold 1000000000)
 		 (setq-default abbrev-mode t)
 		 (set-face-attribute 'mode-line nil :box nil)
