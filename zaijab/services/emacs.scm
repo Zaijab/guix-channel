@@ -454,6 +454,8 @@ See `consult-grep' for details."
   (home-emacs-configuration
    (packages (list emacs-gcmh))
    (init '((use-package gcmh
+			:custom
+			(gcmh-high-cons-threshold (* 128 1024 1024))
 			:config
 			(gcmh-mode 1))))))
 
