@@ -47,10 +47,10 @@
    (url "https://codeberg.org/gofranz/panther.git")
    ;; Enable signature verification
    (introduction
-    (make-channel-introduction
-     "54b4056ac571611892c743b65f4c47dc298c49da"
-     (openpgp-fingerprint
-      "A36A D41E ECC7 A871 1003  5D24 524F EB1A 9D33 C9CB"))))
+    (channel-introduction
+     (version 0)
+     (commit "54b4056ac571611892c743b65f4c47dc298c49da")
+     (signer "A36A D41E ECC7 A871 1003  5D24 524F EB1A 9D33 C9CB"))))
   (channel
    (name guix)
    ;; (url "https://git.savannah.gnu.org/git/guix.git")
