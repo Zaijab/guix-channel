@@ -3,4 +3,5 @@ zaijab/files/damn/*
 .agent-shell
 .claude/*
 CLAUDE.md
+.codex
 cache
