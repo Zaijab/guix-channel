@@ -68,6 +68,8 @@
   #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages fonts)
   #:use-module (nongnu packages nvidia)
+  #:use-module (px packages tools)
+  #:use-module (px packages ai)
 
   ;; #:use-module (guix-science packages python)
   ;; #:use-module (guix-science packages machine-learning)
@@ -570,6 +572,8 @@ See `consult-grep' for details."
 		       (with-commit . "emacs-shell-maker=6377cbdb49248d670170f1c8dbe045648063583e")
 		       (with-commit . "emacs-acp=c32fbf8df34ed0095853a8cf55dc783e68b67d90")))
 		    emacs-agent-shell)
+		   claude-code
+		   codex
 		   node))
    (init '(
 	   (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
