@@ -43,6 +43,15 @@
   (name guix-hpc)
   (url "https://gitlab.inria.fr/guix-hpc/guix-hpc.git"))
   (channel
+   (name 'pantherx)
+   (url "https://codeberg.org/gofranz/panther.git")
+   ;; Enable signature verification
+   (introduction
+    (make-channel-introduction
+     "54b4056ac571611892c743b65f4c47dc298c49da"
+     (openpgp-fingerprint
+      "A36A D41E ECC7 A871 1003  5D24 524F EB1A 9D33 C9CB"))))
+  (channel
    (name guix)
    ;; (url "https://git.savannah.gnu.org/git/guix.git")
    (url "https://codeberg.org/guix/guix.git")
