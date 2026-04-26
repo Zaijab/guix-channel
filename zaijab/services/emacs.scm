@@ -998,15 +998,27 @@ See `consult-grep' for details."
 	   (require 'password-store)
 	   (require 'password-store-otp)
 
-	   (defun password-store-otp-token (entry)
-	     "Return an OTP token from ENTRY."
-	     (password-store-otp--related-error
-	      (caddr (s-split "\n" (password-store--run "otp" entry)))))
+	   ;; `pass otp ENTRY' increments a HOTP counter and pass's
+	   ;; git auto-commit hook prepends the commit message and
+	   ;; diffstat to stdout, polluting every OTP read.  Strip
+	   ;; the noise globally: return only the last all-digit
+	   ;; line, falling back to RAW if none is found so non-OTP
+	   ;; callers aren't disturbed.
+	   (advice-add 'password-store-otp-token :filter-return
+		       (lambda (raw)
+			 (or (and (stringp raw)
+				  (catch 'found
+				    (dolist (line (nreverse (split-string raw "\n" t "[ \t\r]+")))
+				      (when (string-match-p "\\`[0-9]\\{6,8\\}\\'" line)
+					(throw 'found line)))))
+			     raw)))
 	   (defun copy-zjabbar-hawaii-otp ()
 	     (interactive)
 	     (password-store-otp-token-copy "hawaii_edu_otp"))
 
-
+	   (require 'auth-source-pass)
+	   (auth-source-pass-enable)
+	   (load "/home/zjabbar/code/guix-channel/zaijab/files/tramp-pass.el")
 	   ))))
 
 (define elfeed-configuration

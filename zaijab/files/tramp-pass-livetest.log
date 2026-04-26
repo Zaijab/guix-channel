@@ -1,0 +1,10 @@
+[05:38:06.353] TEST-START
+[05:38:06.354] calling file-exists-p on remote .
+[05:38:06.482] POA-IN n-actions=15
+[05:38:06.659] OURS-IN host=koa.its.hawaii.edu otp?=nil tail=<<** WARNING: connection is not using a post-quantum key exchange algorithm.\n** This session may be vulnerable to "store now, decrypt later" attacks.\n** The server may need to be upgraded. See https://openssh.com/pq.html\n(zjabbar@koa.its.hawaii.edu) Password: >>
+[05:38:07.565] OURS-OUT ret=t
+[05:38:08.071] OURS-IN host=koa.its.hawaii.edu otp?=t tail=<<\n(zjabbar@koa.its.hawaii.edu) Duo two-factor login for zjabbar\n\nEnter a passcode or select one of the following options:\n\n1. Duo Push to Android\n2. Phone call to XXX-XXX-6998\n3. SMS passcodes to XXX-XXX-6998 (next code starts with: 2)\n\nPasscode or option (1-3): >>
+[05:38:09.127] OURS-OUT ret=t
+[05:38:13.330] TEST-OK exists=t
+[05:38:13.331] TEST-END
+[13:17:10.958] POA-IN n-actions=15
