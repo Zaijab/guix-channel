@@ -24,6 +24,7 @@
   #:use-module (guix-science-nonfree packages cuda)
   #:use-module (gnu packages linux)
   #:use-module (gnu services linux)
+  #:use-module (gnu services sysctl)
   #:use-module (gnu packages search)
   #:use-module (gnu services base)
   #:use-module (gnu packages base)
@@ -74,6 +75,11 @@
 	    (zram-device-configuration
 	     (size "8G")
 	     (compression-algorithm 'zstd)))
+   (service sysctl-service-type
+	    (sysctl-configuration
+	     (settings '(("vm.swappiness"             . "180")
+			 ("vm.page-cluster"           . "0")
+			 ("vm.watermark_scale_factor" . "125")))))
    (service earlyoom-service-type
 	    (earlyoom-configuration
 	     (minimum-available-memory 5)
