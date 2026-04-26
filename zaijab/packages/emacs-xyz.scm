@@ -910,4 +910,48 @@ emacs-elfeed-tube-current
     (synopsis "")
     (description "")
     (license license:unlicense)))
+
+;;; Emacs built from upstream feature/igc3 branch with the incremental,
+;;; generational GC backed by Ravenbrook's Memory Pool System.  MPS is
+;;; vendored under mps/ in the Emacs tree (AC_CONFIG_SUBDIRS([mps])), so no
+;;; separate package is required.  The branch is rebased upstream; bump the
+;;; commit/hash to get a newer build.
+(define-public emacs-igc
+  (let ((commit   "9f434852fccfff27bca2e09cdfdc023c8017aca5")
+        (revision "0"))
+    (package/inherit emacs
+      (name "emacs-igc")
+      (version (git-version "31.0.50" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://git.savannah.gnu.org/git/emacs.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "18hb33cqhhmyxblzw1z6ji4np9xxm5f807cyhw9hrddhwwmckrnv"))))
+      (arguments
+       (substitute-keyword-arguments (package-arguments emacs)
+         ((#:configure-flags flags #~'())
+          #~(cons "--with-mps=yes" #$flags))
+         ((#:phases phases #~%standard-phases)
+          #~(modify-phases #$phases
+              (add-after 'unpack 'autogen
+                (lambda* (#:key inputs #:allow-other-keys)
+                  (invoke "sh" "autogen.sh")
+                  (let ((automake (assoc-ref inputs "automake"))
+                        (dest "mps/tool/autoconf/build-aux"))
+                    (for-each
+                     (lambda (name)
+                       (install-file
+                        (car (find-files automake
+                                         (string-append "^" name "$")))
+                        dest))
+                     '("install-sh" "config.sub" "config.guess"
+                       "missing" "compile")))))))))
+      (native-inputs
+       (modify-inputs (package-native-inputs emacs)
+         (prepend autoconf automake texinfo))))))
+
 emacs-gpastel
