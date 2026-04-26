@@ -771,6 +771,13 @@ See `consult-grep' for details."
 			(tabspaces-include-buffers '("*scratch*"))
 			(tab-bar-new-tab-choice "*scratch*")
 			:config
+			;; Default `tabspaces-keymap-prefix' is "C-c TAB", which `kbd'
+			;; reads as the ASCII tab (\t).  In a graphical/EXWM Emacs the
+			;; Tab key arrives as the function-key event `tab', and the
+			;; usual `function-key-map' fallback to TAB gets shadowed
+			;; whenever any active map binds `<tab>'.  Bind the function-
+			;; key form explicitly so `C-c <tab> r' reliably dispatches.
+			(define-key global-map (kbd "C-c <tab>") 'tabspaces-command-map)
 			(dolist (name '(
 					"Foundations" ; Pure Math / Flashcards
 					;; "Geometric Sensor Tasking"
@@ -2255,6 +2262,23 @@ END is the start of the line with :END: on it."
 			(define-key exwm-mode-map (kbd "M-<escape>") (function toggle-exwm-input-line-mode-passthrough))
 			(define-key exwm-mode-map (kbd "C-c C-c") (function exwm-input-send-next-key))
 
+			(defun my/exwm-paste-from-kill-ring ()
+			  "Pick a `kill-ring' entry via `completing-read' (vertico) and paste
+it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
+			  (interactive)
+			  (unless (derived-mode-p 'exwm-mode)
+			    (user-error "Not in an EXWM window"))
+			  (let* ((cands (cl-remove-duplicates
+					 (cl-remove-if (lambda (s)
+							 (or (null s) (string-empty-p s)))
+						       kill-ring)
+					 :test #'equal :from-end t))
+				 (text (completing-read "Paste: " cands nil t)))
+			    (when (and (stringp text) (> (length text) 0))
+			      (gui-set-selection 'CLIPBOARD text)
+			      (exwm-input--fake-key ?\C-v))))
+			(define-key exwm-mode-map (kbd "M-y") (function my/exwm-paste-from-kill-ring))
+
 			(global-set-key (kbd "s-0") 'delete-window)
 			(global-set-key (kbd "s-1") 'delete-other-windows)
 			(global-set-key (kbd "s-2") 'split-window-below)
@@ -2323,7 +2347,10 @@ END is the start of the line with :END: on it."
 
 			(setq exwm-input-simulation-keys
 			      (list (cons (kbd "C-s") (kbd "C-f"))
-				    (cons (kbd "M-w") (kbd "C-c"))))
+				    (cons (kbd "M-w") (kbd "C-c"))
+				    (cons (kbd "C-y") (kbd "C-v"))
+				    (cons (kbd "C-w") (kbd "C-x"))
+				    (cons (kbd "C-/") (kbd "C-z"))))
 			(setq exwm-replace nil)
 			
 			(defun exwm-rename-buffer-to-title () (exwm-workspace-rename-buffer exwm-class-name))
@@ -2347,7 +2374,8 @@ END is the start of the line with :END: on it."
 				  (add-to-list 'super-keys maybe-event)))
 			    (setq km (cdr km))))
 
-			(setq exwm-input-prefix-keys (append super-keys '(?\M-o
+			(setq exwm-input-prefix-keys (append super-keys '(?\C-c
+									  ?\M-o
 									  f7
 									  XF86AudioRaiseVolume
 									  XF86AudioLowerVolume
