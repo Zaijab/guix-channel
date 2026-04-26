@@ -75,11 +75,6 @@
 	    (zram-device-configuration
 	     (size "8G")
 	     (compression-algorithm 'zstd)))
-   (service sysctl-service-type
-	    (sysctl-configuration
-	     (settings '(("vm.swappiness"             . "180")
-			 ("vm.page-cluster"           . "0")
-			 ("vm.watermark_scale_factor" . "125")))))
    (service earlyoom-service-type
 	    (earlyoom-configuration
 	     (minimum-available-memory 5)
@@ -134,6 +129,14 @@
 
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
+     (sysctl-service-type
+      config => (sysctl-configuration
+		 (inherit config)
+		 (settings (append
+			    '(("vm.swappiness"             . "180")
+			      ("vm.page-cluster"           . "0")
+			      ("vm.watermark_scale_factor" . "125"))
+			    (sysctl-configuration-settings config)))))
      (nscd-service-type
       config => (nscd-configuration
 		 (inherit config)
