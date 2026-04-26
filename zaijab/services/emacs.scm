@@ -458,7 +458,10 @@ See `consult-grep' for details."
    (packages (list emacs-gcmh))
    (init '((use-package gcmh
 			:custom
-			(gcmh-high-cons-threshold (* 128 1024 1024))
+			(gcmh-low-cons-threshold (* 16 1024 1024))
+			(gcmh-high-cons-threshold (* 64 1024 1024))
+			(gcmh-idle-delay 'auto)
+			(gc-cons-percentage 0.2)
 			:config
 			(gcmh-mode 1))))))
 
