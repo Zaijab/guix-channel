@@ -2284,7 +2284,7 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 					 (cl-remove-if (lambda (s)
 							 (or (null s) (string-empty-p s)))
 						       kill-ring)
-					 :test #'equal :from-end t))
+					 :test (function equal) :from-end t))
 				 (text (completing-read "Paste: " cands nil t)))
 			    (when (and (stringp text) (> (length text) 0))
 			      (gui-set-selection 'CLIPBOARD text)
