@@ -571,7 +571,7 @@ See `consult-grep' for details."
 (define llm-configuration
   (home-emacs-configuration
    (packages (list ((options->transformation
-		     '((with-commit . "emacs-agent-shell=eb5a379c1db4e395a04acd1f16a6dfb92e803d60")
+		     '((with-commit . "emacs-agent-shell=9368925f40f92c6de79cf8c1f3d95265e56da213")
 		       (with-commit . "emacs-shell-maker=6377cbdb49248d670170f1c8dbe045648063583e")
 		       (with-commit . "emacs-acp=c32fbf8df34ed0095853a8cf55dc783e68b67d90")))
 		    emacs-agent-shell)
