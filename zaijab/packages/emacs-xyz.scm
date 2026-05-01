@@ -933,8 +933,14 @@ emacs-elfeed-tube-current
           (base32 "18hb33cqhhmyxblzw1z6ji4np9xxm5f807cyhw9hrddhwwmckrnv"))))
       (arguments
        (substitute-keyword-arguments (package-arguments emacs)
+         ((#:tests? _ #t) #f)
          ((#:configure-flags flags #~'())
-          #~(cons "--with-mps=yes" #$flags))
+          #~(cons* "--with-mps=yes"
+                   "--with-native-compilation=yes"
+                   (filter (lambda (f)
+                             (not (string-prefix? "--with-native-compilation="
+                                                  f)))
+                           #$flags)))
          ((#:phases phases #~%standard-phases)
           #~(modify-phases #$phases
               (add-after 'unpack 'autogen

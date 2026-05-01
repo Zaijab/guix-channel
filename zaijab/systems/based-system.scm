@@ -79,7 +79,10 @@
 	    (earlyoom-configuration
 	     (minimum-available-memory 5)
 	     (minimum-free-swap 5)))
-   (service tlp-service-type)
+   (service tlp-service-type
+	    (tlp-configuration
+             (cpu-scaling-governor-on-ac (list "performance"))
+             (cpu-scaling-governor-on-bat (list "powersave"))))
    (service opendht-service-type)
    (service docker-service-type)
    (service containerd-service-type)
