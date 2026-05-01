@@ -4,7 +4,7 @@
 
 CGROUP_PATH="/sys/fs/cgroup/chrome"
 MEMORY_MAX="8G"
-CPU_MAX="150000 100000"
+CPU_MAX="300000 200000"
 
 # Create and configure the cgroup if needed
 if [ ! -d "$CGROUP_PATH" ]; then

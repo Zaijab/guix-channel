@@ -1515,7 +1515,7 @@ See `consult-grep' for details."
 
 	   (use-package org-roam-ui
 			:after org-roam
-			:hook (after-init . org-roam-ui-mode)
+			;; :hook (after-init . org-roam-ui-mode)
 			:custom
 			(org-roam-ui-sync-theme t)
 			(org-roam-ui-follow t)
