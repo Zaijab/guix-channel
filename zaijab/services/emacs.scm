@@ -2523,6 +2523,10 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
 		 (pixel-scroll-precision-mode)
+		 (setq native-comp-driver-options
+		       '("-B/home/zjabbar/.guix-home/profile/bin"
+			 "-B/home/zjabbar/.guix-home/profile/lib"
+			 "-B/home/zjabbar/.guix-home/profile/lib/gcc/x86_64-unknown-linux-gnu/14.3.0"))
 		 ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/31.0.50/lisp/subr.el.gz")
 		 ))
    (init '((setq global-auto-revert-non-file-buffers t)
