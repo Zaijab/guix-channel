@@ -4,7 +4,7 @@
 
 CGROUP_PATH="/sys/fs/cgroup/chrome"
 MEMORY_MAX="8G"
-CPU_MAX="300000 200000"
+CPU_MAX="600000 500000"
 
 # Create and configure the cgroup if needed
 if [ ! -d "$CGROUP_PATH" ]; then
@@ -13,7 +13,7 @@ if [ ! -d "$CGROUP_PATH" ]; then
 fi
 
 echo "$MEMORY_MAX" | sudo tee "$CGROUP_PATH/memory.max" > /dev/null
-echo "$CPU_MAX" | sudo tee "$CGROUP_PATH/cpu.max" > /dev/null
+# echo "$CPU_MAX" | sudo tee "$CGROUP_PATH/cpu.max" > /dev/null
 
 # Move this shell into the cgroup so chrome and all its children inherit it
 echo $$ | sudo tee "$CGROUP_PATH/cgroup.procs" > /dev/null

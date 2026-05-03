@@ -919,12 +919,12 @@ emacs-elfeed-tube-current
 (define-public emacs-igc
   (let ((commit   "9f434852fccfff27bca2e09cdfdc023c8017aca5")
         (revision "0"))
-    (package/inherit emacs
+    (package/inherit emacs-next
       (name "emacs-igc")
       (version (git-version "31.0.50" revision commit))
       (source
        (origin
-         (method git-fetch)
+         (inherit (package-source emacs-next))
          (uri (git-reference
                (url "https://git.savannah.gnu.org/git/emacs.git")
                (commit commit)))
@@ -932,7 +932,7 @@ emacs-elfeed-tube-current
          (sha256
           (base32 "18hb33cqhhmyxblzw1z6ji4np9xxm5f807cyhw9hrddhwwmckrnv"))))
       (arguments
-       (substitute-keyword-arguments (package-arguments emacs)
+       (substitute-keyword-arguments (package-arguments emacs-next)
          ((#:tests? _ #t) #f)
          ((#:configure-flags flags #~'())
           #~(cons* "--with-mps=yes"
@@ -957,7 +957,7 @@ emacs-elfeed-tube-current
                      '("install-sh" "config.sub" "config.guess"
                        "missing" "compile")))))))))
       (native-inputs
-       (modify-inputs (package-native-inputs emacs)
-         (prepend autoconf automake texinfo))))))
+       (modify-inputs (package-native-inputs emacs-next)
+         (prepend automake))))))
 
 emacs-gpastel
