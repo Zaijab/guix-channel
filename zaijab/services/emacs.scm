@@ -579,7 +579,7 @@ See `consult-grep' for details."
 		   codex
 		   node))
    (init '(
-	   (add-to-list 'exec-path (expand-file-name "~/.local/bin"))
+	   (add-to-list 'exec-path (expand-file-name "~/.guix-home/profile/bin/"))
 	   (setq agent-shell-anthropic-claude-command nil)
 	   (setq agent-shell-anthropic-claude-acp-command '("claude-agent-acp"))
 	   (setq agent-shell-preferred-agent-config 'claude-code)
