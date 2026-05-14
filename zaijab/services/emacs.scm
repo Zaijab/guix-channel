@@ -22,6 +22,7 @@
   #:use-module (gnu packages shellutils)
   #:use-module (gnu packages browser-extensions)
   #:use-module (gnu packages gdb)
+  #:use-module (gnu packages virtualization)
   #:use-module (gnu packages gnuzilla)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages emacs-xyz)
@@ -577,6 +578,7 @@ See `consult-grep' for details."
 		    emacs-agent-shell)
 		   emacs-agent-shell
 		   claude-code
+		   bubblewrap
 		   codex
 		   node))
    (init '(
