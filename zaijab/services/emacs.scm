@@ -784,8 +784,10 @@ See `consult-grep' for details."
 			(dolist (name '(
 					"Foundations" ; Pure Math / Flashcards
 					;; "Geometric Sensor Tasking"
-					"Directional Statistics"
-					"Normalizing Flows"
+					"GLMB"
+					"ETPF"
+					"FvML"
+					"NEnGMF"
 					"Japanese" ; Japanese Learning / Coursework
 					"Communications" ; Google Voice / Email / Discord
 					"System" ; Emacs / Guix Sysadmin
