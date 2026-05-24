@@ -74,7 +74,7 @@
      (service home-dbus-service-type)
      (service home-pipewire-service-type
               (home-pipewire-configuration
-               (enable-pulseaudio? #f)))
+               (enable-pulseaudio? #t)))
      (service home-gpg-agent-service-type
               (home-gpg-agent-configuration
                (pinentry-program
