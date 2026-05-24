@@ -45,7 +45,7 @@ system_from_main:
 
 
 system_from_lock:
-	sudo -H guix time-machine \
+	sudo -EH guix time-machine \
 	-C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl \
 	-- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' \
 	--allow-downgrades
