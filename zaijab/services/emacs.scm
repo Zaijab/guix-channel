@@ -7,6 +7,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages node)
+  #:use-module (gnu packages glib)
   #:use-module (gnu packages education)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages bittorrent)
@@ -1583,8 +1584,10 @@ END is the start of the line with :END: on it."
 
 (define latex-configuration
   (home-emacs-configuration
-   (init '(	   (setq org-latex-listings 'engraved)
+   (init '((setq org-latex-listings 'engraved)
 
+	   ;; Org 9.7+ preview setup: dvisvgm renders SVG fragments, auto-mode
+	   ;; refreshes previews around point, and live mode updates while editing.
 	   (use-package org-latex-preview
 			:config
 			;; Increase preview width
@@ -1620,6 +1623,7 @@ END is the start of the line with :END: on it."
 
 	   (setq texmathp-tex-commands '(("lflalign" env-on)))
 	   (setq org-latex-compiler "pdflatex")
+	   (setq org-latex-preview-process-precompile t)
 	   (setq org-latex-title-command (concat
 					  "\\pagestyle{fancy}"
 					  "\\begin{titlepage}\n"
@@ -2241,7 +2245,8 @@ END is the start of the line with :END: on it."
 	      emacs-eat
 	      xrandr
 	      xinput
-	      arandr))
+	      arandr
+	      gobject-introspection))
    (init '((use-package exwm
 			:if (display-graphic-p)
 			:init
