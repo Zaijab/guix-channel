@@ -38,7 +38,7 @@ system_test:
 	guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/channel.scm -- system build -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades
 
 system_from_main:
-	sudo -H guix time-machine \
+	sudo -EH guix time-machine \
 	-C /home/zjabbar/code/guix-channel/zaijab/channel.scm \
 	-- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' \
 	--allow-downgrades

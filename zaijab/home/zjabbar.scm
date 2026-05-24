@@ -72,7 +72,9 @@
 				  "source \"$EAT_SHELL_INTEGRATION_DIR/bash\"")))))
      (service home-emacs-service-type home-emacs-total-configuration)
      (service home-dbus-service-type)
-     (service home-pipewire-service-type)
+     (service home-pipewire-service-type
+              (home-pipewire-configuration
+               (enable-pulseaudio? #f)))
      (service home-gpg-agent-service-type
               (home-gpg-agent-configuration
                (pinentry-program
