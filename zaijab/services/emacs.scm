@@ -2341,7 +2341,6 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 			(global-set-key (kbd "s-J") 'windsize-down)
 			(global-set-key (kbd "s-f") 'exwm-floating-toggle-floating)
 			(global-set-key (kbd "s-F") 'exwm-layout-toggle-fullscreen)
-			(exwm-input-set-key (kbd "s-R") 'exwm-reset)
 			(global-set-key (kbd "s-<tab>") 'consult-buffer)
 			(global-set-key (kbd "s-<escape>") 'execute-extended-command)
 			(global-set-key (kbd "s-`") 'eshell-command)
