@@ -870,7 +870,8 @@ See `consult-grep' for details."
    (early-init '((global-unset-key (kbd "C-x t"))))
    (init '((use-package skk
 			:after (consult)
-			:if (display-graphic-p))
+			:if (display-graphic-p)
+			:config (setq skk-user-directory "~/.cache/emacs/ddskk"))
 
 	   (use-package facemenu
 			:after skk)
