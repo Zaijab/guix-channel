@@ -67,6 +67,7 @@
   #:use-module (zaijab packages emacs-xyz)
   #:use-module (zaijab packages python-xyz)
   #:use-module (zaijab packages mathematics)
+  #:use-module (zaijab packages lean)
   #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages fonts)
   #:use-module (nongnu packages nvidia)
@@ -2449,6 +2450,11 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 (define theme-configuration
   (home-emacs-configuration
    (init '((load-theme 'modus-operandi t)))))
+
+(define lean-configuration
+  (home-emacs-configuration
+   (packages (list lean4-patched lean-mathlib))
+   ))
 
 (define font-configuration
   (home-emacs-configuration
