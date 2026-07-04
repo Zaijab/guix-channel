@@ -38,14 +38,14 @@ system_test:
 	guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/channel.scm -- system build -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades
 
 system_from_main:
-	sudo -EH guix time-machine \
+	sudo -EH guix time-machine --unsafe-channel-evaluation \
 	-C /home/zjabbar/code/guix-channel/zaijab/channel.scm \
 	-- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' \
 	--allow-downgrades
 
 
 system_from_lock:
-	sudo -EH guix time-machine \
+	sudo -EH guix time-machine --unsafe-channel-evaluation \
 	-C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl \
 	-- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' \
 	--allow-downgrades
