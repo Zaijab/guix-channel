@@ -1801,6 +1801,8 @@ END is the start of the line with :END: on it."
 	      texlive-scheme-medium
 	      texlive-preview
 	      texlive-mylatexformat
+	      texlive-xypic
+	      texlive-esint
 	      ;; texlive-bin
 	      ;; texlive-collection-latexrecommended
 	      ;; texlive-collection-latexextra
