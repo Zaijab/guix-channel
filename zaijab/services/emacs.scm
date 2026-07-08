@@ -832,6 +832,7 @@ See `consult-grep' for details."
 (define project-configuration
   (home-emacs-configuration
    (packages (list git
+		   github-cli
 		   direnv
 		   emacs-envrc))
    (init '((require 'ansi-color)

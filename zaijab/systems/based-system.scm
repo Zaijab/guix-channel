@@ -126,9 +126,9 @@
 		    epson-inkjet-printer-escpr
 		    foo2zjs hplip-minimal hplip hplip-plugin))))
 
-   (extra-special-file "/etc/nsswitch.conf"
-		       (plain-file "nsswitch.conf"
-				   "group:  files\nhosts: files myhostname mdns4_minimal [NOTFOUND=return] dns mdns4\nnetworks: files dns [!UNAVAIL=return]\npasswd: files\nshadow: files\n"))
+   ;; (extra-special-file "/etc/nsswitch.conf"
+   ;; 		       (plain-file "nsswitch.conf"
+   ;; 				   "group:  files\nhosts: files myhostname mdns4_minimal [NOTFOUND=return] dns mdns4\nnetworks: files dns [!UNAVAIL=return]\npasswd: files\nshadow: files\n"))
 
    (modify-services %desktop-services
      (delete pulseaudio-service-type)
@@ -140,10 +140,10 @@
 			      ("vm.page-cluster"           . "0")
 			      ("vm.watermark_scale_factor" . "125"))
 			    (sysctl-configuration-settings config)))))
-     (nscd-service-type
-      config => (nscd-configuration
-		 (inherit config)
-		 (name-services (list nss-mdns))))
+     ;; (nscd-service-type
+     ;;  config => (nscd-configuration
+     ;; 		 (inherit config)
+     ;; 		 (name-services (list nss-mdns))))
      ;; (avahi-service-type config =>
      ;; 			 (avahi-configuration
      ;; 			  (publish? #t)
