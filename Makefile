@@ -37,15 +37,22 @@ system_vm:
 system_test:
 	guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/channel.scm -- system build -e '(@ (zaijab systems based-system) my-operating-system)' --allow-downgrades
 
+# NOTE: use `sudo -H`, NOT `sudo -EH`.  `-E` preserves XDG_CACHE_HOME
+# (=/home/zjabbar/.cache), which guix prefers over HOME for its channel
+# checkout cache; guix-as-root would then write root-owned files into the
+# user cache and break later non-sudo `guix pull`/`time-machine` with
+# "Permission denied".  `-H` forces HOME=/root so root's cache stays in
+# /root/.cache.  `-E` is not needed: sudo already finds the system guix,
+# which supports --unsafe-channel-evaluation.
 system_from_main:
-	sudo -EH guix time-machine --unsafe-channel-evaluation \
+	sudo -H guix time-machine --unsafe-channel-evaluation \
 	-C /home/zjabbar/code/guix-channel/zaijab/channel.scm \
 	-- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' \
 	--allow-downgrades
 
 
 system_from_lock:
-	sudo -EH guix time-machine --unsafe-channel-evaluation \
+	sudo -H guix time-machine --unsafe-channel-evaluation \
 	-C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl \
 	-- system reconfigure -e '(@ (zaijab systems based-system) my-operating-system)' \
 	--allow-downgrades

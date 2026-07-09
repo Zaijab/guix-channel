@@ -10,8 +10,8 @@
 ;;; dependent can recover the *Lake* package name (which must match the name in
 ;;; the upstream lakefile, e.g. "batteries", "Qq").
 ;;;
-;;; Pinned to Lean 4.28.0 to match the `lean4' package in this Guix revision.
-;;; Dependency revisions come from mathlib4's lake-manifest.json at tag v4.28.0.
+;;; Pinned to Lean 4.29.0 to match the `lean4' package in this Guix revision.
+;;; Dependency revisions come from mathlib4's lake-manifest.json at tag v4.29.0.
 
 (define-module (zaijab packages lean)
   #:use-module (guix packages)
@@ -184,43 +184,43 @@ name is LAKE-NAME, building LAKE-TARGETS (default: the package's default)."
 
 (define-public lean-batteries
   (make-lean-lib
-   "lean-batteries" "4.28.0"
+   "lean-batteries" "4.29.0"
    "https://github.com/leanprover-community/batteries"
-   "495c008c3e3f4fb4256ff5582ddb3abf3198026f"
-   "19qqxm1x29hbh12kk1k7qg02h0jvpcr880130jq4ir90bc44rpfw"
+   "756e3321fd3b02a85ffda19fef789916223e578c"
+   "013bh6anafhwgq8mav7yswqy7ym86gwvf5m6h39s45dnd25h6hmh"
    "batteries"
    #:synopsis "The Lean 4 standard library extension (Batteries)"))
 
 (define-public lean-qq
   (make-lean-lib
-   "lean-qq" "4.28.0"
+   "lean-qq" "4.29.0"
    "https://github.com/leanprover-community/quote4"
-   "b8f98e9087e02c8553945a2c5abf07cec8e798c3"
-   "1m0c99ls04v58p1zhzf4rkzv69qc9rhjz4npzh6ch0jh69sd46h5"
+   "707efb56d0696634e9e965523a1bbe9ac6ce141d"
+   "03cx5xpm3sr6b8hmigq14apn4ahw13n12f7m17gbl9b7zn33kmm4"
    "Qq"
    #:synopsis "Lean 4 type-safe expression quotations (Qq)"))
 
 (define-public lean-cli
   (make-lean-lib
-   "lean-cli" "4.28.0"
+   "lean-cli" "4.29.0"
    "https://github.com/leanprover/lean4-cli"
-   "4f10f47646cb7d5748d6f423f4a07f98f7bbcc9e"
-   "03lbimfkgp139ymmfvdansphpcndg2ymi2lvdyahc376iivgwxgn"
+   "7802da01beb530bf051ab657443f9cd9bc3e1a29"
+   "0fasl91y1dlfpgd8whfs6cbv1a8z0m2p07p47rc0p6ymqpi2a9cc"
    "Cli"
    #:synopsis "Command-line-interface library for Lean 4"))
 
 (define-public lean-plausible
   (make-lean-lib
-   "lean-plausible" "4.28.0"
+   "lean-plausible" "4.29.0"
    "https://github.com/leanprover-community/plausible"
-   "55c8532eb21ec9f6d565d51d96b8ca50bd1fbef3"
-   "0lkcg667hwhyn9gjv428hdm38l4br29i07sf8vs95dsghix9zqy6"
+   "83e90935a17ca19ebe4b7893c7f7066e266f50d3"
+   "178vkdys7hzaf5w2m7rkpd4rm2hxgvly8rsy4y1hmr4ac43wviyk"
    "plausible"
    #:synopsis "Property-based testing (plausible) for Lean 4"))
 
 (define-public lean-search-client
   (make-lean-lib
-   "lean-search-client" "4.28.0"
+   "lean-search-client" "4.29.0"
    "https://github.com/leanprover-community/LeanSearchClient"
    "c5d5b8fe6e5158def25cd28eb94e4141ad97c843"
    "05v9l41s83yyrwkhqa08cam20jjb86vp0p7mnzai4yffgp180rig"
@@ -233,20 +233,20 @@ name is LAKE-NAME, building LAKE-TARGETS (default: the package's default)."
 
 (define-public lean-aesop
   (make-lean-lib
-   "lean-aesop" "4.28.0"
+   "lean-aesop" "4.29.0"
    "https://github.com/leanprover-community/aesop"
-   "f642a64c76df8ba9cb53dba3b919425a0c2aeaf1"
-   "1blh96pqjbmv9mp8jiykwz7dl1i1k1dhj8ifhbjqyzs4mgmgiqr9"
+   "7152850e7b216a0d409701617721b6e469d34bf6"
+   "0n1njrklz5fh7xm7wd8sdagq2wgwrhcwjn04gpnnhf9w50v33p08"
    "aesop"
    #:propagated-inputs (list lean-batteries)
    #:synopsis "Aesop: a proof-search tactic for Lean 4"))
 
 (define-public lean-import-graph
   (make-lean-lib
-   "lean-import-graph" "4.28.0"
+   "lean-import-graph" "4.29.0"
    "https://github.com/leanprover-community/import-graph"
-   "85b59af46828c029a9168f2f9c35119bd0721e6e"
-   "12rr017z3jyb7f7mzbk15dq84fa7jpj0yw12cj5vfmr3ainbr53x"
+   "48d5698bc464786347c1b0d859b18f938420f060"
+   "1f39gycfiwwfkk39fp1x9169f8xn7vpblcmddk29r24nmkd4x9xn"
    "importGraph"
    ;; Default targets include the `graph' executable, which statically links
    ;; Cli and would try to compile Cli's objects in the read-only store.  We
@@ -272,29 +272,29 @@ name is LAKE-NAME, building LAKE-TARGETS (default: the package's default)."
 
 (define proofwidgets-release
   ;; Prebuilt `.lake/build' contents (compiled `js/' widgets + oleans) for the
-  ;; v0.0.87 tag, used to avoid a Node/npm build.
+  ;; v0.0.95 tag, used to avoid a Node/npm build.
   (origin
     (method url-fetch)
     (uri (string-append
           "https://github.com/leanprover-community/ProofWidgets4"
-          "/releases/download/v0.0.87/ProofWidgets4.tar.gz"))
-    (file-name "proofwidgets-0.0.87-release.tar.gz")
+          "/releases/download/v0.0.95/ProofWidgets4.tar.gz"))
+    (file-name "proofwidgets-0.0.95-release.tar.gz")
     (sha256
-     (base32 "09f718k3wh8rc7fwkgnnn26rhf9sprvvlanbfzhvdc297k9nqgyf"))))
+     (base32 "181wpr1jyhwnqnq3inajr7qvdax8xsy1swklvaf3956sy7x1gnf2"))))
 
 (define-public lean-proofwidgets
   (package
     (name "lean-proofwidgets")
-    (version "0.0.87")
+    (version "0.0.95")
     (source
      (origin
        (method git-fetch)
        (uri (git-reference
              (url "https://github.com/leanprover-community/ProofWidgets4")
-             (commit "be3b2e63b1bbf496c478cef98b86972a37c1417d")))
+             (commit "3c52dee17f0cd89c1ec14de78920d1bdaa3d26b3")))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1fhvrshk7kwg5vh8v5sqh8rnnn04acb91lfj0bqzj10lzhsjlwd9"))))
+        (base32 "0lqxc63lr87ki0pb4gpw420f2k45g28dxlcsqs14w4chpy7fai1c"))))
     (build-system gnu-build-system)
     (arguments
      (list
@@ -359,10 +359,10 @@ upstream source with its prebuilt release artifacts to avoid a Node toolchain.")
 
 (define-public lean-mathlib
   (make-lean-lib
-   "lean-mathlib" "4.28.0"
+   "lean-mathlib" "4.29.0"
    "https://github.com/leanprover-community/mathlib4"
-   "v4.28.0"
-   "1y748ig23vq3ryzac1vjamvi167w1r8jk2ns25j2wyq3y5d78i7f"
+   "v4.29.0"
+   "1wbrb5nnxja0x8ccjvk0ppp6dbx1jcxgxxr503kx5i8dp15smvvx"
    "mathlib"
    #:lake-targets '("Mathlib")
    #:propagated-inputs (list lean-batteries

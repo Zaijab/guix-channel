@@ -2456,10 +2456,10 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
   (home-emacs-configuration
    (init '((load-theme 'modus-operandi t)))))
 
-;; (define lean-configuration
-;;   (home-emacs-configuration
-;;    (packages (list lean4-patched lean-mathlib))
-;;    ))
+(define lean-configuration
+  (home-emacs-configuration
+   (packages (list lean4-patched lean-mathlib))
+   ))
 
 (define font-configuration
   (home-emacs-configuration

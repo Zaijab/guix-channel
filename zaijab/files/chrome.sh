@@ -18,5 +18,5 @@ echo "$MEMORY_MAX" | sudo tee "$CGROUP_PATH/memory.max" > /dev/null
 # Move this shell into the cgroup so chrome and all its children inherit it
 echo $$ | sudo tee "$CGROUP_PATH/cgroup.procs" > /dev/null
 
-exec guix time-machine -C /home/zjabbar/code/guix-channel/zaijab/files/channel_without_zaijab.tmpl \
+exec guix time-machine --unsafe-channel-evaluation -C /home/zjabbar/code/guix-channel/zaijab/files/channel_without_zaijab.tmpl \
      -- shell google-chrome-stable -- google-chrome "$@"
