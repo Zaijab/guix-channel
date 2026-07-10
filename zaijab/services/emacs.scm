@@ -2097,8 +2097,10 @@ END is the start of the line with :END: on it."
 			;; TODO: Find Keys for:
 			;; import-at-point, flymake-goto-error
 			
-			(setq major-mode-remap-alist
-			      '((python-mode . python-ts-mode))))
+			#;(setq major-mode-remap-alist
+			'((python-mode . python-ts-mode)))
+			(add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
+			)
 
 	   (use-package combobulate
 			:custom
