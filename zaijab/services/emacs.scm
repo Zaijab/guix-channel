@@ -646,10 +646,12 @@ See `consult-grep' for details."
 					   ':justMyCode 'nil
 					   ':showReturnValue 't))
 
-			;; Robust testing + removing messages
+			;; Keep the Jupyter DAPE adapter available, but do not
+			;; advise Jupyter globally during normal org-babel use.
 			(load "/home/zjabbar/code/guix-channel/zaijab/files/jupyter-dape.el")
+			;; Enable with M-x jupyter-dape-mode before debugging a
+			;; Jupyter session.
 			(jupyter-dape-mode 1)
-
 
 			;; Kill compile buffer on build success
 			(add-hook 'dape-compile-hook 'kill-buffer))
@@ -2062,6 +2064,11 @@ END is the start of the line with :END: on it."
    (init '(
 	   (use-package jupyter
 			:config
+			;; emacs-igc's MPS-backed GC currently crashes in
+			;; emacs-zmq during the kernel_info_request path.  Use
+			;; the notebook/WebSocket transport instead of the ZMQ
+			;; dynamic module.
+			(setq jupyter-use-zmq nil)
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
 			(setq jupyter-repl-completion-at-point-hook-depth 1)
 			(setq org-babel-python-command "python3"
