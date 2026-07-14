@@ -2103,10 +2103,10 @@ END is the start of the line with :END: on it."
 			(add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
 			)
 
-	   (use-package combobulate
+	   #;(use-package combobulate
 			:custom
 		       	(combobulate-key-prefix "C-c o")
-			:hook ((python-ts-mode . combobulate-mode)))
+			:hook ((prog-mode . combobulate-mode)))
 
 	   (use-package envrc
 			:demand t
