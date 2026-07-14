@@ -2085,6 +2085,7 @@ END is the start of the line with :END: on it."
 										 (shell . t)
 										 (jupyter . t)
 										 ))
+			(setf (alist-get "python" org-src-lang-modes nil nil #'equal) 'python-ts)
 
 			(add-to-list 'org-src-lang-modes (cons "python3" 'python))
 			(define-key python-base-mode-map (kbd "C-<tab>") (function hs-cycle))
