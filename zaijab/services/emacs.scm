@@ -2106,7 +2106,7 @@ END is the start of the line with :END: on it."
 	   (use-package combobulate
 			:custom
 		       	(combobulate-key-prefix "C-c o")
-			:hook ((prog-mode . combobulate-mode)))
+			:hook ((python-ts-mode . combobulate-mode)))
 
 	   (use-package envrc
 			:demand t
