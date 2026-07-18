@@ -359,14 +359,7 @@ See `consult-grep' for details."
 
 
 
-			)
-	   ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/site-lisp/consult-2.5/consult.el")
-
-
-
-
-
-	   ))))
+			)))))
 
 ;;
 (define embark-configuration
