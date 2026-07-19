@@ -2453,7 +2453,10 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 			  (force-mode-line-update))
 
 			(load "/home/zjabbar/code/guix-channel/zaijab/files/exwm-clipboard-kill-ring.el")
-			(add-hook 'exwm-init-hook 'exwm-clipboard-kill-ring-enable))))))
+			(add-hook 'exwm-init-hook 'exwm-clipboard-kill-ring-enable)
+			(load "/home/zjabbar/code/guix-channel/zaijab/files/exwm-game-fixes.el")
+
+			)))))
 
 (define theme-configuration
   (home-emacs-configuration
