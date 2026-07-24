@@ -970,7 +970,7 @@ See `consult-grep' for details."
 	      emacs-nov-el))
    (init '((add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 	   (pdf-tools-install)
-	   (add-hook 'pdf-view-mode-hook (function pdf-view-roll-minor-mode))
+	   ;; (add-hook 'pdf-view-mode-hook (function pdf-view-roll-minor-mode))
 	   (defvar *current-mode* 'light)
 
 	   (defun my/dark-mode ()
