@@ -832,9 +832,12 @@ See `consult-grep' for details."
 		   emacs-envrc))
    (init '((require 'ansi-color)
 	   (setq project-vc-ignores '(".direnv/*" "*.pyc" ".ob-jupyter/*"))
-	   (add-hook 'compilation-filter-hook (function ansi-color-compilation-filter))
-	   ;; (add-hook 'org-mode-hook (function ansi-color-compilation-filter))
-	   ))))
+	   (defun colorize-compilation-buffer ()
+	     (interactive)
+	     (let ((inhibit-read-only t))
+	       (ansi-color-apply-on-region (point-min) (point-max))))
+	   (add-hook 'compilation-filter-hook (function colorize-compilation-buffer))
+	   (add-hook 'org-mode-hook (function colorize-compilation-buffer))))))
 
 
 ;; (define emoji-configuration
