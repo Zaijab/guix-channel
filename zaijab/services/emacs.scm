@@ -449,7 +449,7 @@ See `consult-grep' for details."
 			'(file))
 		  ))))))
 
-(define garbage-collection-configuration
+#;(define garbage-collection-configuration
   (home-emacs-configuration
    (packages (list emacs-gcmh))
    (init '((use-package gcmh
@@ -2507,6 +2507,13 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 		       ;; native-comp-speed 0
 		       native-comp-jit-compilation nil
 		       package-native-compile t
+		       bidi-inhibit-bpa t
+		       jit-lock-defer-time 0
+		       fast-but-imprecise-scrolling t
+		       x-wait-for-event-timeout nil
+		       native-comp-async-jobs-number 4
+		       native-comp-async-report-warnings-errors 'silent
+		       native-comp-jit-compilation t
 	    	       large-file-warning-threshold 1000000000)
 		 (setq-default abbrev-mode t)
 		 (set-face-attribute 'mode-line nil :box nil)
@@ -2551,7 +2558,7 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 		 (setq make-backup-files nil)
 		 (setq auto-save-default nil)
 		 (setq create-lockfiles nil)
-		 (pixel-scroll-precision-mode)
+		 ;; (pixel-scroll-precision-mode)
 		 ;; (load "/home/zjabbar/.guix-home/profile/share/emacs/31.0.50/lisp/subr.el.gz")
 		 ))
    (init '((setq global-auto-revert-non-file-buffers t)
