@@ -2345,7 +2345,7 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 
 							     (start-file-process-shell-command "Kanji Dojo" nil "/home/zjabbar/notes/data/kanji_dojo/run_kanij.sh")
 							     )))
-			(global-set-key (kbd "s-r") (function eat))
+			(global-set-key (kbd "s-r") (function vterm))
 			(global-set-key (kbd "s-t") (function eval-region))
 			(global-set-key (kbd "s-K") 'windsize-up)
 			(global-set-key (kbd "s-J") 'windsize-down)
@@ -2464,8 +2464,7 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 
 (define lean-configuration
   (home-emacs-configuration
-   (packages (list lean4-patched lean-mathlib))
-   ))
+   (packages (list lean4-patched lean-mathlib))))
 
 (define font-configuration
   (home-emacs-configuration
