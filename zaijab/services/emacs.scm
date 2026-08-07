@@ -1801,6 +1801,7 @@ END is the start of the line with :END: on it."
 	      texlive-xypic
 	      texlive-esint
 	      texlive-ntheorem
+	      texlive-cleverref
 	      ;; texlive-bin
 	      ;; texlive-collection-latexrecommended
 	      ;; texlive-collection-latexextra
