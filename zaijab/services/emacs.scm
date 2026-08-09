@@ -1802,30 +1802,25 @@ END is the start of the line with :END: on it."
 	      texlive-esint
 	      texlive-ntheorem
 	      texlive-cleveref
-	      ;; texlive-bin
-	      ;; texlive-collection-latexrecommended
-	      ;; texlive-collection-latexextra
-	      ;; texlive-collection-fontsrecommended
-	      ;; texlive-collection-mathscience
 	      texlive-bbm
 	      texlive-bbm-macros
-	      ;; texlive-doublestroke
 	      imagemagick))
-   (init '(
-	   #;(use-package consult-org-roam
+   (init '((use-package consult-org-roam
 			:after (org-roam org consult)
 			:config (consult-org-roam-mode))
+
+	   (use-package org-tree-slide
+			:after (org)
+			:config
+			(setq org-tree-slide-activate-message ""
+			      org-tree-slide-deactivate-message "")
+			(setq org-tree-slide-cursor-init nil))
 
 	   (use-package org
 			:config
 			(setq org-element-cache-persistent t
 			      org-element-use-cache t)
 
-			(require 'org-tree-slide)
-			(setq org-tree-slide-activate-message ""
-			      org-tree-slide-deactivate-message "")
-
-			(setq org-tree-slide-cursor-init nil)
 			(require 'ox)
 			(require 'calfw)
 			(require 'calfw-org)
