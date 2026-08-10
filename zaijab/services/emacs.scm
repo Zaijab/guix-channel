@@ -1457,7 +1457,7 @@ See `consult-grep' for details."
 	      emacs-org-roam
 	      emacs-org-roam-ui
 	      emacs-org-roam-bibtex
-	      ;; emacs-consult-org-roam
+	      emacs-consult-org-roam
 	      emacs-org-fc
 	      emacs-kanji))
    (init '((use-package sqlite)
