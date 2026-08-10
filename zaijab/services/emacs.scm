@@ -785,7 +785,7 @@ See `consult-grep' for details."
 					;; "Geometric Sensor Tasking"
 					"GLMB"
 					"ETPF"
-					"FvML"
+					;"FvML"
 					"NEnGMF"
 					"Japanese" ; Japanese Learning / Coursework
 					"Communications" ; Google Voice / Email / Discord
@@ -2279,7 +2279,7 @@ END is the start of the line with :END: on it."
 			(global-set-key (kbd "<f4>") (function
 						      (lambda () (interactive)
 							      (start-process-shell-command "" nil "xset dpms force off"))))
-			(setq exwm-manage-force-tiling t)
+			(setq exwm-manage-force-tiling nil)
 			(defun my/tabspace-kill-current-buffer () (interactive)
 			  (let ((buffer-list (cl-remove-if (lambda (buf) (string-match-p (regexp-quote "*Minibuf-") (buffer-name buf))) (tabspaces--buffer-list))))
 			    (cond
