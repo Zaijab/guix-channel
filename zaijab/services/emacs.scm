@@ -2261,7 +2261,6 @@ END is the start of the line with :END: on it."
    (init '((use-package exwm
 			:if (display-graphic-p)
 			:init
-			(setq exwm-randr-workspace-monitor-plist '(0 "eDP-1" 1 "HDMI-A-0"))
 			(exwm-randr-mode)
 			(require 'xelb)
 
@@ -2456,7 +2455,18 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 			(load "/home/zjabbar/code/guix-channel/zaijab/files/exwm-clipboard-kill-ring.el")
 			(add-hook 'exwm-init-hook 'exwm-clipboard-kill-ring-enable)
 			(load "/home/zjabbar/code/guix-channel/zaijab/files/exwm-game-fixes.el")
+			(defun my/exwm-passthrough-only-for-prompts (orig fn &rest args)
+			  "Around advice for `exwm-input--call-with-passthrough'.
+Skip the passthrough binding for a character read carrying a SECONDS
+timeout, i.e. Emacs waiting rather than prompting the user."
+			  (if (and (nth 2 args)
+				   (memq (if (subrp fn) (intern (subr-name fn)) fn)
+					 '(read-event read-char read-char-exclusive)))
+			      (apply fn args)
+			      (apply orig fn args)))
 
+			(advice-add 'exwm-input--call-with-passthrough :around
+				    (function my/exwm-passthrough-only-for-prompts))
 			)))))
 
 (define theme-configuration
@@ -2500,12 +2510,10 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 		       initial-scratch-message nil
 		       byte-compile-root-dir nil
 		       frame-inhibit-implied-resize t
-		       redisplay-dont-pause t
 		       max-mini-window-height 10
 	    	       initial-scratch-message nil
 		       inhibit-compacting-font-caches t
 		       ;; native-comp-speed 0
-		       native-comp-jit-compilation nil
 		       package-native-compile t
 		       bidi-inhibit-bpa t
 		       jit-lock-defer-time 0
