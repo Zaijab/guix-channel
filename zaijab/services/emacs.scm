@@ -2242,6 +2242,8 @@ END is the start of the line with :END: on it."
 		   emacs-bash-completion))
    (init '((use-package eat
 			:demand t
+			:config
+			(setq eat-enable-mouse nil)
 			;; :hook
 			#;(eshell-load . (function eat-eshell-mode))
 			#;(eshell-load . (function eat-eshell-visual-command-mode)))))))
@@ -2471,7 +2473,10 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 
 (define theme-configuration
   (home-emacs-configuration
-   (init '((load-theme 'modus-operandi t)))))
+   (init '((setq modus-themes-common-palette-overrides
+		 '((border-mode-line-active unspecified)
+		   (border-mode-line-inactive unspecified)))
+	   (load-theme 'modus-operandi t)))))
 
 (define lean-configuration
   (home-emacs-configuration
@@ -2571,7 +2576,30 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 		 ))
    (init '((setq global-auto-revert-non-file-buffers t)
 	   (setq org-startup-truncated nil)
+	   (defvar zaijab/tab-bar-tab-width 16 
+	     "Minimum tab width in characters.")
+	   
+	   (defun zaijab/tab-bar-name-pad (name _tab _i)
+	     (let ((pad (max 0 (- zaijab/tab-bar-tab-width (string-width name)))))
+	       (concat (make-string (ceiling pad 2) ?\s) name (make-string (floor pad 2) ?\s))))
+	   
+	   (customize-set-variable 'tab-bar-tab-name-format-functions
+				   '(tab-bar-tab-name-format-hints
+				     zaijab/tab-bar-name-pad              ; pad the name first
+				     tab-bar-tab-name-format-close-button ; X at the right edge
+				     tab-bar-tab-name-format-face         ; face styles the full width
+				     tab-bar-tab-name-format-mouse-face)) 
+           
+	   (customize-set-variable 'tab-bar-format
+				   '(tab-bar-format-tabs
+				     tab-bar-separator
+				     zaijab/tab-bar-format-align-right
+				     zaijab/tab-bar-format-global-cached))
+           
+	   (zaijab/tab-bar-refresh-global)
 	   (tab-bar-mode)
+	   (igc-start-idle-timer)
+	   
 	   (setq custom-file (locate-user-emacs-file "custom.el"))
 	   (load custom-file :no-error-if-file-is-missing)
 	   (set-face-attribute 'tab-bar nil :height 140)
