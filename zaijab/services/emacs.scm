@@ -2599,6 +2599,7 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 	   (zaijab/tab-bar-refresh-global)
 	   (tab-bar-mode)
 	   (igc-start-idle-timer)
+	   (run-at-time 0.1 0.1 (lambda () (when (input-pending-p) (redisplay t))))
 	   
 	   (setq custom-file (locate-user-emacs-file "custom.el"))
 	   (load custom-file :no-error-if-file-is-missing)
