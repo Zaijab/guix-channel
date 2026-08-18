@@ -2576,6 +2576,30 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 		 ))
    (init '((setq global-auto-revert-non-file-buffers t)
 	   (setq org-startup-truncated nil)
+
+	   (setq tab-bar-auto-width nil)
+	   
+	   ;; -- Right side: clock/battery, re-rendered only when their 60s timers fire --
+	   (defvar zaijab/tab-bar-global-cache "") 
+	   
+	   (defun zaijab/tab-bar-refresh-global (&rest _)
+	     (setq zaijab/tab-bar-global-cache
+		   (string-trim-right (format-mode-line global-mode-string)))
+	     (force-mode-line-update t))
+	   
+	   (defun zaijab/tab-bar-format-global-cached ()
+	     `((global menu-item ,zaijab/tab-bar-global-cache ignore)))
+	   
+	   (defun zaijab/tab-bar-format-align-right ()
+	     `((align-right menu-item
+			    ,(propertize " " 'display
+					 `(space :align-to
+						 (- right ,(+ 1 (string-width zaijab/tab-bar-global-cache)))))
+			    ignore)))            
+	   (advice-add 'display-time-event-handler :after (function zaijab/tab-bar-refresh-global))
+	   (advice-add 'battery-update-handler :after (function zaijab/tab-bar-refresh-global))
+	   
+	   
 	   (defvar zaijab/tab-bar-tab-width 16 
 	     "Minimum tab width in characters.")
 	   
