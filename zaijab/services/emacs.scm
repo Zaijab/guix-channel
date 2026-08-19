@@ -2621,7 +2621,7 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 				     zaijab/tab-bar-format-global-cached))
            
 	   (zaijab/tab-bar-refresh-global)
-	   (tab-bar-mode)
+	   (tab-bar-mode 1)
 	   (igc-start-idle-timer)
 	   ;; (run-at-time 0.1 0.1 (lambda () (when (input-pending-p) (redisplay t))))
 	   
