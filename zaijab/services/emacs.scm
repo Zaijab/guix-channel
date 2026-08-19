@@ -2621,7 +2621,8 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 		   ;; width never changes, so memoize on the face font name.
 		   (defvar zaijab/font-width-cache (make-hash-table :test (quote equal)))
 		   (defun zaijab/window-font-width-cached (orig &optional window face)
-		     (let ((key (face-font (or face (quote default)) window)))
+		     ;; `face-font' takes a frame, not a window.
+		     (let ((key (face-font (or face (quote default)) (window-frame window))))
 		       (or (gethash key zaijab/font-width-cache)
 			   (puthash key (funcall orig window face) zaijab/font-width-cache))))
 		   (advice-add (quote window-font-width) :around (function zaijab/window-font-width-cached))
