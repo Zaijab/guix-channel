@@ -2588,14 +2588,14 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 	     (force-mode-line-update t))
 	   
 	   (defun zaijab/tab-bar-format-global-cached ()
-	     `((global menu-item ,zaijab/tab-bar-global-cache ignore)))
+	     (list (list 'global 'menu-item zaijab/tab-bar-global-cache 'ignore)))
 	   
 	   (defun zaijab/tab-bar-format-align-right ()
-	     `((align-right menu-item
-			    ,(propertize " " 'display
-					 `(space :align-to
-						 (- right ,(+ 1 (string-width zaijab/tab-bar-global-cache)))))
-			    ignore)))            
+	     (list (list 'align-right 'menu-item
+			    (propertize " " 'display
+					 (list 'space :align-to
+						 (list '- 'right (+ 1 (string-width zaijab/tab-bar-global-cache)))))
+			    'ignore)))
 	   (advice-add 'display-time-event-handler :after (function zaijab/tab-bar-refresh-global))
 	   (advice-add 'battery-update-handler :after (function zaijab/tab-bar-refresh-global))
 	   
