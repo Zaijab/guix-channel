@@ -2244,6 +2244,32 @@ END is the start of the line with :END: on it."
 			:demand t
 			:config
 			(setq eat-enable-mouse nil)
+
+			;; eat's stock scroll sync runs `recenter' plus a regexp
+			;; line-count on every output chunk (~0.87ms/call here).
+			;; When the window is at least as tall as the terminal,
+			;; pinning window-start to the terminal display start is
+			;; equivalent and ~1000x cheaper (~0.6us/call).
+			(defun zaijab/eat--synchronize-scroll (windows)
+			  "Set point and window start in WINDOWS without recentering."
+			  (dolist (window windows)
+			    (if (eq window 'buffer)
+				(goto-char (eat-term-display-cursor eat-terminal))
+			      (if (>= (window-body-height window)
+				      (cdr (eat-term-size eat-terminal)))
+				  (progn
+				    (set-window-point window (eat-term-display-cursor eat-terminal))
+				    (set-window-start window (eat-term-display-beginning eat-terminal) t))
+				;; Window shorter than the terminal: keep eat's
+				;; recenter-based sync so the cursor stays visible.
+				(with-selected-window window
+				  (set-window-point nil (eat-term-display-cursor eat-terminal))
+				  (recenter (- (how-many "\n" (eat-term-display-beginning eat-terminal)
+							 (eat-term-display-cursor eat-terminal))
+					       (cdr (eat-term-size eat-terminal))
+					       (max 0 (- (floor (window-screen-lines))
+							 (cdr (eat-term-size eat-terminal)))))))))))
+			(advice-add 'eat--synchronize-scroll :override (function zaijab/eat--synchronize-scroll))
 			;; :hook
 			#;(eshell-load . (function eat-eshell-mode))
 			#;(eshell-load . (function eat-eshell-visual-command-mode)))))))
@@ -2522,13 +2548,18 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 		       package-native-compile t
 		       bidi-inhibit-bpa t
 		       jit-lock-defer-time 0
+		       redisplay-skip-fontification-on-input t
 		       fast-but-imprecise-scrolling t
+		       read-process-output-max (* 1024 1024)
 		       x-wait-for-event-timeout nil
 		       native-comp-async-jobs-number 4
 		       native-comp-async-report-warnings-errors 'silent
 		       native-comp-jit-compilation t
 	    	       large-file-warning-threshold 1000000000)
 		 (setq-default abbrev-mode t)
+		 ;; Skip cursor layout work in every non-selected window on
+		 ;; each redisplay; only the selected window draws a cursor.
+		 (setq-default cursor-in-non-selected-windows nil)
 		 (set-face-attribute 'mode-line nil :box nil)
 		 (set-face-attribute 'mode-line-inactive nil :box nil)
 
