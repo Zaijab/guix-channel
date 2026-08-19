@@ -2245,6 +2245,13 @@ END is the start of the line with :END: on it."
 			:config
 			(setq eat-enable-mouse nil)
 
+			;; Batch terminal output: process chunks at most ~30/s
+			;; and repaint at least every 100ms during floods,
+			;; instead of the 8ms/33ms defaults.  Animated TUIs
+			;; (Claude Code) repaint 3x less often.
+			(setq eat-minimum-latency 0.033
+			      eat-maximum-latency 0.1)
+
 			;; eat's stock scroll sync runs `recenter' plus a regexp
 			;; line-count on every output chunk (~0.87ms/call here).
 			;; When the window is at least as tall as the terminal,
@@ -2608,7 +2615,18 @@ timeout, i.e. Emacs waiting rather than prompting the user."
    (init '((setq global-auto-revert-non-file-buffers t)
 	   (setq org-startup-truncated nil)
 
-	   (setq tab-bar-auto-width nil)
+	   ;; `window-font-width' re-reads font metrics on every call
+		   ;; (~3ms); `window-max-chars-per-line' hits it for each
+		   ;; terminal window on every window-layout change.  A font's
+		   ;; width never changes, so memoize on the face font name.
+		   (defvar zaijab/font-width-cache (make-hash-table :test (quote equal)))
+		   (defun zaijab/window-font-width-cached (orig &optional window face)
+		     (let ((key (face-font (or face (quote default)) window)))
+		       (or (gethash key zaijab/font-width-cache)
+			   (puthash key (funcall orig window face) zaijab/font-width-cache))))
+		   (advice-add (quote window-font-width) :around (function zaijab/window-font-width-cached))
+
+		   (setq tab-bar-auto-width nil)
 	   
 	   ;; -- Right side: clock/battery, re-rendered only when their 60s timers fire --
 	   (defvar zaijab/tab-bar-global-cache "") 
