@@ -2244,19 +2244,9 @@ END is the start of the line with :END: on it."
 			:demand t
 			:config
 			(setq eat-enable-mouse nil)
+			(setq eat-minimum-latency 0.001
+			      eat-maximum-latency 0.01)
 
-			;; Batch terminal output: process chunks at most ~30/s
-			;; and repaint at least every 100ms during floods,
-			;; instead of the 8ms/33ms defaults.  Animated TUIs
-			;; (Claude Code) repaint 3x less often.
-			(setq eat-minimum-latency 0.033
-			      eat-maximum-latency 0.1)
-
-			;; eat's stock scroll sync runs `recenter' plus a regexp
-			;; line-count on every output chunk (~0.87ms/call here).
-			;; When the window is at least as tall as the terminal,
-			;; pinning window-start to the terminal display start is
-			;; equivalent and ~1000x cheaper (~0.6us/call).
 			(defun zaijab/eat--synchronize-scroll (windows)
 			  "Set point and window start in WINDOWS without recentering."
 			  (dolist (window windows)

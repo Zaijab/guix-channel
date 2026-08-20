@@ -4,6 +4,9 @@
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu services)
+  #:use-module (guix base32)
+  #:use-module (guix download)
+  #:use-module (guix packages)
   #:use-module (gnu packages)
   #:use-module (gnu packages vpn)
   #:use-module (gnu packages gnupg)
@@ -18,6 +21,15 @@
   #:use-module (zaijab services emacs)
   #:use-module (gnu home services sound)
   #:use-module (gnu services shepherd))
+
+(define bgutil-ytdlp-pot-provider-plugin
+  (origin
+    (method url-fetch)
+    (uri (string-append
+          "https://github.com/Brainicism/bgutil-ytdlp-pot-provider/"
+          "releases/download/1.3.1/bgutil-ytdlp-pot-provider.zip"))
+    (sha256
+     (base32 "0f4v0rkqb95whqar6fq61ilfa66jqb0fxszmm9ra2g8lfrzyrkmq"))))
 
 (define-public zains-home
   (home-environment
@@ -89,6 +101,8 @@
                        (".config/pycodestyle" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/pycodestyle"))
                        (".config/mpv/mpv.conf" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mpv.conf"))
                        (".config/yt-dlp/config" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/yt-dlp-config"))
+                       (".config/yt-dlp/plugins/bgutil-ytdlp-pot-provider.zip"
+                        ,bgutil-ytdlp-pot-provider-plugin)
                        (".config/emacs/templates" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/templates"))))))))
 
 zains-home

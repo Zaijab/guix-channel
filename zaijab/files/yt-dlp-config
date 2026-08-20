@@ -1,1 +1,3 @@
---extractor-args "youtube:player_client=default,android"
+--extractor-args "youtube:player_client=mweb"
+--js-runtimes node
+--remote-components ejs:github
