@@ -23,7 +23,7 @@
    (name guix-science-nonfree)
    (url "https://codeberg.org/yiranlus/guix-science-nonfree.git")
    (branch "fix")
-   (introduction
+   #;(introduction
     (channel-introduction
      (version 0)
      (commit "58661b110325fd5d9b40e6f0177cc486a615817e")
