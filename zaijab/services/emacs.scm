@@ -2116,7 +2116,7 @@ END is the start of the line with :END: on it."
 			:config
 			(setq eglot-autoshutdown t)
 			(setq eglot-ignored-server-capabilities '(:semanticTokensProvider))
-			(add-hook 'eglot-managed-mode-hook (lambda () (flymake-mode -1)))
+			#;(add-hook 'eglot-managed-mode-hook (lambda () (flymake-mode -1)))
 			(setq python-indent-def-block-scale 1)
 			(add-to-list 'eglot-server-programs '(python-ts-mode . ("pylsp")))
 			(setq-default eglot-workspace-configuration
@@ -2508,9 +2508,10 @@ timeout, i.e. Emacs waiting rather than prompting the user."
    (packages (list emacs-lean4-mode lean4-patched lean-mathlib))
    (init '((use-package lean4-mode
 			:config
-			(define-key lsp-mode-map (kbd "s-l") nil))
+			(define-key lsp-mode-map (kbd "s-l") nil)
+			(load "/home/zjabbar/code/guix-channel/zaijab/files/lean-eglot.el"))
 	   
-	   #;(load "/home/zjabbar/code/guix-channel/zaijab/files/.el")))))
+	   ))))
 
 (define font-configuration
   (home-emacs-configuration
