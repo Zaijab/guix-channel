@@ -976,7 +976,32 @@ See `consult-grep' for details."
 	   (pdf-tools-install)
 	   ;; (add-hook 'pdf-view-mode-hook (function pdf-view-roll-minor-mode))
 	   (defvar *current-mode* 'light)
-
+	   (defun zj/pdf-view-new-window-function--fixed (winprops)
+	     (cl-assert (or (eq t (car winprops))
+			    (eq (window-buffer (car winprops)) (current-buffer))))
+	     (let ((ol (image-mode-window-get 'overlay winprops)))
+	       (if ol
+		   (progn
+		    (setq ol (copy-overlay ol))
+		    (move-overlay ol (point-min) (point-max)))
+		   (setq ol (make-overlay (point-min) (point-max) nil t))
+		   (overlay-put ol 'pdf-view t))
+	       (overlay-put ol 'window (car winprops))
+	       (unless (windowp (car winprops))
+		 (cl-assert (eq t (car winprops)))
+		 (delete-overlay ol))
+	       (image-mode-window-put 'overlay ol winprops)
+	       (dolist (ov (overlays-in (point-min) (point-max)))
+		       (when (and (windowp (overlay-get ov 'window))
+				  (not (window-live-p (overlay-get ov 'window))))
+			 (delete-overlay ov)))
+	       (when (and (windowp (car winprops))
+			  (null (image-mode-window-get 'image winprops)))
+		 (with-selected-window (car winprops)
+				       (pdf-view-goto-page
+					(or (image-mode-window-get 'page t) 1))))))
+           
+	   (advice-add 'pdf-view-new-window-function :override #'zj/pdf-view-new-window-function--fixed)
 	   (defun my/dark-mode ()
 	     (interactive)
 	     (cond ((eq *current-mode* 'light)
@@ -2285,21 +2310,11 @@ END is the start of the line with :END: on it."
 	      xinput
 	      arandr
 	      gobject-introspection))
-   (init '((use-package exwm
+   (init '((use-package xelb
+			:if (display-graphic-p))
+	   (use-package exwm
 			:if (display-graphic-p)
 			:init
-			(exwm-randr-mode)
-			(require 'xelb)
-
-			;; (advice-add (function exwm-layout--hide)
-			;; 	    :after (lambda (id)
-			;; 		     (with-current-buffer (exwm--id->buffer id)
-			;; 					  (setq exwm--ewmh-state
-			;; 						(delq xcb:Atom:_NET_WM_STATE_HIDDEN exwm--ewmh-state))
-			;; 					  (exwm-layout--set-ewmh-state id)
-			;; 					  (xcb:flush exwm--connection))))
-			(unbind-key (kbd "C-x C-z") 'global-map)
-			(unbind-key (kbd "C-z") 'global-map)
 			(global-set-key (kbd "<f7>") (function
 						      (lambda () (interactive)
 							      (start-process-shell-command "" nil "loginctl suspend"))))
@@ -2746,7 +2761,8 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 		     (setq this-command 'hs-global-show))
 		    (_ (hs-hide-all))))
 
-
+	   (unbind-key (kbd "C-x C-z") 'global-map)
+	   (unbind-key (kbd "C-z") 'global-map)
 	   (define-key tab-bar-mode-map (kbd "C-<tab>") nil)
 	   (define-key tab-bar-mode-map (kbd "C-S-<tab>") nil)
 	   (define-key tab-bar-mode-map (kbd "C-S-<iso-lefttab>") nil)
