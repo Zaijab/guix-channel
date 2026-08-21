@@ -2314,7 +2314,7 @@ END is the start of the line with :END: on it."
 			:if (display-graphic-p))
 	   (use-package exwm
 			:if (display-graphic-p)
-			:init
+			:config
 			(global-set-key (kbd "<f7>") (function
 						      (lambda () (interactive)
 							      (start-process-shell-command "" nil "loginctl suspend"))))
