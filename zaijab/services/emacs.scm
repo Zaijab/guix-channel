@@ -1001,7 +1001,7 @@ See `consult-grep' for details."
 				       (pdf-view-goto-page
 					(or (image-mode-window-get 'page t) 1))))))
            
-	   (advice-add 'pdf-view-new-window-function :override #'zj/pdf-view-new-window-function--fixed)
+	   (advice-add 'pdf-view-new-window-function :override (function zj/pdf-view-new-window-function--fixed))
 	   (defun my/dark-mode ()
 	     (interactive)
 	     (cond ((eq *current-mode* 'light)
