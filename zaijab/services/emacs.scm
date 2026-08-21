@@ -2505,7 +2505,7 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 
 (define lean-configuration
   (home-emacs-configuration
-   (packages (list lean4-patched lean-mathlib))))
+   (packages (list emacs-lean4-mode lean4-patched lean-mathlib))))
 
 (define font-configuration
   (home-emacs-configuration
