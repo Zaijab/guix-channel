@@ -2505,7 +2505,9 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 
 (define lean-configuration
   (home-emacs-configuration
-   (packages (list emacs-lean4-mode lean4-patched lean-mathlib))))
+   (packages (list emacs-lean4-mode lean4-patched lean-mathlib))
+   (init '((define-key lsp-mode-map (kbd "s-l") nil)
+	   (load "/home/zjabbar/code/guix-channel/zaijab/files/.el")))))
 
 (define font-configuration
   (home-emacs-configuration
