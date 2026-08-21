@@ -71,7 +71,8 @@
   #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages fonts)
   #:use-module (nongnu packages nvidia)
-  #:use-module (px packages tools)
+  ;; #:use-module (px packages tools)
+  #:use-module (gnu packages tools)
   #:use-module (px packages ai)
 
   ;; #:use-module (guix-science packages python)
