@@ -68,6 +68,7 @@
   #:use-module (zaijab packages python-xyz)
   #:use-module (zaijab packages mathematics)
   #:use-module (zaijab packages lean)
+  #:use-module (zaijab packages ai)
   #:use-module (nongnu packages emacs)
   #:use-module (nongnu packages fonts)
   #:use-module (nongnu packages nvidia)
@@ -577,7 +578,7 @@ See `consult-grep' for details."
 		   emacs-agent-shell
 		   claude-code
 		   bubblewrap
-		   codex
+		   codex-with-code-mode
 		   node))
    (init '(
 	   (add-to-list 'exec-path (expand-file-name "~/.guix-home/profile/bin/"))
