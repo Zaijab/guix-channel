@@ -9,6 +9,7 @@
   #:use-module (guix channels)
   #:use-module (nongnu packages linux)
   #:use-module (nongnu packages video)
+  #:use-module (gnu packages video)
   #:use-module (nongnu packages printers)
   #:use-module (gnu)
   #:use-module (gnu system)
