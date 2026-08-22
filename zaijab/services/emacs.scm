@@ -975,7 +975,6 @@ See `consult-grep' for details."
    (init '((add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 	   (pdf-tools-install)
 	   ;; (add-hook 'pdf-view-mode-hook (function pdf-view-roll-minor-mode))
-	   (defvar *current-mode* 'light)
 	   (defun zj/pdf-view-new-window-function--fixed (winprops)
 	     (cl-assert (or (eq t (car winprops))
 			    (eq (window-buffer (car winprops)) (current-buffer))))
@@ -1002,6 +1001,7 @@ See `consult-grep' for details."
 					(or (image-mode-window-get 'page t) 1))))))
            
 	   (advice-add 'pdf-view-new-window-function :override (function zj/pdf-view-new-window-function--fixed))
+	   (defvar *current-mode* 'light)
 	   (defun my/dark-mode ()
 	     (interactive)
 	     (cond ((eq *current-mode* 'light)
