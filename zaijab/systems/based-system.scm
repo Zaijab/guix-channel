@@ -8,6 +8,7 @@
   #:use-module (guix transformations)
   #:use-module (guix channels)
   #:use-module (nongnu packages linux)
+  #:use-module (nongnu packages video)
   #:use-module (nongnu packages printers)
   #:use-module (gnu)
   #:use-module (gnu system)
@@ -258,6 +259,7 @@
 	       nss-mdns
 	       cuda
 	       cudnn-8.9.1.23
+	       mpv-nvidia
 	       (specification->package "scrot")
 	       (specification->package "xauth")
 	       (specification->package "openvpn")
@@ -295,6 +297,22 @@
     (kernel linux)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
 			     %default-kernel-arguments))
+    (packages (cons*
+	       tree
+	       parted
+	       git
+	       gnu-make
+	       cups
+	       htop
+	       nss-mdns
+	       mpv
+	       (specification->package "scrot")
+	       (specification->package "xauth")
+	       (specification->package "openvpn")
+	       (specification->package "network-manager-applet")
+	       (specification->package "pavucontrol")
+	       (specification->package "gsettings-desktop-schemas")
+	       %base-packages))
     (host-name "euler")))
 
 (define-public my-operating-system

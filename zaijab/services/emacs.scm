@@ -1057,7 +1057,7 @@ See `consult-grep' for details."
 (define elfeed-configuration
   (home-emacs-configuration
    (packages (list
-	      mpv
+	      ;; mpv
 	      emacs-empv
 	      yt-dlp
 	      emacs-elfeed
@@ -1190,7 +1190,6 @@ See `consult-grep' for details."
 
 	   (defun browse-url-mpv (url &optional new-window)
 	     (start-process "mpv" "*mpv*" "mpv"
-			    "--ytdl-format=bestvideo[height<=?480]+bestaudio/best"
 			    "--save-position-on-quit"
 			    url))
 
