@@ -1178,7 +1178,7 @@ See `consult-grep' for details."
 	   (require 'elfeed-tube-fill)
 	   (elfeed-tube-setup)
 	   (load "/home/zjabbar/code/guix-channel/zaijab/files/elfeed-fill-ytdlp.el")
-	   (setq-default elfeed-search-filter "")
+	   (setq-default elfeed-search-filter "@2-weeks-ago")
 	   (setq-default elfeed-search-title-max-width 100)
 	   (setq-default elfeed-search-title-min-width 100)
 
