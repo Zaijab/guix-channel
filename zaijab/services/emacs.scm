@@ -75,7 +75,7 @@
   #:use-module (nongnu packages nvidia)
   ;; #:use-module (px packages tools)
   #:use-module (gnu packages codex)
-  #:use-module (px packages ai)
+  #:use-module ((px packages ai) #:hide (ollama))
 
   ;; #:use-module (guix-science packages python)
   ;; #:use-module (guix-science packages machine-learning)

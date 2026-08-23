@@ -19,9 +19,10 @@
   #:use-module (nongnu packages chrome)
   #:use-module (nongnu packages messaging)
   #:use-module (zaijab services emacs)
+  #:use-module (zaijab packages ai)
   #:use-module (gnu home services sound)
   #:use-module (gnu services shepherd)
-  #:use-module (px packages ai))
+  #:use-module ((px packages ai) #:hide (ollama)))
 
 (define bgutil-ytdlp-pot-provider-plugin
   (origin
