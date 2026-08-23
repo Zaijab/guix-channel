@@ -52,6 +52,7 @@
   #:use-module (gnu packages imagemagick)
   #:use-module (gnu packages graphviz)
   #:use-module (gnu packages tree-sitter)
+  #:use-module (gnu packages web)
   #:use-module (gnu packages rust-apps)
   #:use-module (gnu packages base)
   #:use-module (gnu services)
@@ -579,7 +580,9 @@ See `consult-grep' for details."
 		   claude-code
 		   bubblewrap
 		   codex-with-code-mode
-		   node))
+		   node
+		   jq
+		   ollama))
    (init '(
 	   (add-to-list 'exec-path (expand-file-name "~/.guix-home/profile/bin/"))
 	   (setq agent-shell-anthropic-claude-command nil)
@@ -1192,9 +1195,6 @@ See `consult-grep' for details."
 	     (start-process "mpv" "*mpv*" "mpv"
 			    "--save-position-on-quit"
 			    url))
-
-	   ;; (defun browse-url-mpv (url &optional new-window)
-	   ;;   (start-process "mpv" "*mpv*" "mpv" url))
 
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.youtube." 'browse-url-mpv))
 	   (add-to-list 'browse-url-handlers (cons "https:\\/\\/www\\.twitch." 'browse-url-mpv))
