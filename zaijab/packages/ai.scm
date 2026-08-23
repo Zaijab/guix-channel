@@ -3,6 +3,7 @@
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix gexp)
+  #:use-module (guix utils)
   #:use-module (nonguix build-system binary)
   #:use-module ((px packages ai) #:prefix px:))
 
@@ -78,7 +79,7 @@ models such as gpt-5.6-sol use to execute every tool call.")
     (inherit px:ollama)
     (arguments
       (substitute-keyword-arguments (package-arguments px:ollama)
-        ((#:install-plan _)
+        ((#:install-plan old-install-plan)
           #~'(("bin/ollama" "bin/")
               ("lib/ollama/llama-server" "lib/ollama/")
               ("lib/ollama/llama-quantize" "lib/ollama/")
