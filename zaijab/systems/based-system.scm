@@ -121,7 +121,7 @@
 		       (respawn? #t))
 
 		      (oci-container-configuration
-		       (image "docker.io/brainicism/bgutil-ytdlp-pot-provider:1.3.1")
+		       (image "docker.io/brainicism/bgutil-ytdlp-pot-provider:1.3.2")
 		       (provision "docker-bgutil-provider")
 		       (ports '("127.0.0.1:4416:4416"))
 		       (respawn? #t))))))
