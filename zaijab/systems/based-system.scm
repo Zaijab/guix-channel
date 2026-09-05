@@ -76,7 +76,11 @@
    (service zram-device-service-type
 	    (zram-device-configuration
 	     (size "8G")
-	     (compression-algorithm 'zstd)))
+	     (compression-algorithm 'zstd)
+	     ;; Stay ahead of the NVMe swapfile.
+	     (priority 100)
+	     ) ; zram-device-configuration
+	    ) ; service zram-device-service-type
    (service earlyoom-service-type
 	    (earlyoom-configuration
 	     (minimum-available-memory 5)
@@ -275,7 +279,17 @@
 			     %default-kernel-arguments))
     
     (host-name "tao")
-    
+
+    ;; NVMe overflow tier below zram; a full zram otherwise means an earlyoom kill.
+    (swap-devices
+     (list
+      (swap-space
+       (target "/swap/swapfile")
+       (priority 10)
+       ) ; swap-space
+      ) ; list
+     ) ; swap-devices
+
     (services (cons*
 	       (service nvidia-service-type)	       
 	       (set-xorg-configuration
