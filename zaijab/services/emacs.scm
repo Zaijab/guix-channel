@@ -2449,7 +2449,7 @@ it into the focused EXWM window by setting CLIPBOARD and synthesising C-v."
 				  (add-to-list 'super-keys maybe-event)))
 			    (setq km (cdr km))))
 
-			(setq exwm-input-global-keys (append super-keys '(?\C-c
+			(setq exwm-input-prefix-keys (append super-keys '(?\C-c
 									  ?\M-o
 									  f7
 									  XF86AudioRaiseVolume
