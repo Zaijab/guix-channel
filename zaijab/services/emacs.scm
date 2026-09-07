@@ -2769,7 +2769,8 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 	   (define-key prog-mode-map (kbd "C-x C-n") (function forward-page))
 	   (define-key prog-mode-map (kbd "C-x C-p") (function backward-page))
 
-
+	   (unless (fboundp 'compat--seconds-to-string)
+	     (defalias 'compat--seconds-to-string (function seconds-to-string)))
 
 	   (defun quick-restart ()
 	     (interactive)
