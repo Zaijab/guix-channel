@@ -1,0 +1,5 @@
+# yt-dlp needs an external JS runtime to solve YouTube's n/sig challenges;
+# only deno is enabled by default, and node is what the profile has.
+--js-runtimes node
+# Let it fetch a newer solver script from GitHub when the bundled one is stale.
+--remote-components ejs:github

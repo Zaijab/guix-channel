@@ -122,12 +122,6 @@
 				  "/home/zjabbar/code/guix-channel/zaijab/files/limiter.toml:/etc/searxng/limiter.toml"
 				  "/home/zjabbar/code/guix-channel/zaijab/files/settings.yml:/etc/searxng/settings.yml"))
 		       (environment '(("SEARXNG_BASE_URL" . "http://localhost:8080")))
-		       (respawn? #t))
-
-		      (oci-container-configuration
-		       (image "docker.io/brainicism/bgutil-ytdlp-pot-provider:latest")
-		       (provision "docker-bgutil-provider")
-		       (ports '("127.0.0.1:4416:4416"))
 		       (respawn? #t))))))
 
    (service cups-service-type
