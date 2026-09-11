@@ -2090,7 +2090,7 @@ END is the start of the line with :END: on it."
 			;; dynamic module.
 			(setq jupyter-use-zmq nil)
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
-			(setq jupyter-repl-completion-at-point-hook-depth 1)
+			(setq jupyter-repl-completion-at-point-hook-depth 0)
 			(setq org-babel-python-command "python3"
 			      org-confirm-babel-evaluate nil
 			      python-interpreter "python3"
