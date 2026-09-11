@@ -842,6 +842,26 @@ feed subscriptions.")
 
 emacs-elfeed-tube-current
 
+(define-public emacs-org-mindmap
+  (package
+    (name "emacs-org-mindmap")
+    (version "0.3.0")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/krvkir/org-mindmap.git")
+             (commit "de81481bff9e33568b7df202478e95aff9e7b4af")))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "0h4g3fjvxn7r7zikxf62znabspnkr9a1wfrs4ij20vb6pzs95lkj"))))
+    (build-system emacs-build-system)
+    (propagated-inputs (list))
+    (home-page "https://github.com/krvkir/org-mindmap")
+    (synopsis "")
+    (description "")
+    (license license:unlicense)))
+
 (define-public emacs-gpastel
   (package
     (name "emacs-gpastel")

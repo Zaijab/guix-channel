@@ -1483,6 +1483,7 @@ See `consult-grep' for details."
 	      emacs-org-node-3
 	      emacs-org-roam
 	      emacs-org-roam-ui
+	      emacs-org-mindmap
 	      emacs-org-roam-bibtex
 	      emacs-consult-org-roam
 	      emacs-org-fc
@@ -2324,6 +2325,18 @@ END is the start of the line with :END: on it."
 					       (max 0 (- (floor (window-screen-lines))
 							 (cdr (eat-term-size eat-terminal)))))))))))
 			(advice-add 'eat--synchronize-scroll :override (function zaijab/eat--synchronize-scroll))
+			(defun zaijab/eat-size-unless-minibuffer-active (process windows)
+			  "Do not resize Eat's PTY while a minibuffer is active."
+			  (unless (active-minibuffer-window)
+			    (window-adjust-process-window-size-smallest process windows)))
+
+			(defun zaijab/eat-defer-resize-during-minibuffer ()
+			  (setq-local window-adjust-process-window-size-function
+				      (function zaijab/eat-size-unless-minibuffer-active)))
+
+			(add-hook 'eat-mode-hook
+				  (function zaijab/eat-defer-resize-during-minibuffer))
+
 			;; :hook
 			#;(eshell-load . (function eat-eshell-mode))
 			#;(eshell-load . (function eat-eshell-visual-command-mode)))))))
