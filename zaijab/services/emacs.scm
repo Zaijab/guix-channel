@@ -2026,7 +2026,7 @@ END is the start of the line with :END: on it."
 			;; (setq org-confirm-babel-evaluate nil)
 			(setq org-startup-with-latex-preview t)
 			(add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-			(add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
+			;; (add-hook 'org-babel-after-execute-hook 'colorize-compilation-buffer)
 			(setq python-indent-guess-indent-offset-verbose nil)
 			(setq org-preview-latex-image-directory "/home/zjabbar/.cache/dvisvgm/")
 
