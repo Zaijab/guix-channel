@@ -854,7 +854,7 @@ emacs-elfeed-tube-current
              (commit "de81481bff9e33568b7df202478e95aff9e7b4af")))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "0h4g3fjvxn7r7zikxf62znabspnkr9a1wfrs4ij20vb6pzs95lkj"))))
+        (base32 "1i184clw6vagpd15r2v9582yvf3wfqkxarwb4x2mly01s11zzvr0"))))
     (build-system emacs-build-system)
     (propagated-inputs (list))
     (home-page "https://github.com/krvkir/org-mindmap")
