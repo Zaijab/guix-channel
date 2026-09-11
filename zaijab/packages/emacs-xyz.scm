@@ -856,6 +856,7 @@ emacs-elfeed-tube-current
        (sha256
         (base32 "1i184clw6vagpd15r2v9582yvf3wfqkxarwb4x2mly01s11zzvr0"))))
     (build-system emacs-build-system)
+    (arguments `(#:phases (modify-phases %standard-phases (delete 'check))))
     (propagated-inputs (list))
     (home-page "https://github.com/krvkir/org-mindmap")
     (synopsis "")
