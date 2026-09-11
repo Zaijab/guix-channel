@@ -2150,29 +2150,59 @@ END is the start of the line with :END: on it."
 							'(:pycodestyle (:enabled :json-false)
 							  ;; :pyflakes (:enabled t)
 							  :flake8 (:enabled :json-false)
-							  :mypy (:enabled :json-false))))))
+							  :pylsp_mypy (:enabled t :live_mode t))))))
 			(setq eglot-send-changes-idle-time 0.1)
 			(setq eglot-report-progress nil)
 
-			(defun sloth/org-babel-edit-prep (info)
-			  (setq buffer-file-name (or (alist-get :file (caddr info))
-						     "org-src-babel-tmp"))
-			  (eglot-ensure))
+			;; (defun sloth/org-babel-edit-prep (info)
+			;;   (setq buffer-file-name (or (alist-get :file (caddr info))
+			;; 			     "org-src-babel-tmp"))
+			;;   (eglot-ensure))
 
-			(advice-add 'org-edit-src-code
-				    :before (defun sloth/org-edit-src-code/before (&rest args)
-					      (when-let* ((element (org-element-at-point))
-							  (type (org-element-type element))
-							  (lang (org-element-property :language element))
-							  ;; (is-python (string= lang "jupyter-python"))
-							  (mode (org-src-get-lang-mode lang))
-							  ((eglot--lookup-mode mode))
-							  (edit-pre (intern
-								     (format "org-babel-edit-prep:%s" lang))))
-							 (if (fboundp edit-pre)
-							     (advice-add edit-pre :after (function sloth/org-babel-edit-prep))
-							     (fset edit-pre (function sloth/org-babel-edit-prep))))))
-			
+			;; (advice-add 'org-edit-src-code
+			;; 	    :before (defun sloth/org-edit-src-code/before (&rest args)
+			;; 		      (when-let* ((element (org-element-at-point))
+			;; 				  (type (org-element-type element))
+			;; 				  (lang (org-element-property :language element))
+			;; 				  ;; (is-python (string= lang "jupyter-python"))
+			;; 				  (mode (org-src-get-lang-mode lang))
+			;; 				  ((eglot--lookup-mode mode))
+			;; 				  (edit-pre (intern
+			;; 					     (format "org-babel-edit-prep:%s" lang))))
+			;; 				 (if (fboundp edit-pre)
+			;; 				     (advice-add edit-pre :after (function sloth/org-babel-edit-prep))
+			;; 				     (fset edit-pre (function sloth/org-babel-edit-prep))))))
+			(setq org-src-window-setup 'current-window)
+
+			(defvar-local sloth/org-src-python-temp-file nil)
+
+			(defun sloth/org-src-python-cleanup ()
+			  (when (and sloth/org-src-python-temp-file
+				     (file-exists-p sloth/org-src-python-temp-file)
+				     (file-in-directory-p
+				      sloth/org-src-python-temp-file
+				      temporary-file-directory))
+			    (delete-file sloth/org-src-python-temp-file)))
+
+			(defun sloth/org-src-python-setup ()
+			  (when (derived-mode-p 'python-base-mode)
+			    ;; pylsp-mypy requires the advertised Python pathname to exist.
+			    ;; This file is only an LSP backing file; Org remains authoritative.
+			    (setq-local sloth/org-src-python-temp-file
+					(make-temp-file
+					 "org-src-" nil ".py" (buffer-string)))
+			    (setq-local buffer-file-name sloth/org-src-python-temp-file)
+
+			    ;; Give Eglot a workspace containing the temporary file.
+			    (setq-local default-directory temporary-file-directory)
+
+			    ;; Run after Eglot's ordinary kill hooks.
+			    (add-hook 'kill-buffer-hook
+				      (function sloth/org-src-python-cleanup 90 t))
+
+			    (eglot-ensure)))
+
+			(add-hook 'org-src-mode-hook (function sloth/org-src-python-setup))
 			)
 
 
