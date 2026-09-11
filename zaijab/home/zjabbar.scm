@@ -2,6 +2,7 @@
   #:use-module (gnu home)
   #:use-module (gnu home services)
   #:use-module (gnu packages emacs)
+  #:use-module (gnu packages window-management)
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu services)
   #:use-module (guix base32)
@@ -28,6 +29,7 @@
   (home-environment
    (packages (list
 	      ;; strongswan
+	      dunst
 	      (specification->package "xmodmap")
 	      (specification->package "unzip")
               (specification->package "xset")
