@@ -2198,7 +2198,7 @@ END is the start of the line with :END: on it."
 
 			    ;; Run after Eglot's ordinary kill hooks.
 			    (add-hook 'kill-buffer-hook
-				      (function sloth/org-src-python-cleanup 90 t))
+				      (function sloth/org-src-python-cleanup) 90 t)
 
 			    (eglot-ensure)))
 
@@ -2218,9 +2218,10 @@ END is the start of the line with :END: on it."
 				    nil t))
 			(add-hook 'python-ts-mode-hook (function eglot-ensure))
 			(add-hook 'python-ts-mode-hook (function hs-minor-mode))
-			(add-hook 'python-ts-mode-hook (lambda () (setq-local completion-at-point-functions
-									      (list (function eglot-completion-at-point)
-										    ))))
+			
+			;; (add-hook 'python-ts-mode-hook (lambda () (setq-local completion-at-point-functions
+			;; 						      (list (function eglot-completion-at-point)
+			;; 							    ))))
 			)))))
 
 (define lisp-configuration
