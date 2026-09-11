@@ -1502,7 +1502,7 @@ See `consult-grep' for details."
 			 ("C-c m m" . org-mindmap-list-to-mindmap)
 			 ("C-c m l" . org-mindmap-to-list))
 			:config
-			(add-hook 'org-mode-hook #'org-mindmap-mode))
+			(add-hook 'org-mode-hook (function org-mindmap-mode)))
 	   
 	   ;; (use-package org-node
 	   ;; 		:config
