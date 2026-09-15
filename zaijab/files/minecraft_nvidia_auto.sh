@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-channel="${GUIX_MINECRAFT_CHANNEL:-/home/zjabbar/code/guix-channel/zaijab/files/minecraft.tmpl}"
+channel="${GUIX_MINECRAFT_CHANNEL:-/home/zjabbar/code/guix-channel/zaijab/files/channel_without_zaijab}"
 
 driver_version="$(
     nvidia-smi --query-gpu=driver_version --format=csv,noheader 2>/dev/null \

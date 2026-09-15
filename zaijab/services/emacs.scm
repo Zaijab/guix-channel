@@ -89,7 +89,7 @@
 
 (define-configuration/no-serialization home-emacs-configuration
   (emacs
-   (file-like emacs-igc)
+   (file-like emacs)
    "The Emacs package to use.")
   (packages
    (file-likes '())
