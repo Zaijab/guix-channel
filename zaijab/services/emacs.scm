@@ -2698,21 +2698,26 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 		   (setq tab-bar-auto-width nil)
 	   
 	   ;; -- Right side: clock/battery, re-rendered only when their 60s timers fire --
-	   (defvar zaijab/tab-bar-global-cache "") 
-	   
+	   (defvar zaijab/tab-bar-global-cache "")
+	   ;; Pixel width, not `string-width': mu4e-alert swaps "Mail" for a 17px icon.
+	   (defvar zaijab/tab-bar-global-pixel-width 0)
+
 	   (defun zaijab/tab-bar-refresh-global (&rest _)
 	     (setq zaijab/tab-bar-global-cache
 		   (string-trim-right (format-mode-line global-mode-string)))
+	     (setq zaijab/tab-bar-global-pixel-width
+		   (string-pixel-width zaijab/tab-bar-global-cache))
 	     (force-mode-line-update t))
-	   
+
 	   (defun zaijab/tab-bar-format-global-cached ()
 	     (list (list 'global 'menu-item zaijab/tab-bar-global-cache 'ignore)))
-	   
+
 	   (defun zaijab/tab-bar-format-align-right ()
 	     (list (list 'align-right 'menu-item
 			    (propertize " " 'display
 					 (list 'space :align-to
-						 (list '- 'right (+ 1 (string-width zaijab/tab-bar-global-cache)))))
+						 (list '- 'right
+						       (list (+ (frame-char-width) zaijab/tab-bar-global-pixel-width)))))
 			    'ignore)))
 	   (advice-add 'display-time-event-handler :after (function zaijab/tab-bar-refresh-global))
 	   (advice-add 'battery-update-handler :after (function zaijab/tab-bar-refresh-global))
