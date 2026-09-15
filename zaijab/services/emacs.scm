@@ -2730,7 +2730,7 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 				     zaijab/tab-bar-name-pad              ; pad the name first
 				     tab-bar-tab-name-format-close-button ; X at the right edge
 				     tab-bar-tab-name-format-face         ; face styles the full width
-				     tab-bar-tab-name-format-mouse-face)) 
+				     )) 
            
 	   (customize-set-variable 'tab-bar-format
 				   '(tab-bar-format-tabs
