@@ -141,6 +141,7 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages emacs-xyz)
+  #:use-module (guix build utils)
   #:use-module (guix channels)
   #:use-module (guix inferior)
   #:use-module (guix profiles)
@@ -854,7 +855,16 @@ emacs-elfeed-tube-current
              (commit "de81481bff9e33568b7df202478e95aff9e7b4af")))
        (file-name (git-file-name name version))
        (sha256
-        (base32 "1i184clw6vagpd15r2v9582yvf3wfqkxarwb4x2mly01s11zzvr0"))))
+        (base32 "1i184clw6vagpd15r2v9582yvf3wfqkxarwb4x2mly01s11zzvr0"))
+         (snippet
+	  '(begin
+	     (substitute* '("org-mindmap.el" "org-mindmap-parser.el")
+               (("\\(incf ") "(cl-incf ")
+               (("\\(decf ") "(cl-decf ")
+	       ) ; substitute*
+	     ) ; begin
+	  ) ; snippet
+       ))
     (build-system emacs-build-system)
     (arguments `(#:phases (modify-phases %standard-phases (delete 'check))))
     (propagated-inputs (list))

@@ -2102,6 +2102,8 @@ END is the start of the line with :END: on it."
 			;; the notebook/WebSocket transport instead of the ZMQ
 			;; dynamic module.
 			;; (setq jupyter-use-zmq nil)
+			(advice-add 'jupyter-org-results-drawer :filter-return
+				    (lambda (d) (org-element-put-property d :pre-blank 0)))
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
 			(setq jupyter-repl-completion-at-point-hook-depth 1)
 			(setq org-babel-python-command "python3"
