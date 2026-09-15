@@ -856,6 +856,7 @@ emacs-elfeed-tube-current
        (file-name (git-file-name name version))
        (sha256
         (base32 "1i184clw6vagpd15r2v9582yvf3wfqkxarwb4x2mly01s11zzvr0"))
+       (modules '((guix build utils)))
          (snippet
 	  '(begin
 	     (substitute* '("org-mindmap.el" "org-mindmap-parser.el")
