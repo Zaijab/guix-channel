@@ -1622,7 +1622,22 @@ END is the start of the line with :END: on it."
 				  (line-beginning-position 0)
 				  (line-beginning-position 0)))))))
 
-			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card)))
+			(define-key org-fc-review-rate-mode-map (kbd "n") (function org-fc-review-skip-card))
+			;; org-mindmap-mode binds RET ahead of org-fc's flip map; drop it while a card is up
+			(defvar-local org-fc-mindmap-was-on nil)
+			(defun org-fc-disable-mindmap ()
+			  (setq org-fc-mindmap-was-on org-mindmap-mode)
+			  (org-mindmap-mode -1)
+			) ; defun
+			(defun org-fc-restore-mindmap ()
+			  (when org-fc-mindmap-was-on
+			    (setq org-fc-mindmap-was-on nil)
+			    (org-mindmap-mode 1)
+			  ) ; when
+			) ; defun
+			(add-hook (quote org-fc-before-setup-hook) (function org-fc-disable-mindmap))
+			(advice-add (quote org-fc-review-reset) :after (function org-fc-restore-mindmap))
+		   ) ; use-package org-fc
 
 	   ))))
 
