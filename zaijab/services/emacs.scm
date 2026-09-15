@@ -2101,9 +2101,9 @@ END is the start of the line with :END: on it."
 			;; emacs-zmq during the kernel_info_request path.  Use
 			;; the notebook/WebSocket transport instead of the ZMQ
 			;; dynamic module.
-			(setq jupyter-use-zmq nil)
+			;; (setq jupyter-use-zmq nil)
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
-			(setq jupyter-repl-completion-at-point-hook-depth 0)
+			(setq jupyter-repl-completion-at-point-hook-depth 1)
 			(setq org-babel-python-command "python3"
 			      org-confirm-babel-evaluate nil
 			      python-interpreter "python3"
@@ -2740,7 +2740,7 @@ timeout, i.e. Emacs waiting rather than prompting the user."
            
 	   (zaijab/tab-bar-refresh-global)
 	   (tab-bar-mode 1)
-	   (igc-start-idle-timer)
+	   ;; (igc-start-idle-timer)
 	   ;; (run-at-time 0.1 0.1 (lambda () (when (input-pending-p) (redisplay t))))
 	   
 	   (setq custom-file (locate-user-emacs-file "custom.el"))
