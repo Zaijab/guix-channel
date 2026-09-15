@@ -1500,7 +1500,11 @@ See `consult-grep' for details."
 			 ("C-c m v" . org-mindmap-switch-layout)
 			 ("C-c m p" . org-mindmap-switch-compaction)
 			 ("C-c m m" . org-mindmap-list-to-mindmap)
-			 ("C-c m l" . org-mindmap-to-list)))
+			 ("C-c m l" . org-mindmap-to-list))
+			:config
+			;; Its tinge blends from face-background, which is nil (so "black") unless the face reaches `default'.
+			(set-face-attribute 'org-mindmap-face-text nil :inherit '(fixed-pitch default))
+			(set-face-attribute 'org-mindmap-face-connectors nil :inherit '(fixed-pitch default)))
 	   
 	   ;; (use-package org-node
 	   ;; 		:config
@@ -2104,6 +2108,8 @@ END is the start of the line with :END: on it."
 			;; (setq jupyter-use-zmq nil)
 			(advice-add 'jupyter-org-results-drawer :filter-return
 				    (lambda (d) (org-element-put-property d :pre-blank 0)))
+			(advice-add 'jupyter-org--define-key-filter :before-while
+				    (lambda (&rest _) (derived-mode-p 'org-mode)))
 			(setq jupyter-org-resource-directory "/home/zjabbar/notes/static/jupyter/")
 			(setq jupyter-repl-completion-at-point-hook-depth 1)
 			(setq org-babel-python-command "python3"

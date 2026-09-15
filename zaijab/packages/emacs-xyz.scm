@@ -857,14 +857,14 @@ emacs-elfeed-tube-current
        (sha256
         (base32 "1i184clw6vagpd15r2v9582yvf3wfqkxarwb4x2mly01s11zzvr0"))
        (modules '((guix build utils)))
-         (snippet
-	  '(begin
-	     (substitute* '("org-mindmap.el" "org-mindmap-parser.el")
-               (("\\(incf ") "(cl-incf ")
-               (("\\(decf ") "(cl-decf ")
-	       ) ; substitute*
-	     ) ; begin
-	  ) ; snippet
+       (snippet
+	'(begin
+	   (substitute* '("org-mindmap.el" "org-mindmap-parser.el")
+             (("\\(incf ") "(cl-incf ")
+             (("\\(decf ") "(cl-decf ")
+	     ) ; substitute*
+	   ) ; begin
+	) ; snippet
        ))
     (build-system emacs-build-system)
     (arguments `(#:phases (modify-phases %standard-phases (delete 'check))))
