@@ -12,6 +12,7 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages vpn)
   #:use-module (gnu packages gnupg)
+  #:use-module (gnu packages xorg)
   #:use-module (gnu home services shells)
   #:use-module (gnu home services gnupg)
   #:use-module (gnu home services shepherd)
@@ -31,7 +32,7 @@
    (packages (list
 	      dunst
 	      libnotify
-	      (specification->package "xmodmap")
+	      xmodmap
 	      (specification->package "unzip")
               (specification->package "xset")
               (specification->package "xinit")
