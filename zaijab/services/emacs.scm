@@ -1859,6 +1859,7 @@ END is the start of the line with :END: on it."
 	      texlive-collection-pictures
 	      texlive-preview
 	      texlive-mylatexformat
+	      texlive-mylatex
 	      texlive-xypic
 	      texlive-esint
 	      texlive-ntheorem
