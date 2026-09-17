@@ -132,11 +132,16 @@
 		    epson-inkjet-printer-escpr
 		    foo2zjs hplip-minimal hplip hplip-plugin))))
 
+   (service slim-service-type
+	    (slim-configuration
+	     (auto-login? #t)
+	     (default-user "zjabbar")))
    ;; (extra-special-file "/etc/nsswitch.conf"
    ;; 		       (plain-file "nsswitch.conf"
    ;; 				   "group:  files\nhosts: files myhostname mdns4_minimal [NOTFOUND=return] dns mdns4\nnetworks: files dns [!UNAVAIL=return]\npasswd: files\nshadow: files\n"))
 
    (modify-services %desktop-services
+     (delete gdm-service-type)
      (delete pulseaudio-service-type)
      (sysctl-service-type
       config => (sysctl-configuration
@@ -154,8 +159,8 @@
      ;; 			 (avahi-configuration
      ;; 			  (publish? #t)
      ;; 			  (publish-workstation? #t)))
-     (gdm-service-type
-      config => (gdm-configuration (inherit config) (auto-login? #t) (default-user "zjabbar")))
+     ;; (gdm-service-type
+      ;; config => (gdm-configuration (inherit config) (auto-login? #t) (default-user "zjabbar")))
      (network-manager-service-type
 		  config => (network-manager-configuration
 			     (inherit config)
