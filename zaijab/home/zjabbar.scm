@@ -2,6 +2,8 @@
   #:use-module (gnu home)
   #:use-module (gnu home services)
   #:use-module (gnu packages emacs)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (nongnu packages messaging)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages window-management)
   #:use-module (gnu packages emacs-xyz)
@@ -30,6 +32,8 @@
 (define-public zains-home
   (home-environment
    (packages (list
+	      xdg-utils
+	      zoom
 	      dunst
 	      libnotify
 	      xmodmap
