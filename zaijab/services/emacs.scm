@@ -1531,6 +1531,7 @@ See `consult-grep' for details."
 			:demand t
 			:after (org sqlite)
 			:custom
+			
 			(org-roam-node-formatter (lambda (node) (downcase (org-roam-node-title node))))
 			(org-roam-directory "~/notes")
 			(org-roam-v2-ack t)
@@ -1544,6 +1545,12 @@ See `consult-grep' for details."
 			     "%(concat (when citar-org-roam-subdir (concat citar-org-roam-subdir \"/\")) \"${citar-citekey}.org\")"
 			     "#+TITLE: ${note-title}\n#+SETUPFILE: latex_header.org\n#+FILETAGS: :Reference:\n")
 			    :unnarrowed t :immediate-finish t)))
+			(org-roam-dailies-capture-templates
+			 '(("d" "default" entry "* %?"
+			    :target
+			    (file+head "%<%Y-%m-%d>.org"
+				       "#+TITLE: %<%Y-%m-%d>\n#+SETUPFILE: ../latex_header.org\n\n")
+			    :unnarrowed t)))
 			(org-roam-db-node-include-function (lambda () (not (member "FC" (org-get-tags)))))
 			(org-roam-node-display-template (concat "${title:*} " (propertize "${tags}" 'face 'org-tag)))
 			:config

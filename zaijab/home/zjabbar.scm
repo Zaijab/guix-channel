@@ -45,7 +45,13 @@
      (service home-bash-service-type
               (home-bash-configuration
                (aliases
-                '(("ll"   . "ls -l")
+                '(("gtm" .
+		   "guix time-machine --unsafe-channel-evaluation -C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl --")
+		  ("gtm-root" .
+		   "sudo guix time-machine --unsafe-channel-evaluation -C /home/zjabbar/code/guix-channel/zaijab/files/channel.tmpl --")
+		  ("gtm-no-zaijab" .
+		   "guix time-machine --unsafe-channel-evaluation -C /home/zjabbar/code/guix-channel/zaijab/files/channel_without_zaijab.tmpl --")
+		  ("ll"   . "ls -l")
                   ("mbsync" . "mbsync -c ~/.config/mbsyncrc")))
                (environment-variables
                 '(("GNUPGHOME" . "~/.config/gnupg")
