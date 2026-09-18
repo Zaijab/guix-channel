@@ -2,4 +2,5 @@
 
 source ~/.bash_profile
 
-exec startx
+# No exec: if X dies you get a shell on tty1 instead of a respawn loop.
+startx

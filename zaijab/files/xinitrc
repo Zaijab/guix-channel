@@ -1,4 +1,5 @@
 #!/bin/sh
 
 # The session itself is per-machine and deliberately unmanaged.
-exec "$HOME/.xsession"
+# Run through sh explicitly: ~/.xsession has no shebang.
+exec /bin/sh "$HOME/.xsession"
