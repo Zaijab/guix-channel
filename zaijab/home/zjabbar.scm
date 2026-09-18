@@ -115,7 +115,9 @@
 
      (simple-service 'dotfiles
                      home-files-service-type
-                     `((".xinitrc" ,(program-file "xinitrc" (local-file "/home/zjabbar/code/guix-channel/zaijab/files/xinitrc")))
+		     ;; local-file #:recursive?, not program-file: the latter
+		     ;; wraps the path in a Guile script that does nothing.
+                     `((".xinitrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/xinitrc" #:recursive? #t))
 		       (".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
                        (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
                        (".config/pycodestyle" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/pycodestyle"))
