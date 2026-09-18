@@ -195,8 +195,6 @@
     (kernel linux)
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
 			     "modprobe.blacklist=nouveau"
-			     "nvidia_drm.modeset=1"
-			     "nvidia_drm.fbdev=1"
 			     %default-kernel-arguments))
     (firmware (list linux-firmware))
     (locale "en_US.utf8")
@@ -277,7 +275,9 @@
 	       %base-packages))
     (kernel-arguments (cons* "module_blacklist=pcspkr,snd_pcsp"
 			     "modprobe.blacklist=nouveau"
-			     ;; "nvidia_drm.fbdev=1"
+			     ;; KMS + fbdev so the VT consoles render through nvidia instead of the dead efifb.
+			     "nvidia_drm.modeset=1"
+			     "nvidia_drm.fbdev=1"
 			     ;; "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
 			     %default-kernel-arguments))
     
