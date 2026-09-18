@@ -39,11 +39,9 @@
 	      xmodmap
 	      (specification->package "unzip")
               (specification->package "xset")
-              (specification->package "xinit")
-              (specification->package "xorg-server")
-              (specification->package "xf86-input-libinput")
-              (specification->package "xf86-video-fbdev")
-              (specification->package "xf86-video-nouveau")))
+	      ;; X server and drivers come from startx-command-service-type.
+	      ) ; list
+	     ) ; packages
    (services
     (list
      (service home-bash-service-type
@@ -117,8 +115,7 @@
 
      (simple-service 'dotfiles
                      home-files-service-type
-                     `(#;("startx.sh" ,(program-file "zaijab_startx" (local-file "/home/zjabbar/code/guix-channel/zaijab/files/startx.sh")))
-		       #;(".xsession" ,(program-file "xsession" (local-file "/home/zjabbar/code/guix-channel/zaijab/files/xsession")))
+                     `((".xinitrc" ,(program-file "xinitrc" (local-file "/home/zjabbar/code/guix-channel/zaijab/files/xinitrc")))
 		       (".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
                        (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
                        (".config/pycodestyle" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/pycodestyle"))
