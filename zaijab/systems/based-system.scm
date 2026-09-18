@@ -293,12 +293,16 @@
       ) ; list
      ) ; swap-devices
 
+    ;; startx-command-service-type, not set-xorg-configuration: the latter
+    ;; extends gdm-service-type, which Guix then re-instantiates by default.
     (services (cons*
-	       (service nvidia-service-type)	       
-	       (set-xorg-configuration
-		 	(xorg-configuration
-		 	 (modules (cons nvda %default-xorg-modules))
-		 	 (drivers '("nvidia"))))
+	       (service nvidia-service-type)
+	       (service startx-command-service-type
+			(xorg-configuration
+			 (modules (cons nvda %default-xorg-modules))
+			 (drivers '("nvidia"))
+			 ) ; xorg-configuration
+			) ; service startx-command-service-type
 	       main-services))
     ))
 
@@ -331,7 +335,13 @@
 	       (specification->package "pavucontrol")
 	       (specification->package "gsettings-desktop-schemas")
 	       %base-packages))
-    (host-name "euler")))
+    (host-name "euler")
+
+    ;; Integrated graphics, so the default modules and autoconfiguration.
+    (services (cons*
+	       (service startx-command-service-type)
+	       main-services))
+    ))
 
 (define-public my-operating-system
   (let ((hostname (read-delimited "\n" (open-input-pipe "echo $HOSTNAME"))))

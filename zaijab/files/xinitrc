@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# The session itself is per-machine and deliberately unmanaged.
+exec "$HOME/.xsession"
