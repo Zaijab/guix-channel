@@ -85,7 +85,7 @@
 		 (mixed-text-file "login.sh"
                                   "eval \"$(direnv hook bash)\"\n"
 				  "if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then \n"
-				  "exec /home/zjabbar/code/guix-channel/zaijab/files/xinitrc.sh\n"
+				  "exec /home/zjabbar/code/guix-channel/zaijab/files/startx.sh\n"
 				  "fi\n"
 				  "[ -n \"$EAT_SHELL_INTEGRATION_DIR\" ] && \\\n"
 				  "source \"$EAT_SHELL_INTEGRATION_DIR/bash\"")))))
@@ -117,7 +117,8 @@
 
      (simple-service 'dotfiles
                      home-files-service-type
-                     `(#;(".xsession" ,(program-file "xsession" (local-file "/home/zjabbar/code/guix-channel/zaijab/files/xsession")))
+                     `(#;("startx.sh" ,(program-file "zaijab_startx" (local-file "/home/zjabbar/code/guix-channel/zaijab/files/startx.sh")))
+		       #;(".xsession" ,(program-file "xsession" (local-file "/home/zjabbar/code/guix-channel/zaijab/files/xsession")))
 		       (".msmtprc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/msmtprc"))
                        (".config/mbsyncrc" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/mbsyncrc"))
                        (".config/pycodestyle" ,(local-file "/home/zjabbar/code/guix-channel/zaijab/files/pycodestyle"))
