@@ -173,7 +173,9 @@
       config => (mingetty-configuration
 		 (inherit config)
 		 (auto-login "zjabbar")
-		 (login-pause? #t)))
+		 (login-pause? #f)
+		 (shepherd-requirement
+		  (cons 'dbus-system (mingetty-configuration-shepherd-requirement config)))))
      (guix-service-type
       config => (guix-configuration
 		 (inherit config)
