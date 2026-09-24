@@ -98,20 +98,20 @@
                 (file-append pinentry-emacs "/bin/pinentry-emacs"))
                (ssh-support? #t)))
 
-     (simple-service 'ollama
-                     home-shepherd-service-type
-                     (list
-                      (shepherd-service
-                       (documentation "Run the Ollama local LLM server")
-                       (provision '(ollama))
-                       (requirement '())
-                       (start
-                        #~(make-forkexec-constructor
-                           (list #$(file-append ollama "/bin/ollama") "serve")
-                           #:log-file "/home/zjabbar/.local/var/log/ollama.log"
-                           #:environment-variables
-                           (cons "HOME=/home/zjabbar" (default-environment-variables))))
-                       (stop #~(make-kill-destructor)))))
+     ;; (simple-service 'ollama
+     ;;                 home-shepherd-service-type
+     ;;                 (list
+     ;;                  (shepherd-service
+     ;;                   (documentation "Run the Ollama local LLM server")
+     ;;                   (provision '(ollama))
+     ;;                   (requirement '())
+     ;;                   (start
+     ;;                    #~(make-forkexec-constructor
+     ;;                       (list #$(file-append ollama "/bin/ollama") "serve")
+     ;;                       #:log-file "/home/zjabbar/.local/var/log/ollama.log"
+     ;;                       #:environment-variables
+     ;;                       (cons "HOME=/home/zjabbar" (default-environment-variables))))
+     ;;                   (stop #~(make-kill-destructor)))))
 
      (simple-service 'dotfiles
                      home-files-service-type

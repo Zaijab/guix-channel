@@ -582,7 +582,8 @@ See `consult-grep' for details."
 		   codex-with-code-mode
 		   node
 		   jq
-		   ollama))
+		   ;; ollama
+		   ))
    (init '(
 	   (add-to-list 'exec-path (expand-file-name "~/.guix-home/profile/bin/"))
 	   (setq agent-shell-anthropic-claude-command nil)
