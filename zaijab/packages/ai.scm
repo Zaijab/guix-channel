@@ -14,7 +14,7 @@
 ;; in one output; codex resolves the helper next to the realpath of its own
 ;; executable, so the profile's bin/ is not a valid home for it.
 
-(define %codex-version "0.148.0")
+(define %codex-version "0.160.0")
 
 (define (codex-release-uri component)
   (string-append "https://github.com/openai/codex/releases/download/rust-v"
