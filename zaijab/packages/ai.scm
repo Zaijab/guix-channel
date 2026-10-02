@@ -27,7 +27,7 @@
     (uri (codex-release-uri "codex-code-mode-host"))
     (file-name (string-append "codex-code-mode-host-" %codex-version ".tar.gz"))
     (sha256
-     (base32 "0acqsncr9iv3rw03zkmw4l87as10q0gc6a1czcc1p9lg4admavlf"))))
+     (base32 "1b4c0dgb8bmql7b77g1xyca1yr8ifz9wz8gb6dmg8f8fiwldcv5c"))))
 
 (define-public codex-with-code-mode
   (package
