@@ -36,6 +36,7 @@
      (origin
        (method url-fetch)
        (uri (codex-release-uri "codex"))
+       (file-name (string-append "codex-" %codex-version ".tar.gz"))
        (sha256
         (base32 "0npfrz98kjpj1hjnm6ak9pcc4qbna7cmld46pcrzbgmkyrigfdhs"))))
     (build-system binary-build-system)
