@@ -25,6 +25,7 @@
   (origin
     (method url-fetch)
     (uri (codex-release-uri "codex-code-mode-host"))
+    (file-name (string-append "codex-code-mode-host-" %codex-version ".tar.gz"))
     (sha256
      (base32 "0acqsncr9iv3rw03zkmw4l87as10q0gc6a1czcc1p9lg4admavlf"))))
 
@@ -38,7 +39,7 @@
        (uri (codex-release-uri "codex"))
        (file-name (string-append "codex-" %codex-version ".tar.gz"))
        (sha256
-        (base32 "0npfrz98kjpj1hjnm6ak9pcc4qbna7cmld46pcrzbgmkyrigfdhs"))))
+        (base32 "04sasikwpb73ban91lxdb7hy2hbza8592ljqg0kskrsfgm0nas1h"))))
     (build-system binary-build-system)
     (arguments
      (list
