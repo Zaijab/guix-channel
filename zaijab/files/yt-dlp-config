@@ -4,4 +4,4 @@
 # Let it fetch a newer solver script from GitHub when the bundled one is stale.
 --remote-components ejs:github
 # YouTube bot-flags this IP for anonymous requests; borrow the LibreWolf login.
---cookies-from-browser firefox:/home/zjabbar/.librewolf/2eb2waww.default
+--cookies-from-browser firefox:/home/zjabbar/.librewolf/*.default
