@@ -1868,6 +1868,8 @@ END is the start of the line with :END: on it."
 	      texlive-collection-pictures
 	      texlive-preview
 	      texlive-mylatexformat
+	      texlive-capt-of
+	      texlive-wrapfig
 	      texlive-mylatex
 	      texlive-xypic
 	      texlive-esint
