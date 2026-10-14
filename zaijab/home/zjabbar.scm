@@ -67,6 +67,8 @@
                   ("TF_CPP_MIN_LOG_LEVEL" . "1")
 		  ("SWANCTL_DIR" . "/home/zjabbar/.config/swanctl/")
                   ("DISABLE_RTKIT" . "1")
+                  ;; bsnes's OpenMP threads otherwise busy-wait on ~4.5 cores.
+                  ("OMP_WAIT_POLICY" . "passive")
                   ("LD_LIBRARY_PATH" . "/run/current-system/profile/lib/")
                   ("GUILE_LOAD_PATH" . "$GUILE_LOAD_PATH:/home/zjabbar/.config/guix/current/share/guile/site/3.0/")))
                (bash-profile
