@@ -92,6 +92,16 @@
      (service home-pipewire-service-type
               (home-pipewire-configuration
                (enable-pulseaudio? #t)))
+     ;; Some client requests a 256 quantum, which crackles without realtime priority.
+     (simple-service 'pipewire-min-quantum
+                     home-xdg-configuration-files-service-type
+                     (list
+                      (list "pipewire/pipewire.conf.d/10-min-quantum.conf"
+                            (plain-file "10-min-quantum.conf"
+                                        "context.properties = {\n  default.clock.min-quantum = 1024\n}\n")
+                            ) ; list
+                      ) ; list
+                     ) ; simple-service
      (service home-gpg-agent-service-type
               (home-gpg-agent-configuration
                (pinentry-program

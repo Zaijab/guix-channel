@@ -787,9 +787,9 @@ See `consult-grep' for details."
 			;; key form explicitly so `C-c <tab> r' reliably dispatches.
 			(define-key global-map (kbd "C-c <tab>") 'tabspaces-command-map)
 			(dolist (name '(
-					"Foundations" ; Pure Math / Flashcards
+					;; "Foundations" ; Pure Math / Flashcards
 					;; "Geometric Sensor Tasking"
-					"GLMB"
+					;; "GLMB"
 					"ETPF"
 					;"FvML"
 					"NEnGMF"
