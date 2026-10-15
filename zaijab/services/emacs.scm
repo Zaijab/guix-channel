@@ -2359,9 +2359,13 @@ END is the start of the line with :END: on it."
 				(goto-char (eat-term-display-cursor eat-terminal))
 			      (if (>= (window-body-height window)
 				      (cdr (eat-term-size eat-terminal)))
-				  (progn
-				    (set-window-point window (eat-term-display-cursor eat-terminal))
-				    (set-window-start window (eat-term-display-beginning eat-terminal) t))
+				  ;; Skip no-op calls: set-window-start forces a tab bar and mode line rebuild.
+				  (let ((cursor (eat-term-display-cursor eat-terminal))
+					(start (eat-term-display-beginning eat-terminal)))
+				    (unless (= (window-point window) cursor)
+				      (set-window-point window cursor))
+				    (unless (= (window-start window) start)
+				      (set-window-start window start t)))
 				;; Window shorter than the terminal: keep eat's
 				;; recenter-based sync so the cursor stays visible.
 				(with-selected-window window
