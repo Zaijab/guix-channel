@@ -454,7 +454,7 @@ See `consult-grep' for details."
 			'(file))
 		  ))))))
 
-#;(define garbage-collection-configuration
+(define garbage-collection-configuration
   (home-emacs-configuration
    (packages (list emacs-gcmh))
    (init '((use-package gcmh
@@ -2657,6 +2657,7 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 		       ;; native-comp-speed 0
 		       package-native-compile t
 		       bidi-inhibit-bpa t
+		       bidi-display-reordering nil
 		       jit-lock-defer-time 0
 		       redisplay-skip-fontification-on-input t
 		       fast-but-imprecise-scrolling t
