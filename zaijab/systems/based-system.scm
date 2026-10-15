@@ -69,7 +69,7 @@
 
 (define-public main-services
   (cons*
-   (service unattended-upgrade-service-type)
+   ;; (service unattended-upgrade-service-type)
    (service openssh-service-type)
    (service syncthing-service-type (syncthing-configuration (user "zjabbar")))
    (service guix-home-service-type `(("zjabbar" ,zains-home)))
@@ -87,7 +87,7 @@
 	     (minimum-free-swap 5)))
    (service tlp-service-type
 	    (tlp-configuration
-             (cpu-scaling-governor-on-ac (list "performance"))
+             (cpu-scaling-governor-on-ac (list "balance_performance"))
              (cpu-scaling-governor-on-bat (list "powersave"))))
    (service opendht-service-type)
    (service docker-service-type)
