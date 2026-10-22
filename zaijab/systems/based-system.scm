@@ -214,6 +214,7 @@
 	       tree
 	       parted
 	       git
+	       git-filter-repo
 	       gnu-make
 	       cups
 	       htop
