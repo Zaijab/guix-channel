@@ -1869,6 +1869,8 @@ END is the start of the line with :END: on it."
 	      texlive-preview
 	      texlive-mylatexformat
 	      texlive-capt-of
+	      texlive-biber
+	      texlive-biblatex
 	      texlive-wrapfig
 	      texlive-mylatex
 	      texlive-xypic
