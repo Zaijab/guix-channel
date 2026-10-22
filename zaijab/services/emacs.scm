@@ -1865,6 +1865,8 @@ END is the start of the line with :END: on it."
 	      dvisvgm
 	      texlive-scheme-medium
 	      texlive-sttools
+	      texlive-titlesec
+	      texlive-fontawesome
 	      texlive-collection-pictures
 	      texlive-preview
 	      texlive-mylatexformat
