@@ -16,6 +16,7 @@
   #:use-module (gnu packages curl)
   #:use-module (gnu packages cpp)
   #:use-module (gnu packages fonts)
+  #:use-module (gnu packages debug)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages java)
   #:use-module (gnu packages inkscape)
@@ -2097,7 +2098,7 @@ END is the start of the line with :END: on it."
 
 (define c-configuration
   (home-emacs-configuration
-   (packages (list ccls))))
+   (packages (list ccls cppdap))))
 
 (define python-configuration
   (home-emacs-configuration
