@@ -14,6 +14,7 @@
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages video)
   #:use-module (gnu packages curl)
+  #:use-module (gnu packages cpp)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages java)
@@ -2093,6 +2094,10 @@ END is the start of the line with :END: on it."
 			(setf (alist-get :title org-export-options-alist) '("TITLE" nil "Maybe, में भि میں بھی, 明媚." t))
 			(setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex))))
 	   ))))
+
+(define c-configuration
+  (home-emacs-configuration
+   (packages (list ccls))))
 
 (define python-configuration
   (home-emacs-configuration
