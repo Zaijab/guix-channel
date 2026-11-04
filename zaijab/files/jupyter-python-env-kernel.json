@@ -1,0 +1,8 @@
+{
+  "argv": ["uv", "run", "--no-project", "--with", "ipykernel",
+           "python", "-m", "ipykernel_launcher", "-f", "{connection_file}"],
+  "env": {"UV_PYTHON_DOWNLOADS": "never"},
+  "display_name": "Python (project env)",
+  "language": "python",
+  "metadata": {"debugger": true}
+}
