@@ -16,6 +16,7 @@
   #:use-module (gnu home)
   #:use-module (gnu services guix)
   #:use-module (gnu packages cups)
+  #:use-module (gnu packages rsync)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages avahi)
   #:use-module (gnu packages disk)
@@ -219,6 +220,7 @@
 	       cups
 	       htop
 	       nss-mdns
+	       rsync
 	       ;; nix
 	       (specification->package "scrot")
 	       (specification->package "xauth")
@@ -258,6 +260,7 @@
     (inherit based-operating-system)
     (packages (cons*
 	       tree
+	       rsync
 	       parted
 	       git
 	       git-filter-repo
@@ -323,6 +326,7 @@
 			     %default-kernel-arguments))
     (packages (cons*
 	       tree
+	       rsync
 	       parted
 	       git
 	       git-filter-repo
