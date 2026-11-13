@@ -33,9 +33,12 @@
 #   SCHEDULER_ARGS   bash array of default srun/sbatch flags (slurm only)
 #   REMOTE_ENV       shell lines run on the backend before .envrc
 #   REMOTE_ENV_AFTER shell lines run on the backend after .envrc
+#   STDERR_DROP      extended regular expression; error-output lines that match
+#                    are hidden.  For login banners that complain when there
+#                    is no terminal, which every ssh call would repeat.
 #   PASSWORD_ENTRY   password-store entry whose first line is the password
 #   OTP_ENTRY        pass-otp entry for the one-time passcode
-# The last two are optional.  With them, uv-hpc logs in by itself; without
+# The last three are optional.  The last two go together.  With them, uv-hpc logs in by itself; without
 # them, ssh asks as usual (or uses your key).  Either way the connection is
 # then kept open and shared, so later calls do not log in again.
 # Without --backend, the backend is $UV_HPC_BACKEND, or the only entry if
@@ -121,6 +124,7 @@ ROOT=
 SCHEDULER_ARGS=()
 REMOTE_ENV=
 REMOTE_ENV_AFTER=
+STDERR_DROP=
 PASSWORD_ENTRY=
 OTP_ENTRY=
 entry="$(pass show "uv-hpc/$backend")" || die "cannot read password-store entry uv-hpc/$backend"
@@ -134,6 +138,12 @@ case "$KIND" in
                die "backend $backend has no scheduler; unknown flags: ${scheduler_flags[*]}" ;;
     *)     die "KIND in uv-hpc/$backend must be slurm or ssh, not '$KIND'" ;;
 esac
+if [[ -n $STDERR_DROP ]]; then
+    exec 2> >(grep --line-buffered -Ev -- "$STDERR_DROP" >&2)
+    filter=$!
+    # Let the filter print its last lines before the prompt comes back.
+    trap 'exec 2>&-; wait "$filter"' EXIT
+fi
 
 # One shared connection per backend: the first call logs in, later calls
 # reuse it for CONTROL_PERSIST after its last use.
