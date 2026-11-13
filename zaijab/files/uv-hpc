@@ -5,6 +5,7 @@
 #
 #   uv-hpc -- pytest tests -x -q                  run on the default backend
 #   uv-hpc --backend NAME -- python -c 'print(1)' name the backend
+#   uv-hpc -- --extra dev pytest tests            flags after -- go to uv run
 #   uv-hpc --time=03:00:00 -- pytest ...          other flags go to the scheduler
 #   uv-hpc --detach -- pytest ...                 submit and return (Slurm only)
 #   uv-hpc --status                               my jobs in the queue
@@ -49,6 +50,15 @@
 #
 # A foreground run on Slurm ends if the connection drops; use --detach for
 # long runs.
+#
+# The backend builds its environment from uv.lock alone, so it has only what
+# a plain `uv run` installs: the dependencies and the default dependency
+# groups.  A tool listed under [project.optional-dependencies] needs its
+# extra named, as in the --extra dev example above.
+#
+# The shell here expands globs before uv-hpc sees them.  `pytest tests/*`
+# names tests/__pycache__ if it exists here, and the backend has no such
+# folder.  Name the folder instead: `pytest tests`.
 set -euo pipefail
 
 die() { echo "uv-hpc: $*" >&2; exit 1; }
@@ -205,6 +215,18 @@ pull() {
             -not -path '*/__pycache__/*' -not -path './.pytest_cache/*'") \
         "$HOST:$dir/" "$root/"
 }
+
+# A path in the command that exists here but holds no tracked file will be
+# missing on the backend.  Say so before logging in and queueing.
+warn_unsent() {
+    local arg
+    for arg in "$@"; do
+        [[ $arg != -* && $arg != /* && -e $arg ]] || continue
+        [[ -n "$(git -C "$PWD" ls-files -- "$arg")" ]] && continue
+        echo "uv-hpc: warning: '$arg' exists here but git does not track it, so the backend will not have it" >&2
+    done
+}
+[[ $action == run ]] && warn_unsent "$@"
 
 connect
 case "$action" in
