@@ -739,19 +739,52 @@ See `consult-grep' for details."
 			       ("a" . citar-add-file-to-library))
 			:bind-keymap ("C-c c" . citar-map)
 			:custom
-			(citar-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
+			(citar-bibliography
+			 '("/home/zjabbar/notes/bibtex/general_bibliography.bib"
+			   "/home/zjabbar/library/claude/claude.bib"
+			   ) ; bibliography files
+			 ) ; citar-bibliography
 			(citar-notes-paths (list "/home/zjabbar/notes/")) ; List of directories for reference nodes
 			(citar-library-paths (list "/home/zjabbar/library/")) ;
 			(citar-open-note-function 'orb-citar-edit-note) ; Open notes in `org-roam'
 			(citar-at-point-function 'embark-act)           ; Use `embark'
 			:hook
 			(LaTeX-mode . citar-capf-setup)
-			(org-mode . citar-capf-setup))
+			(org-mode . citar-capf-setup)
+			:config
+			;; citar 1.4.0 scans only the top level of each library path.
+			(defun citar-library-subdirectories ()
+			  (seq-mapcat
+			   (lambda (root)
+			     (cons root
+				   (seq-filter 'file-directory-p
+					       (directory-files-recursively root "^[^.]" t)
+					       ) ; seq-filter
+				   ) ; cons
+			     ) ; lambda
+			   citar-library-paths
+			   ) ; seq-mapcat
+			  ) ; defun citar-library-subdirectories
+			(defun citar-with-recursive-library (orig &rest args)
+			  (let
+			      ((citar-library-paths
+				(citar-library-subdirectories)
+				) ; binding
+			       ) ; bindings
+			    (apply orig args)
+			    ) ; let
+			  ) ; defun citar-with-recursive-library
+			(advice-add 'citar-file--get-library-files :around 'citar-with-recursive-library)
+			) ; use-package citar
 
 	   (use-package citar-org
 			;; :after (citar oc)
 			:custom
-			(org-cite-global-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib"))
+			(org-cite-global-bibliography
+			 '("/home/zjabbar/notes/bibtex/general_bibliography.bib"
+			   "/home/zjabbar/library/claude/claude.bib"
+			   ) ; bibliography files
+			 ) ; org-cite-global-bibliography
 			(org-cite-insert-processor 'citar)
 			(org-cite-follow-processor 'citar)
 			(org-cite-activate-processor 'citar))
@@ -1577,7 +1610,12 @@ See `consult-grep' for details."
 			:after org-roam
 			:config
 			(org-roam-bibtex-mode)
-			(setq bibtex-completion-bibliography '("/home/zjabbar/notes/bibtex/general_bibliography.bib")))
+			(setq bibtex-completion-bibliography
+			      '("/home/zjabbar/notes/bibtex/general_bibliography.bib"
+				"/home/zjabbar/library/claude/claude.bib"
+				) ; bibliography files
+			      ) ; setq
+			) ; use-package org-roam-bibtex
 
 
 	   (use-package websocket

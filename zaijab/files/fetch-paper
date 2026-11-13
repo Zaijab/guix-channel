@@ -1,0 +1,8 @@
+#!/bin/sh
+# fetch-paper URL: save the PDF at URL, or the first PDF linked from that page, in the current directory.
+out="$(basename "$1" .pdf | tr -c 'A-Za-z0-9._\n-' '_').pdf"
+curl -sL -A Mozilla/5.0 -o "$out" "$1"
+pdf="$(grep -a -o -E '(https?:)?/[^"# <>]*\.pdf' "$out" | head -n 1)"
+case "$pdf" in //*) pdf="https:$pdf" ;; /*) pdf="$(echo "$1" | grep -o -E '^https?://[^/]+')$pdf" ;; esac
+head -c 4 "$out" | grep -q '%PDF' || [ -z "$pdf" ] || curl -sL -A Mozilla/5.0 -o "$out" "$pdf"
+head -c 4 "$out" 2>/dev/null | grep -q '%PDF' && echo "$out" || { rm -f "$out"; echo "no PDF for $1" >&2; exit 1; }

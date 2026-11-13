@@ -1,0 +1,237 @@
+#!/usr/bin/env bash
+# uv-hpc: `uv run <command>` for the current uv project, executed on another
+# machine (a "backend").  The source stays here; the backend holds a copy,
+# the environment built from uv.lock, and the run.
+#
+#   uv-hpc -- pytest tests -x -q                  run on the default backend
+#   uv-hpc --backend NAME -- python -c 'print(1)' name the backend
+#   uv-hpc --time=03:00:00 -- pytest ...          other flags go to the scheduler
+#   uv-hpc --detach -- pytest ...                 submit and return (Slurm only)
+#   uv-hpc --status                               my jobs in the queue
+#   uv-hpc --log JOBID                            output of a detached job
+#   uv-hpc --pull                                 fetch what the last run wrote
+#   uv-hpc --dirty -- ...                         allow uncommitted changes
+#   uv-hpc --backends                             list the backends
+#
+# One run does four things:
+#   1. Finds the project: the nearest parent folder with a pyproject.toml.
+#   2. Copies it to the backend with rsync.  What arrives is the tracked
+#      files of the current commit, so the commit names what ran.  Uncommitted
+#      changes are refused unless --dirty is given.
+#   3. Runs `uv run <command>` there, after sourcing the project's .envrc if
+#      it has one.  Output streams back and the exit status is passed on.
+#   4. Copies back every file the command created or changed.
+#
+# Backends live in the password store, one entry each, as uv-hpc/NAME.  This
+# file names no machine and no user.  An entry is bash that sets:
+#   KIND             slurm (run through srun/sbatch) or ssh (run directly)
+#   HOST             the machine's address
+#   REMOTE_USER      the account there
+#   ROOT             folder on the backend, relative to its home directory;
+#                    the project lands in ROOT/<project name>
+#   SCHEDULER_ARGS   bash array of default srun/sbatch flags (slurm only)
+#   REMOTE_ENV       shell lines run on the backend before .envrc
+#   REMOTE_ENV_AFTER shell lines run on the backend after .envrc
+#   PASSWORD_ENTRY   password-store entry whose first line is the password
+#   OTP_ENTRY        pass-otp entry for the one-time passcode
+# The last two are optional.  With them, uv-hpc logs in by itself; without
+# them, ssh asks as usual (or uses your key).  Either way the connection is
+# then kept open and shared, so later calls do not log in again.
+# Without --backend, the backend is $UV_HPC_BACKEND, or the only entry if
+# there is exactly one; with several entries and neither, uv-hpc stops.
+#
+# An entry can build on another, since it is bash.  A second queue on the
+# same machine is two lines:
+#   eval "$(pass show uv-hpc/OTHER)"
+#   SCHEDULER_ARGS+=(--account=NAME --partition=NAME)
+# Slurm takes the last value of a repeated flag, so the added ones win.
+# Backends on one machine share the login connection and the project copy.
+#
+# A foreground run on Slurm ends if the connection drops; use --detach for
+# long runs.
+set -euo pipefail
+
+die() { echo "uv-hpc: $*" >&2; exit 1; }
+
+# ssh calls this same file to answer its login prompts (see connect below).
+# Each kind of prompt is answered once, so a refused answer ends the login
+# instead of becoming a string of failed attempts.
+if [[ -n ${UV_HPC_ASKPASS_STATE:-} ]]; then
+    case "$1" in
+        *[Pp]asscode*) kind=otp ;;
+        *[Pp]assword*) kind=password ;;
+        *)             exit 1 ;;
+    esac
+    grep -qx "$kind" "$UV_HPC_ASKPASS_STATE" && exit 1
+    echo "$kind" >> "$UV_HPC_ASKPASS_STATE"
+    case "$kind" in
+        password) pass show "$UV_HPC_PASSWORD_ENTRY" | head -n 1 ;;
+        # The passcode is the last line; a counter-based entry prints its
+        # git commit before it.
+        otp)      pass otp "$UV_HPC_OTP_ENTRY" | tail -n 1 ;;
+    esac
+    exit
+fi
+
+store="${PASSWORD_STORE_DIR:-$HOME/.password-store}/uv-hpc"
+backends() { find "$store" -name '*.gpg' -printf '%P\n' 2> /dev/null | while IFS= read -r f; do echo "${f%.gpg}"; done; }
+
+backend="${UV_HPC_BACKEND:-}"
+action=run
+detach=0
+dirty=0
+jobid=
+scheduler_flags=()
+while (($#)); do
+    case "$1" in
+        --backend)  (($# > 1)) || die "--backend needs a name"; backend="$2"; shift 2 ;;
+        --backend=*) backend="${1#*=}"; shift ;;
+        --backends) backends; exit ;;
+        --detach)   detach=1; shift ;;
+        --dirty)    dirty=1; shift ;;
+        --pull)     action=pull; shift ;;
+        --status)   action=status; shift ;;
+        --log)      (($# > 1)) || die "--log needs a job id"; action=log; jobid="$2"; shift 2 ;;
+        -h|--help)  grep '^#' "$0" | cut -c3- | tail -n +2; exit 0 ;;
+        --)         shift; break ;;
+        *)          scheduler_flags+=("$1"); shift ;;
+    esac
+done
+
+mapfile -t all < <(backends | sort)
+if [[ -z $backend ]]; then
+    ((${#all[@]} == 1)) || die "name a backend with --backend or UV_HPC_BACKEND (have: ${all[*]:-none})"
+    backend="${all[0]}"
+fi
+[[ -f $store/$backend.gpg ]] || die "no backend '$backend' (have: ${all[*]:-none})"
+KIND=
+HOST=
+REMOTE_USER=
+ROOT=
+SCHEDULER_ARGS=()
+REMOTE_ENV=
+REMOTE_ENV_AFTER=
+PASSWORD_ENTRY=
+OTP_ENTRY=
+entry="$(pass show "uv-hpc/$backend")" || die "cannot read password-store entry uv-hpc/$backend"
+eval "$entry"
+for key in KIND HOST REMOTE_USER ROOT; do
+    [[ -n ${!key} ]] || die "uv-hpc/$backend does not set $key"
+done
+case "$KIND" in
+    slurm) ;;
+    ssh)   ((${#scheduler_flags[@]} == 0)) ||
+               die "backend $backend has no scheduler; unknown flags: ${scheduler_flags[*]}" ;;
+    *)     die "KIND in uv-hpc/$backend must be slurm or ssh, not '$KIND'" ;;
+esac
+
+# One shared connection per backend: the first call logs in, later calls
+# reuse it for CONTROL_PERSIST after its last use.
+ssh_options=(-o ControlMaster=auto -o "ControlPath=$HOME/.ssh/cm-%C" -o ControlPersist=8h
+             -o ServerAliveInterval=60 -l "$REMOTE_USER")
+remote() { ssh "${ssh_options[@]}" "$HOST" "$@"; }
+
+connect() {
+    remote -O check 2> /dev/null && return
+    if [[ -z $PASSWORD_ENTRY ]]; then
+        remote -fN
+        return
+    fi
+    local state
+    state="$(mktemp)"
+    UV_HPC_ASKPASS_STATE="$state" UV_HPC_PASSWORD_ENTRY="$PASSWORD_ENTRY" \
+        UV_HPC_OTP_ENTRY="$OTP_ENTRY" SSH_ASKPASS="$(realpath "$0")" SSH_ASKPASS_REQUIRE=force \
+        ssh "${ssh_options[@]}" -fN "$HOST" || { rm -f "$state"; die "login to $backend failed"; }
+    rm -f "$state"
+}
+
+# The project is the nearest parent with a pyproject.toml; the command runs
+# in the same subfolder of it that we are in now.
+root="$PWD"
+while [[ ! -f $root/pyproject.toml ]]; do
+    [[ $root == / ]] && die "no pyproject.toml here or in any parent folder"
+    root="$(dirname "$root")"
+done
+project="$(basename "$root")"
+subdir="${PWD#"$root"}"
+dir="$ROOT/$project"            # relative to the backend's home directory
+logs="$ROOT/.logs"
+
+push() {
+    git -C "$root" rev-parse --git-dir > /dev/null || die "$root is not a git repository"
+    local commit
+    commit="$(git -C "$root" rev-parse HEAD)"
+    if [[ -n "$(git -C "$root" status --porcelain --untracked-files=no)" ]]; then
+        ((dirty)) || die "uncommitted changes; commit them, or pass --dirty"
+        commit+="-dirty"
+    fi
+    remote "mkdir -p '$dir' '$logs'"
+    # Tracked files go; untracked files stay here.  Files the backend made
+    # (.venv, anything .gitignore names, our own markers) are neither sent
+    # nor deleted.  No -t: a file is dated when it was copied, because
+    # scratch disks purge by date, and -c compares by content instead.
+    rsync -rlc --delete -e "ssh $(printf '%q ' "${ssh_options[@]}")" \
+        --exclude=/.git --exclude=/.venv --exclude='/.uv-hpc-*' \
+        --exclude-from=<(git -C "$root" ls-files --others --exclude-standard --directory |
+                         while IFS= read -r path; do printf '/%s\n' "$path"; done) \
+        --filter=':- .gitignore' \
+        "$root/" "$HOST:$dir/"
+    remote "echo '$commit' > '$dir/.uv-hpc-commit'"
+}
+
+# The script the backend runs.  The command is quoted into it, so it travels
+# on standard input and no file is stored on the backend.
+remote_script() {
+    cat <<EOF
+#!/bin/bash
+set -eo pipefail
+export PATH="\$HOME/.local/bin:\$PATH"
+$REMOTE_ENV
+cd "\$HOME/$dir"
+echo "uv-hpc: \$(hostname), commit \$(cat .uv-hpc-commit)" >&2
+touch .uv-hpc-start
+if [ -f .envrc ]; then source .envrc; fi
+$REMOTE_ENV_AFTER
+cd "\$HOME/$dir$subdir"
+exec uv run $(printf '%q ' "$@")
+EOF
+}
+
+# Every file the last run created or changed, except the environment.
+pull() {
+    rsync -rlt -e "ssh $(printf '%q ' "${ssh_options[@]}")" \
+        --files-from=<(remote "cd '$dir' && find . -type f -newer .uv-hpc-start \
+            -not -path './.venv/*' -not -path './.git/*' -not -name '.uv-hpc-*' \
+            -not -path '*/__pycache__/*' -not -path './.pytest_cache/*'") \
+        "$HOST:$dir/" "$root/"
+}
+
+connect
+case "$action" in
+    status) remote "squeue --me"; exit ;;
+    log)    remote "cat '$logs/$project-$jobid.out'"; exit ;;
+    pull)   pull; exit ;;
+esac
+
+(($#)) || die "no command; usage: uv-hpc [--backend NAME] -- <command>"
+push
+
+if ((detach)); then
+    [[ $KIND == slurm ]] || die "--detach needs a slurm backend"
+    flags="$(printf '%q ' "${SCHEDULER_ARGS[@]}" "${scheduler_flags[@]}")"
+    jobid="$(remote_script "$@" | remote \
+        "sbatch --parsable --job-name='$project' --output='$logs/$project-%j.out' $flags")"
+    echo "uv-hpc: submitted job $jobid"
+    echo "  uv-hpc --status | uv-hpc --log $jobid | uv-hpc --pull"
+    exit
+fi
+
+case "$KIND" in
+    slurm) launch="srun $(printf '%q ' "${SCHEDULER_ARGS[@]}" "${scheduler_flags[@]}") bash -s" ;;
+    ssh)   launch="bash -s" ;;
+    *)     die "KIND in uv-hpc/$backend must be slurm or ssh" ;;
+esac
+status=0
+remote_script "$@" | remote "$launch" || status=$?
+pull
+exit "$status"
