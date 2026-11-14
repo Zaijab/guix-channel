@@ -2159,9 +2159,37 @@ END is the start of the line with :END: on it."
 			(setf (alist-get :with-latex org-export-options-alist) '("t" "tex" (function org-export-with-latex))))
 	   ))))
 
+;; Compilers, cmake, and clangd come from each project's manifest.scm via envrc.
 (define c-configuration
   (home-emacs-configuration
-   (packages (list ccls cppdap))))
+   (packages (list ccls cppdap tree-sitter-c tree-sitter-cpp))
+   (init '((use-package c-ts-mode
+			:init
+			(add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+			(add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+			(add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode))
+			:config
+			(add-hook 'c-ts-base-mode-hook (function eglot-ensure))
+			(with-eval-after-load 'eglot
+			  (add-to-list 'eglot-server-programs
+				       (cons '(c-ts-mode c++-ts-mode c-mode c++-mode)
+					     (eglot-alternatives
+					      '(("clangd"
+						 "--query-driver=/gnu/store/*/bin/*,/home/zjabbar/.guix-home/profile/bin/*"
+						 "--clang-tidy"
+						 "--header-insertion=never"
+						 ) ; clangd
+						"ccls"
+						) ; alternatives
+					      ) ; eglot-alternatives
+					     ) ; cons
+				       ) ; add-to-list
+			  ) ; with-eval-after-load
+			) ; use-package c-ts-mode
+	   ) ; init list
+	 ) ; init
+   ) ; home-emacs-configuration
+  ) ; define c-configuration
 
 (define python-configuration
   (home-emacs-configuration
