@@ -48,9 +48,6 @@ services:
     container_name: searxng
     image: docker.io/searxng/searxng:latest
     restart: unless-stopped
-    formats:
-      - html
-      - json
     networks:
       - searxng
     ports:

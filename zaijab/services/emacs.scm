@@ -43,6 +43,7 @@
   #:use-module (gnu packages hunspell)
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages python-check)
   #:use-module (gnu packages jupyter)
   #:use-module (gnu packages python-build)
   #:use-module (gnu packages haskell-xyz)
@@ -656,6 +657,27 @@ See `consult-grep' for details."
 					   ':justMyCode 'nil
 					   ':showReturnValue 't))
 
+			;; Like dape's debugpy, but uv layers debugpy onto the project env
+			(add-to-list 'dape-configs
+				     (list
+				      'debugpy-uv
+				      'modes '(python-mode python-ts-mode)
+				      'ensure 'dape-ensure-command
+				      'command "uv"
+				      'command-args '("run" "--no-project" "--with" "debugpy" "python" "-m" "debugpy.adapter" "--host" "0.0.0.0" "--port" :autoport)
+				      'port :autoport
+				      :request "launch"
+				      :type "python"
+				      :cwd 'dape-cwd
+				      :program 'dape-buffer-default
+				      :args (vector)
+				      :justMyCode nil
+				      :console "integratedTerminal"
+				      :showReturnValue t
+				      :stopOnEntry nil
+				      ) ; list debugpy-uv
+				     ) ; add-to-list
+
 			;; Keep the Jupyter DAPE adapter available, but do not
 			;; advise Jupyter globally during normal org-babel use.
 			(load "/home/zjabbar/code/guix-channel/zaijab/files/jupyter-dape.el")
@@ -740,9 +762,7 @@ See `consult-grep' for details."
 			:bind-keymap ("C-c c" . citar-map)
 			:custom
 			(citar-bibliography
-			 '("/home/zjabbar/notes/bibtex/general_bibliography.bib"
-			   "/home/zjabbar/library/claude/claude.bib"
-			   ) ; bibliography files
+			 '("/home/zjabbar/notes/bibtex/general_bibliography.bib"			   ) ; bibliography files
 			 ) ; citar-bibliography
 			(citar-notes-paths (list "/home/zjabbar/notes/")) ; List of directories for reference nodes
 			(citar-library-paths (list "/home/zjabbar/library/")) ;
@@ -781,9 +801,7 @@ See `consult-grep' for details."
 			;; :after (citar oc)
 			:custom
 			(org-cite-global-bibliography
-			 '("/home/zjabbar/notes/bibtex/general_bibliography.bib"
-			   "/home/zjabbar/library/claude/claude.bib"
-			   ) ; bibliography files
+			 '("/home/zjabbar/notes/bibtex/general_bibliography.bib"			   ) ; bibliography files
 			 ) ; org-cite-global-bibliography
 			(org-cite-insert-processor 'citar)
 			(org-cite-follow-processor 'citar)
@@ -882,6 +900,7 @@ See `consult-grep' for details."
 		   emacs-envrc))
    (init '((require 'ansi-color)
 	   (setq project-vc-ignores '(".direnv/*" "*.pyc" ".ob-jupyter/*"))
+	   (setq project-vc-extra-root-markers '("pyproject.toml"))
 	   ;; (defun colorize-compilation-buffer ()
 	   ;;   (interactive)
 	   ;;   (let ((inhibit-read-only t))
@@ -1611,9 +1630,7 @@ See `consult-grep' for details."
 			:config
 			(org-roam-bibtex-mode)
 			(setq bibtex-completion-bibliography
-			      '("/home/zjabbar/notes/bibtex/general_bibliography.bib"
-				"/home/zjabbar/library/claude/claude.bib"
-				) ; bibliography files
+			      '("/home/zjabbar/notes/bibtex/general_bibliography.bib"				) ; bibliography files
 			      ) ; setq
 			) ; use-package org-roam-bibtex
 
@@ -2166,7 +2183,8 @@ END is the start of the line with :END: on it."
 	      emacs-pydoc
 
 	      python-lsp-server
-	      python-lsp-black
+	      python-lsp-ruff
+	      ruff
 	      python-pylsp-mypy
 	      python-flake8
 
@@ -2250,13 +2268,34 @@ END is the start of the line with :END: on it."
 			(setq python-indent-def-block-scale 1)
 			(add-to-list 'eglot-server-programs '(python-ts-mode . ("pylsp")))
 			(setq-default eglot-workspace-configuration
-				      (list (cons :pylsp
-						  (list :configurationSources (vector "flake8")
-							:plugins
-							'(:pycodestyle (:enabled :json-false)
-							  ;; :pyflakes (:enabled t)
-							  :flake8 (:enabled :json-false)
-							  :pylsp_mypy (:enabled t :live_mode t))))))
+				      (list
+				       (cons
+					:pylsp
+					(list
+					 :plugins
+					 (list
+					  :ruff
+					  (list
+					   :enabled t
+					   ;; F722 = jaxtyping shape strings
+					   :extendIgnore (vector "F722")
+					   ) ; list ruff
+					  :pyflakes '(:enabled :json-false)
+					  :mccabe '(:enabled :json-false)
+					  :pycodestyle '(:enabled :json-false)
+					  :flake8 '(:enabled :json-false)
+					  :pylsp_mypy
+					  (list
+					   :enabled t
+					   :live_mode t
+					   ;; python3 on PATH is the envrc venv's, so Guix mypy sees its packages
+					   :overrides (vector "--python-executable" "python3" t)
+					   ) ; list pylsp_mypy
+					  ) ; list plugins
+					 ) ; list pylsp
+					) ; cons
+				       ) ; list
+				      ) ; setq-default
 			(setq eglot-send-changes-idle-time 0.1)
 			(setq eglot-report-progress nil)
 
