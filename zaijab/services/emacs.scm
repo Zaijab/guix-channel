@@ -2168,6 +2168,9 @@ END is the start of the line with :END: on it."
 			(add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
 			(add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
 			(add-to-list 'major-mode-remap-alist '(c-or-c++-mode . c-or-c++-ts-mode))
+			(add-to-list 'auto-mode-alist '("/\\.clangd\\'" . yaml-ts-mode))
+			(add-to-list 'auto-mode-alist '("/\\.clang-tidy\\'" . yaml-ts-mode))
+			(add-to-list 'auto-mode-alist '("/\\.clang-format\\'" . yaml-ts-mode))
 			:config
 			(add-hook 'c-ts-base-mode-hook (function eglot-ensure))
 			(with-eval-after-load 'eglot
