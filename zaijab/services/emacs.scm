@@ -2221,6 +2221,10 @@ END is the start of the line with :END: on it."
 
 	      tree-sitter-c
 	      tree-sitter-cpp
+	      tree-sitter-yaml
+	      tree-sitter-cmake
+	      tree-sitter-csv
+	      tree-sitter-css
 	      tree-sitter-python
 	      tree-sitter-css
 	      tree-sitter-html
