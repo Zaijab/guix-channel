@@ -2254,7 +2254,7 @@ END is the start of the line with :END: on it."
 			      org-confirm-babel-evaluate nil
 			      python-interpreter "python3"
 			      python-shell-interpreter "python3"
-			      treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
+			      )
 
 			(org-babel-do-load-languages 'org-babel-load-languages '(
 										 (scheme .t)
@@ -2802,7 +2802,8 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 		       native-comp-async-jobs-number 4
 		       native-comp-async-report-warnings-errors 'silent
 		       native-comp-jit-compilation t
-	    	       large-file-warning-threshold 1000000000)
+	    	       large-file-warning-threshold 1000000000
+		       treesit-extra-load-path '("/home/zjabbar/.guix-home/profile/lib/tree-sitter"))
 		 (setq-default abbrev-mode t)
 		 ;; Skip cursor layout work in every non-selected window on
 		 ;; each redisplay; only the selected window draws a cursor.
