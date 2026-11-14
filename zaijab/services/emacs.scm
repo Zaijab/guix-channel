@@ -2190,7 +2190,9 @@ END is the start of the line with :END: on it."
 	      python-flake8
 
 	      tree-sitter
-	      
+
+	      tree-sitter-c
+	      tree-sitter-cpp
 	      tree-sitter-python
 	      tree-sitter-css
 	      tree-sitter-html
