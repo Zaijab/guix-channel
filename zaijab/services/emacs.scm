@@ -580,15 +580,16 @@ See `consult-grep' for details."
 		       (with-commit . "emacs-acp=c32fbf8df34ed0095853a8cf55dc783e68b67d90")))
 		    emacs-agent-shell)
 		   emacs-agent-shell
-		   ((options->transformation
-		     '((with-source
-			. "claude-code@2.1.321=https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.321/linux-x64/claude"
-			) ; with-source
-		       ) ; options
-		     ) ; options->transformation
-		    claude-code
-		    ) ; transformed claude-code
+		   ;; ((options->transformation
+		   ;;   '((with-source
+		   ;; 	. "claude-code@2.1.321=https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/2.1.321/linux-x64/claude"
+		   ;; 	) ; with-source
+		   ;;     ) ; options
+		   ;;   ) ; options->transformation
+		   ;;  claude-code
+		   ;;  ) ; transformed claude-code
 		   bubblewrap
+		   claude-code
 		   codex-with-code-mode
 		   node
 		   jq
