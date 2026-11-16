@@ -13,6 +13,7 @@
 #   uv-hpc --pull                                 fetch what the last run wrote
 #   uv-hpc --dirty -- ...                         allow uncommitted changes
 #   uv-hpc --backends                             list the backends
+#   uv-hpc --exec 'module list'                   one command on the login node
 #
 # One run does four things:
 #   1. Finds the project: the nearest parent folder with a pyproject.toml.
@@ -36,6 +37,8 @@
 #   STDERR_DROP      extended regular expression; error-output lines that match
 #                    are hidden.  For login banners that complain when there
 #                    is no terminal, which every ssh call would repeat.
+#   REMOTE_GIT       shell lines that put git on the PATH (git mode); default:
+#                    load an environment module named git or tools/git
 #   PASSWORD_ENTRY   password-store entry whose first line is the password
 #   OTP_ENTRY        pass-otp entry for the one-time passcode
 # The last three are optional.  The last two go together.  With them, uv-hpc logs in by itself; without
@@ -54,6 +57,34 @@
 # A foreground run on Slurm ends if the connection drops; use --detach for
 # long runs.
 #
+# Git mode.  Naming a commit selects it:
+#   uv-hpc --branch=main -- python run.py      submit the tip of main, return the job id
+#   uv-hpc --commit=HEAD --wait -- pytest      submit HEAD, wait, merge the result
+#   uv-hpc --wait [JOB ...]                    wait for jobs (default: all pending), then collect
+#   uv-hpc --collect                           merge every finished result into this branch
+#   uv-hpc --jobs                              this clone's jobs and their state
+#   uv-hpc --force --commit=HEAD -- ...        run again even if this exact job has a result
+# A job is a commit and a command.  Git runs here and on the compute nodes,
+# never on the login node, which may lack it.  The commits the backend lacks
+# travel as a git bundle (the first job sends the whole history), and the job
+# runs detached (sbatch, or setsid on an ssh backend): it fetches the bundles
+# into a bare repo on scratch (ROOT/<project>.git) and works in its own git
+# worktree at its commit, so jobs never share files and survive the
+# connection.  The environment is built once per uv.lock (ROOT/.uv-envs).
+# When the command ends, the job commits every file it created or changed
+# (files .gitignore names stay out; files over 50 MB stay on scratch and are
+# listed in the message) on top of its commit, with the command, host, wall
+# time and exit status in the message, and leaves that commit as a bundle in
+# ROOT/<project>.results.  On a Slurm time limit it gets SIGTERM two minutes
+# early and commits what it has.
+#   The job id is a hash of the commit's tree, the backend, the folder and the
+# command, so the same job on the same files is run once; --force runs it
+# again.  Collecting fetches the result refs and merges into the current
+# branch each result whose source commit is already in the branch's history.
+# Appended result files merge cleanly with `*.jsonl merge=union` in the
+# project's .gitattributes.  Git mode needs a clean commit: uncommitted
+# changes are not sent (commit them first).
+#
 # The backend builds its environment from uv.lock alone, so it has only what
 # a plain `uv run` installs: the dependencies and the default dependency
 # groups.  A tool listed under [project.optional-dependencies] needs its
@@ -63,6 +94,7 @@
 # names tests/__pycache__ if it exists here, and the backend has no such
 # folder.  Name the folder instead: `pytest tests`.
 set -euo pipefail
+shopt -s inherit_errexit
 
 die() { echo "uv-hpc: $*" >&2; exit 1; }
 
@@ -95,6 +127,9 @@ detach=0
 dirty=0
 jobid=
 scheduler_flags=()
+rev=
+wait_after=0
+force=0
 while (($#)); do
     case "$1" in
         --backend)  (($# > 1)) || die "--backend needs a name"; backend="$2"; shift 2 ;;
@@ -105,11 +140,26 @@ while (($#)); do
         --pull)     action=pull; shift ;;
         --status)   action=status; shift ;;
         --log)      (($# > 1)) || die "--log needs a job id"; action=log; jobid="$2"; shift 2 ;;
+        --commit=*) rev="${1#*=}"; shift ;;
+        --branch=*) rev="refs/heads/${1#*=}"; shift ;;
+        --wait)     wait_after=1; [[ $action == run && -z $rev ]] && action=wait; shift ;;
+        --collect)  action=collect; shift ;;
+        --jobs)     action=jobs; shift ;;
+        --force)    force=1; shift ;;
+        --exec)     (($# > 1)) || die "--exec needs a command"; action=exec; exec_cmd="$2"; shift 2 ;;
         -h|--help)  grep '^#' "$0" | cut -c3- | tail -n +2; exit 0 ;;
         --)         shift; break ;;
         *)          scheduler_flags+=("$1"); shift ;;
     esac
 done
+# --wait before --commit still means "submit, then wait"; bare words after
+# --wait are job ids, not scheduler flags.
+[[ -n $rev && $action == wait ]] && action=run
+wait_ids=()
+if [[ $action == wait ]]; then
+    wait_ids=("${scheduler_flags[@]}")
+    scheduler_flags=()
+fi
 
 mapfile -t all < <(backends | sort)
 if [[ -z $backend ]]; then
@@ -124,6 +174,7 @@ ROOT=
 SCHEDULER_ARGS=()
 REMOTE_ENV=
 REMOTE_ENV_AFTER=
+REMOTE_GIT=
 STDERR_DROP=
 PASSWORD_ENTRY=
 OTP_ENTRY=
@@ -237,6 +288,238 @@ warn_unsent() {
     done
 }
 [[ $action == run ]] && warn_unsent "$@"
+
+if [[ $action == exec ]]; then   # one shell command on the login node, for diagnosis
+    connect
+    # UVHPC_SRUN holds the backend's scheduler flags, for `srun $UVHPC_SRUN cmd`.
+    remote "$REMOTE_ENV
+UVHPC_SRUN=$(printf '%q' "$(printf '%q ' "${SCHEDULER_ARGS[@]}" "${scheduler_flags[@]}")")
+$exec_cmd"
+    exit
+fi
+
+# ---------------------------------------------------------------- git mode
+# Git runs here and on the compute nodes, never on the login node (a cluster
+# may install git only on compute nodes).  Commits travel as bundles: the first
+# job sends the whole history, later jobs only the commits the backend lacks.
+# On the backend (paths relative to its home):
+#   ROOT/<project>.bundles/<seq>-<job>.bundle   commits sent from here
+#   ROOT/<project>.git                          bare repo the jobs build from them
+#   ROOT/<project>-jobs/<job>                   one worktree per running job
+#   ROOT/<project>.results/<job>.bundle         the result commit, sent back
+#   ROOT/<project>.results/<job>.status         its exit status
+gitdir="$(git -C "$root" rev-parse --path-format=absolute --git-common-dir 2> /dev/null || true)"
+registry="$gitdir/uv-hpc/jobs"
+inbox="$gitdir/uv-hpc/results"
+r_bundles="$ROOT/$project.bundles"
+r_bare="$ROOT/$project.git"
+r_jobs="$ROOT/$project-jobs"
+r_results="$ROOT/$project.results"
+rsync_ssh="ssh $(printf '%q ' "${ssh_options[@]}")"
+
+# The script a git-mode job runs on the backend.  Arguments: job id, commit, command...
+git_job_script() {
+    local id="$1" sha="$2"; shift 2
+    local cmd name email subject
+    cmd="$(printf '%q ' "$@")"
+    name="$(git -C "$root" config user.name || echo uv-hpc)"
+    email="$(git -C "$root" config user.email || echo uv-hpc@localhost)"
+    subject="$(printf '%q' "uv-hpc $id: $(printf '%s ' "$@" | cut -c1-200)")"
+    cat <<EOF
+#!/bin/bash
+set -o pipefail
+export PATH="\$HOME/.local/bin:\$PATH"
+$REMOTE_ENV
+${REMOTE_GIT:-}
+bare="\$HOME/$r_bare"
+wt="\$HOME/$r_jobs/$id"
+results="\$HOME/$r_results"
+mkdir -p "\$results"
+start=\$(date +%s)
+[ -d "\$bare" ] || git init -q --bare "\$bare"
+# Fetch every bundle in the order sent, so each finds its prerequisites.
+for b in \$(ls "\$HOME/$r_bundles"/*.bundle 2> /dev/null | sort); do
+    for try in 1 2 3; do
+        git --git-dir="\$bare" fetch -q "\$b" '+refs/uv-hpc/src/*:refs/uv-hpc/src/*' 2> /dev/null && break
+        sleep \$((RANDOM % 5 + 1))
+    done
+done
+git --git-dir="\$bare" cat-file -e $sha^{commit} || { echo "uv-hpc: commit $sha missing on the backend" >&2; echo missing > "\$results/$id.status"; exit 1; }
+git --git-dir="\$bare" worktree prune
+rm -rf "\$wt"
+git --git-dir="\$bare" worktree add -q --force --detach "\$wt" $sha || exit 1
+cd "\$wt"
+export UV_PROJECT_ENVIRONMENT="\$HOME/$ROOT/.uv-envs/$project-\$(sha1sum uv.lock 2> /dev/null | cut -c1-12)"
+echo "uv-hpc: \$(hostname), commit $sha, job $id" >&2
+if [ -f .envrc ]; then source .envrc; fi
+$REMOTE_ENV_AFTER
+finish() {
+    cd "\$wt" || exit 1
+    git add -A
+    left=""
+    while IFS= read -r -d '' f; do
+        if [ -f "\$f" ] && [ "\$(stat -c %s "\$f")" -gt 52428800 ]; then
+            git rm -q --cached -- "\$f"; left="\$left \$f"
+        fi
+    done < <(git diff --cached --name-only -z)
+    GIT_AUTHOR_NAME=$(printf '%q' "$name") GIT_AUTHOR_EMAIL=$(printf '%q' "$email") \\
+    GIT_COMMITTER_NAME=$(printf '%q' "$name") GIT_COMMITTER_EMAIL=$(printf '%q' "$email") \\
+    git commit -q --allow-empty -m $subject \\
+        -m "host \$(hostname), backend $backend, commit $sha, wall \$(( \$(date +%s) - start )) s, status \$1" \\
+        \${left:+-m "left on scratch (over 50 MB):\$left"}
+    git update-ref refs/uv-hpc/results/$id HEAD
+    git bundle create -q "\$results/$id.bundle.tmp" refs/uv-hpc/results/$id ^$sha \\
+        && mv "\$results/$id.bundle.tmp" "\$results/$id.bundle"
+    echo "\$1" > "\$results/$id.status"
+    cd / && git --git-dir="\$bare" worktree remove --force "\$wt"
+}
+child=
+trap 'kill -TERM \$child 2> /dev/null; wait \$child; finish terminated; exit 143' TERM
+cd "\$wt$subdir"
+uv run $cmd &
+child=\$!
+wait \$child
+finish \$?
+EOF
+}
+
+job_id() {   # tree, backend, folder and command, hashed
+    local tree="$1"; shift
+    { printf '%s\n%s\n%s\n' "$tree" "$backend" "$subdir"; printf '%q ' "$@"
+      if ((force)); then date +%s%N; fi; } | sha1sum | cut -c1-12
+}
+
+has_result() { remote "test -f '$r_results/$1.bundle'"; }
+
+# Send the commits of $1 that the backend lacks, as one bundle.
+send_commit() {
+    local sha="$1" id="$2" sent b
+    mapfile -t sent < <(git -C "$root" for-each-ref --format='%(objectname)' 'refs/uv-hpc/sent/')
+    git -C "$root" update-ref "refs/uv-hpc/src/$id" "$sha"
+    if [[ -z "$(git -C "$root" rev-list -n 1 "$sha" --not "${sent[@]}" --)" ]]; then
+        git -C "$root" update-ref "refs/uv-hpc/sent/$id" "$sha"
+        return
+    fi
+    b="$(mktemp --suffix=.bundle)"
+    git -C "$root" bundle create -q "$b" "refs/uv-hpc/src/$id" --not "${sent[@]}" --
+    remote "mkdir -p '$r_bundles' '$r_results' '$r_jobs' '$logs'"
+    rsync -q -e "$rsync_ssh" "$b" "$HOST:$r_bundles/$(date +%s%N)-$id.bundle"
+    rm -f "$b"
+    git -C "$root" update-ref "refs/uv-hpc/sent/$id" "$sha"
+}
+
+submit() {
+    [[ -n $gitdir ]] || die "$root is not a git repository"
+    local sha tree id handle
+    sha="$(git -C "$root" rev-parse --verify "$rev^{commit}")" || die "no commit '$rev'"
+    tree="$(git -C "$root" rev-parse "$sha^{tree}")"
+    id="$(job_id "$tree" "$@")"
+    if has_result "$id"; then
+        echo "uv-hpc: job $id already has a result (same files and command); --force runs it again" >&2
+        echo "$id"; return
+    fi
+    send_commit "$sha" "$id"
+    remote "mkdir -p '$r_bundles' '$r_results' '$r_jobs' '$logs'"
+    mkdir -p "$registry"
+    case "$KIND" in
+        slurm)
+            local flags
+            flags="$(printf '%q ' "${SCHEDULER_ARGS[@]}" --signal=B:TERM@120 "${scheduler_flags[@]}")"
+            handle="$(git_job_script "$id" "$sha" "$@" | remote \
+                "sbatch --parsable --job-name='$project-$id' --output='$logs/$project-$id.out' $flags")" ;;
+        ssh)
+            git_job_script "$id" "$sha" "$@" | remote "cat > '$logs/$project-$id.sh'"
+            handle="$(remote "setsid nohup bash '$logs/$project-$id.sh' > '$logs/$project-$id.out' 2>&1 < /dev/null & echo \$!")" ;;
+    esac
+    printf 'backend=%q\nhandle=%q\ncommit=%q\ncommand=%q\nsubmitted=%q\n' \
+        "$backend" "$handle" "$sha" "$(printf '%q ' "$@")" "$(date -Is)" > "$registry/$id"
+    echo "uv-hpc: submitted job $id ($KIND $handle) at ${sha:0:12}" >&2
+    echo "$id"
+}
+
+# Fetch the finished results and merge into the current branch each one whose
+# source commit is already in this branch's history.
+collect() {
+    mkdir -p "$inbox"
+    rsync -q -r -e "$rsync_ssh" --include='*.bundle' --exclude='*' "$HOST:$r_results/" "$inbox/" || true
+    local b ref id merged=0
+    for b in "$inbox"/*.bundle; do
+        [[ -e $b ]] || continue
+        id="$(basename "$b" .bundle)"
+        ref="refs/uv-hpc/results/$id"
+        git -C "$root" rev-parse -q --verify "$ref" > /dev/null \
+            || git -C "$root" fetch -q "$b" "+$ref:$ref" || { echo "uv-hpc: cannot read $b" >&2; continue; }
+        git -C "$root" merge-base --is-ancestor "$ref" HEAD && continue
+        git -C "$root" merge-base --is-ancestor "$ref^" HEAD || continue
+        if git -C "$root" merge -q --no-edit -m "uv-hpc: collect $id" "$ref"; then
+            echo "uv-hpc: merged $id: $(git -C "$root" log -1 --format=%s "$ref")"
+            merged=$((merged + 1))
+            rm -f "$registry/$id"
+        else
+            git -C "$root" merge --abort
+            echo "uv-hpc: $id does not merge cleanly; left at $ref" >&2
+        fi
+    done
+    echo "uv-hpc: collected $merged result(s)"
+}
+
+job_state() {   # done, running or failed
+    local id="$1" handle
+    if grep -qx "$id" <<< "$finished"; then echo done; return; fi
+    handle="$(. "$registry/$id"; echo "$handle")"
+    case "$KIND" in
+        slurm) [[ -n "$(remote "squeue -h -j '$handle' 2> /dev/null")" ]] && echo running || echo failed ;;
+        ssh)   remote "kill -0 '$handle' 2> /dev/null" && echo running || echo failed ;;
+    esac
+}
+
+finished_ids() {
+    local f
+    remote "ls '$r_results' 2> /dev/null || true" | while IFS= read -r f; do
+        if [[ $f == *.bundle ]]; then echo "${f%.bundle}"; fi
+    done
+}
+
+wait_jobs() {
+    local ids=("$@") id state pending
+    ((${#ids[@]})) || mapfile -t ids < <(ls "$registry" 2> /dev/null)
+    ((${#ids[@]})) || { echo "uv-hpc: no pending jobs"; return; }
+    while :; do
+        finished="$(finished_ids)"
+        pending=0
+        for id in "${ids[@]}"; do
+            [[ -e $registry/$id ]] || continue
+            state="$(job_state "$id")"
+            case "$state" in
+                running) pending=1 ;;
+                failed)  echo "uv-hpc: job $id ended without a result; its log:" >&2
+                         remote "tail -n 30 '$logs/$project-$id.out'" >&2 || true
+                         rm -f "$registry/$id" ;;
+            esac
+        done
+        ((pending)) || break
+        sleep 30
+    done
+    collect
+}
+
+if [[ -n $rev || $action == wait || $action == collect || $action == jobs ]]; then
+    connect
+    case "$action" in
+        jobs)    finished="$(finished_ids)"
+                 for f in "$registry"/*; do [[ -e $f ]] || continue
+                     id="${f##*/}"; echo "$id $(job_state "$id") $(. "$f"; echo "$command")"; done
+                 exit ;;
+        collect) collect; exit ;;
+        wait)    wait_jobs "${wait_ids[@]}"; exit ;;
+    esac
+    (($#)) || die "no command; usage: uv-hpc --commit=REV [--backend NAME] -- <command>"
+    id="$(submit "$@")"
+    if ((wait_after)); then wait_jobs "$id"; fi
+    exit
+fi
+
+# ------------------------------------------------------------- rsync mode
 
 connect
 case "$action" in
