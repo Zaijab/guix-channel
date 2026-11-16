@@ -484,12 +484,12 @@ wait_jobs() {
     local ids=("$@") id state pending
     ((${#ids[@]})) || mapfile -t ids < <(ls "$registry" 2> /dev/null)
     ((${#ids[@]})) || { echo "uv-hpc: no pending jobs"; return; }
-    local seen=""
+    local seen="(none yet)"
     while :; do
         finished="$(finished_ids)"
         # Merge each result as soon as it arrives, not only when every job is done.
         if [[ $finished != "$seen" ]]; then
-            [[ -z $seen ]] || collect
+            collect
             seen="$finished"
         fi
         pending=0
