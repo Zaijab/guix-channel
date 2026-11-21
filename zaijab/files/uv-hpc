@@ -359,7 +359,9 @@ finish() {
     left=""
     while IFS= read -r -d '' f; do
         if [ -f "\$f" ] && [ "\$(stat -c %s "\$f")" -gt 52428800 ]; then
-            git rm -q --cached -- "\$f"; left="\$left \$f"
+            # Kept beside the result bundle: removing the worktree below would delete it.
+            mkdir -p "\$results/$id.left/\$(dirname "\$f")" && cp -- "\$f" "\$results/$id.left/\$f"
+            git rm -q --cached -- "\$f"; left="\$left \$results/$id.left/\$f"
         fi
     done < <(git diff --cached --name-only -z)
     GIT_AUTHOR_NAME=$(printf '%q' "$name") GIT_AUTHOR_EMAIL=$(printf '%q' "$email") \\
