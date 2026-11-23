@@ -910,8 +910,21 @@ See `consult-grep' for details."
    (packages (list git
 		   github-cli
 		   direnv
-		   emacs-envrc))
+		   emacs-envrc
+		   emacs-magit
+		   emacs-diff-hl
+		   ) ; list
+	     ) ; packages
    (init '((require 'ansi-color)
+	   ;; magit binds C-x g by default
+	   (use-package diff-hl
+			:demand t
+			:config
+			(global-diff-hl-mode)
+			(diff-hl-flydiff-mode)
+			(add-hook 'magit-pre-refresh-hook (function diff-hl-magit-pre-refresh))
+			(add-hook 'magit-post-refresh-hook (function diff-hl-magit-post-refresh))
+			) ; use-package diff-hl
 	   (setq project-vc-ignores '(".direnv/*" "*.pyc" ".ob-jupyter/*"))
 	   (setq project-vc-extra-root-markers '("pyproject.toml"))
 	   ;; (defun colorize-compilation-buffer ()
@@ -2296,6 +2309,8 @@ END is the start of the line with :END: on it."
 			#;(setq major-mode-remap-alist
 			'((python-mode . python-ts-mode)))
 			(add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
+			;; stubs otherwise open in python-mode, which never starts Eglot
+			(add-to-list 'auto-mode-alist '("\\.pyi\\'" . python-ts-mode))
 			)
 
 	   #;(use-package combobulate
@@ -2320,6 +2335,8 @@ END is the start of the line with :END: on it."
 			      ) ; :map eglot-mode-map
 			:config
 			(setq eglot-autoshutdown t)
+			;; M-. into site-packages stays on the same server
+			(setq eglot-extend-to-xref t)
 			(setq eglot-ignored-server-capabilities '(:semanticTokensProvider))
 			#;(add-hook 'eglot-managed-mode-hook (lambda () (flymake-mode -1)))
 			(setq python-indent-def-block-scale 1)
