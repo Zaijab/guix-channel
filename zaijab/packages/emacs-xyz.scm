@@ -894,6 +894,42 @@ emacs-elfeed-tube-current
     (description "")
     (license license:unlicense)))
 
+(define-public emacs-python-pytest
+  (package
+    (name "emacs-python-pytest")
+    (version "3.6.0")
+    (source
+     (origin
+       (method git-fetch)
+       (uri
+	(git-reference
+	 (url "https://github.com/wbolster/emacs-python-pytest")
+	 (commit version)
+	 ) ; git-reference
+	) ; uri
+       (file-name (git-file-name name version))
+       (sha256
+	(base32 "06k1509nnzrffmkzz5shikz2msk6g0bb89v56fxf9w9prpb0nna3")
+	) ; sha256
+       ) ; origin
+     ) ; source
+    (build-system emacs-build-system)
+    (arguments
+     (list
+      #:tests? #f
+      ;; default exclude drops *test.el, which matches python-pytest.el
+      #:exclude #~(list "^tests/")
+      ) ; list
+     ) ; arguments
+    (propagated-inputs (list emacs-dash emacs-s emacs-transient))
+    (home-page "https://github.com/wbolster/emacs-python-pytest")
+    (synopsis "Run pytest from Emacs")
+    (description "Transient menu for running pytest on the project, file,
+test function at point, or last failures, in a comint buffer with pdb tracking.")
+    (license license:bsd-3)
+    ) ; package
+  ) ; define-public emacs-python-pytest
+
 ;;; Emacs built from upstream feature/igc3 branch with the incremental,
 ;;; generational GC backed by Ravenbrook's Memory Pool System.  MPS is
 ;;; vendored under mps/ in the Emacs tree (AC_CONFIG_SUBDIRS([mps])), so no

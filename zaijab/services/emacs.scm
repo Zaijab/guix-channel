@@ -609,7 +609,19 @@ See `consult-grep' for details."
 (define lsp-configuration
   (home-emacs-configuration
    (packages (list emacs-treemacs))
-   (init '((setq eldoc-echo-area-use-multiline-p nil)))))
+   (init '((setq eldoc-echo-area-use-multiline-p nil)
+	   (which-key-mode 1)
+	   (use-package flymake
+			:bind
+			(:map flymake-mode-map
+			      ("M-n" . flymake-goto-next-error)
+			      ("M-p" . flymake-goto-prev-error)
+			      ) ; :map flymake-mode-map
+			) ; use-package flymake
+	   ) ; init list
+	 ) ; init
+   ) ; home-emacs-configuration
+  ) ; define lsp-configuration
 
 (define dape-configuration
   (home-emacs-configuration
@@ -2213,6 +2225,7 @@ END is the start of the line with :END: on it."
 	      emacs-ob-async
 	      emacs-jupyter
 	      emacs-pydoc
+	      emacs-python-pytest
 
 	      python-lsp-server
 	      python-lsp-ruff
@@ -2299,6 +2312,12 @@ END is the start of the line with :END: on it."
 			(add-hook 'org-mode-hook (function envrc-global-mode-enable-in-buffer) -90))
 
 	   (use-package eglot
+			:bind
+			(:map eglot-mode-map
+			      ("C-c r" . eglot-rename)
+			      ("C-c f" . eglot-format-buffer)
+			      ("C-c a" . eglot-code-actions)
+			      ) ; :map eglot-mode-map
 			:config
 			(setq eglot-autoshutdown t)
 			(setq eglot-ignored-server-capabilities '(:semanticTokensProvider))
@@ -2317,6 +2336,8 @@ END is the start of the line with :END: on it."
 					   :enabled t
 					   ;; F722 = jaxtyping shape strings
 					   :extendIgnore (vector "F722")
+					   ;; eglot-format-buffer also sorts imports
+					   :format (vector "I")
 					   ) ; list ruff
 					  :pyflakes '(:enabled :json-false)
 					  :mccabe '(:enabled :json-false)
@@ -2401,6 +2422,10 @@ END is the start of the line with :END: on it."
 				    nil t))
 			(add-hook 'python-ts-mode-hook (function eglot-ensure))
 			(add-hook 'python-ts-mode-hook (function hs-minor-mode))
+
+			;; uv layers pytest onto the project env, like debugpy-uv
+			(setq python-pytest-executable "uv run --no-project --with pytest pytest")
+			(define-key python-base-mode-map (kbd "C-c t") (function python-pytest-dispatch))
 			
 			;; (add-hook 'python-ts-mode-hook (lambda () (setq-local completion-at-point-functions
 			;; 						      (list (function eglot-completion-at-point)
