@@ -1,9 +1,19 @@
 #!/usr/bin/env bash
-# uv-hpc: `uv run <command>` for the current uv project, executed on another
-# machine (a "backend").  The source stays here; the backend holds a copy,
-# the environment built from uv.lock, and the run.
+# uv-hpc: run <command> for the current project on another machine (a
+# "backend"), inside an environment built from the project's lock.  The source
+# stays here; the backend holds a copy, the environment, and the run.
+#
+# Two environments, chosen with --env (default: $UV_HPC_ENV, else guix):
+#   guix  the project folder is the nearest parent with a manifest.scm.  The
+#         environment is a relocatable `guix pack` of that manifest, built
+#         here and unpacked once on the backend (see "Guix packs" below).
+#   uv    the project folder is the nearest parent with a pyproject.toml, and
+#         the command runs as `uv run <command>` on an environment built
+#         there from uv.lock.
+# A uv project can say so once in its .envrc: export UV_HPC_ENV=uv
 #
 #   uv-hpc -- pytest tests -x -q                  run on the default backend
+#   uv-hpc --env=uv -- pytest tests               run a uv project
 #   uv-hpc --backend NAME -- python -c 'print(1)' name the backend
 #   uv-hpc -- --extra dev pytest tests            flags after -- go to uv run
 #   uv-hpc --time=03:00:00 -- pytest ...          other flags go to the scheduler
@@ -16,13 +26,32 @@
 #   uv-hpc --exec 'module list'                   one command on the login node
 #
 # One run does four things:
-#   1. Finds the project: the nearest parent folder with a pyproject.toml.
+#   1. Finds the project: the nearest parent folder with a manifest.scm
+#      (guix) or a pyproject.toml (uv).
 #   2. Copies it to the backend with rsync.  What arrives is the tracked
 #      files of the current commit, so the commit names what ran.  Uncommitted
 #      changes are refused unless --dirty is given.
-#   3. Runs `uv run <command>` there, after sourcing the project's .envrc if
-#      it has one.  Output streams back and the exit status is passed on.
+#   3. Runs the command there in the environment.  With uv, the project's
+#      .envrc is sourced first if it has one; with guix it is not, since it
+#      sets up the local environment the pack replaces.  Output streams back
+#      and the exit status is passed on.
 #   4. Copies back every file the command created or changed.
+#
+# Guix packs.  The channels are the project's channels.scm, or the file
+# $UV_HPC_CHANNELS names when the project has none.  Either is evaluated with
+# --unsafe-channel-evaluation, so a channel template works too.  uv-hpc runs
+#   guix time-machine -C CHANNELS -- pack -RR -C gzip -m manifest.scm
+# here (bash-minimal is added, the command runs under it) and unpacks the
+# tarball on the backend in ROOT/.guix-packs/<hash>, once per pack: the hash
+# is the pack's store hash, so the same manifest and channels reuse it.  The
+# backend needs no Guix and no root, only unprivileged user namespaces (or
+# PRoot as the slower fallback), and gzip, which login nodes lack less often
+# than zstd.  The command runs inside the pack with the pack's profile
+# sourced, so every /gnu/store path in it resolves; the backend's own files
+# and programs stay visible behind the profile's PATH.  Packs build for this
+# machine's architecture; a backend's GUIX_PACK_ARGS can say otherwise.
+# Guix caches channel checkouts by URL, so a channels.scm should use the same
+# URLs as this machine's channels, or its first build clones from scratch.
 #
 # Backends live in the password store, one entry each, as uv-hpc/NAME.  This
 # file names no machine and no user.  An entry is bash that sets:
@@ -39,6 +68,8 @@
 #                    is no terminal, which every ssh call would repeat.
 #   REMOTE_GIT       shell lines that put git on the PATH (git mode); default:
 #                    load an environment module named git or tools/git
+#   GUIX_PACK_ARGS   bash array of extra `guix pack` flags for this backend,
+#                    such as (--system=aarch64-linux) or (--tune=icelake-server)
 #   PASSWORD_ENTRY   password-store entry whose first line is the password
 #   OTP_ENTRY        pass-otp entry for the one-time passcode
 # The last three are optional.  The last two go together.  With them, uv-hpc logs in by itself; without
@@ -70,22 +101,24 @@
 # runs detached (sbatch, or setsid on an ssh backend): it fetches the bundles
 # into a bare repo on scratch (ROOT/<project>.git) and works in its own git
 # worktree at its commit, so jobs never share files and survive the
-# connection.  The environment is built once per uv.lock (ROOT/.uv-envs).
+# connection.  The environment is built once per uv.lock (ROOT/.uv-envs), or
+# with guix packed from the commit's own manifest.scm and channels.scm (so a
+# manifest should not load other files).
 # When the command ends, the job commits every file it created or changed
 # (files .gitignore names stay out; files over 50 MB stay on scratch and are
 # listed in the message) on top of its commit, with the command, host, wall
 # time and exit status in the message, and leaves that commit as a bundle in
 # ROOT/<project>.results.  On a Slurm time limit it gets SIGTERM two minutes
 # early and commits what it has.
-#   The job id is a hash of the commit's tree, the backend, the folder and the
-# command, so the same job on the same files is run once; --force runs it
+#   The job id is a hash of the commit's tree, the backend, the folder, the
+# command and (guix) the pack, so the same job on the same files is run once; --force runs it
 # again.  Collecting fetches the result refs and merges into the current
 # branch each result whose source commit is already in the branch's history.
 # Appended result files merge cleanly with `*.jsonl merge=union` in the
 # project's .gitattributes.  Git mode needs a clean commit: uncommitted
 # changes are not sent (commit them first).
 #
-# The backend builds its environment from uv.lock alone, so it has only what
+# With uv, the backend builds its environment from uv.lock alone, so it has only what
 # a plain `uv run` installs: the dependencies and the default dependency
 # groups.  A tool listed under [project.optional-dependencies] needs its
 # extra named, as in the --extra dev example above.
@@ -122,6 +155,7 @@ store="${PASSWORD_STORE_DIR:-$HOME/.password-store}/uv-hpc"
 backends() { find "$store" -name '*.gpg' -printf '%P\n' 2> /dev/null | while IFS= read -r f; do echo "${f%.gpg}"; done; }
 
 backend="${UV_HPC_BACKEND:-}"
+env="${UV_HPC_ENV:-guix}"
 action=run
 detach=0
 dirty=0
@@ -135,6 +169,8 @@ while (($#)); do
         --backend)  (($# > 1)) || die "--backend needs a name"; backend="$2"; shift 2 ;;
         --backend=*) backend="${1#*=}"; shift ;;
         --backends) backends; exit ;;
+        --env)      (($# > 1)) || die "--env needs guix or uv"; env="$2"; shift 2 ;;
+        --env=*)    env="${1#*=}"; shift ;;
         --detach)   detach=1; shift ;;
         --dirty)    dirty=1; shift ;;
         --pull)     action=pull; shift ;;
@@ -172,6 +208,7 @@ HOST=
 REMOTE_USER=
 ROOT=
 SCHEDULER_ARGS=()
+GUIX_PACK_ARGS=()
 REMOTE_ENV=
 REMOTE_ENV_AFTER=
 REMOTE_GIT=
@@ -216,17 +253,95 @@ connect() {
     rm -f "$state"
 }
 
-# The project is the nearest parent with a pyproject.toml; the command runs
-# in the same subfolder of it that we are in now.
-root="$PWD"
-while [[ ! -f $root/pyproject.toml ]]; do
-    [[ $root == / ]] && die "no pyproject.toml here or in any parent folder"
-    root="$(dirname "$root")"
-done
+# The project is the nearest parent with the environment's marker file; the
+# command runs in the same subfolder of it that we are in now.
+case "$env" in
+    guix) marker=manifest.scm ;;
+    uv)   marker=pyproject.toml ;;
+    *)    die "--env must be guix or uv, not '$env'" ;;
+esac
+find_up() {   # nearest folder from here up that holds file $1, or nothing
+    local d="$PWD"
+    while :; do
+        [[ -f $d/$1 ]] && { echo "$d"; return; }
+        [[ $d == / ]] && return
+        d="$(dirname "$d")"
+    done
+}
+root="$(find_up "$marker")"
+if [[ -z $root ]]; then
+    [[ $env == guix && -n "$(find_up pyproject.toml)" ]] &&
+        die "no manifest.scm here or in any parent folder; for a uv project pass --env=uv (or export UV_HPC_ENV=uv in its .envrc)"
+    die "no $marker here or in any parent folder"
+fi
 project="$(basename "$root")"
 subdir="${PWD#"$root"}"
 dir="$ROOT/$project"            # relative to the backend's home directory
 logs="$ROOT/.logs"
+r_packs="$ROOT/.guix-packs"
+rsync_ssh="ssh $(printf '%q ' "${ssh_options[@]}")"
+
+# ------------------------------------------------------------- environments
+pack_hash=   # store hash of the pack in use (guix)
+
+# Pack folder $1's manifest.scm with its channels.scm, or $UV_HPC_CHANNELS;
+# print the tarball's store path.
+build_pack() {
+    local src="$1" channels extra out
+    channels="$src/channels.scm"
+    if [[ ! -f $channels ]]; then
+        channels="${UV_HPC_CHANNELS:-}"
+        [[ -n $channels && -f $channels ]] ||
+            die "no channels.scm in the project, and UV_HPC_CHANNELS names no file"
+    fi
+    extra="$(mktemp --suffix=.scm)"
+    echo "(specifications->manifest '(\"bash-minimal\"))" > "$extra"
+    echo "uv-hpc: packing manifest.scm with $channels" >&2
+    out="$(guix time-machine --unsafe-channel-evaluation -C "$channels" -- \
+               pack -RR -C gzip -S /bin=bin "${GUIX_PACK_ARGS[@]}" \
+               -m "$src/manifest.scm" -m "$extra")" || { rm -f "$extra"; die "guix pack failed"; }
+    rm -f "$extra"
+    tail -n 1 <<< "$out"
+}
+
+store_hash() { local b; b="$(basename "$1")"; echo "${b%%-*}"; }
+
+# Send and unpack the tarball $1 unless the backend already has that pack.
+upload_pack() {
+    local tarball="$1" h tmp
+    h="$(store_hash "$tarball")"
+    remote "test -e '$r_packs/$h/bin'" && return
+    tmp="$h.tmp.$$"
+    echo "uv-hpc: sending pack $h ($(du -hL "$tarball" | cut -f1)); unpacking it once on the backend" >&2
+    remote "mkdir -p '$r_packs'"
+    rsync -q -e "$rsync_ssh" "$tarball" "$HOST:$r_packs/$h.tar.gz"
+    # Store folders unpack read-only, hence the chmod before removing one.
+    remote "cd '$r_packs' && mkdir '$tmp' && tar -xzf '$h.tar.gz' -C '$tmp' && rm -f '$h.tar.gz' &&
+            { mv -T '$tmp' '$h' 2> /dev/null || { chmod -R u+w '$tmp'; rm -rf '$tmp'; }; }" ||
+        die "could not unpack the pack in $r_packs on $backend"
+}
+
+# Lines the backend script runs before the command.
+env_setup() {
+    if [[ $env == guix ]]; then
+        printf 'PACK="$HOME/%s"\nPROFILE="/$(dirname "$(readlink "$PACK/bin")")"\n' "$r_packs/$pack_hash"
+    fi
+}
+
+# The .envrc sets up a local environment; with guix the pack replaces it.
+envrc_line() {
+    if [[ $env == uv ]]; then echo 'if [ -f .envrc ]; then source .envrc; fi'; fi
+}
+
+# The words that run a command in the environment.  With guix the command
+# runs under the pack's bash, inside the pack's namespace, so /gnu/store
+# paths resolve for it and everything it starts.
+env_run() {
+    case "$env" in
+        guix) printf '%s' '"$PACK/bin/bash" -c '\''unset GUIX_PROFILE; . "$1/etc/profile"; shift; exec "$@"'\'' uv-hpc "$PROFILE"' ;;
+        uv)   printf 'uv run' ;;
+    esac
+}
 
 push() {
     git -C "$root" rev-parse --git-dir > /dev/null || die "$root is not a git repository"
@@ -261,10 +376,11 @@ $REMOTE_ENV
 cd "\$HOME/$dir"
 echo "uv-hpc: \$(hostname), commit \$(cat .uv-hpc-commit)" >&2
 touch .uv-hpc-start
-if [ -f .envrc ]; then source .envrc; fi
+$(envrc_line)
 $REMOTE_ENV_AFTER
+$(env_setup)
 cd "\$HOME/$dir$subdir"
-exec uv run $(printf '%q ' "$@")
+exec $(env_run) $(printf '%q ' "$@")
 EOF
 }
 
@@ -315,7 +431,6 @@ r_bundles="$ROOT/$project.bundles"
 r_bare="$ROOT/$project.git"
 r_jobs="$ROOT/$project-jobs"
 r_results="$ROOT/$project.results"
-rsync_ssh="ssh $(printf '%q ' "${ssh_options[@]}")"
 
 # The script a git-mode job runs on the backend.  Arguments: job id, commit, command...
 git_job_script() {
@@ -351,8 +466,9 @@ git --git-dir="\$bare" worktree add -q --force --detach "\$wt" $sha || exit 1
 cd "\$wt"
 export UV_PROJECT_ENVIRONMENT="\$HOME/$ROOT/.uv-envs/$project-\$(sha1sum uv.lock 2> /dev/null | cut -c1-12)"
 echo "uv-hpc: \$(hostname), commit $sha, job $id" >&2
-if [ -f .envrc ]; then source .envrc; fi
+$(envrc_line)
 $REMOTE_ENV_AFTER
+$(env_setup)
 finish() {
     cd "\$wt" || exit 1
     git add -A
@@ -376,19 +492,35 @@ finish() {
     cd / && git --git-dir="\$bare" worktree remove --force "\$wt"
 }
 child=
-trap 'kill -TERM \$child 2> /dev/null; wait \$child; finish terminated; exit 143' TERM
+# With guix the command leads its own process group, so TERM reaches all of
+# it, past the pack's namespace wrapper; uv forwards TERM itself.
+trap 'kill -TERM -- -\$child 2> /dev/null || kill -TERM \$child 2> /dev/null; wait \$child; finish terminated; exit 143' TERM
 cd "\$wt$subdir"
-uv run $cmd &
+$(if [[ $env == guix ]]; then printf 'setsid '; fi)$(env_run) $cmd &
 child=\$!
 wait \$child
 finish \$?
 EOF
 }
 
-job_id() {   # tree, backend, folder and command, hashed
+job_id() {   # tree, backend, folder, command and pack, hashed
     local tree="$1"; shift
     { printf '%s\n%s\n%s\n' "$tree" "$backend" "$subdir"; printf '%q ' "$@"
+      # Nothing added for uv, so its job ids stay what they were.
+      if [[ -n $pack_hash ]]; then printf '\n%s' "$pack_hash"; fi
       if ((force)); then date +%s%N; fi; } | sha1sum | cut -c1-12
+}
+
+# The commit's manifest.scm and channels.scm, in a new temporary folder.
+pack_source_at() {
+    local sha="$1" t
+    t="$(mktemp -d)"
+    git -C "$root" show "$sha:./manifest.scm" > "$t/manifest.scm" 2> /dev/null ||
+        { rm -rf "$t"; die "commit ${sha:0:12} has no manifest.scm in $project"; }
+    if git -C "$root" cat-file -e "$sha:./channels.scm" 2> /dev/null; then
+        git -C "$root" show "$sha:./channels.scm" > "$t/channels.scm"
+    fi
+    echo "$t"
 }
 
 has_result() { remote "test -f '$r_results/$1.bundle'"; }
@@ -415,11 +547,19 @@ submit() {
     local sha tree id handle
     sha="$(git -C "$root" rev-parse --verify "$rev^{commit}")" || die "no commit '$rev'"
     tree="$(git -C "$root" rev-parse "$sha^{tree}")"
+    local src tarball=
+    if [[ $env == guix ]]; then
+        src="$(pack_source_at "$sha")"
+        tarball="$(build_pack "$src")"
+        rm -rf "$src"
+        pack_hash="$(store_hash "$tarball")"
+    fi
     id="$(job_id "$tree" "$@")"
     if has_result "$id"; then
         echo "uv-hpc: job $id already has a result (same files and command); --force runs it again" >&2
         echo "$id"; return
     fi
+    if [[ -n $tarball ]]; then upload_pack "$tarball"; fi
     send_commit "$sha" "$id"
     remote "mkdir -p '$r_bundles' '$r_results' '$r_jobs' '$logs'"
     mkdir -p "$registry"
@@ -537,6 +677,11 @@ case "$action" in
 esac
 
 (($#)) || die "no command; usage: uv-hpc [--backend NAME] -- <command>"
+if [[ $env == guix ]]; then
+    tarball="$(build_pack "$root")"
+    pack_hash="$(store_hash "$tarball")"
+    upload_pack "$tarball"
+fi
 push
 
 if ((detach)); then

@@ -65,6 +65,8 @@
                   ("PATH" . "$PATH:/home/zjabbar/.local/bin:/home/zjabbar/.nix-profile/bin")
                   ("GUIX_PROFILE" . "/home/zjabbar/.guix-profile")
                   ("TF_CPP_MIN_LOG_LEVEL" . "1")
+                  ;; uv-hpc packs guix projects that lack a channels.scm with the system's lock.
+                  ("UV_HPC_CHANNELS" . "/home/zjabbar/code/guix-channel/zaijab/files/channel_without_zaijab.tmpl")
 		  ("SWANCTL_DIR" . "/home/zjabbar/.config/swanctl/")
                   ("DISABLE_RTKIT" . "1")
                   ;; bsnes's OpenMP threads otherwise busy-wait on ~4.5 cores.
