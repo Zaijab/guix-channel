@@ -18,9 +18,14 @@
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix gexp)
+  #:use-module (guix utils)
   #:use-module (guix git-download)
   #:use-module (guix build-system python)
   #:use-module (guix build-system pyproject)
+  #:use-module (guix build-system cargo)
+  #:use-module (gnu packages jemalloc)
+  #:use-module (gnu packages compression)
+  #:use-module (gnu packages pkg-config)
   #:use-module ((guix licenses) #:prefix license:))
 
 ;; (define-public pass-import
@@ -127,3 +132,119 @@ files.")
 ;;     (synopsis "Elegant easy-to-use neural networks in JAX.")
 ;;     (description "Elegant easy-to-use neural networks in JAX.")
 ;;     (license #f)))
+
+;; Built from ty's ruff submodule; crates live in (zaijab packages rust-crates).
+(define-public ty
+  (package
+    (name "ty")
+    (version "0.0.109")
+    (source
+     (origin
+       (method git-fetch)
+       (uri
+	(git-reference
+	 (url "https://github.com/astral-sh/ty")
+	 (commit version)
+	 (recursive? #t)
+	 ) ; git-reference
+	) ; uri
+       (file-name (git-file-name name version))
+       (sha256
+	(base32 "0dkld73qdlx7n2gphs1kqgfq3lga8qzf71dvqsxgqvp92vl80w67")
+	) ; sha256
+       ) ; origin
+     ) ; source
+    (build-system cargo-build-system)
+    (arguments
+     (list
+      #:tests? #f
+      #:install-source? #f
+      #:cargo-build-flags ''("--release" "--package" "ty")
+      #:cargo-install-paths ''("crates/ty")
+      #:phases
+      #~(modify-phases %standard-phases
+	  ;; the Cargo workspace is the ruff submodule; build.rs reads
+	  ;; the version from ../dist-workspace.toml
+	  (add-after 'unpack 'enter-ruff-workspace
+	    (lambda _
+	      (chdir "ruff")
+	      ) ; lambda
+	    ) ; add-after
+	  (add-before 'build 'override-jemalloc
+	    (lambda* (#:key inputs #:allow-other-keys)
+	      (setenv "CARGO_FEATURE_UNPREFIXED_MALLOC_ON_SUPPORTED_PLATFORMS" "1")
+	      (setenv "JEMALLOC_OVERRIDE"
+		      (search-input-file inputs "lib/libjemalloc.so")
+		      ) ; setenv
+	      ) ; lambda*
+	    ) ; add-before
+	  ) ; modify-phases
+      ) ; list
+     ) ; arguments
+    (native-inputs (list pkg-config))
+    (inputs
+     (cons* jemalloc
+	    (list zstd "lib")
+	    (cargo-inputs 'ty #:module '(zaijab packages rust-crates))
+	    ) ; cons*
+     ) ; inputs
+    (home-page "https://docs.astral.sh/ty/")
+    (synopsis "Python type checker and language server")
+    (description "ty is a type checker and language server for Python from
+Astral, the makers of ruff and uv.  @code{ty server} speaks LSP.")
+    (license license:expat)
+    ) ; package
+  ) ; define-public ty
+
+;; ruff from the same ruff submodule and crate list as ty.
+(define-public ruff-next
+  (package
+    (inherit ty)
+    (name "ruff")
+    (version "0.17.6")
+    (arguments
+     (substitute-keyword-arguments (package-arguments ty)
+       ((#:cargo-build-flags _) ''("--release" "--package" "ruff"))
+       ((#:cargo-install-paths _) ''("crates/ruff"))
+       ) ; substitute-keyword-arguments
+     ) ; arguments
+    (home-page "https://docs.astral.sh/ruff")
+    (synopsis "Python linter, formatter and language server")
+    (description "Ruff is a Python linter and code formatter.  @code{ruff
+server} speaks LSP.")
+    ) ; package
+  ) ; define-public ruff-next
+
+;; LSP multiplexer the Eglot manual suggests for ty + ruff.
+(define-public rassumfrassum
+  (package
+    (name "rassumfrassum")
+    (version "0.3.5")
+    (source
+     (origin
+       (method git-fetch)
+       (uri
+	(git-reference
+	 (url "https://github.com/joaotavora/rassumfrassum")
+	 (commit (string-append "v" version))
+	 ) ; git-reference
+	) ; uri
+       (file-name (git-file-name name version))
+       (sha256
+	(base32 "05h6c4ywzrza3zmzgd82sdzj01rk7jsf5n1yd4sxx3x5m419mn9v")
+	) ; sha256
+       ) ; origin
+     ) ; source
+    (build-system pyproject-build-system)
+    (arguments
+     (list #:tests? #f)
+     ) ; arguments
+    (native-inputs (list python-setuptools))
+    (home-page "https://github.com/joaotavora/rassumfrassum")
+    (synopsis "LSP multiplexer for one client and several servers")
+    (description "Rassumfrassum (@command{rass}) presents several language
+servers to an LSP client as a single server, merging their capabilities and
+responses.")
+    (license license:gpl3+)
+    ) ; package
+  ) ; define-public rassumfrassum

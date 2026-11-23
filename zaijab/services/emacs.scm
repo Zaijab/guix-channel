@@ -2240,11 +2240,10 @@ END is the start of the line with :END: on it."
 	      emacs-pydoc
 	      emacs-python-pytest
 
-	      python-lsp-server
-	      python-lsp-ruff
-	      ruff
-	      python-pylsp-mypy
-	      python-flake8
+	      ;; Eglot runs rass, which multiplexes ty and ruff's servers
+	      rassumfrassum
+	      ty
+	      ruff-next
 
 	      tree-sitter
 
@@ -2330,7 +2329,7 @@ END is the start of the line with :END: on it."
 			:bind
 			(:map eglot-mode-map
 			      ("C-c r" . eglot-rename)
-			      ("C-c f" . eglot-format-buffer)
+			      ("C-c f" . zain/eglot-organize-and-format)
 			      ("C-c a" . eglot-code-actions)
 			      ) ; :map eglot-mode-map
 			:config
@@ -2340,38 +2339,38 @@ END is the start of the line with :END: on it."
 			(setq eglot-ignored-server-capabilities '(:semanticTokensProvider))
 			#;(add-hook 'eglot-managed-mode-hook (lambda () (flymake-mode -1)))
 			(setq python-indent-def-block-scale 1)
-			(add-to-list 'eglot-server-programs '(python-ts-mode . ("pylsp")))
-			(setq-default eglot-workspace-configuration
+			;; ty: completion, hover, M-., type errors; ruff: lint, fixes, format
+			(add-to-list 'eglot-server-programs
+				     (cons
+				      '(python-mode python-ts-mode)
 				      (list
-				       (cons
-					:pylsp
+				       "rass" "--" "ty" "server" "--" "ruff" "server"
+				       :initializationOptions
+				       ;; rass hands the "ruff" entry to ruff only
+				       (list
+					:rass
 					(list
-					 :plugins
+					 :ruff
 					 (list
-					  :ruff
+					  :settings
 					  (list
-					   :enabled t
-					   ;; F722 = jaxtyping shape strings
-					   :extendIgnore (vector "F722")
-					   ;; eglot-format-buffer also sorts imports
-					   :format (vector "I")
-					   ) ; list ruff
-					  :pyflakes '(:enabled :json-false)
-					  :mccabe '(:enabled :json-false)
-					  :pycodestyle '(:enabled :json-false)
-					  :flake8 '(:enabled :json-false)
-					  :pylsp_mypy
-					  (list
-					   :enabled t
-					   :live_mode t
-					   ;; python3 on PATH is the envrc venv's, so Guix mypy sees its packages
-					   :overrides (vector "--python-executable" "python3" t)
-					   ) ; list pylsp_mypy
-					  ) ; list plugins
-					 ) ; list pylsp
-					) ; cons
-				       ) ; list
-				      ) ; setq-default
+					   ;; F722 = jaxtyping shape strings; ty already accepts them
+					   :lint (list :ignore (vector "F722"))
+					   ;; ty reports syntax errors too
+					   :showSyntaxErrors :json-false
+					   ) ; list settings
+					  ) ; list ruff
+					 ) ; list rass
+					) ; list initializationOptions
+				       ) ; list contact
+				      ) ; cons
+				     ) ; add-to-list
+
+			(defun zain/eglot-organize-and-format ()
+			  "Sort imports when the server offers it, then format the buffer."
+			  (interactive)
+			  (ignore-errors (eglot-code-action-organize-imports (point-min) (point-max)))
+			  (eglot-format-buffer))
 			(setq eglot-send-changes-idle-time 0.1)
 			(setq eglot-report-progress nil)
 
@@ -2407,7 +2406,7 @@ END is the start of the line with :END: on it."
 
 			(defun sloth/org-src-python-setup ()
 			  (when (derived-mode-p 'python-base-mode)
-			    ;; pylsp-mypy requires the advertised Python pathname to exist.
+			    ;; The language server needs a real Python path inside a workspace.
 			    ;; This file is only an LSP backing file; Org remains authoritative.
 			    (setq-local sloth/org-src-python-temp-file
 					(make-temp-file
