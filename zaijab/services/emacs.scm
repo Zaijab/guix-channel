@@ -1150,7 +1150,7 @@ See `consult-grep' for details."
    (packages (list
 	      ;; mpv
 	      emacs-empv
-	      yt-dlp
+	      yt-dlp-next
 	      emacs-elfeed
 	      emacs-elfeed-tube-current
 	      curl))

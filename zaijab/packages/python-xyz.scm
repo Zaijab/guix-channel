@@ -14,7 +14,8 @@
   #:use-module (gnu packages rust)  
   #:use-module (gnu packages password-utils)
   #:use-module (gnu packages haskell-xyz)  
-  #:use-module (gnu packages check)  
+  #:use-module (gnu packages check)
+  #:use-module ((gnu packages video) #:select (yt-dlp))
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix gexp)
@@ -214,6 +215,29 @@ Astral, the makers of ruff and uv.  @code{ty server} speaks LSP.")
 server} speaks LSP.")
     ) ; package
   ) ; define-public ruff-next
+
+;; Newer than the pinned Guix; YouTube breaks old releases within weeks.
+(define-public yt-dlp-next
+  (package
+    (inherit yt-dlp)
+    (version "2026.11.23")
+    (source
+     (origin
+       (method git-fetch)
+       (uri
+	(git-reference
+	 (url "https://github.com/yt-dlp/yt-dlp/")
+	 (commit version)
+	 ) ; git-reference
+	) ; uri
+       (file-name (git-file-name "yt-dlp" version))
+       (sha256
+	(base32 "1kc10qq5rbbk3iwxlcnsaznm48la3065ingz9rncyfj6iz6ng706")
+	) ; sha256
+       ) ; origin
+     ) ; source
+    ) ; package
+  ) ; define-public yt-dlp-next
 
 ;; LSP multiplexer the Eglot manual suggests for ty + ruff.
 (define-public rassumfrassum
