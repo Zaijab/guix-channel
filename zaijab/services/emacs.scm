@@ -2938,6 +2938,8 @@ timeout, i.e. Emacs waiting rather than prompting the user."
 			    'ignore)))
 	   (advice-add 'display-time-event-handler :after (function zaijab/tab-bar-refresh-global))
 	   (advice-add 'battery-update-handler :after (function zaijab/tab-bar-refresh-global))
+	   (advice-add 'org-timer-update-mode-line :after (function zaijab/tab-bar-refresh-global))
+	   (advice-add 'org-timer-set-mode-line :after (function zaijab/tab-bar-refresh-global))
 	   
 	   
 	   (defvar zaijab/tab-bar-tab-width 16 
