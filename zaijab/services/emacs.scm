@@ -2337,6 +2337,7 @@ END is the start of the line with :END: on it."
 			;; M-. into site-packages stays on the same server
 			(setq eglot-extend-to-xref t)
 			(setq eglot-ignored-server-capabilities '(:semanticTokensProvider))
+			(setq eglot-code-action-indications nil)
 			#;(add-hook 'eglot-managed-mode-hook (lambda () (flymake-mode -1)))
 			(setq python-indent-def-block-scale 1)
 			;; ty: completion, hover, M-., type errors; ruff: lint, fixes, format
